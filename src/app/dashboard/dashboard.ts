@@ -14,19 +14,19 @@ export class DashboardComponent implements OnInit{
   itemsLength:number;
   constructor( private tabsServices: TabsService){}
 
-  getTabsDetails(){
-    this.tabsServices.getTabsDetails()
+  getDashboardList(){
+    this.tabsServices.getDashboardList()
     .subscribe(res =>{
       console.log(res);
-      if(res.status = 200){
-        this.TotalDada = res.SurveyCases11;
-        this.itemsLength = Object.keys(this.TotalDada).length;
+      if(res.Status = 200){
+        this.TotalDada = res.Data;
+        console.log('dashboardList:', this.TotalDada);
       }
     })
   }
   
 
   ngOnInit(){
-    this.getTabsDetails();
+    this.getDashboardList();
   }
 }

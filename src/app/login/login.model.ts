@@ -1,11 +1,10 @@
 export interface LoginRequest{
-    username: string,
-    password: string
+    UserName: string,
+    UserPassword: string
 }
 
 export interface LoginResponse{
     massage: string,
-    result: number,
-    SurveyorID: number;
-    value:{}
+    Status: number,
+    Data:{}
 }

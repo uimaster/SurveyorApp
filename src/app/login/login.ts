@@ -17,23 +17,27 @@ export class LoginComponent implements OnInit {
   public showSuccessMessage: boolean = false;
   public showErrorMessage : boolean = false;
   public isLoggedIn: any = false;
+  loginData = {};
   constructor( private loginservice: LoginService, private router: Router){
 
     this.loginForm = new FormGroup({
-      username : new FormControl('', Validators.required),
-      password : new FormControl('', Validators.required)
+      UserName : new FormControl('', Validators.required),
+      UserPassword : new FormControl('', Validators.required)
     })  
   }
 
   loginSubmit(data){
+    debugger;
     if(this.loginForm.valid){     
       this.loginservice.loginSubmit(this.loginForm.value)
         .subscribe(res =>{
-          if(res.result = 200){
-            console.log(res);
+          if(res && res.Status == 200){
+            this.loginData = res.Data;
+            console.log(this.loginData);
             this.isLoggedIn = true;
             localStorage.setItem('isLoggedIn', JSON.stringify(this.isLoggedIn));
-            localStorage.setItem('SurveyorsId', JSON.stringify(res.SurveyorID));
+            localStorage.setItem('SurveyorsId', JSON.stringify(this.loginData[0].SurveyorsId));
+            localStorage.setItem('CompanyId', JSON.stringify(this.loginData[0].CompanyId));
             this.loginSuccessMessage = res.massage;
             this.showSuccessMessage = true;
             this.showErrorMessage = false;

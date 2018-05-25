@@ -144,8 +144,8 @@ export class WizardComponent implements OnInit {
     this.caseId = localStorage.getItem('CaseID');
     this.wizardService.getClaimDetails()
     .subscribe(res =>{
-      if(res.status = 200){
-        this.claimDetailData = res.SurveyCases4;
+      if(res && res.Status == 200){
+        this.claimDetailData = res.Data;
         this.firstFormGroup = new FormGroup({
             CaseID: new FormControl(this.caseId),
             CaseNo: new FormControl(''),
@@ -176,8 +176,8 @@ export class WizardComponent implements OnInit {
   getVehicleDetails(){
     this.wizardService.getVehicleDetails()
     .subscribe(res =>{
-      if(res.status = 200){
-        this.VehicleDetailData = res.SurveyCases;
+      if(res && res.Status == 200){
+        this.VehicleDetailData = res.Data;
         this.thirdFormGroup = new FormGroup({
             CaseVehicleId: new FormControl(this.VehicleDetailData[0].CaseVehicleId),
             SurveyorsId: new FormControl(this.VehicleDetailData[0].SurveyorsId, Validators.required),
@@ -215,8 +215,8 @@ export class WizardComponent implements OnInit {
     this.caseId = localStorage.getItem('CaseID');
     this.wizardService.getDriverDetails()
     .subscribe(res =>{
-      if(res.status = 200){
-        this.driverData = res.SurveyCases2;
+      if(res && res.Status == 200){
+        this.driverData = res.Data;
         // this.fourthFormGroup = new FormGroup({
         //     CaseDriverID: new FormControl(this.driverData[0].CaseDriverID),
         //     CaseID: new FormControl(this.driverData[0].CaseID),
@@ -241,8 +241,8 @@ export class WizardComponent implements OnInit {
   this.caseId = localStorage.getItem('CaseID');
   this.wizardService.geAccidentDetails()
   .subscribe(res =>{
-    if(res.status = 200){
-      this.accidentData = res.SurveyCases12;     
+    if(res && res.Status == 200){
+      this.accidentData = res.Data;     
 
       this.fifthFormGroup = new FormGroup({
         CaseID: new FormControl(this.accidentData[0].CaseID, Validators.required),
@@ -264,19 +264,18 @@ export class WizardComponent implements OnInit {
 
   firstStepSubmit(formdata){
     if(this.firstFormGroup.valid){
-        this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(data =>{
-            // if(data && data.status_code==200){
-            if(data){
-                this.successMessage = data.message;
+        this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(res =>{
+            if(res && res.status == 200){           
+                this.successMessage = res.mssage;
                 this.showError = false;
                 this.showSuccess = true;                
-                console.log(data);		
+                alert(this.successMessage);		
             }
             else{
-                this.errorMessage = data.message;
+                this.errorMessage = res.message;
                 this.showError = true;
                 this.showSuccess = false;
-                console.log(data);
+                alert(this.errorMessage);
             }
         }, error =>{
             this.errorMessage = error;

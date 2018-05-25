@@ -1,7 +1,9 @@
 export const BASEURL ='http://apiflacors.iflotech.in/api/';
-export const LOGINURL = BASEURL + 'Values?';
-export const DASHBOARDALLCASES = BASEURL + 'SurveryorCaseRFiled?';
+export const LOGINURL = BASEURL + 'CompanyLogin';
+export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard?';
+export const DASHBOARDLIST = BASEURL + 'SurveyCaseList?';
 export const DASHBOARD_CAT_CASES = BASEURL + 'SurveyCaseList?';
+
 export const WIZARD_GETCLAIMURL = BASEURL + 'ClaimDetaile?';
 export const WIZARD_POSTCLAIMURL = BASEURL + 'SpotClaimDetails';
 export const WIZARD_POSTSURVEYORURL = BASEURL + 'SpotSurveyDetails';

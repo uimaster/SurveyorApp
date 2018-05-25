@@ -13,8 +13,8 @@ export class LoginService{
     constructor(private http: HttpClient){}
 
     loginSubmit(payload: LoginRequest):Observable<LoginResponse>{
-        const params = new HttpParams().set('username', payload.username).set('password', payload.password);
-        return this.http.get(LOGINURL, {params})
+        // const params = new HttpParams().set('username', payload.username).set('password', payload.password);
+        return this.http.post(LOGINURL, payload)
             .map((res) =>{
                 if(res){
                     return res;

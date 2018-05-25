@@ -3,9 +3,9 @@ export interface TabsRequest{
 }
 
 export interface TabsResponse{
-    massage: string,
-    status: number,
-    SurveyCases11: TabsGenericResponse
+    Message: string,
+    Status: number,
+    Data: {}
 }
 
 export interface TabsGenericResponse{

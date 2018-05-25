@@ -17,10 +17,9 @@ export class ProcessCaseComponent implements OnInit{
   getProcessList(){
     this.tabsServices.getProcessList()
     .subscribe(res =>{
-      console.log(res);
-      if(res.status = 200){
-        this.UnderProcessCases = res.SurveyCases11;
-        this.itemsLength = Object.keys(this.UnderProcessCases).length;
+      if(res && res.Status == 200){
+        this.UnderProcessCases = res.Data;
+        console.log('process:', this.UnderProcessCases);
       }
     })
   }

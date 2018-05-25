@@ -10,14 +10,14 @@
                 <div class="alert alert-success" *ngIf="showSuccessMessage">{{loginSuccessMessage}}</div>
                 <div class="alert alert-danger" *ngIf="showErrorMessage">{{loginfailedMessage}}</div><br/><br/>
                 <mat-form-field>
-                    <input matInput placeholder="Username" formControlName="username">
-                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">Email is required !</div>
-                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['username'].hasError('pattern') && loginForm.controls['username'].touched">Email is not valid !</div>
+                    <input matInput placeholder="Username" formControlName="UserName">
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserName'].hasError('required') && loginForm.controls['UserName'].touched">Email is required !</div>
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserName'].hasError('pattern') && loginForm.controls['UserName'].touched">Email is not valid !</div>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Password" type="password" formControlName="password">
-                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password is required !</div>
-                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['password'].hasError('minlength') && loginForm.controls['password'].touched">Password length should have atleast 5 character !</div>     
+                    <input matInput placeholder="Password" type="password" formControlName="UserPassword">
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('required') && loginForm.controls['UserPassword'].touched">Password is required !</div>
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('minlength') && loginForm.controls['UserPassword'].touched">Password length should have atleast 5 character !</div>     
                 </mat-form-field>
                 
                 <p>               
