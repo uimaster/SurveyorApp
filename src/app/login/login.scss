@@ -1,0 +1,30 @@
+
+.mat-card{
+    width: 500px; margin: 150px auto; 
+    background-color:#fff; border-radius: 6px;
+    h1{
+        text-align: center;
+    }
+    p {
+        text-align: center;
+        a {
+            text-align: center;
+        }
+    }
+    p.forget{
+        clear: both;
+        a{
+            text-align: right;
+        }
+    }
+    .mat-form-field{ width:100%;}
+    a{ color: #0189ce; text-decoration: none;}
+    
+    
+} 
+
+.alert{
+    font-size: 14px; 
+    &.alert-success{ color: #028907;}
+    &.alert-danger{ color:#e30000;}
+}

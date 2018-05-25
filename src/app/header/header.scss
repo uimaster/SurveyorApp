@@ -1,0 +1,45 @@
+.mainHeader{
+    background-color: #282828;
+    position: fixed;
+    z-index: 904;
+    box-shadow: 2px 0 3px rgba(0,0,0,.5);
+    height: 66px;
+    width: 100%;
+    min-width: 320px;
+    padding: 0 32px 0 40px;
+    top:0;
+    .logo{
+        display: inline-block;
+        a{
+            float: left;
+            img{ height: 50px;  border-radius: 2px; margin-top: 8px;}
+            &.toggle{
+                margin-top: 17px;
+                margin-left: 32px;
+                i{
+                    color: #fff;
+                    font-size: 34px;
+                }
+            }
+           
+        }
+        
+    }
+    .userDetails{
+        float: right; padding-right: 55px; margin-top: 12px;
+        .thumb{
+            img{height: 40px; width: 40px; border-radius: 50%; vertical-align: middle;}            
+        }
+        p{
+            margin: 10px 10px 0 0;
+            display: inline-block;           
+            display: inline-block;
+            color:#fff;            
+            font-family: Arial, Helvetica, sans-serif;
+            a{
+                color: #00abff;
+            }
+        }
+        
+    }
+}

@@ -1,0 +1,33 @@
+
+    <mat-card>
+        <h1 class="text-center">
+           
+            <a href="#"><img src="../../assets/images/logo.jpg" alt="logo" /></a>
+        </h1>
+       
+        <form [formGroup]="loginForm" (ngSubmit)="loginSubmit(loginForm.value)">
+            <div class="example-container">
+                <div class="alert alert-success" *ngIf="showSuccessMessage">{{loginSuccessMessage}}</div>
+                <div class="alert alert-danger" *ngIf="showErrorMessage">{{loginfailedMessage}}</div><br/><br/>
+                <mat-form-field>
+                    <input matInput placeholder="Username" formControlName="username">
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">Email is required !</div>
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['username'].hasError('pattern') && loginForm.controls['username'].touched">Email is not valid !</div>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Password" type="password" formControlName="password">
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">Password is required !</div>
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['password'].hasError('minlength') && loginForm.controls['password'].touched">Password length should have atleast 5 character !</div>     
+                </mat-form-field>
+                
+                <p>               
+                <button mat-raised-button color="secondary" style="float: left; width: 45%;" >Signup</button>
+                <button mat-raised-button color="primary" style="float: right; width: 45%" type="submit" >Login</button>
+                </p><br/><br/>
+                <p class="forget">                
+                    <a href="#" style="float: right;">Forget Password?</a>
+                </p>
+            <br/><br/>
+            </div>
+        </form>
+    </mat-card>

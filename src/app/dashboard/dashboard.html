@@ -1,0 +1,35 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+<h2>Dashboard</h2>
+<tabs-selector></tabs-selector>
+<div class="tabularData card">
+    <table width="100%" class="table">
+        <thead>
+            <tr>
+                <th>Case Date</th>
+                <th>Case No</th>
+                <th>Claim No</th>
+                <th>Company Name</th>
+                <th>Customer Name</th>
+                <th>Customer Mobile</th>
+                <th>Case Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of TotalDada">
+                <td>{{item.CaseDate}}</td>
+                <td>{{item.CaseNo}}</td>
+                <td>{{item.ClaimNO}}</td>
+                <td>{{item.CompanyName}}</td>
+                <td>{{item.CustomerName}}</td>
+                <td>{{item.CustomerMobile}}</td>
+                <td>{{item.CaseTypeName}}</td>
+                <td>{{item.SurveyStatusName}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->

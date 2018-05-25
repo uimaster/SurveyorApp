@@ -1,0 +1,70 @@
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+body{
+    background: url('../images/sky-bg.jpg') center no-repeat;  
+    font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%; min-height: 90vh; padding: 0; margin: 0;
+} 
+.mat-form-field-infix{ border-top:inherit;}
+.mat-horizontal-stepper-header-container{
+     background-color: hsla(0,0%,100%,0.6);  padding: 10px; margin: -24px;  -webkit-border-top-left-radius: 6px;
+     -webkit-border-top-right-radius: 6px;
+     -moz-border-radius-topleft: 6px;
+     -moz-border-radius-topright: 6px;
+     border-top-left-radius: 6px;
+     border-top-right-radius: 6px;
+     
+    .mat-horizontal-stepper-header{ height: auto;}
+   
+} 
+.mat-horizontal-content-container{padding: 0!important; margin-top: 35px;}
+.mat-step-icon, .mat-step-icon-not-touched{ height: 28px!important; width: 28px!important; font-size: 12px!important;}
+.mat-step-header:hover{ background-color: transparent;}
+// .mat-form-field-underline { background-color: #fff;}
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: pink;
+  }
+  input::-moz-placeholder { /* Firefox 19+ */
+    color: pink;
+  }
+  input:-ms-input-placeholder { /* IE 10+ */
+    color: pink;
+  }
+  input:-moz-placeholder { /* Firefox 18- */
+    color: pink;
+  }
+
+  .mat-raised-button{ padding: 0px 45px!important;}
+
+  .card{
+    color: #fff;
+    background-color: hsla(0,0%,100%,.1);
+    border: 0;
+    border-radius: 7px;
+    position: relative;
+    margin-bottom: 24px;
+    box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+  }
+
+  .table{
+    thead{
+      tr{
+        th{
+          font-size: 14px; padding: 4px; text-align: left!important; font-weight: 600;
+        }
+      }
+    }
+    tbody{
+      tr{
+        &:nth-child(odd){
+          background-color: rgba(0,0,0,.1);
+        }      
+        td{
+          font-size: 12px; padding: 8px 6px; font-weight: 500;
+        }      
+      }
+    }
+  }
+
+.container{
+  padding-top: 85px;
+  padding-left: 210px;    padding-right: 20px;
+}  

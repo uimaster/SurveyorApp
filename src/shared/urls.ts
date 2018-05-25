@@ -1,0 +1,13 @@
+export const BASEURL ='http://apiflacors.iflotech.in/api/';
+export const LOGINURL = BASEURL + 'Values?';
+export const DASHBOARDALLCASES = BASEURL + 'SurveryorCaseRFiled?';
+export const DASHBOARD_CAT_CASES = BASEURL + 'SurveyCaseList?';
+export const WIZARD_GETCLAIMURL = BASEURL + 'ClaimDetaile?';
+export const WIZARD_POSTCLAIMURL = BASEURL + 'SpotClaimDetails';
+export const WIZARD_POSTSURVEYORURL = BASEURL + 'SpotSurveyDetails';
+export const WIZARD_GETVEHICLEDETAILSURL = BASEURL + 'CustomerVehData?';
+export const WIZARD_POSTVEHICLEDETAILSURL = BASEURL + 'UpdateVehicleDetails';
+export const WIZARD_GETDRIVERDETAILSURL = BASEURL + 'CaseDriverData';
+export const WIZARD_POSTDRIVERDETAILSURL = BASEURL + 'UpdateDriverDetails';
+export const WIZARD_GETACCIDENTDETAILSURL = BASEURL + 'SurveyAccidentDetails';
+export const WIZARD_POSTACCIDENTDETAILSURL = BASEURL + 'SurveyAccidentDetails';

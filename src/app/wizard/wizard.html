@@ -1,0 +1,214 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Survey / Claim Details -</h2>
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" (ngSubmit)="firstStepSubmit(firstFormGroup.value);">
+        <ng-template matStepLabel>Claim form</ng-template>
+        <h4>Survay Case No :</h4>
+        <mat-form-field>
+          <input matInput placeholder="Claim No." formControlName="claimNo" >
+        </mat-form-field>
+        <!-- <mat-form-field>
+          <input matInput placeholder="Policy From Picture" formControlName="policyPic">
+        </mat-form-field> -->
+        <mat-form-field>
+          <input matInput placeholder="Policy No." formControlName="policyNo">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Insured's Name" formControlName="InsuredName">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Insured's Address" formControlName="InsuredAddress">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="insured's Mobile No." formControlName="InsuredMobile">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Insured's Email id" formControlName="EmailID">
+        </mat-form-field>
+        <div style="text-align: center; margin-top: 50px;">
+          <button mat-raised-button  matStepperNext >Skip</button>
+          <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit" [disabled]="firstFormGroup.invalid">Next</button>
+          <!-- <button mat-raised-button color="primary">Primary</button> -->
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup" (ngSubmit)="secondStepSubmit(secondFormGroup.value);">
+        <ng-template matStepLabel>Surveyor</ng-template>
+        <h4>Survay Details :</h4>
+        <mat-form-field>
+          <input matInput placeholder="Surveyor Name" formControlName="SurveyorsName">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Date of Allotment of Survey" formControlName="DateofAllotmentofsurvey" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Date of Survey" formControlName="DateofSurvey" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Place Of Survey" formControlName="SurveyLocation" required>
+        </mat-form-field>
+        <div style="text-align: center; margin-top: 50px;">
+          <button mat-raised-button matStepperNext>Skip</button>
+          <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit" [disabled]="secondFormGroup.invalid">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup" (ngSubmit)="thirdStepSubmit(thirdFormGroup.value);">
+          <ng-template matStepLabel>Vehicle</ng-template>
+          <h4>Vehicle Details:</h4>
+          <mat-form-field>
+            <input matInput placeholder="Registration No" formControlName="Registration_No" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Chasis No" formControlName="ChasisNo" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Engine No" formControlName="EngineNo" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Make" formControlName="Make" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Model" formControlName="Model" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Manufacture of Year" formControlName="MgfYear" required>
+          </mat-form-field>
+          <div style="text-align: center; margin-top: 50px;">
+            <button mat-raised-button matStepperNext>Skip</button>
+            <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit" [disabled]="thirdFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="fourthFormGroup">
+        <form [formGroup]="fourthFormGroup" (ngSubmit)="fourthSubmit(fourthFormGroup.value)">
+          <ng-template matStepLabel>Driver</ng-template>
+          <h4>Driver Details:</h4>
+
+          <mat-form-field>
+            <input matInput placeholder="Driver Name" formControlName="Drivername">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Driver License Number" formControlName="DriverLicenseNo">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Issue Date" formControlName="IssueDate">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Date Of Birth" formControlName="DOB">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Driver Age" formControlName="Age">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Type Of License" formControlName="TypeOfLicense">
+          </mat-form-field>
+
+          <div style="text-align: center; margin-top: 50px;">
+            <button mat-raised-button matStepperNext>Back</button>
+            <button mat-raised-button style="margin-left: 10px;" color="primary" type="submit">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="fifthFormGroup">
+        <form [formGroup]="fifthFormGroup" (ngSubmit)="fifthSubmit(fifthFormGroup.value)">
+          <ng-template matStepLabel>Accident</ng-template>
+          <h4>Accident Details:</h4>
+          <mat-form-field>
+            <input matInput placeholder="Accident Date" formControlName="AccidentDate">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Accident Place" formControlName="AccidentPlace">
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput placeholder="Cause of Lost" formControlName="CauseofLoss"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Upload Claim Form/Statement" formControlName="FIRDDR">
+          </mat-form-field>
+          <div style="text-align: center; margin-top: 50px;">
+            <button mat-raised-button matStepperNext>Back</button>
+            <button mat-raised-button style="margin-left: 10px;" color="primary" type="submit" [disabled]="fifthFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="sixthFormGroup">
+        <form [formGroup]="sixthFormGroup">
+          <ng-template matStepLabel>Police FIR</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="sixthCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="seventhFormGroup">
+        <form [formGroup]="seventhFormGroup">
+          <ng-template matStepLabel>Crash Images</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="seventhCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="eightthFormGroup">
+        <form [formGroup]="eightthFormGroup">
+          <ng-template matStepLabel>Damage Details</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="eightthCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="ninethFormGroup">
+        <form [formGroup]="ninethFormGroup">
+          <ng-template matStepLabel>Report Summary</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="ninethCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="tenthFormGroup">
+        <form [formGroup]="tenthFormGroup">
+          <ng-template matStepLabel>Digital Signature</ng-template>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="tenthCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+  </mat-horizontal-stepper>
+</div>  

@@ -1,0 +1,49 @@
+<div class="tabs">
+    <ul>
+        <li>
+            <a href="#">
+                <i class="material-icons">
+                    assignment
+                </i>
+                <span class="first">Total Cases</span>
+                <span>{{itemsLength}}</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="material-icons">
+                    description
+                </i>
+                <span class="first">Allocated Cases</span>
+                <span>00</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="material-icons">
+                    playlist_add_check
+                </i> 
+                <span class="first">Completed Cases</span>
+                <span>{{completedListLength}}</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/process-case">
+                <i class="material-icons">
+                    dvr
+                </i>
+                <span class="first">Under Process Case</span>
+                <span>{{processListLength}}</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="material-icons">
+                    wifi
+                </i>
+                <span class="first">BroadCast Case</span>
+                <span>00</span>
+            </a>
+        </li>
+    </ul>
+</div>
