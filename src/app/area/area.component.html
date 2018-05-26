@@ -1,0 +1,32 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Areas</h2>
+
+  <div class="tabularData card">
+    <table width="100%" class="table">
+      <thead>
+      <tr>
+        <th>Sn</th>
+        <th>Area Id</th>
+        <th>City Id</th>
+        <th>City Name</th>
+        <th>Area Name</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let area of TotalDada;let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{area.AreaId}}</td>
+        <td>{{area.CityId}}</td>
+        <td>{{area.CityName}}</td>
+        <td>{{area.AreaName}}</td>
+
+        <td><a>Edit</a> | <a>delete</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->

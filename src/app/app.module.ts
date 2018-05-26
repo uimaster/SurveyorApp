@@ -25,6 +25,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatStepperModule} from '@angular/material/stepper';
+import { UsersComponent } from './users/users.component';
+import { SurveyorComponent } from './surveyor/surveyor.component';
+import { AreaComponent } from './area/area.component';
+import { CompaniesComponent } from './companies/companies.component';
+import {UsersService} from "./users/users.service";
 
 
 @NgModule({
@@ -36,7 +41,11 @@ import {MatStepperModule} from '@angular/material/stepper';
     HeaderComponent,
     WizardComponent,
     DashboardTabComponent,
-    ProcessCaseComponent
+    ProcessCaseComponent,
+    UsersComponent,
+    SurveyorComponent,
+    AreaComponent,
+    CompaniesComponent
   ],
   imports: [
     BrowserModule,
@@ -45,18 +54,18 @@ import {MatStepperModule} from '@angular/material/stepper';
     HttpClientModule,
 
     //Material Modules
-    MatInputModule,    
+    MatInputModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCheckboxModule,    
+    MatCheckboxModule,
     MatCardModule,
     MatFormFieldModule,
     MatSidenavModule,
     MatStepperModule
   ],
-  providers: [LoginService, TabsService, WizardService],
+  providers: [LoginService, TabsService, WizardService,UsersService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }

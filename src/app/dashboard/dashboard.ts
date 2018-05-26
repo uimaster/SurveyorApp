@@ -9,7 +9,7 @@ import { TabsResponse, TabsGenericResponse} from './dashboardTabs/tabs.model';
   styleUrls: ['./dashboard.scss'],
 })
 export class DashboardComponent implements OnInit{
- 
+
   public TotalDada = [];
   itemsLength:number;
   constructor( private tabsServices: TabsService){}
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit{
       }
     })
   }
-  
+
 
   ngOnInit(){
     this.getDashboardList();

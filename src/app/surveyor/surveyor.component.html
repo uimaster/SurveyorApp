@@ -1,0 +1,39 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Surveyors</h2>
+
+  <div class="tabularData card">
+    <table width="100%" class="table">
+      <thead>
+      <tr>
+        <th>Sn</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Landline</th>
+        <th>Area Name</th>
+        <th>City Name</th>
+        <th>Address</th>
+        <th>LicenceNo</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let surveyor of TotalDada;let i = index;">
+        <td>{{i}}</td>
+        <td>{{surveyor.Name}}</td>
+        <td>{{surveyor.EmailId}}</td>
+        <td>{{surveyor.MobileNo}}</td>
+        <td>{{surveyor.LandLine}}</td>
+        <td>{{surveyor.AreaName}}</td>
+        <td>{{surveyor.CityName}}</td>
+        <td>{{surveyor.Address}}</td>
+        <td>{{surveyor.LicenceNo}}</td>
+        <td><a>Edit</a> | <a>delete</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->
