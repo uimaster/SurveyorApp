@@ -18,3 +18,4 @@ export const USERSLIST = BASEURL + 'CompanyUserList';
 export const SURVEYORLIST = BASEURL + 'MasterSurveyor';
 export const AREALIST = BASEURL + 'MasterArea';
 export const COMPANYLIST = BASEURL + 'CompanyList';
+export const CREATECOMPANY = BASEURL + 'MasterCompany';

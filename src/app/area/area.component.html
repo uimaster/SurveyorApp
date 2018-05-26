@@ -2,7 +2,7 @@
 <sidebar-selector></sidebar-selector>
 <div class="container">
   <h2>Areas</h2>
-
+  <a class="waves-effect waves-light btn" [routerLink] = "['/area/create']" >Create </a>
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
@@ -23,7 +23,7 @@
         <td>{{area.CityName}}</td>
         <td>{{area.AreaName}}</td>
 
-        <td><a>Edit</a> | <a>delete</a></td>
+        <td><a (click)="editArea(area.AreaId)">Edit</a> | <a>delete</a></td>
       </tr>
       </tbody>
     </table>

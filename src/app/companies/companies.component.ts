@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AreaService} from "../area/area.service";
 import {CompaniesService} from "./companies.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-companies',
@@ -11,7 +12,7 @@ import {CompaniesService} from "./companies.service";
 export class CompaniesComponent implements OnInit {
 
   public TotalDada = [];
-  constructor( private companyService: CompaniesService){}
+  constructor( private companyService: CompaniesService,private router:Router){}
 
   getCompanyList() {
     this.companyService.getCompanyList()
@@ -23,6 +24,10 @@ export class CompaniesComponent implements OnInit {
 
   ngOnInit(){
     this.getCompanyList();
+  }
+
+  editCompany(companyId){
+    this.router.navigate(['/companies/create/' + companyId]);
   }
 
 }

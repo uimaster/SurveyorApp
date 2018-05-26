@@ -30,6 +30,11 @@ import { SurveyorComponent } from './surveyor/surveyor.component';
 import { AreaComponent } from './area/area.component';
 import { CompaniesComponent } from './companies/companies.component';
 import {UsersService} from "./users/users.service";
+import { CreateComponent } from './users/create/create.component';
+import {MatSelectModule} from '@angular/material/select';
+import { CreateSurveyorComponent } from './surveyor/create-surveyor/create-surveyor.component';
+import { CreateAreaComponent } from './area/create-area/create-area.component';
+import { CreateCompaniesComponent } from './companies/create-companies/create-companies.component';
 
 
 @NgModule({
@@ -45,15 +50,19 @@ import {UsersService} from "./users/users.service";
     UsersComponent,
     SurveyorComponent,
     AreaComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    CreateComponent,
+    CreateSurveyorComponent,
+    CreateAreaComponent,
+    CreateCompaniesComponent
   ],
   imports: [
     BrowserModule,
     routing,
     ReactiveFormsModule,
     HttpClientModule,
-
     //Material Modules
+    MatSelectModule,
     MatInputModule,
     BrowserAnimationsModule,
     MatButtonModule,

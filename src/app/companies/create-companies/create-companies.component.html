@@ -1,0 +1,55 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Create Company</h2>
+
+  <div class="tabularData card">
+    <div *ngIf="showSuccess">
+      {{successMessage}}
+    </div>
+    <div *ngIf="showError">
+      {{errorMessage}}
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value);">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" >
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <input matInput placeholder="Contact" formControlName="Contact">
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="CompanyNos" formControlName="CompanyNos">
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <mat-select placeholder="CompanyType" formControlName="CompanyTypeId">
+          <mat-option [value]="1">
+            x
+          </mat-option>
+          <mat-option [value]="2">
+            y
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div style="text-align: center; margin-top: 50px;">
+        <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit" [disabled]="myForm.invalid">Next</button>
+        <!-- <button mat-raised-button color="primary">Primary</button> -->
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->

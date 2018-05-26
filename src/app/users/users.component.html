@@ -2,7 +2,7 @@
 <sidebar-selector></sidebar-selector>
 <div class="container">
   <h2>Users</h2>
-
+  <a class="waves-effect waves-light btn" [routerLink] = "['/users/create']" >Create </a>
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
@@ -28,7 +28,7 @@
         <td>{{user.CompanyName}}</td>
         <td>{{user.SurveyorsId}}</td>
         <td>{{user.IsActive}}</td>
-        <td><a>Edit</a> | <a>delete</a></td>
+        <td><a (click)="editUser(user.UserId)">Edit</a> | <a>delete</a></td>
       </tr>
       </tbody>
     </table>

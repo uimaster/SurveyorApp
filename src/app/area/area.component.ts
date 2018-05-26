@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AreaService} from "./area.service";
 import {UsersService} from "../users/users.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-area',
@@ -11,7 +12,7 @@ import {UsersService} from "../users/users.service";
 export class AreaComponent implements OnInit {
 
   public TotalDada = [];
-  constructor( private areaService: AreaService){}
+  constructor( private areaService: AreaService,private router:Router){}
 
   getAreaList() {
     this.areaService.getAreaList()
@@ -23,6 +24,10 @@ export class AreaComponent implements OnInit {
 
   ngOnInit(){
     this.getAreaList();
+  }
+
+  editArea(AreaId){
+    this.router.navigate(['/area/create/' + AreaId]);
   }
 
 }

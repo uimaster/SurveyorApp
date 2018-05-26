@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {SURVEYORLIST} from '../../shared/urls';
+import {SURVEYORLIST, USERSLIST} from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -19,6 +19,20 @@ export class SurveyorService {
         }
       })
       .catch((error) => Observable.throw('server Error.'));
+  }
+
+  addSurveyor(payload: any): Observable<any> {
+    return this.http.post(SURVEYORLIST, payload)
+      .map((res: any) =>  {
+        if (res) {
+          return res;
+        }
+        else{
+          return res;
+        }
+
+      })
+      .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
 
 

@@ -2,6 +2,7 @@
 <sidebar-selector></sidebar-selector>
 <div class="container">
   <h2>Surveyors</h2>
+  <a class="waves-effect waves-light btn" [routerLink] = "['/surveyor/create']" >Create </a>
 
   <div class="tabularData card">
     <table width="100%" class="table">
@@ -30,7 +31,7 @@
         <td>{{surveyor.CityName}}</td>
         <td>{{surveyor.Address}}</td>
         <td>{{surveyor.LicenceNo}}</td>
-        <td><a>Edit</a> | <a>delete</a></td>
+        <td><a (click)="editSurveyor(surveyor.SurveyorsId)">Edit</a> | <a>delete</a></td>
       </tr>
       </tbody>
     </table>
