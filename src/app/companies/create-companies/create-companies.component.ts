@@ -25,8 +25,8 @@ export class CreateCompaniesComponent implements OnInit {
   ngOnInit() {
 
     this.myForm = this.fb.group({
-      name: ['', Validators.required],
-      Contact: [''],
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
+      Contact: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       address: [''],
       CompanyNos: ['na'],
       CompanyTypeId: [1, Validators.required]
@@ -73,8 +73,6 @@ export class CreateCompaniesComponent implements OnInit {
 
     this.companyService.addCompanies(bodyObj).subscribe (
       result => {
-        // Handle result
-        console.log(result);
         this.showSuccess = true;
         this.successMessage = result.Message;
         setTimeout(()=>{    //<<<---    using ()=> syntax
