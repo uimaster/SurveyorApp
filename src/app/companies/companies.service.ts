@@ -7,6 +7,7 @@ import 'rxjs/Rx';
 
 export class CompaniesService {
   constructor(private http: HttpClient){}
+/*get company list*/
 
   getCompanyList(): Observable<any> {
     return this.http.get(COMPANYLIST)
