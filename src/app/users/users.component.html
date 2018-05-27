@@ -1,0 +1,37 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Users</h2>
+  <a class="waves-effect waves-light btn" [routerLink] = "['/users/create']" >Create </a>
+  <div class="tabularData card">
+    <table width="100%" class="table">
+      <thead>
+      <tr>
+        <th>Sn</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>User Type</th>
+        <th>Company Id</th>
+        <th>Company Name</th>
+        <th>Surveyor Id</th>
+        <th>Active</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of TotalDada;let i = index;">
+        <td>{{i}}</td>
+        <td>{{user.Name}}</td>
+        <td>{{user.EmailId}}</td>
+        <td>{{user.UserType}}</td>
+        <td>{{user.CompanyId}}</td>
+        <td>{{user.CompanyName}}</td>
+        <td>{{user.SurveyorsId}}</td>
+        <td>{{user.IsActive}}</td>
+        <td><a (click)="editUser(user.UserId)">Edit</a> | <a>delete</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->

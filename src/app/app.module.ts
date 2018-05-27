@@ -23,11 +23,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule, MatInputModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+import { UsersComponent } from './users/users.component';
+import { SurveyorComponent } from './surveyor/surveyor.component';
+import { AreaComponent } from './area/area.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { UsersService } from "./users/users.service";
+import { CreateComponent } from './users/create/create.component';
+import { CreateSurveyorComponent } from './surveyor/create-surveyor/create-surveyor.component';
+import { CreateAreaComponent } from './area/create-area/create-area.component';
+import { CreateCompaniesComponent } from './companies/create-companies/create-companies.component';
 
 
 @NgModule({
@@ -39,19 +49,27 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     HeaderComponent,
     WizardComponent,
     DashboardTabComponent,
-    ProcessCaseComponent
+    ProcessCaseComponent,
+    UsersComponent,
+    SurveyorComponent,
+    AreaComponent,
+    CompaniesComponent,
+    CreateComponent,
+    CreateSurveyorComponent,
+    CreateAreaComponent,
+    CreateCompaniesComponent
   ],
   imports: [
     BrowserModule,
     routing,
     ReactiveFormsModule,
     HttpClientModule,
-
     //Material Modules
-    MatInputModule,    
+    MatSelectModule,
+    MatInputModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCheckboxModule,    
+    MatCheckboxModule,
     MatCardModule,
     MatFormFieldModule,
     MatSidenavModule,
@@ -60,9 +78,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatSelectModule,
     MatDatepickerModule
   ],
-  providers: [LoginService, TabsService, WizardService],
+  providers: [LoginService, TabsService, WizardService,UsersService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }

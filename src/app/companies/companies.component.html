@@ -1,0 +1,36 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Companies</h2>
+  <a class="waves-effect waves-light btn" [routerLink] = "['/companies/create']" >Create </a>
+  <div class="tabularData card">
+    <table width="100%" class="table">
+      <thead>
+      <tr>
+        <th>Sn</th>
+        <th>Company Id</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Contact</th>
+        <th>Company Nos</th>
+        <th>Company Type</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let company of TotalDada;let i = index;">
+        <td>{{i+1}}</td>
+        <td>{{company.CompanyId}}</td>
+        <td>{{company.Name}}</td>
+        <td>{{company.Address}}</td>
+        <td>{{company.Contact}}</td>
+        <td>{{company.CompanyNos}}</td>
+        <td>{{company.CompanyType}}</td>
+
+        <td><a (click)="editCompany(company.CompanyId)">Edit</a> | <a>delete</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->

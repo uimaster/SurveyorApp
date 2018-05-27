@@ -1,0 +1,84 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="container">
+  <h2>Create Surveyor</h2>
+
+  <div class="tabularData card">
+    <div *ngIf="showSuccess">
+      {{successMessage}}
+    </div>
+    <div *ngIf="showError">
+      {{errorMessage}}
+    </div>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value);">
+      <mat-form-field>
+        <input matInput placeholder="Name" formControlName="name" >
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <input matInput placeholder="email" formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type="password" matInput placeholder="password" formControlName="password">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Mobile" formControlName="mobile">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Landline" formControlName="landline">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Area" formControlName="area">
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="city">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="address">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="licenseNo" formControlName="licenseNo">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="LicenceExpiryDate" formControlName="LicenceExpiryDate">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="expireDate" formControlName="expireDate">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="GPSCordinates" formControlName="GPSCordinates">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="company" formControlName="company">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Active" formControlName="active">
+          <mat-option [value]="true">
+            True
+          </mat-option>
+          <mat-option [value]="false">
+            false
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div style="text-align: center; margin-top: 50px;">
+        <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit" [disabled]="myForm.invalid">Next</button>
+        <!-- <button mat-raised-button color="primary">Primary</button> -->
+      </div>
+    </form>
+
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->
