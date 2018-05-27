@@ -7,6 +7,7 @@ import {
         WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL,
         WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS
         } from '../../shared/urls';
+import { GETCLAIMPOLICYIMG_URL } from '../../shared/img.urls';        
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -157,7 +158,7 @@ export class WizardService{
               }
           })
           .catch((error) => Observable.throw('server Error.'));
-  }
+    }
 
   
 
@@ -172,6 +173,19 @@ export class WizardService{
           }    
         })
         .catch((error) => Observable.throw(error.json() || 'Server error'));
+  }
+
+
+  getDetailImg():Observable<any>{
+    var SurveyorsId= localStorage.getItem('SurveyorsId');
+    const params = new HttpParams().set('SurveyorsId', JSON.parse(SurveyorsId));
+    return this.http.get(GETCLAIMPOLICYIMG_URL, {params})
+        .map((res) =>{
+            if(res){
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
   }
 
 

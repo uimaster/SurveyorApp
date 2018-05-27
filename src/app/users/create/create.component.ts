@@ -91,6 +91,6 @@ export class CreateComponent implements OnInit {
       () => {
         // No errors, route to new page
       }
-    );
-
-}
+    )
+  }
+}  

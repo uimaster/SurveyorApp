@@ -10,4 +10,14 @@ h2{ color: #fff; font-size: 18px;}
     display: inline-block; position: relative; text-align: left;  width: 40%;  margin: 0 45px; margin: 15px 45px;
     label{ margin-right: 10px; width:160px; display: inline-block;  text-align: left; color: #4f4f4f;}
     .mat-radio-button{ color: #e5e9ff; margin-right: 15px;}
+    img{ 
+        height: 100px; width: 100px; background-color: #ddd;
+        display: block;
+        position: absolute;
+        top: -44px;
+        left: 480px;
+        border: 1px solid #eee;
+        padding: 2px;
+        border-radius: 4px;
+    }
 }

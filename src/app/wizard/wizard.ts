@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
 import{ WizardService } from './wizard.service';
+import { POSTCLAIMPOLICYIMG_URL } from '../../shared/img.urls';
 
 @Component({
   selector: 'wizard-selector',
@@ -31,12 +33,17 @@ export class WizardComponent implements OnInit {
   errorMessage:string;
   showError: boolean = false;
   showSuccess: boolean = false;
-  caseId: any = 0;
+  caseId: any = localStorage.getItem('CaseID');
+//   url:any;
+  public files: any[];
 
-  constructor(private _formBuilder: FormBuilder, private wizardService:WizardService ) {
+  
+
+  constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient, ) {
+    this.files = []; 
 
     this.firstFormGroup = new FormGroup({
-        CaseID: new FormControl(''),
+        CaseID: new FormControl(this.caseId),
         CaseNo: new FormControl(''),
         claimNo: new FormControl('', Validators.required),
         policyNo: new FormControl('', Validators.required),
@@ -48,7 +55,7 @@ export class WizardComponent implements OnInit {
     });
 
     this.secondFormGroup = new FormGroup({
-        CaseID: new FormControl(''),
+        CaseID: new FormControl(this.caseId),
         SurveyorsId: new FormControl('',Validators.required),
         SurveyorsName: new FormControl('', Validators.required),
         DateofAllotmentofsurvey: new FormControl('', Validators.required),
@@ -87,7 +94,7 @@ export class WizardComponent implements OnInit {
 
     this.fourthFormGroup = new FormGroup({
         CaseDriverID: new FormControl(''),
-        CaseID: new FormControl('',Validators.required),
+        CaseID: new FormControl(this.caseId,Validators.required),
         Drivername: new FormControl(''),
         DriverLicenseNo: new FormControl(''),
         IssuingAuthority: new FormControl(''),
@@ -101,7 +108,7 @@ export class WizardComponent implements OnInit {
     });
 
     this.fifthFormGroup = new FormGroup({
-        CaseID: new FormControl('',Validators.required),
+        CaseID: new FormControl(this.caseId,Validators.required),
         AccidentDate: new FormControl('' ,Validators.required),
         AccidentPlace: new FormControl('' ,Validators.required),
         AllotementDate: new FormControl('' ,Validators.required),
@@ -112,11 +119,9 @@ export class WizardComponent implements OnInit {
         FIRDDR: new FormControl(''),
         DetailsTPLoss: new FormControl('')
     });
-
-    this.caseId = localStorage.getItem('CaseID');
     this.sixthFormGroup = new FormGroup({
         PoliceFIRID: new FormControl(''),
-        CaseID: new FormControl(this.caseId,Validators.required),
+        CaseID: new FormControl(this.caseId, Validators.required),
         FIRReported: new FormControl(''),
         FIRPoliceStation: new FormControl(''),
         FIRStationDiaryNo: new FormControl(''),
@@ -136,12 +141,12 @@ export class WizardComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.caseId= localStorage.getItem('CaseID');
     this.getClaimDetails();    
     this.getVehicleDetails();
     this.getDriverDetails();
     this.getAccidentDetails();
     this.getFirDetails();
+    this.getImageFromService()
     this.seventhFormGroup = this._formBuilder.group({
         seventhCtrl: ['', Validators.required]
     });
@@ -160,7 +165,6 @@ export class WizardComponent implements OnInit {
 
 
     getClaimDetails(){  
-        this.caseId = localStorage.getItem('CaseID');
         this.wizardService.getClaimDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -231,7 +235,6 @@ export class WizardComponent implements OnInit {
     }
 
     getDriverDetails(){  
-        this.caseId = localStorage.getItem('CaseID');
         this.wizardService.getDriverDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -257,7 +260,6 @@ export class WizardComponent implements OnInit {
     }
 
     getAccidentDetails(){  
-        this.caseId = localStorage.getItem('CaseID');
         this.wizardService.geAccidentDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -281,7 +283,6 @@ export class WizardComponent implements OnInit {
     }
 
     getFirDetails(){  
-        this.caseId = localStorage.getItem('CaseID');
         this.wizardService.geFirDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -465,6 +466,60 @@ export class WizardComponent implements OnInit {
         // }
     }
 
+    onFileChanged(event: any) {
+      this.files = event.target.files;
+      this.onUpload();
+    }
+    
+    onUpload() {
+        const formData = new FormData();
+
+        formData.append('CaseID', this.caseId);
+        for (const file of this.files) {
+            formData.append(name, file, file.name);
+        }
+
+        this.httpClient.post(POSTCLAIMPOLICYIMG_URL, formData).subscribe(
+        res => {
+             console.log(res);
+        });
+
+        this.getImageFromService();
+    }
+
+
+    imageToShow: any;
+    isImageLoading:boolean = false;
+    
+    createImageFromBlob(image: Blob) {
+        let reader = new FileReader();
+        // reader.addEventListener("load", () => {
+        //     this.imageToShow = reader.result;
+        //     console.log("imageToShow", this.imageToShow);
+        // }, false);
+        this.imageToShow = 'http://apiflacors.iflotech.in'+image;
+        // reader.onload = (event) => { // called once readAsDataURL is completed
+        //     this.imageToShow = reader.result;
+        //     console.log(this.imageToShow);
+        // }
+        // if (image) {
+        //     reader.readAsDataURL(image); // read file as data url
+        //     console.log(image);
+        // }
+    }
+
+    getImageFromService() {
+        this.isImageLoading = true;
+        this.wizardService.getDetailImg().subscribe(data => {
+            this.createImageFromBlob(data.Data[0].Image);
+            this.isImageLoading = false;
+        }, error => {
+            this.isImageLoading = false;
+            console.log(error);
+        });
+    }
+
+    
   
 
 }
