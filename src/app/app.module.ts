@@ -20,7 +20,7 @@ import { WizardService } from './wizard/wizard.service';
 
 //Material Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule, MatInputModule } from '@angular/material';
+import {MAT_DATE_LOCALE, MatButtonModule, MatCheckboxModule, MatInputModule} from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -28,7 +28,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import { MatNativeDateModule } from '@angular/material'
 import { UsersComponent } from './users/users.component';
 import { SurveyorComponent } from './surveyor/surveyor.component';
 import { AreaComponent } from './area/area.component';
@@ -76,9 +76,10 @@ import { CreateCompaniesComponent } from './companies/create-companies/create-co
     MatStepperModule,
     MatRadioModule,
     MatSelectModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [LoginService, TabsService, WizardService,UsersService],
+  providers: [LoginService, TabsService, WizardService,UsersService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 

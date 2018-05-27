@@ -29,18 +29,18 @@ export class CreateSurveyorComponent implements OnInit {
 
 
     this.myForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9.@]*')]],
-      mobile: ['', [Validators.required]],
-      landline: [''],
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
+      email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
+      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
+      landline: ['', Validators.pattern(/^[0-9]*$/)],
       area: [1, Validators.required],
       city: [0],
       address: [],
-      licenseNo:[],
-      LicenceExpiryDate:[],
+      licenseNo: [],
+      LicenceExpiryDate: [],
       expireDate: [null],
       GPSCordinates: [null],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
       company: [],
       active: [true, [Validators.required]]
 
@@ -94,8 +94,8 @@ export class CreateSurveyorComponent implements OnInit {
       "CityId":formD.city,
       "Address":formD.address,
       "LicenceNo":formD.licenseNo,
-      "LicenceExpiryDate":formD.LicenceExpiryDate,
-      "ExpireDate" :formD.expireDate,
+      "LicenceExpiryDate":formD.LicenceExpiryDate.toLocaleDateString("en-GB"),
+      "ExpireDate" :formD.expireDate.toLocaleDateString("en-GB"),
       "GPSCordinates":formD.GPSCordinates,
       "COMPANY_ID":formD.company,
       "IsActive":formD.active
@@ -104,7 +104,6 @@ export class CreateSurveyorComponent implements OnInit {
     this.surveyorService.addSurveyor(bodyObj).subscribe (
       result => {
         // Handle result
-        console.log(result);
         this.showSuccess = true;
         this.successMessage = result.Message;
         setTimeout(()=>{    //<<<---    using ()=> syntax

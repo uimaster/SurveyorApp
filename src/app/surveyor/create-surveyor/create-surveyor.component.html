@@ -13,24 +13,35 @@
     <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value);">
       <mat-form-field>
         <input matInput placeholder="Name" formControlName="name" >
+        <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
+        <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
       </mat-form-field>
 
 
 
       <mat-form-field>
         <input matInput placeholder="email" formControlName="email">
+        <mat-error *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched">Email is required</mat-error>
+        <mat-error *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched">Please Enter valid email</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input type="password" matInput placeholder="password" formControlName="password">
+        <mat-error *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched">Password is required</mat-error>
+        <mat-error *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched">No Whitespace please</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="Mobile" formControlName="mobile">
+        <mat-error *ngIf="myForm.controls['mobile'].hasError('required') && myForm.controls['mobile'].touched">Mobile is required</mat-error>
+        <mat-error *ngIf="myForm.controls['mobile'].hasError('pattern') && myForm.controls['mobile'].touched">Only Digits allowed</mat-error>
+        <mat-error *ngIf="myForm.controls['mobile'].hasError('minlength') && myForm.controls['mobile'].touched">Should be minimum 10 digits</mat-error>
+        <mat-error *ngIf="myForm.controls['mobile'].hasError('maxlength') && myForm.controls['mobile'].touched">Should be maximum 10 digits</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="Landline" formControlName="landline">
+        <mat-error *ngIf="myForm.controls['landline'].hasError('pattern') && myForm.controls['landline'].touched">Only Digits allowed</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -48,10 +59,17 @@
         <input matInput placeholder="licenseNo" formControlName="licenseNo">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="LicenceExpiryDate" formControlName="LicenceExpiryDate">
+        <input matInput placeholder="LicenceExpiryDate" formControlName="LicenceExpiryDate" [matDatepicker]="picker">
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="expireDate" formControlName="expireDate">
+        <input matInput placeholder="expireDate" formControlName="expireDate" [matDatepicker]="picker2">
+
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+
       </mat-form-field>
 
       <mat-form-field>
@@ -71,6 +89,7 @@
             false
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="myForm.controls['active'].hasError('required') && myForm.controls['active'].touched">Active is required</mat-error>
       </mat-form-field>
 
       <div style="text-align: center; margin-top: 50px;">

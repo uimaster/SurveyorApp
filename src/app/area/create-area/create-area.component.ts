@@ -25,7 +25,7 @@ export class CreateAreaComponent implements OnInit {
   ngOnInit() {
 
     this.myForm = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]]
 
     });
     this.sub = this.route.params.subscribe((params: Params) => {
@@ -60,7 +60,6 @@ export class CreateAreaComponent implements OnInit {
     this.areaService.addArea(bodyObj).subscribe (
       result => {
         // Handle result
-        console.log(result);
         this.showSuccess = true;
         this.successMessage = result.Message;
         setTimeout(()=>{    //<<<---    using ()=> syntax
