@@ -5,3 +5,9 @@ h2{ color: #fff; font-size: 18px;}
 .mat-step-header .mat-step-label, .mat-step-header .mat-step-optional{ color: #6c6d6e!important; }
 .mat-step-icon, .mat-step-icon-not-touched{ height: 28px; width: 28px;}
 .mat-form-field { width: 40%;  margin: 0 45px;} 
+
+.mat-form-checkfield{
+    display: inline-block; position: relative; text-align: left;  width: 40%;  margin: 0 45px; margin: 15px 45px;
+    label{ margin-right: 10px; width:160px; display: inline-block;  text-align: left; color: #4f4f4f;}
+    .mat-radio-button{ color: #e5e9ff; margin-right: 15px;}
+}

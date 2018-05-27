@@ -4,7 +4,8 @@ import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 import { LoginRequest, LoginResponse} from '../login/login.model';
 import { 
         WIZARD_GETCLAIMURL, WIZARD_POSTCLAIMURL, WIZARD_POSTSURVEYORURL, WIZARD_GETVEHICLEDETAILSURL, WIZARD_POSTVEHICLEDETAILSURL,
-        WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL
+        WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL,
+        WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS
         } from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -143,6 +144,35 @@ export class WizardService{
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
+
+    // ============ Driver Details ============ // 
+
+    geFirDetails():Observable<any>{
+      var CaseID= localStorage.getItem('CaseID');
+      const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
+      return this.http.get(WIZARD_GETFIRDETAILS, {params})
+          .map((res) =>{
+              if(res){
+                  return res;
+              }
+          })
+          .catch((error) => Observable.throw('server Error.'));
+  }
+
+  
+
+  postFirDetails(payload: any): Observable<any> { 
+      return this.http.post(WIZARD_POSTFIRDETAILS, payload)        
+        .map((res: any) =>  {
+          if (res) {          
+            return res;
+          } 
+          else{          
+            return res;
+          }    
+        })
+        .catch((error) => Observable.throw(error.json() || 'Server error'));
+  }
 
 
 }

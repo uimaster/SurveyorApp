@@ -13,3 +13,5 @@ export const WIZARD_GETDRIVERDETAILSURL = BASEURL + 'CaseDriverData';
 export const WIZARD_POSTDRIVERDETAILSURL = BASEURL + 'UpdateDriverDetails';
 export const WIZARD_GETACCIDENTDETAILSURL = BASEURL + 'SurveyAccidentDetails';
 export const WIZARD_POSTACCIDENTDETAILSURL = BASEURL + 'SurveyAccidentDetails';
+export const WIZARD_GETFIRDETAILS = BASEURL + 'ShowFirData?';
+export const WIZARD_POSTFIRDETAILS = BASEURL + 'UpdateFIRDetails';

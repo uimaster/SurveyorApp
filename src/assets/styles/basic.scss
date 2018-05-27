@@ -68,3 +68,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   padding-top: 85px;
   padding-left: 210px;    padding-right: 20px;
 }  
+
+.alert{
+  display: block;  font-size: 14px; font-weight: 600; padding: 15px; margin: 10px auto; width: 50%;
+  &.success{border: 1px solid #52ba70; background-color: #bce9c9;  border-radius: 4px; color: #247624; }
+  &.error{ border: 1px solid #fa4040; background-color: #ffe6da;  border-radius: 4px;  color: #ff5300;}
+}

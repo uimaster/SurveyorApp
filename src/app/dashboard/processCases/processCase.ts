@@ -19,7 +19,6 @@ export class ProcessCaseComponent implements OnInit{
     .subscribe(res =>{
       if(res && res.Status == 200){
         this.UnderProcessCases = res.Data;
-        console.log('process:', this.UnderProcessCases);
       }
     })
   }

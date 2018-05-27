@@ -25,6 +25,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -52,7 +55,10 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatCardModule,
     MatFormFieldModule,
     MatSidenavModule,
-    MatStepperModule
+    MatStepperModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatDatepickerModule
   ],
   providers: [LoginService, TabsService, WizardService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

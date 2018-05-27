@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
         .subscribe(res =>{
           if(res && res.Status == 200){
             this.loginData = res.Data;
-            console.log(this.loginData);
             this.isLoggedIn = true;
             localStorage.setItem('isLoggedIn', JSON.stringify(this.isLoggedIn));
             localStorage.setItem('SurveyorsId', JSON.stringify(this.loginData[0].SurveyorsId));

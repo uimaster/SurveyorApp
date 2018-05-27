@@ -17,10 +17,8 @@ export class DashboardComponent implements OnInit{
   getDashboardList(){
     this.tabsServices.getDashboardList()
     .subscribe(res =>{
-      console.log(res);
       if(res.Status = 200){
         this.TotalDada = res.Data;
-        console.log('dashboardList:', this.TotalDada);
       }
     })
   }
