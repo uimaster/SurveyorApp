@@ -24,7 +24,9 @@ export class DashboardComponent implements OnInit{
   }
 
 
-  ngOnInit(){
-    this.getDashboardList();
+  ngOnInit(){    
+    setTimeout(() => {
+      this.getDashboardList();
+    }, 100);
   }
 }

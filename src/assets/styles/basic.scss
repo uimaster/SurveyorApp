@@ -1,6 +1,6 @@
 // @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 body{
-    background: url('../images/sky-bg.jpg') center no-repeat;  
+    background: #405c9b url('../images/sky-bg.jpg') center top repeat;  
     font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%; min-height: 90vh; padding: 0; margin: 0;
 } 
 .mat-form-field-infix{ border-top:inherit;}
@@ -73,4 +73,37 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   display: block;  font-size: 14px; font-weight: 600; padding: 15px; margin: 10px auto; width: 50%;
   &.success{border: 1px solid #52ba70; background-color: #bce9c9;  border-radius: 4px; color: #247624; }
   &.error{ border: 1px solid #fa4040; background-color: #ffe6da;  border-radius: 4px;  color: #ff5300;}
+}
+
+.custom-file-input {
+  color: transparent;
+  width: 108px;
+}
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-input::before {
+  content: 'Browse Image';
+  color: #3f51b5;
+  display: block;
+  background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #467dbe;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active {
+  outline: 0;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); 
 }

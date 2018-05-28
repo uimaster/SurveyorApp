@@ -21,3 +21,6 @@ export const SURVEYORLIST = BASEURL + 'MasterSurveyor';
 export const AREALIST = BASEURL + 'MasterArea';
 export const COMPANYLIST = BASEURL + 'CompanyList';
 export const CREATECOMPANY = BASEURL + 'MasterCompany';
+
+export const GETSUMMARYREPORT_URL = BASEURL + 'CaseReportSumary';
+

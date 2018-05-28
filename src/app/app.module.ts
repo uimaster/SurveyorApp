@@ -29,6 +29,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material'
+import { MatGridListModule } from '@angular/material/grid-list';
+
 import { UsersComponent } from './users/users.component';
 import { SurveyorComponent } from './surveyor/surveyor.component';
 import { AreaComponent } from './area/area.component';
@@ -77,7 +79,8 @@ import { CreateCompaniesComponent } from './companies/create-companies/create-co
     MatRadioModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule
   ],
   providers: [LoginService, TabsService, WizardService,UsersService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
