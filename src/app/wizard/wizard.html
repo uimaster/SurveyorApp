@@ -183,21 +183,21 @@
             <label>Injury to Driver: </label>
             <mat-radio-group formControlName="InjuryToDriver" >
               <mat-radio-button value="yes">Yes</mat-radio-button>
-              <mat-radio-button value="no">No</mat-radio-button>
+              <mat-radio-button value="no" checked>No</mat-radio-button>
             </mat-radio-group>
           </div>
           <div class="mat-form-checkfield">
             <label>Injury to Cleaner: </label>
             <mat-radio-group formControlName="InjuryToCleaner">
                 <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
+                <mat-radio-button value="no" checked>No</mat-radio-button>
             </mat-radio-group>
           </div>
           <div class="mat-form-checkfield">
             <label>Injury to Other Occupants: </label>
             <mat-radio-group formControlName="InjuryToOtherOccupants">
                 <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
+                <mat-radio-button value="no" checked>No</mat-radio-button>
             </mat-radio-group>
           </div>
           <mat-form-field>
@@ -207,7 +207,7 @@
             <label>Accident Third Party Property Damages: </label>
             <mat-radio-group formControlName="ThirdPartyPropertyDamages">
                 <mat-radio-button value="yes">Yes</mat-radio-button>
-                <mat-radio-button value="no">No</mat-radio-button>
+                <mat-radio-button value="no" checked>No</mat-radio-button>
             </mat-radio-group>
           </div>
 
@@ -274,20 +274,70 @@
       </mat-step>
 
       <mat-step [stepControl]="eightthFormGroup">
-        <form [formGroup]="eightthFormGroup">
-          <ng-template matStepLabel>Damage Details</ng-template>
-          <!-- <mat-form-field>
-            <input matInput placeholder="Address" formControlName="eightthCtrl" required>
-          </mat-form-field> -->
-          <div style="text-align: center; margin-top: 50px;">
-              <h4>Under Process !</h4>
-            </div><br /><br />
-          <div style="text-align: center; margin-top: 50px;">
-            <button mat-raised-button  matStepperNext style="margin-right: 10px;">Skip</button>
-            <button mat-raised-button color="primary">Save</button>
-          </div>
-        </form>
-      </mat-step>
+          <form [formGroup]="eightthFormGroup">
+            <ng-template matStepLabel>Damage Details</ng-template>
+            <h4>Damage Details <button mat-raised-button color="primary" (click)="getDamagePartList()" style="float: right;">Add Part</button></h4>
+            <div style="max-height: 400px; overflow: auto;"  *ngIf="damageDetailsData.length > 0">                   
+                <mat-list role="list"  *ngFor="let data of damageDetailsData">
+                  <mat-list-item role="listitem" >
+                    <p><b>PartName:</b>data.PartName</p>
+                    <p><b>PartStatus:</b>data.PartStatus</p>
+                    <p><b>PartRemark:</b>data.PartRemark</p>
+                  </mat-list-item>               
+                </mat-list> 
+            </div> 
+            <p  *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p> 
+            <div style="max-height: 450px; overflow: auto;"  *ngIf="damagePartList.length > 0">
+                
+                <mat-accordion class="example-headers-align">
+                  <mat-expansion-panel  hideToggle="true"  *ngFor="let item of damagePartList; let i = index;">
+                    
+                    <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
+                      <mat-panel-title>
+                         Part Name: &nbsp; {{item.PartName}}
+                      </mat-panel-title>
+                      <!-- <mat-panel-description>
+                        Type the country name
+                      </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+                    
+                   
+                      <input  formControlName="CaseID"  value="{{item.CaseID}}" style="display: none">
+                    
+                      <input  formControlName="PartType" value="{{item.PartType}}" style="display: none">
+                   
+                      <input  formControlName="PartID" value="{{item.PartID}}" style="display: none">
+                    
+                      <input  formControlName="PartName" value="{{item.PartName}}" style="display: none">
+                    
+                      <input  formControlName="PartStatusID" value="{{item.PartStatusID}}" style="display: none">
+                    
+    
+    
+                    <mat-radio-group style="width: 40%; margin: 0 45px;" formControlName="PartStatus">
+                      <mat-radio-button value="1" checked>Safe</mat-radio-button>
+                      <mat-radio-button value="2">Scratched</mat-radio-button>
+                      <mat-radio-button value="3">Dented</mat-radio-button>
+                      <mat-radio-button value="4">Broken</mat-radio-button>
+                    </mat-radio-group><br/><br/>
+                    <mat-form-field>
+                      <textarea matInput placeholder="Part Remark" formControlName="PartRemark"></textarea>
+                    </mat-form-field>
+                
+                    <mat-action-row >
+                      <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value)">Save</button>
+                    </mat-action-row>
+                    
+                  </mat-expansion-panel>
+                </mat-accordion>
+              
+            </div>
+    
+            <div style="text-align: center; margin-top: 50px;">
+              <button mat-raised-button  matStepperNext style="margin-right: 10px;">Skip</button>
+            </div>
+          </form>
+        </mat-step>
 
       <mat-step [stepControl]="ninethFormGroup">
         <form [formGroup]="ninethFormGroup">
@@ -297,7 +347,7 @@
             <h5>Claim Form</h5>  
             <mat-radio-group formControlName="Claimform">
               <mat-radio-button value="Yes">Yes</mat-radio-button>
-              <mat-radio-button value="No">No</mat-radio-button>
+              <mat-radio-button value="No" checked>No</mat-radio-button>
             </mat-radio-group>          
             <img  alt="" [src]="imageToShow10" />
             <input type="file" name="" id="" (change)="onFileChanged10($event)" class="custom-file-input"  />
@@ -306,7 +356,7 @@
             <h5>Survey Fees Bill</h5>
             <mat-radio-group formControlName="Surveyfeesbil">
                 <mat-radio-button value="Yes">Yes</mat-radio-button>
-                <mat-radio-button value="No">No</mat-radio-button>
+                <mat-radio-button value="No" checked>No</mat-radio-button>
               </mat-radio-group>
             <img  alt="" [src]="imageToShow11" />
             <input type="file" name="" id="" (change)="onFileChanged11($event)" class="custom-file-input"  />
@@ -315,7 +365,7 @@
             <h5>KYC Doc Identity</h5>
             <mat-radio-group formControlName="kycdocidentity">
                 <mat-radio-button value="Yes">Yes</mat-radio-button>
-              <mat-radio-button value="No">No</mat-radio-button>
+              <mat-radio-button value="No" checked>No</mat-radio-button>
               </mat-radio-group>
             <img  alt="" [src]="imageToShow12" />
             <input type="file" name="" id="" (change)="onFileChanged12($event)" class="custom-file-input"  />
@@ -324,7 +374,7 @@
               <h5>KYC Address </h5>
               <mat-radio-group formControlName="kycdocaddress">
                   <mat-radio-button value="Yes">Yes</mat-radio-button>
-              <mat-radio-button value="No">No</mat-radio-button>
+              <mat-radio-button value="No" checked>No</mat-radio-button>
                 </mat-radio-group>
               <img  alt="" [src]="imageToShow9" />
               <input type="file" name="" id="" (change)="onFileChanged9($event)" class="custom-file-input"  />
@@ -333,7 +383,7 @@
               <h5>Driving License</h5>
               <mat-radio-group formControlName="Drivinglisence">
                   <mat-radio-button value="Yes">Yes</mat-radio-button>
-              <mat-radio-button value="No">No</mat-radio-button>
+              <mat-radio-button value="No" checked>No</mat-radio-button>
                 </mat-radio-group>
               <img  alt="" src='../../assets/images/no-photo.png' />
               <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
@@ -342,7 +392,7 @@
               <h5>RC Book</h5>
               <mat-radio-group formControlName="Rcbook">
                   <mat-radio-button value="Yes">Yes</mat-radio-button>
-                  <mat-radio-button value="No">No</mat-radio-button>
+                  <mat-radio-button value="No" checked>No</mat-radio-button>
                 </mat-radio-group>
               <img  alt="" src='../../assets/images/no-photo.png' />
             <!-- <input type="file" name="" id="" (change)="onFileChanged6($event)" class="custom-file-input"  /> -->
@@ -351,7 +401,7 @@
               <h5>Crash Photo</h5>
               <mat-radio-group formControlName="Crashphotos">
                   <mat-radio-button value="Yes">Yes</mat-radio-button>
-              <mat-radio-button value="No">No</mat-radio-button>
+              <mat-radio-button value="No" checked>No</mat-radio-button>
                 </mat-radio-group>
               <img  alt="" src='../../assets/images/no-photo.png' />
             <!-- <input type="file" name="" id="" (change)="onFileChanged7($event)" class="custom-file-input"  /> -->
@@ -371,10 +421,13 @@
             <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input"  />
           </div>
           <div  style="text-align: center; margin-top: 50px;">
-              <button mat-raised-button  color="primary" >Done</button>
+              <button mat-raised-button  color="primary" (click)="openDialog()">Done</button>
           </div>
         </form>
       </mat-step>
 
   </mat-horizontal-stepper>
 </div>  
+
+
+

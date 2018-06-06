@@ -1,7 +1,15 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-<h2>Dashboard</h2>
+       
+<h2 *ngIf="showTittle">Dashboard</h2>
+                
+<div class="downloadCenter" *ngIf="showDownload">
+    <h2 style="float: left;">Dashboard</h2>
+    <a mat-raised-button color="ascent" target="_blank" href="{{downloadUrl}}">DownLoad Report</a>
+    <button mat-raised-button color="primary" (click)="generateSpotSurvey();">Generate Report</button>
+</div>
+
 <tabs-selector></tabs-selector>
 <div class="tabularData card">
     <table width="100%" class="table">

@@ -2,28 +2,28 @@
 <div class="sidebar">
     <ul>
         <li>
-            <a routerLink="/dashboard"><i class="material-icons">view_list</i> Dashboard</a>
+            <a routerLink="/dashboard"><i class="material-icons">assignment</i> Dashboard</a>
         </li>
 
-      <li>
-        <a routerLink="/users"><i class="material-icons">view_list</i> Users</a>
+      <li *ngIf="adminMenus">
+        <a routerLink="/users"><i class="material-icons">person</i> Users</a>
       </li>
 
-      <li>
-        <a routerLink="/surveyor"><i class="material-icons">view_list</i> Surveyor</a>
-      </li>
-
-
-      <li>
-        <a routerLink="/area"><i class="material-icons">view_list</i> Area</a>
+      <li *ngIf="adminMenus">
+        <a routerLink="/surveyor"><i class="material-icons">how_to_reg</i> Surveyor</a>
       </li>
 
 
-      <li>
-        <a routerLink="/companies"><i class="material-icons">view_list</i> Companies</a>
+      <li *ngIf="adminMenus">
+        <a routerLink="/area"><i class="material-icons">place</i> Area</a>
+      </li>
+
+
+      <li *ngIf="adminMenus">
+        <a routerLink="/companies"><i class="material-icons">business</i> Companies</a>
       </li>
       <li>
-            <a href="#"><i class="material-icons">settings_power</i> Logout</a>
+            <a href="#" (click)="logOut();"><i class="material-icons">power_settings_new</i> Logout</a>
         </li>
     </ul>
 </div>

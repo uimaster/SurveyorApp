@@ -1,13 +1,13 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-  <h2>Companies</h2>
-  <a class="waves-effect waves-light btn" [routerLink] = "['/companies/create']" >Create </a>
+  <h2>Companies <a mat-raised-button color="accent" [routerLink] = "['/companies/create']" style="float:right">Create Company </a></h2>
+  
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
       <tr>
-        <th>Sn</th>
+        <!-- <th>Sn</th> -->
         <th>Company Id</th>
         <th>Name</th>
         <th>Address</th>
@@ -19,7 +19,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let company of TotalDada;let i = index;">
-        <td>{{i+1}}</td>
+        <!-- <td>{{i+1}}</td> -->
         <td>{{company.CompanyId}}</td>
         <td>{{company.Name}}</td>
         <td>{{company.Address}}</td>
@@ -27,7 +27,12 @@
         <td>{{company.CompanyNos}}</td>
         <td>{{company.CompanyType}}</td>
 
-        <td><a (click)="editCompany(company.CompanyId)">Edit</a> | <a>delete</a></td>
+        <td>
+            <mat-chip-list>           
+              <mat-chip color="accent" selected="true" (click)="editCompany(company.CompanyId)">Edit</mat-chip>
+              <mat-chip color="warn" selected="true">Delete</mat-chip>
+            </mat-chip-list>
+        </td>
       </tr>
       </tbody>
     </table>

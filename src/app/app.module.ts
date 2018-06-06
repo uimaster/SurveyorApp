@@ -9,7 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard';
 import { routing } from './app.route';
 import { SidebarComponent} from './sidebar/sidebar';
 import { HeaderComponent } from './header/header';
-import { WizardComponent } from './wizard/wizard';
+import { WizardComponent, DialogOverviewExampleDialog } from './wizard/wizard';
 import { DashboardTabComponent } from './dashboard/dashboardTabs/tabs';
 import { ProcessCaseComponent } from './dashboard/processCases/processCase';
 
@@ -30,6 +30,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material'
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatListModule} from '@angular/material/list';
+import {MatExpansionModule} from '@angular/material/expansion';
+
+
 
 import { UsersComponent } from './users/users.component';
 import { SurveyorComponent } from './surveyor/surveyor.component';
@@ -40,6 +46,8 @@ import { CreateComponent } from './users/create/create.component';
 import { CreateSurveyorComponent } from './surveyor/create-surveyor/create-surveyor.component';
 import { CreateAreaComponent } from './area/create-area/create-area.component';
 import { CreateCompaniesComponent } from './companies/create-companies/create-companies.component';
+import { PreWizardComponent } from './wizardPre/wizard';
+import { PreWizardService } from './wizardPre/wizard.service';
 
 
 @NgModule({
@@ -59,7 +67,9 @@ import { CreateCompaniesComponent } from './companies/create-companies/create-co
     CreateComponent,
     CreateSurveyorComponent,
     CreateAreaComponent,
-    CreateCompaniesComponent
+    CreateCompaniesComponent,
+    DialogOverviewExampleDialog,
+    PreWizardComponent
   ],
   imports: [
     BrowserModule,
@@ -80,9 +90,14 @@ import { CreateCompaniesComponent } from './companies/create-companies/create-co
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatGridListModule
+    MatGridListModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatListModule,
+    MatExpansionModule
   ],
-  providers: [LoginService, TabsService, WizardService,UsersService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  entryComponents: [DialogOverviewExampleDialog],
+  providers: [LoginService, TabsService, WizardService,UsersService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 

@@ -5,7 +5,8 @@ import { LoginRequest, LoginResponse} from '../login/login.model';
 import { 
         WIZARD_GETCLAIMURL, WIZARD_POSTCLAIMURL, WIZARD_POSTSURVEYORURL, WIZARD_GETVEHICLEDETAILSURL, WIZARD_POSTVEHICLEDETAILSURL,
         WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL,
-        WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS, GETSUMMARYREPORT_URL
+        WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS, GETSUMMARYREPORT_URL, DAMAGEDETAILS_URL, GENERATESPOTREPORT, DOWNLOADSPOTREPORT,
+        WIZARD_DAMAGEDETAILSURL_PRE, WIZARD_DAMAGEPARTSLIST_PRE
         } from '../../shared/urls';
 import * as IMAGEURL from '../../shared/img.urls';        
 import { Observable } from 'rxjs/Observable';
@@ -117,7 +118,7 @@ export class WizardService{
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Driver Details ============ // 
+    // ============ Accident Details ============ // 
 
     geAccidentDetails():Observable<any>{
         var SurveyorsId= localStorage.getItem('SurveyorsId');
@@ -146,7 +147,7 @@ export class WizardService{
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Driver Details ============ // 
+    // ============ FIR Details ============ // 
 
     geFirDetails():Observable<any>{
       var CaseID= localStorage.getItem('CaseID');
@@ -174,6 +175,45 @@ export class WizardService{
         })
         .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
+
+  // ============ Damage Details ============ // 
+
+  GetDamageDetails():Observable<any>{
+    var CaseID= localStorage.getItem('CaseID');
+    const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
+    return this.http.get(WIZARD_DAMAGEDETAILSURL_PRE, {params})
+        .map((res) =>{
+            if(res){
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+}
+
+GetDamagePartList():Observable<any>{
+    var CaseID= localStorage.getItem('CaseID');
+    const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
+    return this.http.get(WIZARD_DAMAGEPARTSLIST_PRE, {params})
+        .map((res) =>{
+            if(res){
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+}
+
+PostDamageDetails(payload: any): Observable<any> { 
+    return this.http.post(WIZARD_DAMAGEDETAILSURL_PRE, payload)        
+      .map((res: any) =>  {
+        if (res) {          
+          return res;
+        } 
+        else{          
+          return res;
+        }    
+      })
+      .catch((error) => Observable.throw(error.json() || 'Server error'));
+}
 
   // GET CLAIM IMAGE //
   getDetailImg():Observable<any>{
@@ -370,5 +410,17 @@ export class WizardService{
         .catch((error) => Observable.throw('server Error.'));
   }
 
+  // GET generateSpotSurvey //
+  generateSpotSurvey():Observable<any>{
+    var CaseID= localStorage.getItem('CaseID');
+    const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
+    return this.http.get(GENERATESPOTREPORT, {params})
+        .map((res) =>{
+            if(res){
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
 
 }

@@ -4,13 +4,13 @@
   <h2>Create Company</h2>
 
   <div class="tabularData card">
-    <div *ngIf="showSuccess">
+    <div *ngIf="showSuccess" class="alert success">
       {{successMessage}}
     </div>
-    <div *ngIf="showError">
+    <div *ngIf="showError" class="alert error">
       {{errorMessage}}
     </div>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value);">
+    <form [formGroup]="myForm">
       <mat-form-field>
         <input matInput placeholder="Name" formControlName="name" >
         <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
@@ -50,9 +50,11 @@
         <mat-error *ngIf="myForm.controls['name'].hasError('required')">Company Type is required</mat-error>
       </mat-form-field>
 
-      <div style="text-align: center; margin-top: 50px;">
-        <button mat-raised-button color="primary" style="margin-left: 10px;" type="submit" [disabled]="myForm.invalid">Next</button>
-        <!-- <button mat-raised-button color="primary">Primary</button> -->
+     
+
+      <div style="text-align: center; margin-top: 50px; width: 100%; display: inline-block;">
+          <button mat-raised-button style="color: #333;" type="button" >Cancel</button>
+          <button mat-raised-button color="primary" (click)="onSubmit(myForm.value);" mat-button [disabled]="myForm.invalid">Submit</button>
       </div>
     </form>
 

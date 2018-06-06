@@ -1,13 +1,12 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-  <h2>Users</h2>
-  <a class="waves-effect waves-light btn" [routerLink] = "['/users/create']" >Create </a>
+  <h2>Users List <a  mat-raised-button color="accent" [routerLink] = "['/users/create']" style="float:right">Create User</a></h2>
+  
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
       <tr>
-        <th>Sn</th>
         <th>Name</th>
         <th>Email</th>
         <th>User Type</th>
@@ -20,7 +19,6 @@
       </thead>
       <tbody>
       <tr *ngFor="let user of TotalDada;let i = index;">
-        <td>{{i}}</td>
         <td>{{user.Name}}</td>
         <td>{{user.EmailId}}</td>
         <td>{{user.UserType}}</td>
@@ -28,7 +26,12 @@
         <td>{{user.CompanyName}}</td>
         <td>{{user.SurveyorsId}}</td>
         <td>{{user.IsActive}}</td>
-        <td><a (click)="editUser(user.UserId)">Edit</a> | <a>delete</a></td>
+        <td>
+          <mat-chip-list>           
+            <mat-chip color="accent" selected="true" (click)="editUser(user.UserId)">Edit</mat-chip>
+            <mat-chip color="warn" selected="true">Delete</mat-chip>
+          </mat-chip-list>
+        </td>
       </tr>
       </tbody>
     </table>

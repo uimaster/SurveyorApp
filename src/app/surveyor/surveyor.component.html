@@ -1,14 +1,14 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-  <h2>Surveyors</h2>
-  <a class="waves-effect waves-light btn" [routerLink] = "['/surveyor/create']" >Create </a>
+  <h2>Surveyors List <a mat-raised-button color="accent" [routerLink] = "['/surveyor/create']" style="float:right">Create Surveyor</a></h2>
+  
 
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
       <tr>
-        <th>Sn</th>
+        <!-- <th>Sn</th> -->
         <th>Name</th>
         <th>Email</th>
         <th>Mobile</th>
@@ -22,7 +22,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let surveyor of TotalDada;let i = index;">
-        <td>{{i}}</td>
+        <!-- <td>{{i}}</td> -->
         <td>{{surveyor.Name}}</td>
         <td>{{surveyor.EmailId}}</td>
         <td>{{surveyor.MobileNo}}</td>
@@ -31,7 +31,12 @@
         <td>{{surveyor.CityName}}</td>
         <td>{{surveyor.Address}}</td>
         <td>{{surveyor.LicenceNo}}</td>
-        <td><a (click)="editSurveyor(surveyor.SurveyorsId)">Edit</a> | <a>delete</a></td>
+        <td>
+          <mat-chip-list>           
+            <mat-chip color="accent" selected="true" (click)="editSurveyor(surveyor.SurveyorsId)">Edit</mat-chip>
+            <mat-chip color="warn" selected="true">Delete</mat-chip>
+          </mat-chip-list>
+        </td>
       </tr>
       </tbody>
     </table>

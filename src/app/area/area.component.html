@@ -1,13 +1,13 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-  <h2>Areas</h2>
-  <a class="waves-effect waves-light btn" [routerLink] = "['/area/create']" >Create </a>
+  <h2>Area List <a mat-raised-button color="accent" [routerLink] = "['/area/create']" style="float:right">Create Area</a></h2>
+  
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
       <tr>
-        <th>Sn</th>
+        <!-- <th>Sn</th> -->
         <th>Area Id</th>
         <th>City Id</th>
         <th>City Name</th>
@@ -17,13 +17,18 @@
       </thead>
       <tbody>
       <tr *ngFor="let area of TotalDada;let i = index;">
-        <td>{{i+1}}</td>
+        <!-- <td>{{i+1}}</td> -->
         <td>{{area.AreaId}}</td>
         <td>{{area.CityId}}</td>
         <td>{{area.CityName}}</td>
         <td>{{area.AreaName}}</td>
 
-        <td><a (click)="editArea(area.AreaId)">Edit</a> | <a>delete</a></td>
+        <td>
+            <mat-chip-list>           
+              <mat-chip color="accent" selected="true" (click)="editArea(area.AreaId)">Edit</mat-chip>
+              <mat-chip color="warn" selected="true">Delete</mat-chip>
+            </mat-chip-list>
+        </td>
       </tr>
       </tbody>
     </table>

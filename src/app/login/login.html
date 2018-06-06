@@ -7,8 +7,8 @@
        
         <form [formGroup]="loginForm" (ngSubmit)="loginSubmit(loginForm.value)">
             <div class="example-container">
-                <div class="alert alert-success" *ngIf="showSuccessMessage">{{loginSuccessMessage}}</div>
-                <div class="alert alert-danger" *ngIf="showErrorMessage">{{loginfailedMessage}}</div><br/><br/>
+                <div class="alert success" *ngIf="showSuccessMessage">You have Login {{loginSuccessMessage}}fully.</div>
+                <div class="alert error" *ngIf="showErrorMessage">{{loginfailedMessage}}, Please try again.</div><br/><br/>
                 <mat-form-field>
                     <input matInput placeholder="Username" formControlName="UserName">
                     <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserName'].hasError('required') && loginForm.controls['UserName'].touched">Email is required !</div>
@@ -21,7 +21,7 @@
                 </mat-form-field>
                 
                 <p>               
-                <button mat-raised-button color="secondary" style="float: left; width: 45%;" >Signup</button>
+                <button mat-raised-button color="secondary" style="float: left; width: 45%;" >Cancel</button>
                 <button mat-raised-button color="primary" style="float: right; width: 45%" type="submit" >Login</button>
                 </p><br/><br/>
                 <p class="forget">                

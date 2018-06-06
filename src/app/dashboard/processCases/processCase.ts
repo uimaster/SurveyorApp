@@ -19,13 +19,18 @@ export class ProcessCaseComponent implements OnInit{
     .subscribe(res =>{
       if(res && res.Status == 200){
         this.UnderProcessCases = res.Data;
+        localStorage.setItem('CaseID', this.UnderProcessCases[0].CaseID);
       }
     })
   }
 
   getClaimDetails(id){
-    localStorage.setItem('CaseID', JSON.stringify(id));
-    this.router.navigate(['wizard']);
+    if(id === 1){
+      this.router.navigate(['wizard']);
+    }
+    else{
+      this.router.navigate(['pre-wizard']);
+    }
   }
 
   ngOnInit(){

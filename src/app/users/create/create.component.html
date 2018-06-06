@@ -4,23 +4,22 @@
   <h2>Create Users</h2>
 
   <div class="tabularData card">
-<div *ngIf="showSuccess">
-  {{successMessage}}
-</div>
-<div *ngIf="showError">
-  {{errorMessage}}
-</div>
-    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+    
+    <div *ngIf="showSuccess" class="alert success">
+      {{successMessage}}
+    </div>
+    <div *ngIf="showError" class="alert error">
+      {{errorMessage}}
+    </div>
+    <form [formGroup]="myForm">
 
-      <div class="form-group">
-        <mat-form-field class="example-full-width">
-          <input type="text" matInput placeholder="Name" formControlName="name">
-          <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
-          <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
+      <mat-form-field>
 
-        </mat-form-field>
+        <input type="text" matInput placeholder="Name" formControlName="name">
+        <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
+        <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
 
-      </div>
+      </mat-form-field>
 
       <div class="form-group">
         <mat-form-field class="example-full-width">
@@ -42,21 +41,21 @@
       </div>
 
       <div class="form-group">
-      <mat-form-field>
-        <mat-select placeholder="User Type" formControlName="userType">
-          <mat-option [value]="1">
-            Admin
-          </mat-option>
-          <mat-option [value]="2">
-            Company User
-          </mat-option>
+        <mat-form-field>
+          <mat-select placeholder="User Type" formControlName="userType">
+            <mat-option [value]="1">
+              Admin
+            </mat-option>
+            <mat-option [value]="2">
+              Company User
+            </mat-option>
 
-          <mat-option [value]="3">
-            Surveyor
-          </mat-option>
-          <mat-error *ngIf="myForm.controls['userType'].hasError('required') && myForm.controls['userType'].touched">User Type is required</mat-error>
-        </mat-select>
-      </mat-form-field>
+            <mat-option [value]="3">
+              Surveyor
+            </mat-option>
+            <mat-error *ngIf="myForm.controls['userType'].hasError('required') && myForm.controls['userType'].touched">User Type is required</mat-error>
+          </mat-select>
+        </mat-form-field>
       </div>
 
 
@@ -67,7 +66,7 @@
               Bajaj Allianz General Insurance Co. Ltd.
             </mat-option>
             <mat-option [value]="2">
-              ICICI Lombard General Insurance Co. Ltd. 
+              ICICI Lombard General Insurance Co. Ltd.
             </mat-option>
 
             <mat-error *ngIf="myForm.controls['company'].hasError('required') && myForm.controls['company'].touched">Company is required</mat-error>
@@ -82,16 +81,19 @@
               True
             </mat-option>
             <mat-option [value]="false">
-             false
+              false
             </mat-option>
 
             <mat-error *ngIf="myForm.controls['active'].hasError('required') && myForm.controls['active'].touched">Active is required</mat-error>
           </mat-select>
         </mat-form-field>
       </div>
+      <div style="text-align: center; margin-top: 50px;">
+          <button mat-raised-button style="color: #333;" type="button" >Cancel</button>
+          <button mat-raised-button color="primary" (click)="onSubmit(myForm)" mat-button [disabled]="myForm.invalid">Submit</button>
+      </div>
 
-
-      <button type="submit" mat-button [disabled]="myForm.invalid">Submit</button>
+      
     </form>
 
   </div>

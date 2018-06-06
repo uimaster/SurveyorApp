@@ -5,4 +5,13 @@ import {Component} from '@angular/core';
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  
+  userEmail:string ='';
+  userName: string ='';
+  constructor(){
+    this.userEmail = JSON.parse(localStorage.getItem('userEmail'));
+    this.userName = JSON.parse(localStorage.getItem('userName'));
+  }
+  
+}

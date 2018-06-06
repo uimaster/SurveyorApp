@@ -4,7 +4,7 @@ export interface LoginRequest{
 }
 
 export interface LoginResponse{
-    massage: string,
+    Message: string,
     Status: number,
     Data:{}
 }

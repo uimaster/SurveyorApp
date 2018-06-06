@@ -27,7 +27,7 @@ export class CreateComponent implements OnInit {
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
-      password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
+      password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/), Validators.minLength(5)]],
       userType: ['', [Validators.required]],
       company: ['', [Validators.required]],
       active: [true, [Validators.required]]

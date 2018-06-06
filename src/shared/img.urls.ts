@@ -16,3 +16,6 @@ export const KYCDOC_URL = BASE2URL + 'KYCDocIDimg';
 export const KYCADDRESS_URL = BASE2URL + 'KYCDocAddressimg';
 export const SIGNATURE_URL = BASE2URL + 'CustomerDigitalSign';
 
+// PRE-WIZARD SIGNATURE URL //
+export const SIGNATURE_URL_PRE = BASE2URL + 'SurveyorDSGImage';
+

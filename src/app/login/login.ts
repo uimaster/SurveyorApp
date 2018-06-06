@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   loginSubmit(data){
-    debugger;
     if(this.loginForm.valid){     
       this.loginservice.loginSubmit(this.loginForm.value)
         .subscribe(res =>{
@@ -37,7 +36,9 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('isLoggedIn', JSON.stringify(this.isLoggedIn));
             localStorage.setItem('SurveyorsId', JSON.stringify(this.loginData[0].SurveyorsId));
             localStorage.setItem('CompanyId', JSON.stringify(this.loginData[0].CompanyId));
-            this.loginSuccessMessage = res.massage;
+            localStorage.setItem('userEmail', JSON.stringify(this.loginData[0].EmailId));
+            localStorage.setItem('userName', JSON.stringify(this.loginData[0].Name));
+            this.loginSuccessMessage = res.Message;
             this.showSuccessMessage = true;
             this.showErrorMessage = false;
             setTimeout(() => { 
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
             },2000);
           }
           else{
-            this.loginfailedMessage = res.massage;
+            this.loginfailedMessage = res.Message;
             this.showSuccessMessage = false;
             this.showErrorMessage = true;
           }

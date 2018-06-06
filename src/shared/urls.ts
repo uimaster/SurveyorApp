@@ -23,4 +23,19 @@ export const COMPANYLIST = BASEURL + 'CompanyList';
 export const CREATECOMPANY = BASEURL + 'MasterCompany';
 
 export const GETSUMMARYREPORT_URL = BASEURL + 'CaseReportSumary';
+export const DAMAGEDETAILS_URL = BASEURL + 'CarDemageDetailEntry';
+export const GENERATESPOTREPORT= BASEURL + 'Reports';
+export const DOWNLOADSPOTREPORT= BASEURL + 'DownloadReport/getSpotSurveyReport';
 
+//URLS FOR PRE WIZARD//
+
+export const WIZARD_CASEDETAILS_URL = BASEURL + 'PICaseDetails';
+export const WIZARD_VEHICLEDETAILSURL_PRE = BASEURL + 'PIVehicleDetails';
+export const WIZARD_INSURANCEURL_PRE = BASEURL + 'PIinsuranceDetails';
+export const WIZARD_CONCLUSIONURL_PRE = BASEURL + 'PIConclusion';
+
+export const WIZARD_DAMAGEDETAILSURL_PRE = BASEURL + 'CaseDamageDetails';
+export const WIZARD_DAMAGEPARTSLIST_PRE = BASEURL + 'CarDemageDetailEntry';
+export const WIZARD_CASECOMPLETEURL_PRE = BASEURL + 'CaseCompleteStatus';
+export const GENERATESPOTREPORT_PRE = BASEURL + 'PIReports';
+export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport';

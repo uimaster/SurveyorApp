@@ -1,6 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Router } from '@angular/router';
 
 import{ WizardService } from './wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
@@ -28,6 +30,8 @@ export class WizardComponent implements OnInit {
   driverData = [];
   accidentData = [];
   firData = [];
+  damageDetailsData = [];
+  damagePartList = [];
   summaryReportData = [];
   postResponseData = [];
   successMessage:string;
@@ -40,7 +44,9 @@ export class WizardComponent implements OnInit {
 
   
 
-  constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient, ) {
+  constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
+    public dialog: MatDialog, private router: Router)
+    {
     this.files = []; 
 
     this.firstFormGroup = new FormGroup({
@@ -148,6 +154,17 @@ export class WizardComponent implements OnInit {
         kycdocidentity: new FormControl(''),
         kycdocaddress: new FormControl('')
     });
+
+    this.eightthFormGroup = new FormGroup({         
+        CaseID: new FormControl(this.caseId),
+        PartType: new FormControl(''),
+        PartID: new FormControl(''),
+        PartName: new FormControl(''),
+        PartStatus: new FormControl(''),
+        PartStatusID: new FormControl(''),
+        PartRemark: new FormControl('')
+    })
+
     
     
 
@@ -160,71 +177,75 @@ export class WizardComponent implements OnInit {
     }, 100);
     setTimeout(() => {
         this.getDriverDetails();
-    }, 200);
-    setTimeout(() => {
-        this.getAccidentDetails();
-    }, 300);
-    setTimeout(() => {
-        this.getFirDetails();
     }, 400);
     setTimeout(() => {
-        this.getDetailImage();
-    }, 500);
-    setTimeout(() => {
-        this.getCrashImage1();
-    }, 600);
-    setTimeout(() => {
-        this.getCrashImage2();
-    }, 700);
-    setTimeout(() => {
-        this.getCrashImage3();
+        this.getAccidentDetails();
     }, 800);
     setTimeout(() => {
+        this.getFirDetails();
+    }, 1200);
+    setTimeout(() => {
+        this.getDetailImage();
+    }, 1600);
+    setTimeout(() => {
+        this.getCrashImage1();
+    }, 2000);
+    setTimeout(() => {
+        this.getCrashImage2();
+    }, 2400);
+    setTimeout(() => {
+        this.getCrashImage3();
+    }, 2800);
+    setTimeout(() => {
         this.getCrashImage4();
-    }, 900);
+    }, 3200);
     setTimeout(() => {
         this.getCrashImage5();
-    }, 950);
+    }, 3600);
     setTimeout(() => {
         this.getCrashImage6();
-    }, 1000);
+    }, 4000);
     setTimeout(() => {
         this.getCrashImage7();
-    }, 1100);
+    }, 4500);
     setTimeout(() => {
         this.getCrashImage8();
-    }, 1200);
+    }, 4900);
 
     setTimeout(() => {
         this.getCrashImage9();
-    }, 1250);
+    }, 5250);
 
     setTimeout(() => {
         this.getCrashImage10();
-    }, 1300);
+    }, 5600);
 
     setTimeout(() => {
         this.getCrashImage11();
-    }, 1350);
+    }, 6050);
 
     setTimeout(() => {
         this.getCrashImage12();
-    }, 1400);
+    }, 6400);
     setTimeout(() => {
         this.getSummaryReportDetails();
-    }, 1500);
+    }, 7000);
     setTimeout(() => {
         this.getCrashImage13();
-    }, 4000);
+    }, 7500);
 
+    setTimeout(() => {
+        this.getDamageDetails();
+    }, 5200);
+    
     
 
     this.seventhFormGroup = this._formBuilder.group({
         seventhCtrl: ['', Validators.required]
     });
-    this.eightthFormGroup = this._formBuilder.group({
-        eightthCtrl: ['', Validators.required]
-    });
+    // this.eightthFormGroup = this._formBuilder.group({
+    //     eightthCtrl: ['', Validators.required]
+    // });
     // this.ninethFormGroup = this._formBuilder.group({
     //     ninethCtrl: ['', Validators.required]
     // });
@@ -381,13 +402,12 @@ export class WizardComponent implements OnInit {
             }
         })
     }
-
+    
     getSummaryReportDetails(){  
         this.wizardService.getSummaryReportDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
                 this.summaryReportData = res.Data;
-                console.log(this.summaryReportData);
                 this.ninethFormGroup = new FormGroup({
                     PNo: new FormControl(this.summaryReportData[0].PNo),
                     CaseID: new FormControl(this.caseId),
@@ -406,6 +426,7 @@ export class WizardComponent implements OnInit {
         })
     }
 
+    
     firstStepSubmit(formdata){ 
         if(this.firstFormGroup.valid){
             this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(res =>{
@@ -535,7 +556,6 @@ export class WizardComponent implements OnInit {
     }
 
     fifthSubmit(formdata){
-        debugger;
         if(this.fifthFormGroup.valid){
         this.wizardService.postAccidentDetails(this.fifthFormGroup.value).subscribe(res =>{
             if(res && res.Status == 200){
@@ -599,16 +619,76 @@ export class WizardComponent implements OnInit {
         }
     }
 
-    
-    
-        
+    getDamageDetails(){ 
+        this.wizardService.GetDamageDetails()
+        .subscribe(res =>{
+            if(res && res.Status == 200){
+                this.damageDetailsData = res.Data;                
+            }
+        })
+    }
+
+    getDamagePartList(){ 
+        this.wizardService.GetDamagePartList()
+        .subscribe(res =>{
+            if(res && res.Status == 200){
+                this.damagePartList = res.Data;               
+            }
+        })
+    }
+
+    showdamageListData(data){
+        this.eightthFormGroup = new FormGroup({         
+            CaseID: new FormControl(this.caseId),
+            PartType: new FormControl(data.PartType),
+            PartID: new FormControl(data.PartID),
+            PartName: new FormControl(data.PartName),
+            PartStatus: new FormControl(data.PartStatus),
+            PartStatusID: new FormControl(data.PartStatusID),
+            PartRemark: new FormControl(data.PartRemark)
+        })
+    }
+    eightthStepSubmit(formdata){
+        if(this.eightthFormGroup.valid){
+            this.wizardService.PostDamageDetails(this.eightthFormGroup.value).subscribe(res =>{
+                if(res && res.Status == 200){
+                    this.postResponseData = res.Data;        
+                    this.successMessage = res.Message;
+                    alert(this.successMessage);
+                    this.showError = false;
+                    this.showSuccess = true;
+                    setTimeout(() => {  
+                        this.showSuccess = false;
+                        this.stepper.next();
+                    }, 3000);	
+                }
+                else{
+                    this.errorMessage = res.Message;
+                    this.showError = true;
+                    this.showSuccess = false;
+                    alert(this.errorMessage);
+                    setTimeout(() => {  
+                        this.showError = false;
+                    }, 3000);
+                }
+            }, error =>{
+                this.errorMessage = error;
+                this.showError = true;
+                this.showSuccess = false;
+                alert(this.errorMessage);
+                setTimeout(() => {  
+                    this.showError = false;
+                }, 3000);
+            })			
+        }
+    }
+
     
     // DETAILS IMAGE //
 
     createImageFromBlob0(image: Blob) {
         let reader = new FileReader();
         this.imageToShow = 'http://apiflacors.iflotech.in'+image;
-        console.log(this.imageToShow);
     }
 
     onFileChanged0(event: any) {
@@ -1195,11 +1275,11 @@ export class WizardComponent implements OnInit {
         }, 2000);
     }
 
-    getCrashImage13() {
+    getCrashImage13() {        
         this.isImageLoading13 = true;
         this.wizardService.getSignatureImage().subscribe(data => {
             if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob13(data.Data[0].Image);
+                this.reateImageFromBlob13(data.Data[0].CustSign);
             }
             this.isImageLoading13 = false;
         }, error => {
@@ -1208,7 +1288,44 @@ export class WizardComponent implements OnInit {
         });
     }
 
+    openDialog() {
+        const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+            height: '200px',
+            disableClose:true,
+            width:"350px"
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    
+}
+
+
+
+@Component({
+    selector: 'dialog-overview-example-dialog',
+    template: '<h2 mat-dialog-title style="color:#000;">Completion Confirmation.</h2> <mat-dialog-content>Do you want to complete the case?</mat-dialog-content> <mat-dialog-actions style="margin-top:20px; margin-left:35px;"><button mat-raised-button mat-dialog-close (click)="closeDialog()">No</button><button mat-raised-button color="primary" (click)="closeDialog()" [mat-dialog-close]="true">Yes</button></mat-dialog-actions>',
+  })
+  export class DialogOverviewExampleDialog{
+    
+    
+
+    constructor(
+      public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
+  
+      closeDialog(): void {
+      this.dialogRef.close();
+      localStorage.setItem('showDownload', 'true');
+      localStorage.setItem('showTittle', 'false');
+      setTimeout(() => { 
+        this.router.navigate(['/dashboard']);
+        },1000);
+    }
+
     
   
-
-}
+  }
