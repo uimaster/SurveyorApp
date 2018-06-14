@@ -19,11 +19,12 @@ export class CreateAreaComponent implements OnInit {
   public showSuccess: boolean=false;
   public sub: Subscription;
   public areaId:Number = 0;
+  Loader: boolean = true;
 
   constructor(private fb: FormBuilder, private areaService: AreaService, private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
-
+    this.Loader = false;
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]]
 
@@ -56,20 +57,22 @@ export class CreateAreaComponent implements OnInit {
       "AreaId":this.areaId,
       "AreaName":formD.name
     };
+    this.Loader = true;
 
     this.areaService.addArea(bodyObj).subscribe (
       result => {
         // Handle result
+        debugger;
         this.showSuccess = true;
         this.successMessage = result.Message;
         setTimeout(()=>{    //<<<---    using ()=> syntax
           this.router.navigate(['/area']);
         },2000);
-
+        this.Loader = false;
       },
       error => {
         this.showError = true;
-        this.errorMessage = error.message;
+        this.errorMessage = error.Message;
       },
       () => {
         // No errors, route to new page

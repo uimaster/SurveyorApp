@@ -12,12 +12,14 @@ import {Router} from "@angular/router";
 export class CompaniesComponent implements OnInit {
 
   public TotalDada = [];
+  Loader: boolean = true;
   constructor( private companyService: CompaniesService,private router:Router){}
 
   getCompanyList() {
     this.companyService.getCompanyList()
       .subscribe(res =>{
         this.TotalDada = res.Data;
+        this.Loader = false;
       });
   }
 

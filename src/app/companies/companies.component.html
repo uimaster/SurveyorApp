@@ -1,5 +1,8 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
+<div class="loader" *ngIf="Loader">
+    <mat-spinner [color]="accent"></mat-spinner>
+</div>
 <div class="container">
   <h2>Companies <a mat-raised-button color="accent" [routerLink] = "['/companies/create']" style="float:right">Create Company </a></h2>
   

@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit{
   showTittle:boolean;
   showDownload:boolean;
   downloadUrl:string ="";
+  Loader: boolean = true;
   
   constructor( private tabsServices: TabsService, private wizardService: WizardService){}
 
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit{
     .subscribe(res =>{
       if(res.Status = 200){
         this.TotalDada = res.Data;
+        this.Loader = false;
       }
     })
   }

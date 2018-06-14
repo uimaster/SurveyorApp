@@ -1,5 +1,8 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
+<div class="loader" *ngIf="Loader">
+    <mat-spinner [color]="accent"></mat-spinner>
+</div>
 <div class="container">
   <h2>Create Surveyor</h2>
 
@@ -77,8 +80,16 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="company" formControlName="company">
-      </mat-form-field>
+          <mat-select placeholder="Company" formControlName="company">
+            <mat-option [value]="1">
+              Bajaj Allianz General Insurance Co. Ltd.
+            </mat-option>
+            <mat-option [value]="2">
+              ICICI Lombard General Insurance Co. Ltd.
+            </mat-option>
+            <mat-error *ngIf="myForm.controls['company'].hasError('required') && myForm.controls['company'].touched">Company is required</mat-error>
+          </mat-select>
+        </mat-form-field>
 
       <mat-form-field>
         <mat-select placeholder="Active" formControlName="active">
@@ -93,7 +104,7 @@
       </mat-form-field>
 
       <div style="text-align: center; margin-top: 50px;">
-          <button mat-raised-button style="color: #333;" type="button">Cancel</button>
+          <a mat-raised-button style="color: #333;" type="button" routerLink="/surveyor" >Cancel</a>
           <button mat-raised-button color="primary" (click)="onSubmit(myForm.value);" mat-button [disabled]="myForm.invalid">Submit</button>
       </div>
     </form>

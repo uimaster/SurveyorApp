@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,  CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login';
@@ -9,9 +10,10 @@ import { DashboardComponent } from './dashboard/dashboard';
 import { routing } from './app.route';
 import { SidebarComponent} from './sidebar/sidebar';
 import { HeaderComponent } from './header/header';
-import { WizardComponent, DialogOverviewExampleDialog } from './wizard/wizard';
+import { WizardComponent } from './wizard/wizard';
 import { DashboardTabComponent } from './dashboard/dashboardTabs/tabs';
 import { ProcessCaseComponent } from './dashboard/processCases/processCase';
+import { CompletedCaseComponent} from './dashboard/completedCases';
 
 // Providers
 import { LoginService } from '../app/login/login.service';
@@ -34,6 +36,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatListModule} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -48,6 +51,9 @@ import { CreateAreaComponent } from './area/create-area/create-area.component';
 import { CreateCompaniesComponent } from './companies/create-companies/create-companies.component';
 import { PreWizardComponent } from './wizardPre/wizard';
 import { PreWizardService } from './wizardPre/wizard.service';
+import {CompaniesService} from "./companies/companies.service";
+
+import { SharedModule } from './sharedModule/shared.module';
 
 
 @NgModule({
@@ -68,14 +74,15 @@ import { PreWizardService } from './wizardPre/wizard.service';
     CreateSurveyorComponent,
     CreateAreaComponent,
     CreateCompaniesComponent,
-    DialogOverviewExampleDialog,
-    PreWizardComponent
+    PreWizardComponent,
+    CompletedCaseComponent
   ],
   imports: [
     BrowserModule,
     routing,
     ReactiveFormsModule,
     HttpClientModule,
+    CommonModule,
     //Material Modules
     MatSelectModule,
     MatInputModule,
@@ -94,10 +101,11 @@ import { PreWizardService } from './wizardPre/wizard.service';
     MatChipsModule,
     MatDialogModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    SharedModule
   ],
-  entryComponents: [DialogOverviewExampleDialog],
-  providers: [LoginService, TabsService, WizardService,UsersService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
+  providers: [LoginService, TabsService, WizardService, UsersService, CompaniesService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 

@@ -20,13 +20,14 @@ export class CreateSurveyorComponent implements OnInit {
   public showSuccess: boolean=false;
   public sub: Subscription;
   public surveyorId: Number = 0;
+  Loader: boolean = true;
 
   constructor(private fb: FormBuilder, private surveyorService: SurveyorService, private router: Router,private route: ActivatedRoute) { }
 
 
   ngOnInit() {
 
-
+    this.Loader = false;
 
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
@@ -41,7 +42,7 @@ export class CreateSurveyorComponent implements OnInit {
       expireDate: [null],
       GPSCordinates: [null],
       password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
-      company: [],
+      company: ['', Validators.required],
       active: [true, [Validators.required]]
 
     });
@@ -83,6 +84,7 @@ export class CreateSurveyorComponent implements OnInit {
 
 
   onSubmit(formD) {
+    this.Loader = true;
     let bodyObj = {
       "SurveyorsId":this.surveyorId,
       "Name":formD.name,
@@ -109,11 +111,11 @@ export class CreateSurveyorComponent implements OnInit {
         setTimeout(()=>{    //<<<---    using ()=> syntax
           this.router.navigate(['/surveyor']);
         },2000);
-
+        this.Loader = false;
       },
       error => {
         this.showError = true;
-        this.errorMessage = error.message;
+        this.errorMessage = error.Message;
       },
       () => {
         // No errors, route to new page

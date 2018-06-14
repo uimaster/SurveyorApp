@@ -9,12 +9,14 @@ import {Router} from "@angular/router";
 })
 export class UsersComponent implements OnInit {
   public TotalDada = [];
+  Loader: boolean = true;
   constructor( private userService: UsersService, private router:Router){}
 
   getUserList() {
     this.userService.getUsersList()
       .subscribe(res =>{
         this.TotalDada = res;
+        this.Loader = false;
       });
   }
 

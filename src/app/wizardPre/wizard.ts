@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import{ PreWizardService } from './wizard.service';
 import{ WizardService } from '../wizard/wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
+import { DonwloadDialog } from '../sharedModule/shared.component';
+import {CompaniesService} from "../companies/companies.service";
 
 @Component({
   selector: 'wizard-selector',
@@ -34,13 +36,32 @@ export class PreWizardComponent implements OnInit {
   showError: boolean = false;
   showSuccess: boolean = false;
   caseId: any = localStorage.getItem('CaseID');
+  caseNO: any = localStorage.getItem('CaseNO');
   showPartsList: boolean = false;
   public files: any[];
+  Loader: boolean = true;
+  VehicleType = [
+    {VehicleTypeID: '0', VehicleTypeName: 'LCV/HCV'},
+    {VehicleTypeID: '1', VehicleTypeName: 'HTV/BUS'},
+    {VehicleTypeID: '2', VehicleTypeName: 'CommeTwo-Wheelerrcial'},
+    {VehicleTypeID: '3', VehicleTypeName: 'Private'},
+    {VehicleTypeID: '4', VehicleTypeName: 'Taxi '}
+  ];
 
+  FuelType = [
+    {value: '0', viewValue: 'Diesel'},
+    {value: '1', viewValue: 'Petrol'},
+    {value: '2', viewValue: 'CNG'}
+  ];
+  PartStatusID: any ;
+  companyListData =[];
+  selectedCompany : any;
+  submitDisabled: boolean = false;
   
 
-  constructor(private _formBuilder: FormBuilder, private wizardService:PreWizardService, private spotService: WizardService, private httpClient: HttpClient,
-    public dialog: MatDialog, private router: Router)
+    constructor(private _formBuilder: FormBuilder, private wizardService:PreWizardService, private spotService: WizardService,
+        private httpClient: HttpClient,public dialog: MatDialog, private router: Router, private companyService: CompaniesService
+    )
     {
 
     this.firstFormGroup = new FormGroup({
@@ -49,7 +70,7 @@ export class PreWizardComponent implements OnInit {
         CaseDate: new FormControl(''),
         CaseRefNo: new FormControl(''),
         CaseProposerName: new FormControl(''),
-        CompanyId: new FormControl(''),
+        CompanyID: new FormControl(''),
         CompanyName: new FormControl(''),
         CaseTypeId: new FormControl(''),
         SurveyorsID: new FormControl(''),
@@ -112,7 +133,11 @@ export class PreWizardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getCaseDetails();
+    this.Loader= false;
+    setTimeout(() => {        
+        this.getCaseDetails();
+    }, 200);
+    this.getCompanyList();
     setTimeout(() => {
         this.getVehicleDetails();
     }, 500);
@@ -121,39 +146,14 @@ export class PreWizardComponent implements OnInit {
     }, 700);
     setTimeout(() => {
         this.getConclusion();
-    }, 900);
-    setTimeout(() => {
-        this.getCrashImage1();
-    }, 1100);
-    setTimeout(() => {
-        this.getCrashImage2();
-    }, 1400);
-    setTimeout(() => {
-        this.getCrashImage3();
-    }, 1600);
-    setTimeout(() => {
-        this.getCrashImage4();
-    }, 1800);
-    setTimeout(() => {
-        this.getCrashImage5();
-    }, 2000);
-    setTimeout(() => {
-        this.getCrashImage6();
-    }, 2200);
-    setTimeout(() => {
-        this.getCrashImage7();
-    }, 2400);
-    setTimeout(() => {
-        this.getCrashImage8();
-    }, 2600);
-   
+    }, 900);   
     setTimeout(() => {
         this.getCrashImage13();
-    }, 3600);
+    }, 1200);
 
     setTimeout(() => {
         this.getDamageDetails();
-    }, 4000);
+    }, 2000);
     // setTimeout(() => {
     //     this.getDamagePartList();
     // }, 4000);
@@ -167,15 +167,36 @@ export class PreWizardComponent implements OnInit {
     //     tenthCtrl: ['', Validators.required]
     // });
 
+    
+   
    
   }
 
+  openDialog() {
+        const dialogRef = this.dialog.open(DonwloadDialog, {
+            height: '200px',
+            disableClose:true,
+            width:"350px"
+        });
 
-    getCaseDetails(){  
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    getCompanyList() {
+        this.companyService.getCompanyList()
+            .subscribe(res =>{
+            this.companyListData = res.Data;
+        });
+    }
+
+    getCaseDetails(){
         this.wizardService.pre_GetCaseDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
             this.caseDetailData = res.Data;
+            this.selectedCompany = this.caseDetailData[0].CompanyID;
             if(this.caseDetailData.length > 0){
                 this.firstFormGroup = new FormGroup({
                     CaseID: new FormControl(this.caseId),
@@ -183,7 +204,7 @@ export class PreWizardComponent implements OnInit {
                     CaseDate: new FormControl(this.caseDetailData[0].CaseDate),
                     CaseRefNo: new FormControl(this.caseDetailData[0].CaseRefNo),
                     CaseProposerName: new FormControl(this.caseDetailData[0].CaseProposerName),
-                    CompanyId: new FormControl(this.caseDetailData[0].CompanyId),
+                    CompanyID: new FormControl(this.caseDetailData[0].CompanyID),
                     CompanyName: new FormControl(this.caseDetailData[0].CompanyName),
                     CaseTypeId: new FormControl(this.caseDetailData[0].CaseTypeId),
                     SurveyorsID: new FormControl(this.caseDetailData[0].SurveyorsID),
@@ -209,19 +230,19 @@ export class PreWizardComponent implements OnInit {
                 this.thirdFormGroup = new FormGroup({
                     CaseID: new FormControl(this.caseId),
                     VehicleTypeID: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    VehicleTypeName: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    Registration_No: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    ChasisNo: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    EngineNo: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    Make: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    Model: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    Variant: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    MgfYear: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    Color: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    RegistrationDate: new FormControl(this.VehicleDetailData[0].VehicleTypeID, Validators.required),
-                    FuelType: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    HypoticatedTo: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                    OdometerReading: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
+                    VehicleTypeName: new FormControl(this.VehicleDetailData[0].VehicleTypeName),
+                    Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No),
+                    ChasisNo: new FormControl(this.VehicleDetailData[0].ChasisNo),
+                    EngineNo: new FormControl(this.VehicleDetailData[0].EngineNo),
+                    Make: new FormControl(this.VehicleDetailData[0].Make),
+                    Model: new FormControl(this.VehicleDetailData[0].Model),
+                    Variant: new FormControl(this.VehicleDetailData[0].Variant),
+                    MgfYear: new FormControl(this.VehicleDetailData[0].MgfYear),
+                    Color: new FormControl(this.VehicleDetailData[0].Color),
+                    RegistrationDate: new FormControl(this.VehicleDetailData[0].RegistrationDate, Validators.required),
+                    FuelType: new FormControl(this.VehicleDetailData[0].FuelType),
+                    HypoticatedTo: new FormControl(this.VehicleDetailData[0].HypoticatedTo),
+                    OdometerReading: new FormControl(this.VehicleDetailData[0].OdometerReading),
                 });
             }
             }
@@ -275,49 +296,62 @@ export class PreWizardComponent implements OnInit {
     }
 
     getDamageDetails(){ 
+        this.Loader = true;
         this.wizardService.pre_GetDamageDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
                 this.damageDetailsData = res.Data;
-                console.log("damageDetails:", this.damageDetailsData);                
+                this.Loader = false;               
             }
         })
     }
 
-    getDamagePartList(){ 
+    getDamagePartList(){
+        this.Loader = true; 
         this.wizardService.pre_GetDamagePartList()
         .subscribe(res =>{
             if(res && res.Status == 200){
                 this.damagePartList = res.Data;
-                console.log("damageDetails:", this.damagePartList);                
+                this.Loader = false;               
             }
         })
     }
 
     showdamageListData(data){
+        this.PartStatusID = localStorage.getItem('PartStatusID')
         this.eightthFormGroup = new FormGroup({         
             CaseID: new FormControl(this.caseId),
             PartType: new FormControl(data.PartType),
             PartID: new FormControl(data.PartID),
             PartName: new FormControl(data.PartName),
-            PartStatus: new FormControl(data.PartStatus),
-            PartStatusID: new FormControl(data.PartStatusID || 2),
+            PartStatus: new FormControl(this.PartStatusID),
+            PartStatusID: new FormControl(this.PartStatusID),
             PartRemark: new FormControl(data.PartRemark)
         })
     }
 
+    getPartStatusID(event){        
+        localStorage.setItem('PartStatusID', event.value);
+        this.PartStatusID = localStorage.getItem('PartStatusID')
+        this.eightthFormGroup.controls['PartStatusID'].setValue(this.PartStatusID);
+    }
+
     firstStepSubmit(formdata){ 
         if(this.firstFormGroup.valid){
+            this.Loader = true;
             this.wizardService.pre_PostCaseDetails(this.firstFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
-                    }, 3000);	
+                        this.submitDisabled = false;
+                    }, 3000);
+                    
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -327,6 +361,7 @@ export class PreWizardComponent implements OnInit {
                         this.showError = false;
                     }, 3000);
                 }
+                this.Loader = false;
             }, error =>{
                 this.errorMessage = error;
                 this.showError = true;
@@ -340,15 +375,18 @@ export class PreWizardComponent implements OnInit {
 
     thirdStepSubmit(formdata){
         if(this.thirdFormGroup.valid){
+            this.Loader = true;
             this.wizardService.pre_PostVehicleDetails(this.thirdFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
+                        this.submitDisabled = false;
                     }, 3000);	
                 }
                 else{
@@ -359,6 +397,7 @@ export class PreWizardComponent implements OnInit {
                         this.showError = false;
                     }, 3000);
                 }
+                this.Loader = false;
             }, error =>{
                 this.errorMessage = error;
                 this.showError = true;
@@ -372,15 +411,18 @@ export class PreWizardComponent implements OnInit {
 
     ninthStepSubmit(formdata){
         if(this.ninethFormGroup.valid){
+            this.Loader = true;
             this.wizardService.pre_PostInsuranceDetails(this.ninethFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
+                        this.submitDisabled = false;
                     }, 3000);	
                 }
                 else{
@@ -391,6 +433,7 @@ export class PreWizardComponent implements OnInit {
                         this.showError = false;
                     }, 3000);
                 }
+                this.Loader = false;
             }, error =>{
                 this.errorMessage = error;
                 this.showError = true;
@@ -404,15 +447,17 @@ export class PreWizardComponent implements OnInit {
 
     tenthStepSubmit(formdata){
         if(this.tenthFormGroup.valid){
+            this.Loader = true;
             this.wizardService.pre_PostConclusion(this.tenthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
-                    setTimeout(() => {  
-                        this.showSuccess = false;
-                        this.router['/dashboard'];
+                    this.submitDisabled = true;
+                    setTimeout(() => { 
+                        this.router.navigate['/dashboard'];
+                        this.submitDisabled = false;
                     }, 3000);	
                 }
                 else{
@@ -421,9 +466,9 @@ export class PreWizardComponent implements OnInit {
                     this.showSuccess = false;
                     setTimeout(() => {  
                         this.showError = false;
-                        this.router.navigate(['/dashboard']);
                     }, 3000);
                 }
+                this.Loader = false;
             }, error =>{
                 this.errorMessage = error;
                 this.showError = true;
@@ -433,40 +478,41 @@ export class PreWizardComponent implements OnInit {
                 }, 3000);
             })			
         }
+        this.openDialog();
     }
 
-    getpartStatus(event){
-        console.log(event);
-    }
 
     eightthStepSubmit(formdata){
         if(this.eightthFormGroup.valid){
+            this.Loader = true;
             this.wizardService.pre_PostDamageDetails(this.eightthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
-                    alert(this.successMessage);
+                    alert("You have updated part "+ this.successMessage+'lly');
                     this.showError = false;
                     this.showSuccess = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
-                        this.stepper.next();
+                        // this.stepper.next();
                     }, 3000);	
                 }
                 else{
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
-                    alert(this.errorMessage);
+                    alert("You have failed to updated part, "+ this.errorMessage);
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
                 }
+                this.Loader = false;
+                this.getDamageDetails();
             }, error =>{
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
-                alert(this.errorMessage);
+                alert("You have failed to updated part, "+ this.errorMessage);
                 setTimeout(() => {  
                     this.showError = false;
                 }, 3000);
@@ -474,358 +520,6 @@ export class PreWizardComponent implements OnInit {
         }
     }
   
-
-    // CRASH IMAGES FRONT //
-
-    imageToShow1: any;
-    isImageLoading1:boolean = false;
-
-    reateImageFromBlob1(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow1 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged1(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage1();
-    }
-
-    postCrashImage1() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.FRONTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-
-        setTimeout(() => {
-            this.getCrashImage1();
-        }, 1000);
-    }
-
-    getCrashImage1() {
-        this.isImageLoading1 = true;
-        this.spotService.getFrontCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob1(data.Data[0].Image);
-            }
-            this.isImageLoading1 = false;
-        }, error => {
-            this.isImageLoading1 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES BACK //
-
-    
-    imageToShow2: any;
-    isImageLoading2:boolean = false;
-    
-    reateImageFromBlob2(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow2 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged2(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage2();
-    }
-
-    postCrashImage2() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.BACKCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        setTimeout(() => {
-            this.getCrashImage2();
-        }, 1000);
-    }
-
-    getCrashImage2() {
-        this.isImageLoading2 = true;
-        this.spotService.getBackCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob2(data.Data[0].Image);
-            }
-            this.isImageLoading2 = false;
-        }, error => {
-            this.isImageLoading2 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES LEFT FRONT //
-
-    imageToShow3: any;
-    isImageLoading3:boolean = false;
-
-    reateImageFromBlob3(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow3 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged3(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage3();
-    }
-
-    
-    postCrashImage3() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.LEFTFRONTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        
-        setTimeout(() => {
-            this.getCrashImage3();
-        }, 1000);
-    }
-
-    getCrashImage3() {
-        this.isImageLoading3 = true;
-        this.spotService.getLeftFrontCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob3(data.Data[0].Image);
-            }
-            this.isImageLoading3 = false;
-        }, error => {
-            this.isImageLoading3 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES LEFT //
-
-    imageToShow4: any;
-    isImageLoading4:boolean = false;
-    reateImageFromBlob4(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow4 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged4(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage4();
-    }
-
-    postCrashImage4() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.LEFTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-       
-        setTimeout(() => {
-            this.getCrashImage4();
-        }, 1000);
-    }
-
-    getCrashImage4() {
-        this.isImageLoading4 = true;
-        this.spotService.getLeftCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob4(data.Data[0].Image);
-            }
-            this.isImageLoading4 = false;
-        }, error => {
-            this.isImageLoading4 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES LEFT REAR //
-
-    imageToShow5: any;
-    isImageLoading5:boolean = false;
-
-    reateImageFromBlob5(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow5 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged5(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage5();
-    }
-
-    postCrashImage5() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.LEFTREARCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        
-        setTimeout(() => {
-            this.getCrashImage5();
-        }, 1000);
-    }
-
-    getCrashImage5() {
-        this.isImageLoading5 = true;
-        this.spotService.getLeftRearCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob5(data.Data[0].Image);
-            }
-            this.isImageLoading5 = false;
-        }, error => {
-            this.isImageLoading5 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES RIGHT FRONT //
-
-    imageToShow6: any;
-    isImageLoading6:boolean = false;
-
-    reateImageFromBlob6(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow6 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged6(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage6();
-    }
-    
-    postCrashImage6() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.RIGHTFRONTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        this.getCrashImage6();
-        setTimeout(() => {
-            this.getCrashImage6();
-        }, 1000);
-    }
-
-    getCrashImage6() {
-        this.isImageLoading6 = true;
-        this.spotService.getRightFrontCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob6(data.Data[0].Image);
-            }
-            this.isImageLoading6 = false;
-        }, error => {
-            this.isImageLoading6 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES RIGHT //
-
-    imageToShow7: any;
-    isImageLoading7:boolean = false;
-
-    reateImageFromBlob7(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow7 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged7(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage7();
-    }
-
-    postCrashImage7() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.RIGHTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        setTimeout(() => {
-            this.getCrashImage7();
-        }, 1000);
-    }
-
-    getCrashImage7() {
-        this.isImageLoading7 = true;
-        this.spotService.getRightCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob7(data.Data[0].Image);
-            }            
-            this.isImageLoading7 = false;
-        }, error => {
-            this.isImageLoading7 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES RIGHT REAR //
-    imageToShow8: any;
-    isImageLoading8:boolean = false;
-
-    reateImageFromBlob8(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow8 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged8(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage8();
-    }
-
-    postCrashImage8() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.RIGHTREARCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        setTimeout(() => {
-            this.getCrashImage8();
-        }, 1000);
-    }
-
-    getCrashImage8() {
-        this.isImageLoading8 = true;
-        this.spotService.getRightRearCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob8(data.Data[0].Image);
-            }
-            this.isImageLoading8 = false;
-        }, error => {
-            this.isImageLoading8 = false;
-            console.log(error);
-        });
-    }
-
-
-    
 
     // DIGITAL SIGNATURE IMAGE //
     imageToShow13: any;

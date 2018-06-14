@@ -4,7 +4,7 @@
     <mat-spinner [color]="accent"></mat-spinner>
 </div>
 <div class="container">
-<h2>Under Process Cases</h2>
+<h2>Completed Cases</h2>
 <div class="tabularData card">
     <table width="100%" class="table">
         <thead>
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of UnderProcessCases; let i = index">
+            <tr *ngFor="let item of completedCaseData; let i = index">
                 <td>{{i+1}}</td>
                 <td>{{item.CaseDate | date:'dd/MM/yyyy'}}</td>
                 <td>{{item.CaseNo}}</td>
@@ -38,14 +38,9 @@
                             assignment_returned
                         </i>
                     </a>
-                    <button mat-raised-button color="accent" title="Generate Report">
+                    <button mat-raised-button color="accent" title="Generate Report" (click)="generateSpotSurvey();">
                         <i class="material-icons">
                             assignment_turned_in
-                        </i>
-                    </button>
-                    <button mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo);" title="Process Case">
-                        <i class="material-icons">                            
-                            forward
                         </i>
                     </button>
                 </td>

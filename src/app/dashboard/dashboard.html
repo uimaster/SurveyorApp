@@ -1,33 +1,38 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-       
-<h2 *ngIf="showTittle">Dashboard</h2>
+<div class="loader" *ngIf="Loader">
+    <mat-spinner [color]="accent"></mat-spinner>
+</div>      
+<h2>Dashboard</h2>
                 
-<div class="downloadCenter" *ngIf="showDownload">
+<!-- <div class="downloadCenter" *ngIf="showDownload">
     <h2 style="float: left;">Dashboard</h2>
     <a mat-raised-button color="ascent" target="_blank" href="{{downloadUrl}}">DownLoad Report</a>
     <button mat-raised-button color="primary" (click)="generateSpotSurvey();">Generate Report</button>
-</div>
+</div> -->
 
 <tabs-selector></tabs-selector>
 <div class="tabularData card">
     <table width="100%" class="table">
         <thead>
             <tr>
-                <th>Case Date</th>
-                <th>Case No</th>
-                <th>Claim No</th>
-                <th>Company Name</th>
-                <th>Customer Name</th>
-                <th>Customer Mobile</th>
-                <th>Case Type</th>
-                <th>Status</th>
+                <th width="5%">S No.</th>
+                <th width="8%">Case Date</th>
+                <th width="8%">Case No</th>
+                <th width="8%">Claim No</th>
+                <th width="15%">Company Name</th>
+                <th width="11%">Customer Name</th>
+                <th width="12%">Customer Mobile</th>
+                <th width="10%">Case Type</th>
+                <th width="8%">Status</th>
+                <th width="15%">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of TotalDada">
-                <td>{{item.CaseDate}}</td>
+            <tr *ngFor="let item of TotalDada; let i = index">
+                <td>{{i}}</td>
+                <td>{{item.CaseDate | date:'dd/MM/yyyy' }}</td>
                 <td>{{item.CaseNo}}</td>
                 <td>{{item.ClaimNO}}</td>
                 <td>{{item.CompanyName}}</td>
@@ -35,6 +40,23 @@
                 <td>{{item.CustomerMobile}}</td>
                 <td>{{item.CaseTypeName}}</td>
                 <td>{{item.SurveyStatusName}}</td>
+                <td>              
+                    <a mat-raised-button color="primary" title="DownLoad Report" target="_blank" href="{{downloadUrl}}">
+                        <i class="material-icons">
+                            assignment_returned
+                        </i>
+                    </a>
+                    <button mat-raised-button color="accent" title="Generate Report" (click)="generateSpotSurvey();">
+                        <i class="material-icons">
+                            assignment_turned_in
+                        </i>
+                    </button>
+                    <!-- <button mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId);" title="Process Case">
+                        <i class="material-icons">                            
+                            forward
+                        </i>
+                    </button> -->
+                </td>
             </tr>
         </tbody>
     </table>

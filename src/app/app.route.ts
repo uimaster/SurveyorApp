@@ -14,6 +14,8 @@ import { CreateComponent } from "./users/create/create.component";
 import { CreateSurveyorComponent } from "./surveyor/create-surveyor/create-surveyor.component";
 import { CreateAreaComponent } from "./area/create-area/create-area.component";
 import { CreateCompaniesComponent } from "./companies/create-companies/create-companies.component";
+import { CompletedCaseComponent } from './dashboard/completedCases';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,6 +24,7 @@ export const routes: Routes = [
   { path: 'wizard', component: WizardComponent },
   { path: 'pre-wizard', component: PreWizardComponent },
   { path: 'process-case', component: ProcessCaseComponent },
+  { path: 'completed-case', component:CompletedCaseComponent},
   { path: 'users', component: UsersComponent },
   { path: 'users/create/:id', component: CreateComponent },
   { path: 'users/create', component: CreateComponent },

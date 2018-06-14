@@ -11,12 +11,14 @@ import {Router} from "@angular/router";
 })
 export class SurveyorComponent implements OnInit {
   public TotalDada = [];
+  Loader: boolean = true;
   constructor( private surveyorService: SurveyorService,  private router:Router ){}
 
   getSurveyorList() {
     this.surveyorService.getSurveyorList()
       .subscribe(res =>{
         this.TotalDada = res.Data;
+        this.Loader = false;
       });
   }
 

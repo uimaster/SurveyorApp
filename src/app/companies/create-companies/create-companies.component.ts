@@ -20,10 +20,11 @@ export class CreateCompaniesComponent implements OnInit {
   public showSuccess: boolean=false;
   public sub: Subscription;
   public companyId:Number = 0;
+  Loader: boolean = true;
 
   constructor(private fb: FormBuilder, private companyService: CompaniesService, private router: Router,private route: ActivatedRoute) { }
   ngOnInit() {
-
+    this.Loader = false;
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
       Contact: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
@@ -62,6 +63,7 @@ export class CreateCompaniesComponent implements OnInit {
 
 
   onSubmit(formD) {
+    this.Loader = true;
     let bodyObj = {
       "CompanyId":this.companyId,
       "Name":formD.name,
@@ -78,11 +80,11 @@ export class CreateCompaniesComponent implements OnInit {
         setTimeout(()=>{    //<<<---    using ()=> syntax
           this.router.navigate(['/companies']);
         },2000);
-
+        this.Loader = false;
       },
       error => {
         this.showError = true;
-        this.errorMessage = error.message;
+        this.errorMessage = error.Message;
       },
       () => {
         // No errors, route to new page

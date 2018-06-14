@@ -19,3 +19,6 @@ export const SIGNATURE_URL = BASE2URL + 'CustomerDigitalSign';
 // PRE-WIZARD SIGNATURE URL //
 export const SIGNATURE_URL_PRE = BASE2URL + 'SurveyorDSGImage';
 
+// get and post multiImages url//
+export const MULTIIMAGES_URL = BASE2URL + 'SurveyCaseAccidentImages';
+

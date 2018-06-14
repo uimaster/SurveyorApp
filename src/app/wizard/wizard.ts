@@ -2,10 +2,14 @@ import {Component, OnInit, ViewChild, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 
 import{ WizardService } from './wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
+import { SharedComponent, DonwloadDialog} from '../sharedModule/shared.component';
+import {CompaniesService} from "../companies/companies.service";
+
 
 @Component({
   selector: 'wizard-selector',
@@ -39,16 +43,43 @@ export class WizardComponent implements OnInit {
   showError: boolean = false;
   showSuccess: boolean = false;
   caseId: any = localStorage.getItem('CaseID');
+  caseNO: any = localStorage.getItem('CaseNO');
 //   url:any;
   public files: any[];
+  Loader: boolean = true;
+  PartStatusID: any ;
+  VehicleType = [
+    {value: '1', viewValue: 'LCV/HCV'},
+    {value: '2', viewValue: 'HTV/BUS'},
+    {value: '3', viewValue: 'CommeTwo-Wheelerrcial'},
+    {value: '4', viewValue: 'Private'},
+    {value: '5', viewValue: 'Taxi '}
+  ];
 
-  
+  FuelType = [
+    {value: '0', viewValue: 'Diesel'},
+    {value: '1', viewValue: 'Petrol'},
+    {value: '2', viewValue: 'CNG'}
+  ];
+
+  LicenseType = [
+    {value: '0', viewValue: 'LMV'},
+    {value: '1', viewValue: 'M/CYCL.WG'},
+    {value: '2', viewValue: 'LMV-TR'},
+    {value: '3', viewValue: 'HTV'}
+  ];
+
+
+  submitDisabled: boolean = false;
+  companyListData =[];
+  thisYear: number = new Date().getFullYear();
+  driverAge:number =0;
+ 
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
-    public dialog: MatDialog, private router: Router)
+     private router: Router, public dialog: MatDialog, private companyService: CompaniesService)
     {
-    this.files = []; 
-
+    this.files = [];         
     this.firstFormGroup = new FormGroup({
         CaseID: new FormControl(this.caseId),
         CaseNo: new FormControl(''),
@@ -73,13 +104,13 @@ export class WizardComponent implements OnInit {
 
     this.thirdFormGroup = new FormGroup({
         CaseVehicleId: new FormControl(''),
-        SurveyorsId: new FormControl('', Validators.required),
-        VehicleId: new FormControl('', Validators.required),
+        SurveyorsId: new FormControl(''),
+        VehicleId: new FormControl(''),
         VehicleName: new FormControl(''),
         Registration_No: new FormControl('', Validators.required),
         ChasisNo:  new FormControl('',Validators.required),
         EngineNo: new FormControl(''),
-        FitnessCertifyValidDate: new FormControl('',Validators.required),
+        FitnessCertifyValidDate: new FormControl(''),
         PermitNo: new FormControl(''),
         TypeofPermit: new FormControl(''),
         Make: new FormControl(''),
@@ -88,7 +119,7 @@ export class WizardComponent implements OnInit {
         Color: new FormControl(''),
         OdometerReading: new FormControl(''),
         Hypo: new FormControl(''),
-        RegisteredOwner: new FormControl('',Validators.required),
+        RegisteredOwner: new FormControl(''),
         Transfer_Date: new FormControl(''),
         Class_Vehicle: new FormControl(''),
         Pre_Accident_Condition: new FormControl(''),
@@ -165,94 +196,102 @@ export class WizardComponent implements OnInit {
         PartRemark: new FormControl('')
     })
 
+    this.tenthFormGroup = this._formBuilder.group({
+        tenthCtrl: ['', Validators.required]
+    });
     
     
 
    }
 
-  ngOnInit() {
-    this.getClaimDetails();
-    setTimeout(() => {
+   openDialog() {
+        const dialogRef = this.dialog.open(DonwloadDialog, {
+            height: '200px',
+            disableClose:true,
+            width:"350px"
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+
+   
+
+    getCompanyList() {
+        this.companyService.getCompanyList()
+            .subscribe(res =>{
+            this.companyListData = res.Data;
+        });
+    }
+
+    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>){
+        console.log(event.value);
+        // let dateString : string = event.value.toString();
+        // let years : number = parseInt(dateString.substring(0,40));
+
+        // let finalyears = this.thisYear - years;
+        // this.fourthFormGroup.controls['Age'].setValue(years);
+    }
+    
+
+
+  ngOnInit() { 
+    this.Loader= false;
+    this.getCompanyList();
+    setTimeout(() => {        
         this.getVehicleDetails();
-    }, 100);
+    },300);
     setTimeout(() => {
-        this.getDriverDetails();
-    }, 400);
-    setTimeout(() => {
-        this.getAccidentDetails();
+        this.getClaimDetails();
     }, 800);
     setTimeout(() => {
+        this.getDriverDetails();
+    }, 1100);
+    setTimeout(() => {
+        this.getAccidentDetails();
+    }, 1400);
+    setTimeout(() => {
         this.getFirDetails();
-    }, 1200);
+    }, 1700);
     setTimeout(() => {
         this.getDetailImage();
-    }, 1600);
-    setTimeout(() => {
-        this.getCrashImage1();
     }, 2000);
-    setTimeout(() => {
-        this.getCrashImage2();
-    }, 2400);
-    setTimeout(() => {
-        this.getCrashImage3();
-    }, 2800);
-    setTimeout(() => {
-        this.getCrashImage4();
-    }, 3200);
-    setTimeout(() => {
-        this.getCrashImage5();
-    }, 3600);
-    setTimeout(() => {
-        this.getCrashImage6();
-    }, 4000);
-    setTimeout(() => {
-        this.getCrashImage7();
-    }, 4500);
-    setTimeout(() => {
-        this.getCrashImage8();
-    }, 4900);
 
     setTimeout(() => {
         this.getCrashImage9();
-    }, 5250);
+    }, 2250);
 
     setTimeout(() => {
         this.getCrashImage10();
-    }, 5600);
+    }, 2600);
 
     setTimeout(() => {
         this.getCrashImage11();
-    }, 6050);
+    }, 3050);
 
     setTimeout(() => {
         this.getCrashImage12();
-    }, 6400);
+    }, 3400);
     setTimeout(() => {
         this.getSummaryReportDetails();
-    }, 7000);
+    }, 4000);
     setTimeout(() => {
         this.getCrashImage13();
-    }, 7500);
+    }, 4500);
 
     setTimeout(() => {
         this.getDamageDetails();
-    }, 5200);
+    }, 4700);
     
     
 
     this.seventhFormGroup = this._formBuilder.group({
         seventhCtrl: ['', Validators.required]
     });
-    // this.eightthFormGroup = this._formBuilder.group({
-    //     eightthCtrl: ['', Validators.required]
-    // });
-    // this.ninethFormGroup = this._formBuilder.group({
-    //     ninethCtrl: ['', Validators.required]
-    // });
-    this.tenthFormGroup = this._formBuilder.group({
-        tenthCtrl: ['', Validators.required]
-    });
-
+    
+    
    
   }
 
@@ -268,7 +307,7 @@ export class WizardComponent implements OnInit {
                     CaseNo: new FormControl(''),
                     claimNo: new FormControl(this.claimDetailData[0].ClaimNO, Validators.required),
                     policyNo: new FormControl(this.claimDetailData[0].PolicyNO, Validators.required),
-                    CompanyId: new FormControl(''),
+                    CompanyId: new FormControl(this.claimDetailData[0].CompanyId),
                     InsuredName:  new FormControl(this.claimDetailData[0].InsuredName, Validators.required),
                     InsuredAddress:  new FormControl(this.claimDetailData[0].InsuredAddress, Validators.required),
                     InsuredMobile:  new FormControl(this.claimDetailData[0].InsuredMobile, [Validators.required, Validators.minLength(10)]),
@@ -297,8 +336,8 @@ export class WizardComponent implements OnInit {
             if(this.VehicleDetailData.length > 0){
                 this.thirdFormGroup = new FormGroup({
                     CaseVehicleId: new FormControl(this.VehicleDetailData[0].CaseVehicleId),
-                    SurveyorsId: new FormControl(this.VehicleDetailData[0].SurveyorsId, Validators.required),
-                    VehicleId: new FormControl(this.VehicleDetailData[0].VehicleId, Validators.required),
+                    SurveyorsId: new FormControl(this.VehicleDetailData[0].SurveyorsId),
+                    VehicleId: new FormControl(this.VehicleDetailData[0].VehicleId),
                     VehicleName: new FormControl(this.VehicleDetailData[0].VehicleName),
                     Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No),
                     ChasisNo:  new FormControl(this.VehicleDetailData[0].ChasisNo, Validators.required),
@@ -333,6 +372,11 @@ export class WizardComponent implements OnInit {
             if(res && res.Status == 200){
             this.driverData = res.Data;
             if(this.driverData.length > 0){
+                if(this.driverData[0].DOB !== null){                   
+                    let dateString : string = this.driverData[0].DOB.toString();
+                    let years : number = parseInt(dateString.substring(0, 5));
+                    this.driverAge = this.thisYear - years;
+                }
                 this.fourthFormGroup = new FormGroup({
                     CaseDriverID: new FormControl(this.driverData[0].CaseDriverID),
                     CaseID: new FormControl(this.driverData[0].CaseID),
@@ -343,7 +387,7 @@ export class WizardComponent implements OnInit {
                     TypeOfLicense: new FormControl(this.driverData[0].TypeOfLicense),
                     PSVBadgeNo: new FormControl(this.driverData[0].PSVBadgeNo),
                     DOB: new FormControl(this.driverData[0].DOB),
-                    Age: new FormControl(this.driverData[0].Age),
+                    Age: new FormControl(this.driverAge),
                     DLEndorsment: new FormControl(this.driverData[0].DLEndorsment),
                     IssueDate: new FormControl(this.driverData[0].IssueDate)
                 });  
@@ -427,7 +471,8 @@ export class WizardComponent implements OnInit {
     }
 
     
-    firstStepSubmit(formdata){ 
+    firstStepSubmit(formdata){
+        this.Loader = true; 
         if(this.firstFormGroup.valid){
             this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
@@ -435,10 +480,13 @@ export class WizardComponent implements OnInit {
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
-                    }, 3000);	
+                        this.submitDisabled = false;
+                    }, 3000);
+                    this.Loader = false; 	
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -447,6 +495,7 @@ export class WizardComponent implements OnInit {
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
+                    this.Loader = false;
                 }
             }, error =>{
                 this.errorMessage = error;
@@ -461,16 +510,20 @@ export class WizardComponent implements OnInit {
 
     secondStepSubmit(formdata){
         if(this.secondFormGroup.valid){
+            this.Loader = true; 
             this.wizardService.postSurveyorDetails(this.secondFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
+                        this.submitDisabled = false;
                     }, 3000);	
+                    this.Loader = false; 
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -479,6 +532,7 @@ export class WizardComponent implements OnInit {
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
+                    this.Loader = false;
                 }
             }, error =>{
                 this.errorMessage = error;
@@ -493,16 +547,20 @@ export class WizardComponent implements OnInit {
 
     thirdStepSubmit(formdata){
         if(this.thirdFormGroup.valid){
+            this.Loader = true; 
             this.wizardService.postVehicleDetails(this.thirdFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
+                        this.submitDisabled = false;
                     }, 3000);	
+                    this.Loader = false; 
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -511,6 +569,7 @@ export class WizardComponent implements OnInit {
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
+                    this.Loader = false;
                 }
             }, error =>{
                 this.errorMessage = error;
@@ -525,16 +584,20 @@ export class WizardComponent implements OnInit {
 
     fourthSubmit(formdata){
         if(this.fourthFormGroup.valid){
+            this.Loader = true; 
             this.wizardService.postDriverDetails(this.fourthFormGroup.value).subscribe(res =>{        
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
-                    }, 3000);	
+                        this.submitDisabled = false;
+                    }, 3000);
+                    this.Loader = false; 	
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -543,6 +606,7 @@ export class WizardComponent implements OnInit {
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
+                    this.Loader = false;
                 }
             }, error =>{
                     this.errorMessage = error;
@@ -557,16 +621,20 @@ export class WizardComponent implements OnInit {
 
     fifthSubmit(formdata){
         if(this.fifthFormGroup.valid){
+        this.Loader = true; 
         this.wizardService.postAccidentDetails(this.fifthFormGroup.value).subscribe(res =>{
             if(res && res.Status == 200){
                 this.postResponseData = res.Data;        
                 this.successMessage = res.Message;
                 this.showError = false;
                 this.showSuccess = true;
+                this.submitDisabled = true;
                 setTimeout(() => {  
                     this.showSuccess = false;
                     this.stepper.next();
+                    this.submitDisabled = false;
                 }, 3000);	
+                this.Loader = false; 
             }
             else{
                 this.errorMessage = res.Message;
@@ -575,6 +643,7 @@ export class WizardComponent implements OnInit {
                 setTimeout(() => {  
                     this.showError = false;
                 }, 3000);
+                this.Loader = false;
             }
         }, error =>{
                 this.errorMessage = error;
@@ -589,16 +658,20 @@ export class WizardComponent implements OnInit {
 
     sixthSubmit(formdata){
         if(this.sixthFormGroup.valid){
+            this.Loader = true; 
             this.wizardService.postFirDetails(this.sixthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
+                    this.submitDisabled = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
                         this.stepper.next();
-                    }, 3000);	
+                        this.submitDisabled = false;
+                    }, 3000);
+                    this.Loader = false; 	
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -607,6 +680,7 @@ export class WizardComponent implements OnInit {
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
+                    this.Loader = false;
                 }
             }, error =>{
                     this.errorMessage = error;
@@ -620,46 +694,59 @@ export class WizardComponent implements OnInit {
     }
 
     getDamageDetails(){ 
+        this.Loader = true;
         this.wizardService.GetDamageDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
-                this.damageDetailsData = res.Data;                
+                this.damageDetailsData = res.Data;
+                this.Loader = false;               
             }
         })
     }
 
-    getDamagePartList(){ 
+    getDamagePartList(){
+        this.Loader = true; 
         this.wizardService.GetDamagePartList()
         .subscribe(res =>{
             if(res && res.Status == 200){
-                this.damagePartList = res.Data;               
+                this.damagePartList = res.Data;
+                this.Loader = false;               
             }
         })
     }
 
     showdamageListData(data){
+        this.PartStatusID = localStorage.getItem('PartStatusID')
         this.eightthFormGroup = new FormGroup({         
             CaseID: new FormControl(this.caseId),
             PartType: new FormControl(data.PartType),
             PartID: new FormControl(data.PartID),
             PartName: new FormControl(data.PartName),
-            PartStatus: new FormControl(data.PartStatus),
-            PartStatusID: new FormControl(data.PartStatusID),
+            PartStatus: new FormControl(this.PartStatusID),
+            PartStatusID: new FormControl(this.PartStatusID),
             PartRemark: new FormControl(data.PartRemark)
         })
     }
+
+    getPartStatusID(event){        
+        localStorage.setItem('PartStatusID', event.value);
+        this.PartStatusID = localStorage.getItem('PartStatusID')
+        this.eightthFormGroup.controls['PartStatusID'].setValue(this.PartStatusID);
+    }
+
     eightthStepSubmit(formdata){
         if(this.eightthFormGroup.valid){
+            this.Loader = true;
             this.wizardService.PostDamageDetails(this.eightthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
-                    alert(this.successMessage);
+                    alert("You have updated part "+ this.successMessage+'lly');
                     this.showError = false;
                     this.showSuccess = true;
                     setTimeout(() => {  
                         this.showSuccess = false;
-                        this.stepper.next();
+                        // this.stepper.next();
                     }, 3000);	
                 }
                 else{
@@ -667,15 +754,18 @@ export class WizardComponent implements OnInit {
                     this.showError = true;
                     this.showSuccess = false;
                     alert(this.errorMessage);
+                    alert("You have failed to updated part, "+ this.errorMessage);
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
                 }
+                this.Loader = false;
+                this.getDamageDetails();
             }, error =>{
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
-                alert(this.errorMessage);
+                alert("You have failed to updated part, "+ this.errorMessage);
                 setTimeout(() => {  
                     this.showError = false;
                 }, 3000);
@@ -727,356 +817,6 @@ export class WizardComponent implements OnInit {
             console.log(error);
         });
     }
-
-    // CRASH IMAGES FRONT //
-
-    imageToShow1: any;
-    isImageLoading1:boolean = false;
-
-    reateImageFromBlob1(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow1 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged1(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage1();
-    }
-
-    postCrashImage1() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.FRONTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-
-        setTimeout(() => {
-            this.getCrashImage1();
-        }, 1000);
-    }
-
-    getCrashImage1() {
-        this.isImageLoading1 = true;
-        this.wizardService.getFrontCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob1(data.Data[0].Image);
-            }
-            this.isImageLoading1 = false;
-        }, error => {
-            this.isImageLoading1 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES BACK //
-
-    
-    imageToShow2: any;
-    isImageLoading2:boolean = false;
-    
-    reateImageFromBlob2(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow2 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged2(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage2();
-    }
-
-    postCrashImage2() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.BACKCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        setTimeout(() => {
-            this.getCrashImage2();
-        }, 1000);
-    }
-
-    getCrashImage2() {
-        this.isImageLoading2 = true;
-        this.wizardService.getBackCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob2(data.Data[0].Image);
-            }
-            this.isImageLoading2 = false;
-        }, error => {
-            this.isImageLoading2 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES LEFT FRONT //
-
-    imageToShow3: any;
-    isImageLoading3:boolean = false;
-
-    reateImageFromBlob3(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow3 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged3(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage3();
-    }
-
-    
-    postCrashImage3() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.LEFTFRONTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        
-        setTimeout(() => {
-            this.getCrashImage3();
-        }, 1000);
-    }
-
-    getCrashImage3() {
-        this.isImageLoading3 = true;
-        this.wizardService.getLeftFrontCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob3(data.Data[0].Image);
-            }
-            this.isImageLoading3 = false;
-        }, error => {
-            this.isImageLoading3 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES LEFT //
-
-    imageToShow4: any;
-    isImageLoading4:boolean = false;
-    reateImageFromBlob4(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow4 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged4(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage4();
-    }
-
-    postCrashImage4() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.LEFTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-       
-        setTimeout(() => {
-            this.getCrashImage4();
-        }, 1000);
-    }
-
-    getCrashImage4() {
-        this.isImageLoading4 = true;
-        this.wizardService.getLeftCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob4(data.Data[0].Image);
-            }
-            this.isImageLoading4 = false;
-        }, error => {
-            this.isImageLoading4 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES LEFT REAR //
-
-    imageToShow5: any;
-    isImageLoading5:boolean = false;
-
-    reateImageFromBlob5(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow5 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged5(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage5();
-    }
-
-    postCrashImage5() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.LEFTREARCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        
-        setTimeout(() => {
-            this.getCrashImage5();
-        }, 1000);
-    }
-
-    getCrashImage5() {
-        this.isImageLoading5 = true;
-        this.wizardService.getLeftRearCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob5(data.Data[0].Image);
-            }
-            this.isImageLoading5 = false;
-        }, error => {
-            this.isImageLoading5 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES RIGHT FRONT //
-
-    imageToShow6: any;
-    isImageLoading6:boolean = false;
-
-    reateImageFromBlob6(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow6 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged6(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage6();
-    }
-    
-    postCrashImage6() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.RIGHTFRONTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        this.getCrashImage6();
-        setTimeout(() => {
-            this.getCrashImage6();
-        }, 1000);
-    }
-
-    getCrashImage6() {
-        this.isImageLoading6 = true;
-        this.wizardService.getRightFrontCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob6(data.Data[0].Image);
-            }
-            this.isImageLoading6 = false;
-        }, error => {
-            this.isImageLoading6 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES RIGHT //
-
-    imageToShow7: any;
-    isImageLoading7:boolean = false;
-
-    reateImageFromBlob7(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow7 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged7(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage7();
-    }
-
-    postCrashImage7() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.RIGHTCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        setTimeout(() => {
-            this.getCrashImage7();
-        }, 1000);
-    }
-
-    getCrashImage7() {
-        this.isImageLoading7 = true;
-        this.wizardService.getRightCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob7(data.Data[0].Image);
-            }            
-            this.isImageLoading7 = false;
-        }, error => {
-            this.isImageLoading7 = false;
-            console.log(error);
-        });
-    }
-
-    // CRASH IMAGES RIGHT REAR //
-    imageToShow8: any;
-    isImageLoading8:boolean = false;
-
-    reateImageFromBlob8(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow8 = 'http://apiflacors.iflotech.in'+image;
-    }
-
-    onFileChanged8(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage8();
-    }
-
-    postCrashImage8() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.RIGHTREARCRASH_URL, formData).subscribe(
-        res => {
-             console.log(res);
-        });
-        setTimeout(() => {
-            this.getCrashImage8();
-        }, 1000);
-    }
-
-    getCrashImage8() {
-        this.isImageLoading8 = true;
-        this.wizardService.getRightRearCrashImage().subscribe(data => {
-            if(data.Data[0] !== null && data.Data[0] !== undefined){
-                this.reateImageFromBlob8(data.Data[0].Image);
-            }
-            this.isImageLoading8 = false;
-        }, error => {
-            this.isImageLoading8 = false;
-            console.log(error);
-        });
-    }
-
 
     // SUMMARY REPORT KYC ADDRESS //
     imageToShow9: any;
@@ -1287,45 +1027,8 @@ export class WizardComponent implements OnInit {
             console.log(error);
         });
     }
-
-    openDialog() {
-        const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-            height: '200px',
-            disableClose:true,
-            width:"350px"
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-        });
-    }
-
     
 }
 
 
 
-@Component({
-    selector: 'dialog-overview-example-dialog',
-    template: '<h2 mat-dialog-title style="color:#000;">Completion Confirmation.</h2> <mat-dialog-content>Do you want to complete the case?</mat-dialog-content> <mat-dialog-actions style="margin-top:20px; margin-left:35px;"><button mat-raised-button mat-dialog-close (click)="closeDialog()">No</button><button mat-raised-button color="primary" (click)="closeDialog()" [mat-dialog-close]="true">Yes</button></mat-dialog-actions>',
-  })
-  export class DialogOverviewExampleDialog{
-    
-    
-
-    constructor(
-      public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
-  
-      closeDialog(): void {
-      this.dialogRef.close();
-      localStorage.setItem('showDownload', 'true');
-      localStorage.setItem('showTittle', 'false');
-      setTimeout(() => { 
-        this.router.navigate(['/dashboard']);
-        },1000);
-    }
-
-    
-  
-  }

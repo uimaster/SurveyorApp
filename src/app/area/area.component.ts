@@ -12,12 +12,14 @@ import {Router} from "@angular/router";
 export class AreaComponent implements OnInit {
 
   public TotalDada = [];
+  Loader: boolean = true;
   constructor( private areaService: AreaService,private router:Router){}
 
   getAreaList() {
     this.areaService.getAreaList()
       .subscribe(res =>{
         this.TotalDada = res.Data;
+        this.Loader = false;
       });
   }
 

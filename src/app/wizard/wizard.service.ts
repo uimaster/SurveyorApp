@@ -65,8 +65,8 @@ export class WizardService{
     // ============ Vehicle Details ============ // 
 
     getVehicleDetails():Observable<any>{
-        var SurveyorsId= localStorage.getItem('SurveyorsId');
-        const params = new HttpParams().set('SurveyorsId', JSON.parse(SurveyorsId));
+        var CaseID= localStorage.getItem('CaseID');
+        const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
         return this.http.get(WIZARD_GETVEHICLEDETAILSURL, {params})
             .map((res) =>{
                 if(res){

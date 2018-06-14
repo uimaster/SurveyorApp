@@ -11,6 +11,12 @@
                 span.first{ color: #c11934; font-size: 15px;}
                 span{ display: block; font-size: 24px; color: #595858; padding-left:60px; line-height: 22px;}
                 i{ float: left; font-size: 52px; color: #fff; margin-left: 5px;}
+                &.active{
+                    background-color: rgba(255, 255, 255, 0.9);
+                    i{
+                        color:#4376b7;
+                    }
+                }
             }
             &:first-child a{
                 margin-left: 0;

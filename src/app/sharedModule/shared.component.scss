@@ -1,0 +1,44 @@
+.card {
+    width:30.333%;
+    float: left;
+    margin: 1% 0.5%;
+    min-height: 100px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 1%;
+    img{
+        vertical-align: top; max-height: 100px; float: left; margin-right: 10px;
+    }
+    span{
+        color: #1e1e1e;
+        font-size: 14px;
+    }
+    a{ font-size: 12px; text-decoration: none;}
+
+}
+.uploadbutton{ width: 130px; margin: auto; display: block;
+    &::before{ content: ' Browse Image '; text-align: center;}
+}
+
+.customPositoned{ position: absolute; top: 10px; right: 0;}
+
+.updatebutton{ width: 180px; margin: auto; display: block;
+    &::before{ content: 'Change Images '; text-align: center;}
+}
+p{ margin:0 0 5px 0; font-size: 12px; text-align: center;}
+.smallBtn{ padding: 0 15px!important;}
+.backdrop{     position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(21, 21, 21, 0.6);
+    z-index: 99;
+} 
+.smallModal{ position: fixed; left: 40%; top: 25%; z-index: 999; padding: 30px; background-color: #fff;
+    h2{
+        margin: 0 0 35px 0;
+    }
+    p{
+        text-align: center; font-size: 14px; color: #333;
+    }
+}    

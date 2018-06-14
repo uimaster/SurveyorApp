@@ -17,13 +17,14 @@ export class CreateComponent implements OnInit {
   public showSuccess: boolean = false;
   public sub: Subscription;
   public userId: Number = 0;
+  Loader: boolean = true;
 
   constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
 
-
+    this.Loader = false;
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
@@ -62,6 +63,7 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit(formD) {
+    this.Loader = true;
     let formValues = formD.value;
     let bodyObj = {
       "UserId": this.userId,
@@ -82,11 +84,11 @@ export class CreateComponent implements OnInit {
         setTimeout(() => {    //<<<---    using ()=> syntax
           this.router.navigate(['/users']);
         }, 2000);
-
+        this.Loader = false;
       },
       error => {
         this.showError = true;
-        this.errorMessage = error.message;
+        this.errorMessage = error.Message;
       },
       () => {
         // No errors, route to new page
