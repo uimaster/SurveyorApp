@@ -1,12 +1,13 @@
 // @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 body{
-    background: #405c9b url('../images/sky-bg.jpg') center top repeat;  
+    background: #447ebe  url('../images/sky-bg.jpg') center top repeat;  
     font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 100%; min-height: 90vh; padding: 0; margin: 0;
 } 
 
 h2{ font-size: 24px; color: #fff; font-weight: normal;}
 .tabularData{
   margin:0 0 20px 0; padding:25px 20px; max-height: 500px; overflow: auto; min-height: 350px;
+  h5{ color: #333;}
 }
 
 .mat-form-field-infix{ border-top:inherit;}
@@ -72,8 +73,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   }
 
 .container{
-  padding-top: 85px;
-  padding-left: 210px;    padding-right: 20px;
+  padding:85px 20px 10px 210px;
 }  
 
 .alert{

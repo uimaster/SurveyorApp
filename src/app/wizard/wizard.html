@@ -192,15 +192,23 @@
             <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
             <mat-datepicker #picker7></mat-datepicker>
           </mat-form-field>
+
+          <div class="mat-form-checkfield">
+              <label>Upload Claim Form/Statement</label>
+              <input type="file" name="file" id="file" (change)="onFileChangedForm($event)" class="custom-file-input"/>
+              <img  alt="" id="imageUrl" [src]="imageToShowForm" />    
+            </div>
+
           <mat-form-field>
             <input matInput placeholder="Accident Place" formControlName="AccidentPlace">
           </mat-form-field>
           <mat-form-field>
             <textarea matInput placeholder="Cause of Lost" formControlName="CauseofLoss"></textarea>
           </mat-form-field>
-          <mat-form-field>
+          <!-- <mat-form-field>
             <input matInput placeholder="Upload Claim Form/Statement" formControlName="FIRDDR">
-          </mat-form-field>
+          </mat-form-field> -->
+
           <div style="text-align: center; margin-top: 50px;">
             <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>
             <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>

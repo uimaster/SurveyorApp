@@ -62,7 +62,6 @@ export class CreateAreaComponent implements OnInit {
     this.areaService.addArea(bodyObj).subscribe (
       result => {
         // Handle result
-        debugger;
         this.showSuccess = true;
         this.successMessage = result.Message;
         setTimeout(()=>{    //<<<---    using ()=> syntax

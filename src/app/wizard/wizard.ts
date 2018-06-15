@@ -154,7 +154,7 @@ export class WizardComponent implements OnInit {
         InsuredRepName: new FormControl(''),
         CauseofLoss: new FormControl(''),
         TPLoss: new FormControl(''),
-        FIRDDR: new FormControl(''),
+        // FIRDDR: new FormControl(''),
         DetailsTPLoss: new FormControl('')
     });
     this.sixthFormGroup = new FormGroup({
@@ -206,7 +206,7 @@ export class WizardComponent implements OnInit {
 
    openDialog() {
         const dialogRef = this.dialog.open(DonwloadDialog, {
-            height: '200px',
+            height: '300px',
             disableClose:true,
             width:"350px"
         });
@@ -284,6 +284,10 @@ export class WizardComponent implements OnInit {
     setTimeout(() => {
         this.getDamageDetails();
     }, 4700);
+
+    setTimeout(() => {
+        this.getClaimFormStatement();
+    }, 4900);
     
     
 
@@ -411,7 +415,7 @@ export class WizardComponent implements OnInit {
                     InsuredRepName: new FormControl(this.accidentData[0].InsuredRepName),
                     CauseofLoss: new FormControl(this.accidentData[0].CauseofLoss),
                     TPLoss: new FormControl(this.accidentData[0].TPLoss),
-                    FIRDDR: new FormControl(this.accidentData[0].FIRDDR),
+                    // FIRDDR: new FormControl(this.accidentData[0].FIRDDR),
                     DetailsTPLoss: new FormControl(this.accidentData[0].DetailsTPLoss)
                 });
             }
@@ -726,7 +730,7 @@ export class WizardComponent implements OnInit {
             PartStatusID: new FormControl(this.PartStatusID),
             PartRemark: new FormControl(data.PartRemark)
         })
-    }
+    }    
 
     getPartStatusID(event){        
         localStorage.setItem('PartStatusID', event.value);
@@ -814,6 +818,50 @@ export class WizardComponent implements OnInit {
             this.isImageLoading = false;
         }, error => {
             this.isImageLoading = false;
+            console.log(error);
+        });
+    }
+
+    // Upload Claim Form/Statement //
+
+    createImageFromBlobForm(image: Blob) {
+        let reader = new FileReader();
+        this.imageToShowForm = 'http://apiflacors.iflotech.in'+image;
+    }
+
+    onFileChangedForm(event: any) {
+        this.files = event.target.files;
+        this.postClaimFormStatement();
+      }
+  
+      imageToShowForm: any;
+      isImageLoadingForm:boolean = false;
+
+      postClaimFormStatement() {
+        const formData = new FormData();
+        formData.append('CaseID', this.caseId);
+        for (const file of this.files) {
+            formData.append(name, file, file.name);
+        }
+        this.httpClient.post(IMAGEURL.CLAIMFORMSTATEMENT_URL, formData).subscribe(
+        res => {
+             console.log(res);
+        });
+        setTimeout(() => {
+            this.getClaimFormStatement();
+        }, 1000);
+        
+    }
+
+    getClaimFormStatement() {
+        this.isImageLoadingForm = true;
+        this.wizardService.getClaimFormStatement().subscribe(data => {
+            if(data.Data[0] !== null && data.Data[0] !== undefined){
+                this.createImageFromBlobForm(data.Data[0].Image);
+            }
+            this.isImageLoadingForm = false;
+        }, error => {
+            this.isImageLoadingForm = false;
             console.log(error);
         });
     }

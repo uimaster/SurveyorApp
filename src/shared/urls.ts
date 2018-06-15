@@ -26,6 +26,7 @@ export const GETSUMMARYREPORT_URL = BASEURL + 'CaseReportSumary';
 export const DAMAGEDETAILS_URL = BASEURL + 'CarDemageDetailEntry';
 export const GENERATESPOTREPORT= BASEURL + 'Reports';
 export const DOWNLOADSPOTREPORT= BASEURL + 'DownloadReport/getSpotSurveyReport';
+export const SPOTCOMPLETIONURL = BASEURL + 'CaseCompleteStatus';
 
 //URLS FOR PRE WIZARD//
 

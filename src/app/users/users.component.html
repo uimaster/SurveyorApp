@@ -11,24 +11,26 @@
     <table width="100%" class="table">
       <thead>
       <tr>
+        <th>S. No.</th>
         <th>Name</th>
-        <th>Email</th>
+        <!-- <th>Email</th> -->
         <th>User Type</th>
-        <th>Company Id</th>
+        <!-- <th>Company Id</th> -->
         <th>Company Name</th>
-        <th>Surveyor Id</th>
+        <!-- <th>Surveyor Id</th> -->
         <th>Active</th>
         <th>Action</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let user of TotalDada;let i = index;">
+          <td>{{i+1}}</td>
         <td>{{user.Name}}</td>
-        <td>{{user.EmailId}}</td>
+        <!-- <td>{{user.EmailId}}</td> -->
         <td>{{user.UserType}}</td>
-        <td>{{user.CompanyId}}</td>
+        <!-- <td>{{user.CompanyId}}</td> -->
         <td>{{user.CompanyName}}</td>
-        <td>{{user.SurveyorsId}}</td>
+        <!-- <td>{{user.SurveyorsId}}</td> -->
         <td>{{user.IsActive}}</td>
         <td>
           <mat-chip-list>           

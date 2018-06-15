@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { Router } from '@angular/router';
+import {MatAccordion} from '@angular/material';
 
 import{ PreWizardService } from './wizard.service';
 import{ WizardService } from '../wizard/wizard.service';
@@ -57,6 +58,8 @@ export class PreWizardComponent implements OnInit {
   companyListData =[];
   selectedCompany : any;
   submitDisabled: boolean = false;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+  allExpandState:boolean;
   
 
     constructor(private _formBuilder: FormBuilder, private wizardService:PreWizardService, private spotService: WizardService,
@@ -174,7 +177,7 @@ export class PreWizardComponent implements OnInit {
 
   openDialog() {
         const dialogRef = this.dialog.open(DonwloadDialog, {
-            height: '200px',
+            height: '300px',
             disableClose:true,
             width:"350px"
         });
@@ -496,6 +499,7 @@ export class PreWizardComponent implements OnInit {
                         this.showSuccess = false;
                         // this.stepper.next();
                     }, 3000);	
+                    this.allExpandState = false;
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -562,45 +566,4 @@ export class PreWizardComponent implements OnInit {
             console.log(error);
         });
     }
-
-    // openDialog() {
-    //     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-    //         height: '200px',
-    //         disableClose:true,
-    //         width:"350px"
-    //     });
-
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         console.log(`Dialog result: ${result}`);
-    //     });
-    // }
-
-    
 }
-
-
-
-// @Component({
-//     selector: 'dialog-overview-example-dialog',
-//     template: '<h2 mat-dialog-title style="color:#000;">Completion Confirmation.</h2> <mat-dialog-content>Do you want to complete the case?</mat-dialog-content> <mat-dialog-actions style="margin-top:20px; margin-left:35px;"><button mat-raised-button mat-dialog-close (click)="closeDialog()">No</button><button mat-raised-button color="primary" (click)="closeDialog()" [mat-dialog-close]="true">Yes</button></mat-dialog-actions>',
-//   })
-//   export class DialogOverviewExampleDialog{
-    
-    
-
-//     constructor(
-//       public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-//       @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
-  
-//       closeDialog(): void {
-//       this.dialogRef.close();
-//       localStorage.setItem('showDownload', 'true');
-//       localStorage.setItem('showTittle', 'false');
-//       setTimeout(() => { 
-//         this.router.navigate(['/dashboard']);
-//         },1000);
-//     }
-
-    
-  
-//   }

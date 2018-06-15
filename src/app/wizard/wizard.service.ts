@@ -6,7 +6,7 @@ import {
         WIZARD_GETCLAIMURL, WIZARD_POSTCLAIMURL, WIZARD_POSTSURVEYORURL, WIZARD_GETVEHICLEDETAILSURL, WIZARD_POSTVEHICLEDETAILSURL,
         WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL,
         WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS, GETSUMMARYREPORT_URL, DAMAGEDETAILS_URL, GENERATESPOTREPORT, DOWNLOADSPOTREPORT,
-        WIZARD_DAMAGEDETAILSURL_PRE, WIZARD_DAMAGEPARTSLIST_PRE
+        WIZARD_DAMAGEDETAILSURL_PRE, WIZARD_DAMAGEPARTSLIST_PRE, SPOTCOMPLETIONURL
         } from '../../shared/urls';
 import * as IMAGEURL from '../../shared/img.urls';        
 import { Observable } from 'rxjs/Observable';
@@ -215,11 +215,27 @@ PostDamageDetails(payload: any): Observable<any> {
       .catch((error) => Observable.throw(error.json() || 'Server error'));
 }
 
+
+
+
   // GET CLAIM IMAGE //
   getDetailImg():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
     return this.http.get(IMAGEURL.CLAIMPOLICYIMG_URL, {params})
+        .map((res) =>{
+            if(res){
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
+
+  // Upload Claim Form/Statement //
+  getClaimFormStatement():Observable<any>{
+    var CaseID= localStorage.getItem('CaseID');
+    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
+    return this.http.get(IMAGEURL.CLAIMFORMSTATEMENT_URL, {params})
         .map((res) =>{
             if(res){
                 return res;

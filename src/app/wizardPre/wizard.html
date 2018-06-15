@@ -207,11 +207,12 @@
         <ng-template matStepLabel>Damage Details</ng-template>
         <h4>Damage Details <button mat-raised-button color="primary" (click)="getDamagePartList()" style="float: right;">Add Part</button></h4><br/>
         <div style="max-height: 400px; overflow: auto;"  *ngIf="damageDetailsData.length > 0">                   
-            <mat-list role="list"  *ngFor="let data of damageDetailsData">
+            <mat-list role="list"  *ngFor="let data of damageDetailsData; let i = index">
               <mat-list-item role="listitem" >
-                <p style="display: inline-block; width: 33%;"><b>Part Name:</b> {{data.PartName}}</p>
-                <p style="display: inline-block; width: 33%;"><b>Part Status:</b> {{data.PartStatus}}</p>
-                <p style="display: inline-block; width: 33%;"><b>Part Remark:</b> {{data.PartRemark}}</p>
+                <p style="display: inline-block; width: 10%;"><b>S. No:</b> {{i+1}}</p>
+                <p style="display: inline-block; width: 30%;"><b>Part Name:</b> {{data.PartName}}</p>
+                <p style="display: inline-block; width: 30%;"><b>Part Status:</b> {{data.PartStatus}}</p>
+                <p style="display: inline-block; width: 30%;"><b>Part Remark:</b> {{data.PartRemark}}</p>
               </mat-list-item>               
             </mat-list> 
             <br/>
@@ -221,16 +222,16 @@
         <div style="max-height: 450px; overflow: auto;"  *ngIf="damagePartList.length > 0">
             
             <mat-accordion class="example-headers-align">
-              <mat-expansion-panel  hideToggle="true"  *ngFor="let item of damagePartList; let i = index;">
+              <mat-expansion-panel  hideToggle="false"  *ngFor="let item of damagePartList; let i = index;" [expanded]="allExpandState">
                 
                 <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
                   <mat-panel-title>
-                     Part Name: &nbsp; {{item.PartName}}
+                     <span>{{i+1}}.</span>&nbsp; &nbsp;Part Name: &nbsp; {{item.PartName}}
                   </mat-panel-title>
                   <mat-panel-description>
-                    <i class="material-icons">
+                    <!-- <i class="material-icons">
                       keyboard_arrow_down
-                    </i>
+                    </i> -->
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 
@@ -254,7 +255,7 @@
                 </mat-form-field>
             
                 <mat-action-row >
-                  <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value)">Save</button>
+                  <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value);">Save</button>
                 </mat-action-row>
                 
               </mat-expansion-panel>

@@ -76,7 +76,6 @@ export class SharedComponent implements OnInit {
             formData.append('CaseImageID', this.CaseImageID || '0');
             for (const file of this.files) {
                 formData.append(name, file);
-                formData.append('Image', file.name);
                 formData.append('ImageName', data.ImageName);
             }
             this.http.post(MULTIIMAGES_URL, formData).subscribe(
@@ -100,8 +99,6 @@ export class SharedComponent implements OnInit {
     updateImgRadio(id) {
         this.showUpdateBtn = true;
         this.CaseImageID = id;
-        console.log(this.CaseImageID);
-        // localStorage.setItem('CaseImageID', id);
     }
 
     getMultiImages() {
@@ -109,7 +106,6 @@ export class SharedComponent implements OnInit {
         this.sharedService.getMultiImages().subscribe(data => {
             if (data.Data[0] !== null && data.Data[0] !== undefined) {
                 this.fileList = data.Data;
-                console.log(this.fileList);
                 this.createImageFromBlob0(data.Data[0].Image);
             }
             this.isImageLoading = false;
@@ -118,6 +114,7 @@ export class SharedComponent implements OnInit {
             console.log(error);
         });
     }
+    
 
 }
 
@@ -134,9 +131,12 @@ export class DonwloadDialog implements OnInit {
     showFirstData: boolean = true;
     showSecondData: boolean = false;
     downloadUrl: string = "";
+    comletionForm: FormGroup;
+    msg:string='';
     constructor(
         public dialogRef: MatDialogRef<DonwloadDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private wizardService: WizardService) { }
+        @Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private wizardService: WizardService,
+         private sharedService: SharedModuleServices, private fb: FormBuilder) { }
 
     closeDialog(): void {
         this.dialogRef.close();
@@ -158,6 +158,22 @@ export class DonwloadDialog implements OnInit {
         var CaseID = localStorage.getItem('CaseID');
         let baseurl = 'http://apiflacors.iflotech.in/api/DownloadReport/getSpotSurveyReport?CaseID=';
         this.downloadUrl = baseurl + CaseID;
+    }
+
+    PostSpotCompletion(){
+        var CaseID= localStorage.getItem('CaseID');
+        this.comletionForm = this.fb.group({
+            CaseID:new FormControl(CaseID),
+            SurveyStatusId:new FormControl('5')
+        })
+        this.sharedService.PostSpotCompletion(this.comletionForm.value).subscribe(res=>{
+            if(res){
+                this.msg = res.Message;
+            }
+            
+        })
+        this.showFirstData = false;
+        this.showSecondData = true;
     }
 
     generateSpotSurvey() {
