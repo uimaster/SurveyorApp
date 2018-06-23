@@ -25,9 +25,9 @@
         <mat-form-field style="display: block;">
           <input matInput placeholder="Enter Image Name" formControlName="ImageName" (focus)="changeshowfileEmptyMsg()">
         </mat-form-field>
-        <input type="file" (change)="onMultifileChange($event)" class="custom-file-input updatebutton" *ngIf="showUpdateBtn" />
-        <input type="file" (change)="onMultifileChange($event)" class="custom-file-input uploadbutton" *ngIf="!showUpdateBtn" />
-        <div class="alert error" *ngIf="showfileEmptyMsg">Please Enter Image name & Select Image/photo.</div>
+        <input type="file" (change)="onMultifileChange($event)" class="custom-file-input updatebutton" *ngIf="showUpdateBtn" accept="image/gif, image/jpeg, image/png"/>
+        <input type="file" (change)="onMultifileChange($event)" class="custom-file-input uploadbutton" *ngIf="!showUpdateBtn" accept="image/gif, image/jpeg, image/png"/>
+        <div class="alert error" *ngIf="showfileEmptyMsg">Please Enter Image name & Select only GIF, JPEG and PNG Image/photo.</div>
         <div style="margin-top:20px; text-align: center; display: block;">
           <button mat-raised-button class="smallBtn" (click)="closeImageModal()" color="accent">Cancel</button>
           <button mat-raised-button class="smallBtn" (click)="postMultiImage(uploadCrashImageForm.value)" color="primary">Upload</button>
