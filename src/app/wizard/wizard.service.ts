@@ -6,7 +6,7 @@ import {
         WIZARD_GETCLAIMURL, WIZARD_POSTCLAIMURL, WIZARD_POSTSURVEYORURL, WIZARD_GETVEHICLEDETAILSURL, WIZARD_POSTVEHICLEDETAILSURL,
         WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL,
         WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS, GETSUMMARYREPORT_URL, DAMAGEDETAILS_URL, GENERATESPOTREPORT, DOWNLOADSPOTREPORT,
-        WIZARD_DAMAGEDETAILSURL_PRE, WIZARD_DAMAGEPARTSLIST_PRE, SPOTCOMPLETIONURL
+        WIZARD_DAMAGEDETAILSURL_PRE, WIZARD_DAMAGEPARTSLIST_PRE, REGISTRATION_SEARCH_URL, SPOTCOMPLETIONURL
         } from '../../shared/urls';
 import * as IMAGEURL from '../../shared/img.urls';        
 import { Observable } from 'rxjs/Observable';
@@ -89,6 +89,20 @@ export class WizardService{
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
+     // ============ Registraion Search for vehicle Details ============ // 
+
+     SearchRegistration(payload:any):Observable<any>{
+        // var CaseID= localStorage.getItem('CaseID');
+        // const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
+        return this.http.get(REGISTRATION_SEARCH_URL, payload)
+            .map((res) =>{
+                if(res){
+                    return res;
+                }
+            })
+            .catch((error) => Observable.throw('server Error.'));
+    }
+
     // ============ Driver Details ============ // 
 
     getDriverDetails():Observable<any>{
@@ -121,8 +135,8 @@ export class WizardService{
     // ============ Accident Details ============ // 
 
     geAccidentDetails():Observable<any>{
-        var SurveyorsId= localStorage.getItem('SurveyorsId');
-        const params = new HttpParams().set('SurveyorsId', JSON.parse(SurveyorsId));
+        var CaseID= localStorage.getItem('CaseID');
+        const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
         return this.http.get(WIZARD_GETACCIDENTDETAILSURL, {params})
             .map((res) =>{
                 if(res){

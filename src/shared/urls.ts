@@ -40,3 +40,6 @@ export const WIZARD_DAMAGEPARTSLIST_PRE = BASEURL + 'CarDemageDetailEntry';
 export const WIZARD_CASECOMPLETEURL_PRE = BASEURL + 'CaseCompleteStatus';
 export const GENERATESPOTREPORT_PRE = BASEURL + 'PIReports';
 export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport';
+
+//REGISTRATION NUMBER SEARCH URL//
+export const REGISTRATION_SEARCH_URL='http://54.169.129.132:90/DataAccessService.svc/GetVehicleData/DL3CCE5000';

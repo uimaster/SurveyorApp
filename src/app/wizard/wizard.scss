@@ -52,3 +52,10 @@ h2{ color: #fff; font-size: 18px;}
     padding-top: 0px;
     .mat-list-item{ background-color: #fff; border-bottom: 1px solid #ddd; padding: 5px; cursor: pointer;}  
   }
+
+  .searchBox{
+    position: absolute;
+    right: 48px;
+    top: 19px;
+    width: 45%;
+  }

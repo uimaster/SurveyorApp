@@ -112,6 +112,7 @@ export class WizardComponent implements OnInit {
         ChasisNo:  new FormControl('',Validators.required),
         EngineNo: new FormControl(''),
         FitnessCertifyValidDate: new FormControl('1900-01-01'),
+        RegistrationDate: new FormControl(''),
         PermitNo: new FormControl(''),
         TypeofPermit: new FormControl(''),
         Make: new FormControl(''),
@@ -317,7 +318,7 @@ export class WizardComponent implements OnInit {
                     InsuredName:  new FormControl(this.claimDetailData[0].InsuredName, Validators.required),
                     InsuredAddress:  new FormControl(this.claimDetailData[0].InsuredAddress, Validators.required),
                     InsuredMobile:  new FormControl(this.claimDetailData[0].InsuredMobile, [Validators.required, Validators.minLength(10)]),
-                    EmailID:  new FormControl('', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)])
+                    EmailID:  new FormControl(this.claimDetailData[0].EmailID, [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)])
                 });
 
                 this.secondFormGroup = new FormGroup({
@@ -334,6 +335,17 @@ export class WizardComponent implements OnInit {
         })
     }
 
+
+    SearchRegistration(data){  
+        this.wizardService.SearchRegistration(data)
+        .subscribe(res =>{
+            if(res && res.Status == 200){
+                this.claimDetailData = res.Data;
+                console.log(this.claimDetailData);
+            }
+        })
+    }
+
     getVehicleDetails(){ 
         this.wizardService.getVehicleDetails()
         .subscribe(res =>{
@@ -346,6 +358,7 @@ export class WizardComponent implements OnInit {
                     VehicleId: new FormControl(this.VehicleDetailData[0].VehicleId),
                     VehicleName: new FormControl(this.VehicleDetailData[0].VehicleName),
                     Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No, Validators.required),
+                    RegistrationDate: new FormControl(this.VehicleDetailData[0].RegistrationDate, Validators.required),
                     ChasisNo:  new FormControl(this.VehicleDetailData[0].ChasisNo, Validators.required),
                     EngineNo: new FormControl(this.VehicleDetailData[0].EngineNo),
                     FitnessCertifyValidDate: new FormControl(this.VehicleDetailData[0].FitnessCertifyValidDate),

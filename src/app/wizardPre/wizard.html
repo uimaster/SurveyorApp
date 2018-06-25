@@ -114,6 +114,36 @@
         <mat-form-field>
           <input matInput placeholder="Odometer Reading" formControlName="OdometerReading">
         </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Registered Owner" formControlName="RegisteredOwner">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Transfer Date" formControlName="Transfer_Date" required [matDatepicker]="Transfer_Date">
+          <mat-datepicker-toggle matSuffix [for]="Transfer_Date"></mat-datepicker-toggle>
+          <mat-datepicker #Transfer_Date></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Vehicle Class" formControlName="Class_Vehicle">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Pre Accident Condition" formControlName="Pre_Accident_Condition">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Laden Weight" formControlName="Laden_Wt">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Unladen Weight" formControlName="Unladen_Wt">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="CNG KIT Status" formControlName="CNG_KIT_Status">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Permit Area" formControlName="Permit_Area">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Road Tax ValidUpto" formControlName="Road_Tax_ValidUpto">
+        </mat-form-field>
         
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>

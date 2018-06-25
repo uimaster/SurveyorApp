@@ -12,7 +12,9 @@ h2{ font-size: 24px; color: #fff; font-weight: normal;}
 
 .mat-form-field-infix{ border-top:inherit;}
 .mat-horizontal-stepper-header-container{
-     background-color: hsla(0,0%,100%,0.6);  padding: 10px; margin: -24px;  -webkit-border-top-left-radius: 6px;
+    //  background-color: hsla(0,0%,100%,0.6);
+     background-color: rgb(190, 216, 253);
+     padding: 10px; margin: -24px;  -webkit-border-top-left-radius: 6px;
      -webkit-border-top-right-radius: 6px;
      -moz-border-radius-topleft: 6px;
      -moz-border-radius-topright: 6px;
@@ -39,7 +41,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: pink;
   }
 
-  .mat-raised-button{ padding: 0px 45px!important;}
+  .mat-raised-button{ padding: 0px 45px!important; background-color: #676767; color: #fff!important;}
 
   .card{
     color: #fff;
@@ -49,6 +51,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     position: relative;
     margin-bottom: 24px;
     box-shadow: 1px 1px 4px rgba(0,0,0,.15);
+    .mat-radio-label-content{ color: #000;}
   }
 
   .table{
@@ -131,7 +134,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 } 
 
 .mat-stepper-horizontal{
-  background-color: rgba(255, 255, 255, 0.8)!important;
+  background-color: rgba(255, 255, 255, 10)!important;
 }
 .mat-expansion-panel-header{
   .mat-expansion-panel-header-description{

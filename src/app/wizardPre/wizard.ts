@@ -103,6 +103,15 @@ export class PreWizardComponent implements OnInit {
         FuelType: new FormControl(''),
         HypoticatedTo: new FormControl(''),
         OdometerReading: new FormControl(''),
+        RegisteredOwner: new FormControl(''),
+        Transfer_Date: new FormControl(''),
+        Class_Vehicle: new FormControl(''),
+        Pre_Accident_Condition: new FormControl(''),
+        Laden_Wt: new FormControl(''),
+        Unladen_Wt: new FormControl(''),
+        CNG_KIT_Status: new FormControl(''),
+        Permit_Area: new FormControl(''),
+        Road_Tax_ValidUpto: new FormControl('')
     });    
 
     this.ninethFormGroup = new FormGroup({
@@ -251,6 +260,15 @@ export class PreWizardComponent implements OnInit {
                     FuelType: new FormControl(this.VehicleDetailData[0].FuelType),
                     HypoticatedTo: new FormControl(this.VehicleDetailData[0].HypoticatedTo),
                     OdometerReading: new FormControl(this.VehicleDetailData[0].OdometerReading),
+                    RegisteredOwner: new FormControl(this.VehicleDetailData[0].RegisteredOwner),
+                    Transfer_Date: new FormControl(this.VehicleDetailData[0].Transfer_Date),
+                    Class_Vehicle: new FormControl(this.VehicleDetailData[0].Class_Vehicle),
+                    Pre_Accident_Condition: new FormControl(this.VehicleDetailData[0].Pre_Accident_Condition),
+                    Laden_Wt: new FormControl(this.VehicleDetailData[0].Laden_Wt),
+                    Unladen_Wt: new FormControl(this.VehicleDetailData[0].Unladen_Wt),
+                    CNG_KIT_Status: new FormControl(this.VehicleDetailData[0].CNG_KIT_Status),
+                    Permit_Area: new FormControl(this.VehicleDetailData[0].Permit_Area),
+                    Road_Tax_ValidUpto: new FormControl(this.VehicleDetailData[0].Road_Tax_ValidUpto)
                 });
             }
             }
