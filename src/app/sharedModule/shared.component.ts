@@ -96,9 +96,10 @@ export class SharedComponent implements OnInit {
         this.CaseImageID = '';
 
     }
-    updateImgRadio(id) {
+    updateImgRadio(data) {
         this.showUpdateBtn = true;
-        this.CaseImageID = id;
+        this.CaseImageID = data.CaseImageID;
+        this.uploadCrashImageForm.controls['ImageName'].setValue(data.ImageName);
     }
 
     getMultiImages() {

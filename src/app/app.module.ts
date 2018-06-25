@@ -12,8 +12,6 @@ import { SidebarComponent} from './sidebar/sidebar';
 import { HeaderComponent } from './header/header';
 import { WizardComponent } from './wizard/wizard';
 import { DashboardTabComponent } from './dashboard/dashboardTabs/tabs';
-import { ProcessCaseComponent } from './dashboard/processCases/processCase';
-import { CompletedCaseComponent} from './dashboard/completedCases';
 
 // Providers
 import { LoginService } from '../app/login/login.service';
@@ -65,7 +63,6 @@ import { SharedModule } from './sharedModule/shared.module';
     HeaderComponent,
     WizardComponent,
     DashboardTabComponent,
-    ProcessCaseComponent,
     UsersComponent,
     SurveyorComponent,
     AreaComponent,
@@ -75,7 +72,6 @@ import { SharedModule } from './sharedModule/shared.module';
     CreateAreaComponent,
     CreateCompaniesComponent,
     PreWizardComponent,
-    CompletedCaseComponent
   ],
   imports: [
     BrowserModule,

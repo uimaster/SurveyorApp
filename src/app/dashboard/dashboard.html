@@ -51,15 +51,16 @@
                             assignment_turned_in
                         </i>
                     </button>
-                    <!-- <button mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId);" title="Process Case">
+                    <button *ngIf="showProcessButtton" mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo);" title="Process Case">
                         <i class="material-icons">                            
                             forward
                         </i>
-                    </button> -->
+                    </button>
                 </td>
             </tr>
         </tbody>
     </table>
+    <h5 *ngIf="noData" style="text-align: center"><br/><br/><br/>No Data Available !</h5>
 </div>
 </div>
 <!-- <wizard-selector></wizard-selector> -->

@@ -41,18 +41,18 @@ export class PreWizardComponent implements OnInit {
   showPartsList: boolean = false;
   public files: any[];
   Loader: boolean = true;
-  VehicleType = [
-    {VehicleTypeID: '0', VehicleTypeName: 'LCV/HCV'},
-    {VehicleTypeID: '1', VehicleTypeName: 'HTV/BUS'},
-    {VehicleTypeID: '2', VehicleTypeName: 'CommeTwo-Wheelerrcial'},
-    {VehicleTypeID: '3', VehicleTypeName: 'Private'},
-    {VehicleTypeID: '4', VehicleTypeName: 'Taxi '}
+  VehicleTypeID = [
+    {VehicleTypeID: 0, Name: 'LCV/HCV'},
+    {VehicleTypeID: 1, Name: 'HTV/BUS'},
+    {VehicleTypeID: 2, Name: 'CommeTwo-Wheelerrcial'},
+    {VehicleTypeID: 3, Name: 'Private'},
+    {VehicleTypeID: 4, Name: 'Taxi'}
   ];
 
   FuelType = [
-    {value: '0', viewValue: 'Diesel'},
-    {value: '1', viewValue: 'Petrol'},
-    {value: '2', viewValue: 'CNG'}
+    {FuelType: '0', Name: 'Diesel'},
+    {FuelType: '1', Name: 'Petrol'},
+    {FuelType: '2', Name: 'CNG'}
   ];
   PartStatusID: any ;
   companyListData =[];
@@ -87,7 +87,7 @@ export class PreWizardComponent implements OnInit {
     });   
 
     this.thirdFormGroup = new FormGroup({
-        CaseID: new FormControl(''),
+        CaseID: new FormControl(this.caseId),
         VehicleTypeID: new FormControl(''),
         VehicleTypeName: new FormControl(''),
         Registration_No: new FormControl(''),
@@ -98,6 +98,7 @@ export class PreWizardComponent implements OnInit {
         Variant: new FormControl(''),
         MgfYear: new FormControl(''),
         Color: new FormControl(''),
+        FitnessCertifyValidDate: new FormControl('1900-01-01'),
         RegistrationDate: new FormControl('', Validators.required),
         FuelType: new FormControl(''),
         HypoticatedTo: new FormControl(''),
@@ -143,7 +144,7 @@ export class PreWizardComponent implements OnInit {
     this.getCompanyList();
     setTimeout(() => {
         this.getVehicleDetails();
-    }, 500);
+    }, 2500);
     setTimeout(() => {
         this.getInsuranceDetails();
     }, 700);
@@ -199,26 +200,29 @@ export class PreWizardComponent implements OnInit {
         .subscribe(res =>{
             if(res && res.Status == 200){
             this.caseDetailData = res.Data;
+            console.log('caseDetails:', this.caseDetailData);
             this.selectedCompany = this.caseDetailData[0].CompanyID;
             if(this.caseDetailData.length > 0){
-                this.firstFormGroup = new FormGroup({
-                    CaseID: new FormControl(this.caseId),
-                    CaseNo: new FormControl(this.caseDetailData[0].CaseNo),
-                    CaseDate: new FormControl(this.caseDetailData[0].CaseDate),
-                    CaseRefNo: new FormControl(this.caseDetailData[0].CaseRefNo),
-                    CaseProposerName: new FormControl(this.caseDetailData[0].CaseProposerName),
-                    CompanyID: new FormControl(this.caseDetailData[0].CompanyID),
-                    CompanyName: new FormControl(this.caseDetailData[0].CompanyName),
-                    CaseTypeId: new FormControl(this.caseDetailData[0].CaseTypeId),
-                    SurveyorsID: new FormControl(this.caseDetailData[0].SurveyorsID),
-                    AssignedDateTime:  new FormControl(this.caseDetailData[0].AssignedDateTime, Validators.required),
-                    caseAddress:  new FormControl(this.caseDetailData[0].caseAddress),
-                    InspectionDate:  new FormControl(this.caseDetailData[0].InspectionDate,Validators.required),
-                    InspectionTime:  new FormControl(this.caseDetailData[0].InspectionTime, Validators.required),
-                    InspectionLocation:  new FormControl(this.caseDetailData[0].InspectionLocation),
-                    InspectionGeoCodes:  new FormControl(this.caseDetailData[0].InspectionGeoCodes),
-                    SurveyStatusID:  new FormControl(this.caseDetailData[0].SurveyStatusID),
-                });
+                let AssDateTime = (new Date(this.caseDetailData[0].AssignedDateTime)).toISOString();
+                let inspectDate = (new Date(this.caseDetailData[0].InspectionDate)).toISOString();
+                let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toISOString();
+
+                this.firstFormGroup.controls['CaseID'].setValue(this.caseId);
+                this.firstFormGroup.controls['CaseNo'].setValue(this.caseDetailData[0].CaseNo);
+                this.firstFormGroup.controls['CaseDate'].setValue(this.caseDetailData[0].CaseDate);
+                this.firstFormGroup.controls['CaseRefNo'].setValue(this.caseDetailData[0].CaseRefNo);
+                this.firstFormGroup.controls['CaseProposerName'].setValue(this.caseDetailData[0].CaseProposerName);
+                this.firstFormGroup.controls['CompanyID'].setValue(this.caseDetailData[0].CompanyID);
+                this.firstFormGroup.controls['CompanyName'].setValue(this.caseDetailData[0].CompanyName);
+                this.firstFormGroup.controls['CaseTypeId'].setValue(this.caseDetailData[0].CaseTypeId);
+                this.firstFormGroup.controls['SurveyorsID'].setValue(this.caseDetailData[0].SurveyorsID);
+                this.firstFormGroup.controls['AssignedDateTime'].setValue(AssDateTime);
+                this.firstFormGroup.controls['caseAddress'].setValue(this.caseDetailData[0].caseAddress);
+                this.firstFormGroup.controls['InspectionDate'].setValue(inspectDate);
+                this.firstFormGroup.controls['InspectionLocation'].setValue(this.caseDetailData[0].InspectionLocation);
+                this.firstFormGroup.controls['InspectionTime'].setValue(InspectTime);
+                this.firstFormGroup.controls['InspectionGeoCodes'].setValue(this.caseDetailData[0].InspectionGeoCodes);
+                this.firstFormGroup.controls['SurveyStatusID'].setValue(this.caseDetailData[0].SurveyStatusID);               
             }
             }
         })
@@ -235,6 +239,7 @@ export class PreWizardComponent implements OnInit {
                     VehicleTypeID: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
                     VehicleTypeName: new FormControl(this.VehicleDetailData[0].VehicleTypeName),
                     Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No),
+                    FitnessCertifyValidDate: new FormControl(this.VehicleDetailData[0].FitnessCertifyValidDate),
                     ChasisNo: new FormControl(this.VehicleDetailData[0].ChasisNo),
                     EngineNo: new FormControl(this.VehicleDetailData[0].EngineNo),
                     Make: new FormControl(this.VehicleDetailData[0].Make),

@@ -6,7 +6,7 @@
   <div class="tabularData card" *ngFor="let item of fileList">
     <img alt="" src="http://apiflacors.iflotech.in{{item.Image}}" />
     <span>
-      <mat-radio-button name="multiImages" (change)="updateImgRadio(item.CaseImageID)" unchecked>Select to Update.</mat-radio-button>
+      <mat-radio-button name="multiImages" (change)="updateImgRadio(item)" unchecked>Select to Update.</mat-radio-button>
     </span>
     <br/>
 

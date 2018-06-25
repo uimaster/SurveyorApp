@@ -48,18 +48,18 @@ export class WizardComponent implements OnInit {
   public files: any[];
   Loader: boolean = true;
   PartStatusID: any ;
-  VehicleType = [
-    {value: '1', viewValue: 'LCV/HCV'},
-    {value: '2', viewValue: 'HTV/BUS'},
-    {value: '3', viewValue: 'CommeTwo-Wheelerrcial'},
-    {value: '4', viewValue: 'Private'},
-    {value: '5', viewValue: 'Taxi '}
+  VehicleId = [
+    {VehicleId: 0, Name: 'LCV/HCV'},
+    {VehicleId: 1, Name: 'HTV/BUS'},
+    {VehicleId: 2, Name: 'CommeTwo-Wheelerrcial'},
+    {VehicleId: 3, Name: 'Private'},
+    {VehicleId: 4, Name: 'Taxi '}
   ];
 
   FuelType = [
-    {value: '0', viewValue: 'Diesel'},
-    {value: '1', viewValue: 'Petrol'},
-    {value: '2', viewValue: 'CNG'}
+    {FuelType: '0', Name: 'Diesel'},
+    {FuelType: '1', Name: 'Petrol'},
+    {FuelType: '2', Name: 'CNG'}
   ];
 
   LicenseType = [
@@ -74,6 +74,7 @@ export class WizardComponent implements OnInit {
   companyListData =[];
   thisYear: number = new Date().getFullYear();
   driverAge:number =0;
+  CaseVehicleId:any = 0;
  
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
@@ -103,14 +104,14 @@ export class WizardComponent implements OnInit {
     });
 
     this.thirdFormGroup = new FormGroup({
-        CaseVehicleId: new FormControl(''),
-        SurveyorsId: new FormControl(''),
+        CaseVehicleId: new FormControl(this.CaseVehicleId),
+        SurveyorsId: new FormControl(this.caseId),
         VehicleId: new FormControl(''),
         VehicleName: new FormControl(''),
         Registration_No: new FormControl('', Validators.required),
         ChasisNo:  new FormControl('',Validators.required),
         EngineNo: new FormControl(''),
-        FitnessCertifyValidDate: new FormControl(''),
+        FitnessCertifyValidDate: new FormControl('1900-01-01'),
         PermitNo: new FormControl(''),
         TypeofPermit: new FormControl(''),
         Make: new FormControl(''),
@@ -127,7 +128,8 @@ export class WizardComponent implements OnInit {
         Unladen_Wt: new FormControl(''),
         CNG_KIT_Status: new FormControl(''),
         Permit_Area: new FormControl(''),
-        Road_Tax_ValidUpto: new FormControl('')
+        Road_Tax_ValidUpto: new FormControl(''),
+        FuelType: new FormControl(''),
     });
 
     this.fourthFormGroup = new FormGroup({
@@ -242,7 +244,7 @@ export class WizardComponent implements OnInit {
     this.getCompanyList();
     setTimeout(() => {        
         this.getVehicleDetails();
-    },300);
+    },5000);
     setTimeout(() => {
         this.getClaimDetails();
     }, 800);
@@ -343,7 +345,7 @@ export class WizardComponent implements OnInit {
                     SurveyorsId: new FormControl(this.VehicleDetailData[0].SurveyorsId),
                     VehicleId: new FormControl(this.VehicleDetailData[0].VehicleId),
                     VehicleName: new FormControl(this.VehicleDetailData[0].VehicleName),
-                    Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No),
+                    Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No, Validators.required),
                     ChasisNo:  new FormControl(this.VehicleDetailData[0].ChasisNo, Validators.required),
                     EngineNo: new FormControl(this.VehicleDetailData[0].EngineNo),
                     FitnessCertifyValidDate: new FormControl(this.VehicleDetailData[0].FitnessCertifyValidDate),
@@ -363,7 +365,8 @@ export class WizardComponent implements OnInit {
                     Unladen_Wt: new FormControl(this.VehicleDetailData[0].Unladen_Wt),
                     CNG_KIT_Status: new FormControl(this.VehicleDetailData[0].CNG_KIT_Status),
                     Permit_Area: new FormControl(this.VehicleDetailData[0].Permit_Area),
-                    Road_Tax_ValidUpto: new FormControl(this.VehicleDetailData[0].Road_Tax_ValidUpto)
+                    Road_Tax_ValidUpto: new FormControl(this.VehicleDetailData[0].Road_Tax_ValidUpto),
+                    FuelType: new FormControl(this.VehicleDetailData[0].FuelType)
                 });
             }
             }
@@ -579,6 +582,7 @@ export class WizardComponent implements OnInit {
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
+                this.Loader = false;
                 setTimeout(() => {  
                     this.showError = false;
                 }, 3000);
@@ -616,6 +620,7 @@ export class WizardComponent implements OnInit {
                     this.errorMessage = error;
                     this.showError = true;
                     this.showSuccess = false;
+                    this.Loader = false;
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);
@@ -653,6 +658,7 @@ export class WizardComponent implements OnInit {
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
+                this.Loader = false;
                 setTimeout(() => {  
                     this.showError = false;
                 }, 3000);
@@ -690,6 +696,7 @@ export class WizardComponent implements OnInit {
                     this.errorMessage = error;
                     this.showError = true;
                     this.showSuccess = false;
+                    this.Loader = false;
                     setTimeout(() => {  
                         this.showError = false;
                     }, 3000);

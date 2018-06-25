@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms'
 
 import { TabsService } from './tabs.service';
 import { TabsResponse, TabsGenericResponse} from './tabs.model';
+import { DashboardComponent } from '../dashboard';
 
 @Component({
   selector: 'tabs-selector',
@@ -15,7 +16,11 @@ export class DashboardTabComponent implements OnInit {
   public UnderProcessCases : number = 0;
   public TotalCases : number = 0;
   public BroadCastCase : number = 0;
-  constructor( private tabsServices: TabsService){}
+  showActiveAll: boolean = true;
+  showActiveCompleted: boolean = false;
+  showActiveUnderProcess: boolean = false;
+
+  constructor( private tabsServices: TabsService, private dashboard: DashboardComponent){}
 
   getTabCounts(){
     this.tabsServices.getTabCounts()
@@ -28,6 +33,27 @@ export class DashboardTabComponent implements OnInit {
         this.TotalCases = res.Data[0].TotalCaseCount;
       }
     })
+  }
+
+  getAllCases(){
+    this.dashboard.getDashboardList();
+    this.showActiveAll = true;
+    this.showActiveCompleted = false;
+    this.showActiveUnderProcess = false;
+  }
+
+  getCompleteCases(){
+    this.dashboard.getCompletedList();
+    this.showActiveAll = false;
+    this.showActiveCompleted = true;
+    this.showActiveUnderProcess = false;
+  }
+
+  getUnderProcessCases(){
+    this.dashboard.getProcessList();
+    this.showActiveAll = false;
+    this.showActiveCompleted = false;
+    this.showActiveUnderProcess = true;
   }
 
 

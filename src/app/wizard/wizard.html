@@ -89,10 +89,13 @@
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>Vehicle</ng-template>
           <h4>Vehicle Details</h4>
+          <mat-form-field style="display:none;">
+            <input matInput placeholder="CaseVehicle Id" formControlName="CaseVehicleId">
+          </mat-form-field>
           <mat-form-field>
-            <mat-select placeholder="Type of Vehicle" formControlName="VehicleId">
-              <mat-option *ngFor="let item of VehicleType" [value]="item.value">
-                {{ item.viewValue }}
+            <mat-select placeholder="Type of Vehicle" formControlName="VehicleId" [(ngModel)]="CaseVehicleId">
+              <mat-option *ngFor="let item of VehicleId" [value]="item.VehicleId">
+                {{ item.Name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -103,27 +106,34 @@
             <input matInput placeholder="Chasis No" formControlName="ChasisNo" required>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Engine No" formControlName="EngineNo" required>
+            <input matInput placeholder="Engine No" formControlName="EngineNo">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Make" formControlName="Make" required>
+            <input matInput placeholder="Make" formControlName="Make">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Model" formControlName="Model" required>
+            <input matInput placeholder="Model" formControlName="Model">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Year Manufacture" formControlName="MgfYear" required  [matDatepicker]="picker3">
+            <input matInput placeholder="Year Manufacture" formControlName="MgfYear"  [matDatepicker]="picker3">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Color" formControlName="Color" required>
+            <input matInput placeholder="Color" formControlName="Color" >
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Odometer Reading" formControlName="OdometerReading" required>
+            <input matInput placeholder="Odometer Reading" formControlName="OdometerReading" >
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Hypo" formControlName="Hypo" required>
+            <input matInput placeholder="Hypophication" formControlName="Hypo" >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Fuel Type" formControlName="FuelType">
+              <mat-option *ngFor="let item of FuelType" [value]="item.FuelType">
+                {{ item.Name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
           <div style="text-align: center; margin-top: 50px;">
             <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>

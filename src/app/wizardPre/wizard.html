@@ -24,18 +24,18 @@
           <input matInput placeholder="Case Proposer Name" formControlName="CaseProposerName">
         </mat-form-field>       
         <mat-form-field>
-          <input matInput placeholder="Assigned Date Time" formControlName="AssignedDateTime"  [matDatepicker]="picker1">
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
+          <input matInput placeholder="Assigned Date Time" formControlName="AssignedDateTime"  [matDatepicker]="Prepicker1">
+          <mat-datepicker-toggle matSuffix [for]="Prepicker1"></mat-datepicker-toggle>
+          <mat-datepicker #Prepicker1></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Case Address" formControlName="caseAddress">
         </mat-form-field>
        
         <mat-form-field>
-          <input matInput placeholder="Inspection Date" formControlName="InspectionDate"  [matDatepicker]="picker2">
-          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
+          <input matInput placeholder="Inspection Date" formControlName="InspectionDate"  [matDatepicker]="Prepicker2" >
+          <mat-datepicker-toggle matSuffix [for]="Prepicker2"></mat-datepicker-toggle>
+          <mat-datepicker #Prepicker2></mat-datepicker>
         </mat-form-field>
         
         <mat-form-field>
@@ -65,8 +65,8 @@
         <h4>Vehicle Details</h4>
         <mat-form-field>
           <mat-select placeholder="Type of Vehicle" formControlName="VehicleTypeID">
-            <mat-option *ngFor="let item of VehicleType" [value]="item.VehicleTypeID">
-              {{ item.VehicleTypeName }}
+            <mat-option *ngFor="let item of VehicleTypeID" [value]="item.VehicleTypeID">
+              {{ item.Name }}
             </mat-option>
           </mat-select>
         </mat-form-field>  
@@ -102,8 +102,8 @@
 
         <mat-form-field>
           <mat-select placeholder="Fuel Type" formControlName="FuelType">
-            <mat-option *ngFor="let item of FuelType" [value]="item.value">
-              {{ item.viewValue }}
+            <mat-option *ngFor="let item of FuelType" [value]="item.Name">
+              {{ item.Name }}
             </mat-option>
           </mat-select>
         </mat-form-field>

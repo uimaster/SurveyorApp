@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 import { TabsService } from './dashboardTabs/tabs.service';
 import { TabsResponse, TabsGenericResponse} from './dashboardTabs/tabs.model';
@@ -17,17 +18,76 @@ export class DashboardComponent implements OnInit{
   showDownload:boolean;
   downloadUrl:string ="";
   Loader: boolean = true;
+  noData: boolean = false;
+  showProcessButtton: boolean = false;
   
-  constructor( private tabsServices: TabsService, private wizardService: WizardService){}
+  
+  constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router){}
 
   getDashboardList(){
     this.tabsServices.getDashboardList()
     .subscribe(res =>{
-      if(res.Status = 200){
-        this.TotalDada = res.Data;
-        this.Loader = false;
+      if(res && res.Status == 200){
+        this.TotalDada = res.Data;        
+        if(this.TotalDada.length > 0){          
+          this.Loader = false;
+          this.noData = false; 
+          this.showProcessButtton = false;         
+        }
+        else{
+          this.noData = true;
+          this.Loader = false;
+        }
       }
     })
+  }
+
+  getCompletedList(){
+    this.tabsServices.getCompletedList()
+    .subscribe(res =>{
+      if(res && res.Status == 200){
+        this.TotalDada = res.Data;
+        if(this.TotalDada.length > 0){          
+          this.Loader = false;
+          this.showProcessButtton = false;
+          this.noData = false;
+        }
+        else{
+          this.noData = true;
+          this.Loader = false;
+        }
+      }
+    })
+  }
+
+  getProcessList(){
+    this.tabsServices.getProcessList()
+    .subscribe(res =>{
+      if(res && res.Status == 200){
+        this.TotalDada = res.Data;
+        if(this.TotalDada.length > 0){
+          this.showProcessButtton = true;          
+          this.Loader = false;
+          this.noData = false;
+        }
+        else{
+          this.noData = true;
+          this.Loader = false;
+        }
+      }
+    })
+  }
+
+
+  getClaimDetails(id, caseid, caseNo){
+    localStorage.setItem('CaseID', caseid);
+    localStorage.setItem('CaseNO', caseNo);
+    if(id === 1){
+      this.router.navigate(['wizard']);
+    }
+    else{
+      this.router.navigate(['pre-wizard']);
+    }
   }
 
 

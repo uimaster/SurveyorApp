@@ -5,7 +5,6 @@ import { LoginComponent } from './login/login';
 import { DashboardComponent } from './dashboard/dashboard';
 import { WizardComponent } from '../app/wizard/wizard';
 import { PreWizardComponent } from './wizardPre/wizard';
-import { ProcessCaseComponent } from './dashboard/processCases/processCase';
 import { UsersComponent } from "./users/users.component";
 import { SurveyorComponent } from "./surveyor/surveyor.component";
 import { AreaComponent } from "./area/area.component";
@@ -14,7 +13,6 @@ import { CreateComponent } from "./users/create/create.component";
 import { CreateSurveyorComponent } from "./surveyor/create-surveyor/create-surveyor.component";
 import { CreateAreaComponent } from "./area/create-area/create-area.component";
 import { CreateCompaniesComponent } from "./companies/create-companies/create-companies.component";
-import { CompletedCaseComponent } from './dashboard/completedCases';
 
 
 export const routes: Routes = [
@@ -23,8 +21,6 @@ export const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'wizard', component: WizardComponent },
   { path: 'pre-wizard', component: PreWizardComponent },
-  { path: 'process-case', component: ProcessCaseComponent },
-  { path: 'completed-case', component:CompletedCaseComponent},
   { path: 'users', component: UsersComponent },
   { path: 'users/create/:id', component: CreateComponent },
   { path: 'users/create', component: CreateComponent },
