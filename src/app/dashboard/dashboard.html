@@ -31,7 +31,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of TotalDada; let i = index">
-                <td>{{i}}</td>
+                <td>{{i+1}}</td>
                 <td>{{item.CaseDate | date:'dd/MM/yyyy' }}</td>
                 <td>{{item.CaseNo}}</td>
                 <td>{{item.ClaimNO}}</td>
@@ -41,12 +41,12 @@
                 <td>{{item.CaseTypeName}}</td>
                 <td>{{item.SurveyStatusName}}</td>
                 <td>              
-                    <a mat-raised-button color="primary" title="DownLoad Report" target="_blank" href="{{downloadUrl}}">
+                    <a *ngIf="!showProcessButtton" mat-raised-button color="primary" title="DownLoad Report" target="_blank" href="{{downloadUrl}}">
                         <i class="material-icons">
                             assignment_returned
                         </i>
                     </a>
-                    <button mat-raised-button color="accent" title="Generate Report" (click)="generateSpotSurvey();">
+                    <button *ngIf="!showProcessButtton" mat-raised-button color="accent" title="Generate Report" (click)="generateSpotSurvey();">
                         <i class="material-icons">
                             assignment_turned_in
                         </i>

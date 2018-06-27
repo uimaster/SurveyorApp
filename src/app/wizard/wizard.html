@@ -88,7 +88,7 @@
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Vehicle</ng-template>
         <h4>Vehicle Details </h4>
-        <div class="searchBox">
+        <!-- <div class="searchBox">
           <mat-form-field style="margin: 0; width: 65%;">
             <input matInput placeholder="Search Registration No" id="RegistrationNum">
           </mat-form-field>
@@ -97,7 +97,7 @@
               search
             </i>
           </button>
-        </div>
+        </div> -->
 
         <br/>
         <br/>
@@ -159,7 +159,7 @@
 
 
         <mat-form-field>
-          <input matInput placeholder="Transfer Date" formControlName="Transfer_Date" required [matDatepicker]="Transfer_Date">
+          <input matInput placeholder="Transfer Date" formControlName="Transfer_Date" [matDatepicker]="Transfer_Date">
           <mat-datepicker-toggle matSuffix [for]="Transfer_Date"></mat-datepicker-toggle>
           <mat-datepicker #Transfer_Date></mat-datepicker>
         </mat-form-field>

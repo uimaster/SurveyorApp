@@ -119,7 +119,7 @@
           <input matInput placeholder="Registered Owner" formControlName="RegisteredOwner">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Transfer Date" formControlName="Transfer_Date" required [matDatepicker]="Transfer_Date">
+          <input matInput placeholder="Transfer Date" formControlName="Transfer_Date" [matDatepicker]="Transfer_Date">
           <mat-datepicker-toggle matSuffix [for]="Transfer_Date"></mat-datepicker-toggle>
           <mat-datepicker #Transfer_Date></mat-datepicker>
         </mat-form-field>

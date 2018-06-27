@@ -51,9 +51,9 @@ export class WizardComponent implements OnInit {
   VehicleId = [
     {VehicleId: 0, Name: 'LCV/HCV'},
     {VehicleId: 1, Name: 'HTV/BUS'},
-    {VehicleId: 2, Name: 'CommeTwo-Wheelerrcial'},
-    {VehicleId: 3, Name: 'Private'},
-    {VehicleId: 4, Name: 'Taxi '}
+    {VehicleId: 2, Name: 'TWO-Wheeler'},
+    {VehicleId: 3, Name: 'CAR'},
+    {VehicleId: 4, Name: 'TAXI '}
   ];
 
   FuelType = [

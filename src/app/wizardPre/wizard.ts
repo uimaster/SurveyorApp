@@ -44,9 +44,9 @@ export class PreWizardComponent implements OnInit {
   VehicleTypeID = [
     {VehicleTypeID: 0, Name: 'LCV/HCV'},
     {VehicleTypeID: 1, Name: 'HTV/BUS'},
-    {VehicleTypeID: 2, Name: 'CommeTwo-Wheelerrcial'},
-    {VehicleTypeID: 3, Name: 'Private'},
-    {VehicleTypeID: 4, Name: 'Taxi'}
+    {VehicleTypeID: 2, Name: 'TWO-Wheeler'},
+    {VehicleTypeID: 3, Name: 'CAR'},
+    {VehicleTypeID: 4, Name: 'TAXI'}
   ];
 
   FuelType = [
