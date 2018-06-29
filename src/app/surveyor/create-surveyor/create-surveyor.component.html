@@ -67,19 +67,19 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      <mat-form-field>
+      <!-- <mat-form-field>
         <input matInput placeholder="expireDate" formControlName="expireDate" [matDatepicker]="picker2">
 
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
 
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field>
         <input matInput placeholder="GPSCordinates" formControlName="GPSCordinates">
       </mat-form-field>
 
-      <mat-form-field>
+      <!-- <mat-form-field>
           <mat-select placeholder="Company" formControlName="company">
             <mat-option [value]="1">
               Bajaj Allianz General Insurance Co. Ltd.
@@ -89,7 +89,7 @@
             </mat-option>
             <mat-error *ngIf="myForm.controls['company'].hasError('required') && myForm.controls['company'].touched">Company is required</mat-error>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
       <mat-form-field>
         <mat-select placeholder="Active" formControlName="active">

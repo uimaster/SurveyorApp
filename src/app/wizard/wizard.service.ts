@@ -91,10 +91,8 @@ export class WizardService{
 
      // ============ Registraion Search for vehicle Details ============ // 
 
-     SearchRegistration(payload:any):Observable<any>{
-        // var CaseID= localStorage.getItem('CaseID');
-        // const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-        return this.http.get(REGISTRATION_SEARCH_URL, payload)
+     SearchRegistration(payload:any):Observable<any>{        
+        return this.http.get(REGISTRATION_SEARCH_URL+"/"+payload)
             .map((res) =>{
                 if(res){
                     return res;

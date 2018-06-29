@@ -75,6 +75,7 @@ export class WizardComponent implements OnInit {
   thisYear: number = new Date().getFullYear();
   driverAge:number =0;
   CaseVehicleId:any = 0;
+  RegistrationMsg: string ="";
  
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
@@ -336,12 +337,75 @@ export class WizardComponent implements OnInit {
     }
 
 
-    SearchRegistration(data){  
+    SearchRegistration(){  
+
+        let data= ((document.getElementById("RegistrationNum") as HTMLInputElement).value);       
         this.wizardService.SearchRegistration(data)
         .subscribe(res =>{
-            if(res && res.Status == 200){
-                this.claimDetailData = res.Data;
-                console.log(this.claimDetailData);
+            debugger;
+            console.log(res);
+            if(res && res.GetVehicleDataResult.status === '200'){
+                this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
+                console.log(res.GetVehicleDataResult.description);               
+                this.RegistrationMsg = res.GetVehicleDataResult.description;
+                this.thirdFormGroup.controls['CaseVehicleId'].setValue('');
+                this.thirdFormGroup.controls['SurveyorsId'].setValue('');
+                this.thirdFormGroup.controls['VehicleId'].setValue('');
+                this.thirdFormGroup.controls['VehicleName'].setValue('');
+                this.thirdFormGroup.controls['Registration_No'].setValue(data);
+                this.thirdFormGroup.controls['RegistrationDate'].setValue(res.GetVehicleDataResult.vehicle.regn_dt);
+                this.thirdFormGroup.controls['ChasisNo'].setValue(res.GetVehicleDataResult.vehicle.chasis_no);
+                this.thirdFormGroup.controls['EngineNo'].setValue(res.GetVehicleDataResult.vehicle.engine_no);
+                this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue('');
+                this.thirdFormGroup.controls['PermitNo'].setValue('');
+                this.thirdFormGroup.controls['TypeofPermit'].setValue('');
+                this.thirdFormGroup.controls['Make'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
+                this.thirdFormGroup.controls['Model'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
+                this.thirdFormGroup.controls['MgfYear'].setValue(res.GetVehicleDataResult.vehicle.manufaturer_year);
+                this.thirdFormGroup.controls['Color'].setValue(res.GetVehicleDataResult.vehicle.color);
+                this.thirdFormGroup.controls['OdometerReading'].setValue('');
+                this.thirdFormGroup.controls['Hypo'].setValue('');
+                this.thirdFormGroup.controls['RegisteredOwner'].setValue('');
+                this.thirdFormGroup.controls['Transfer_Date'].setValue('');
+                this.thirdFormGroup.controls['Class_Vehicle'].setValue(res.GetVehicleDataResult.vehicle.fla_vh_class_desc);
+                this.thirdFormGroup.controls['Pre_Accident_Condition'].setValue('');
+                this.thirdFormGroup.controls['Laden_Wt'].setValue('');
+                this.thirdFormGroup.controls['Unladen_Wt'].setValue('');
+                this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
+                this.thirdFormGroup.controls['Permit_Area'].setValue('');
+                this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
+                this.thirdFormGroup.controls['FuelType'].setValue(res.GetVehicleDataResult.vehicle.fuel_type_desc);
+            }
+            else{
+                console.log(res.GetVehicleDataResult.description);
+                this.RegistrationMsg = res.GetVehicleDataResult.description;
+                this.thirdFormGroup.controls['Registration_No'].setValue(data);                
+                this.thirdFormGroup.controls['CaseVehicleId'].setValue('');
+                this.thirdFormGroup.controls['SurveyorsId'].setValue('');
+                this.thirdFormGroup.controls['VehicleId'].setValue('');
+                this.thirdFormGroup.controls['VehicleName'].setValue('');
+                this.thirdFormGroup.controls['RegistrationDate'].setValue('');
+                this.thirdFormGroup.controls['ChasisNo'].setValue('');
+                this.thirdFormGroup.controls['EngineNo'].setValue('');
+                this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue('');
+                this.thirdFormGroup.controls['PermitNo'].setValue('');
+                this.thirdFormGroup.controls['TypeofPermit'].setValue('');
+                this.thirdFormGroup.controls['Make'].setValue('');
+                this.thirdFormGroup.controls['Model'].setValue('');
+                this.thirdFormGroup.controls['MgfYear'].setValue('');
+                this.thirdFormGroup.controls['Color'].setValue('');
+                this.thirdFormGroup.controls['OdometerReading'].setValue('');
+                this.thirdFormGroup.controls['Hypo'].setValue('');
+                this.thirdFormGroup.controls['RegisteredOwner'].setValue('');
+                this.thirdFormGroup.controls['Transfer_Date'].setValue('');
+                this.thirdFormGroup.controls['Class_Vehicle'].setValue('');
+                this.thirdFormGroup.controls['Pre_Accident_Condition'].setValue('');
+                this.thirdFormGroup.controls['Laden_Wt'].setValue('');
+                this.thirdFormGroup.controls['Unladen_Wt'].setValue('');
+                this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
+                this.thirdFormGroup.controls['Permit_Area'].setValue('');
+                this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
+                this.thirdFormGroup.controls['FuelType'].setValue('');
             }
         })
     }

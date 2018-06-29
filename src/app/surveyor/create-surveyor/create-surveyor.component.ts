@@ -35,14 +35,14 @@ export class CreateSurveyorComponent implements OnInit {
       mobile: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       landline: ['', Validators.pattern(/^[0-9]*$/)],
       area: [1, Validators.required],
-      city: [0],
+      city: ['0'],
       address: [],
       licenseNo: [],
-      LicenceExpiryDate: [],
-      expireDate: [null],
+      LicenceExpiryDate: [''],
+      // expireDate: [null],
       GPSCordinates: [null],
       password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
-      company: ['', Validators.required],
+      // company: ['', Validators.required],
       active: [true, [Validators.required]]
 
     });
@@ -61,11 +61,11 @@ export class CreateSurveyorComponent implements OnInit {
                 this.myForm.controls['mobile'].setValue(finalData[i].MobileNo);
                 this.myForm.controls['landline'].setValue(finalData[i].LandLine);
                 this.myForm.controls['area'].setValue(finalData[i].AreaId);
-                 this.myForm.controls['company'].setValue(finalData[i].COMPANY_ID);
+                //  this.myForm.controls['company'].setValue(finalData[i].COMPANY_ID);
                  this.myForm.controls['LicenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
-                 this.myForm.controls['city'].setValue(finalData[i].CityId);
+                 this.myForm.controls['city'].setValue('0');
                   this.myForm.controls['address'].setValue(finalData[i].Address);
-                  this.myForm.controls['expireDate'].setValue(finalData[i].ExpireDate);
+                  this.myForm.controls['LicenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
                   this.myForm.controls['active'].setValue(finalData[i].IsActive);
                   this.myForm.controls['licenseNo'].setValue(finalData[i].LicenceNo);
                   this.myForm.controls['GPSCordinates'].setValue(finalData[i].GPSCordinates);
@@ -93,13 +93,13 @@ export class CreateSurveyorComponent implements OnInit {
       "MobileNo":formD.MobileNo,
       "LandLine":formD.landline,
       "AreaId":formD.area,
-      "CityId":formD.city,
+      "CityId":'0',
       "Address":formD.address,
       "LicenceNo":formD.licenseNo,
       "LicenceExpiryDate":formD.LicenceExpiryDate.toLocaleDateString("en-GB"),
-      "ExpireDate" :formD.expireDate.toLocaleDateString("en-GB"),
+      // "ExpireDate" :formD.expireDate.toLocaleDateString("en-GB"),
       "GPSCordinates":formD.GPSCordinates,
-      "COMPANY_ID":formD.company,
+      // "COMPANY_ID":formD.company,
       "IsActive":formD.active
     };
 
@@ -116,6 +116,7 @@ export class CreateSurveyorComponent implements OnInit {
       error => {
         this.showError = true;
         this.errorMessage = error.Message;
+        this.Loader = false;
       },
       () => {
         // No errors, route to new page

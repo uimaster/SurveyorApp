@@ -70,6 +70,7 @@ export class CreateAreaComponent implements OnInit {
         this.Loader = false;
       },
       error => {
+        this.Loader = false;
         this.showError = true;
         this.errorMessage = error.Message;
       },

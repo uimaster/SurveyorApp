@@ -87,22 +87,18 @@
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Vehicle</ng-template>
-        <h4>Vehicle Details </h4>
-        <!-- <div class="searchBox">
-          <mat-form-field style="margin: 0; width: 65%;">
-            <input matInput placeholder="Search Registration No" id="RegistrationNum">
-          </mat-form-field>
-          <button mat-raised-button color="primary" (click)="SearchRegistration(RegistrationNum)">
-            <i class="material-icons">
-              search
-            </i>
-          </button>
-        </div> -->
-
-        <br/>
-        <br/>
+        <h4>Vehicle Details </h4>       
+        <div class="alert success" *ngIf="RegistrationMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">{{RegistrationMsg}}</div>            
         <mat-form-field style="display:none;">
           <input matInput placeholder="CaseVehicle Id" formControlName="CaseVehicleId">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Registration No. (Search Registaration No.)" formControlName="Registration_No" id="RegistrationNum" required>
+          <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;">
+            <i class="material-icons">
+            search
+            </i>
+          </mat-icon>
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Type of Vehicle" formControlName="VehicleId" [(ngModel)]="CaseVehicleId">
@@ -111,9 +107,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Registration No" formControlName="Registration_No" required>
-        </mat-form-field>
+        
         <mat-form-field>
           <input matInput placeholder="Chasis No" formControlName="ChasisNo" required>
         </mat-form-field>
@@ -127,9 +121,9 @@
           <input matInput placeholder="Model" formControlName="Model">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Year Manufacture" formControlName="MgfYear" [matDatepicker]="picker3">
-          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-          <mat-datepicker #picker3></mat-datepicker>
+          <input matInput placeholder="Year Manufacture" formControlName="MgfYear" />
+          <!-- <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker> -->
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Color" formControlName="Color">

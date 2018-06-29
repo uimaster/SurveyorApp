@@ -89,6 +89,7 @@ export class CreateComponent implements OnInit {
       error => {
         this.showError = true;
         this.errorMessage = error.Message;
+        this.Loader = false;
       },
       () => {
         // No errors, route to new page
