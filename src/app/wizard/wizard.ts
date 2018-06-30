@@ -75,8 +75,11 @@ export class WizardComponent implements OnInit {
   thisYear: number = new Date().getFullYear();
   driverAge:number =0;
   CaseVehicleId:any = 0;
-  RegistrationMsg: string ="";
- 
+  RegSearchSuccessMsg = false;
+  RegSearchFailedMsg = false;
+  maxDate :any;
+  maxDateToday = new Date();
+  expiryMinDate:any;
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
      private router: Router, public dialog: MatDialog, private companyService: CompaniesService)
@@ -204,8 +207,20 @@ export class WizardComponent implements OnInit {
         tenthCtrl: ['', Validators.required]
     });
     
-    
+   
+    var today:any = new Date();
+    var dd:any = today.getDate();
+    var mm:any = today.getMonth()+1; //January is 0!
+    var yyyy:any = today.getFullYear()-18;
+    if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
 
+    today = yyyy+'-'+mm+'-'+dd;
+    this.maxDate = today;
    }
 
    openDialog() {
@@ -230,13 +245,19 @@ export class WizardComponent implements OnInit {
         });
     }
 
-    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>){
-        console.log(event.value);
-        // let dateString : string = event.value.toString();
-        // let years : number = parseInt(dateString.substring(0,40));
+    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>){        
+        let today = new Date();
+        let thisYear = today.getFullYear();
+        let selectedDate = event.value;        
+        let selectedYear = selectedDate.getFullYear();
+        let DriverAge = thisYear - selectedYear;      
+        this.fourthFormGroup.controls['Age'].setValue(DriverAge);
+    }
 
-        // let finalyears = this.thisYear - years;
-        // this.fourthFormGroup.controls['Age'].setValue(years);
+    getIssueDate(type: string, event: MatDatepickerInputEvent<Date>){
+        let SelectedDate = event.value;
+        this.expiryMinDate = SelectedDate;
+        this.fourthFormGroup.controls['ValidUptoDate'].setValue('');
     }
     
 
@@ -269,12 +290,16 @@ export class WizardComponent implements OnInit {
 
     setTimeout(() => {
         this.getCrashImage10();
-    }, 2600);
+    }, 2500);
 
     setTimeout(() => {
         this.getCrashImage11();
-    }, 3050);
+    }, 2800);
 
+    setTimeout(() => {
+        this.getDriverLicenseImg();
+    }, 3050);
+    
     setTimeout(() => {
         this.getCrashImage12();
     }, 3400);
@@ -292,16 +317,12 @@ export class WizardComponent implements OnInit {
     setTimeout(() => {
         this.getClaimFormStatement();
     }, 4900);
-    
-    
 
     this.seventhFormGroup = this._formBuilder.group({
         seventhCtrl: ['', Validators.required]
     });
-    
-    
-   
   }
+
 
 
     getClaimDetails(){  
@@ -337,17 +358,15 @@ export class WizardComponent implements OnInit {
     }
 
 
-    SearchRegistration(){  
+    SearchRegistration(){ 
 
         let data= ((document.getElementById("RegistrationNum") as HTMLInputElement).value);       
         this.wizardService.SearchRegistration(data)
         .subscribe(res =>{
-            debugger;
-            console.log(res);
             if(res && res.GetVehicleDataResult.status === '200'){
-                this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
-                console.log(res.GetVehicleDataResult.description);               
-                this.RegistrationMsg = res.GetVehicleDataResult.description;
+                this.VehicleDetailData = res.GetVehicleDataResult.vehicle;  
+                this.RegSearchFailedMsg = false;
+                this.RegSearchSuccessMsg = true;
                 this.thirdFormGroup.controls['CaseVehicleId'].setValue('');
                 this.thirdFormGroup.controls['SurveyorsId'].setValue('');
                 this.thirdFormGroup.controls['VehicleId'].setValue('');
@@ -377,8 +396,8 @@ export class WizardComponent implements OnInit {
                 this.thirdFormGroup.controls['FuelType'].setValue(res.GetVehicleDataResult.vehicle.fuel_type_desc);
             }
             else{
-                console.log(res.GetVehicleDataResult.description);
-                this.RegistrationMsg = res.GetVehicleDataResult.description;
+                this.RegSearchFailedMsg = true;
+                this.RegSearchSuccessMsg = false;
                 this.thirdFormGroup.controls['Registration_No'].setValue(data);                
                 this.thirdFormGroup.controls['CaseVehicleId'].setValue('');
                 this.thirdFormGroup.controls['SurveyorsId'].setValue('');
@@ -902,6 +921,50 @@ export class WizardComponent implements OnInit {
             this.isImageLoading = false;
         }, error => {
             this.isImageLoading = false;
+            console.log(error);
+        });
+    }
+
+    // DRIVERLICENSE IMAGE //
+
+    createImageFromBlobD(image: Blob) {
+        let reader = new FileReader();
+        this.imageToShowD = 'http://apiflacors.iflotech.in'+image;
+    }
+
+    onFileChangedD(event: any) {
+        this.files = event.target.files;
+        this.postDetailImageD();
+      }
+  
+      imageToShowD: any;
+      isImageLoadingD:boolean = false;
+
+    postDetailImageD() {
+        const formData = new FormData();
+        formData.append('CaseID', this.caseId);
+        for (const file of this.files) {
+            formData.append(name, file, file.name);
+        }
+        this.httpClient.post(IMAGEURL.DRIVERLICENSE_URL, formData).subscribe(
+        res => {
+             console.log(res);
+        });
+        setTimeout(() => {
+            this.getDriverLicenseImg();
+        }, 1000);
+        
+    }
+
+    getDriverLicenseImg() {
+        this.isImageLoadingD = true;
+        this.wizardService.getDriverLicenseImg().subscribe(data => {
+            if(data.Data[0] !== null && data.Data[0] !== undefined){
+                this.createImageFromBlobD(data.Data[0].Image);
+            }
+            this.isImageLoadingD = false;
+        }, error => {
+            this.isImageLoadingD = false;
             console.log(error);
         });
     }

@@ -37,10 +37,11 @@
           <mat-datepicker-toggle matSuffix [for]="Prepicker2"></mat-datepicker-toggle>
           <mat-datepicker #Prepicker2></mat-datepicker>
         </mat-form-field>
-        
+
         <mat-form-field>
-          <input matInput placeholder="Inspection Time" formControlName="InspectionTime">
-         
+          <input matInput placeholder="Inspection Time" formControlName="InspectionTime"  [matDatepicker]="InspectionTime" >
+          <mat-datepicker-toggle matSuffix [for]="InspectionTime"></mat-datepicker-toggle>
+          <mat-datepicker #InspectionTime></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
@@ -63,16 +64,24 @@
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Vehicle</ng-template>
         <h4>Vehicle Details</h4>
+        <div class="alert error" *ngIf="RegSearchFailedMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record not found, Please try again. </div>
+        <div class="alert success" *ngIf="RegSearchSuccessMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record found !</div>
+        <mat-form-field>
+          <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum" required>
+          <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;">
+            <i class="material-icons">
+            search
+            </i>
+          </mat-icon>
+        </mat-form-field>
+
         <mat-form-field>
           <mat-select placeholder="Type of Vehicle" formControlName="VehicleTypeID">
             <mat-option *ngFor="let item of VehicleTypeID" [value]="item.VehicleTypeID">
               {{ item.Name }}
             </mat-option>
           </mat-select>
-        </mat-form-field>  
-        <mat-form-field>
-          <input matInput placeholder="Registration No" formControlName="Registration_No">
-        </mat-form-field>
+        </mat-form-field>        
         <mat-form-field>
           <input matInput placeholder="Chasis No" formControlName="ChasisNo">
         </mat-form-field>
@@ -173,34 +182,38 @@
         <mat-form-field>
           <input matInput placeholder="Previous Policy No" formControlName="CurrentPolicyNo">
         </mat-form-field>
+        
+
         <mat-form-field>
-          <input matInput placeholder="Policy Start Date" formControlName="PolicyStartDate">
-        </mat-form-field>
+            <input matInput placeholder="Policy Start Date" formControlName="PolicyStartDate"  [matDatepicker]="PolicyStartDate" (dateChange)="getPolicyStartDate('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="PolicyStartDate"></mat-datepicker-toggle>
+            <mat-datepicker #PolicyStartDate></mat-datepicker>
+          </mat-form-field>
        
         <mat-form-field>
-          <input matInput placeholder="Policy End Date" formControlName="PolicyEndDate"  [matDatepicker]="picker5a">
+          <input matInput placeholder="Policy End Date" [max]="policyEndMaxDate" formControlName="PolicyEndDate"  [matDatepicker]="picker5a">
           <mat-datepicker-toggle matSuffix [for]="picker5a"></mat-datepicker-toggle>
           <mat-datepicker #picker5a></mat-datepicker>
         </mat-form-field>
         
         <div class="mat-form-checkfield">
           <label for="ClaimHistory">Claim History</label>
-          <mat-radio-group formControlName="ClaimHistory" id="ClaimHistory">
-            <mat-radio-button value="0" checked>No</mat-radio-button>
+          <mat-radio-group formControlName="ClaimHistory" id="ClaimHistory" [(ngModel)]="ClaimHistory">
+            <mat-radio-button value="0">No</mat-radio-button>
             <mat-radio-button value="1">Yes</mat-radio-button>
           </mat-radio-group>
-        </div>  
+        </div>
         <div class="mat-form-checkfield">  
           <label for="GapInInsurance">Gap InInsurance</label>
-          <mat-radio-group formControlName="GapInInsurance" id="GapInInsurance">
-            <mat-radio-button value="0" checked>No</mat-radio-button>
+          <mat-radio-group formControlName="GapInInsurance" id="GapInInsurance" [(ngModel)]="GapInInsurance">
+            <mat-radio-button value="0">No</mat-radio-button>
             <mat-radio-button value="1">Yes</mat-radio-button>
           </mat-radio-group>
         </div>  
         <div class="mat-form-checkfield">  
           <label for="GapInInsurance">Proposed Insured</label>
-          <mat-radio-group formControlName="ProposedInsured" id="GapInInsurance">
-            <mat-radio-button value="0" checked>No</mat-radio-button>
+          <mat-radio-group formControlName="ProposedInsured" id="GapInInsurance" [(ngModel)]="ProposedInsured">
+            <mat-radio-button value="0">No</mat-radio-button>
             <mat-radio-button value="1">Yes</mat-radio-button>
           </mat-radio-group>
         </div>    
@@ -214,7 +227,7 @@
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button  matStepperNext style="margin-left: 10px;">Skip</button>
           <button mat-raised-button color="primary" style="margin-left: 10px;"  (click)="ninthStepSubmit(ninethFormGroup.value);"
-          [disabled]="thirdFormGroup.invalid || submitDisabled">Next</button>
+          [disabled]="ninethFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>

@@ -13,6 +13,18 @@ export class PreWizardService{
     
     constructor(private http: HttpClient){}
 
+    // ============ Registraion Search for vehicle Details ============ // 
+
+    SearchRegistration(payload:any):Observable<any>{        
+        return this.http.get(urls.REGISTRATION_SEARCH_URL+"/"+payload)
+            .map((res) =>{
+                if(res){
+                    return res;
+                }
+            })
+            .catch((error) => Observable.throw('server Error.'));
+    }
+
     // ============ CASE Details ============ // 
 
     pre_GetCaseDetails():Observable<any>{

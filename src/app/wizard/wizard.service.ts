@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
 import { LoginRequest, LoginResponse} from '../login/login.model';
-import { 
-        WIZARD_GETCLAIMURL, WIZARD_POSTCLAIMURL, WIZARD_POSTSURVEYORURL, WIZARD_GETVEHICLEDETAILSURL, WIZARD_POSTVEHICLEDETAILSURL,
-        WIZARD_GETDRIVERDETAILSURL, WIZARD_POSTDRIVERDETAILSURL, WIZARD_GETACCIDENTDETAILSURL, WIZARD_POSTACCIDENTDETAILSURL,
-        WIZARD_GETFIRDETAILS, WIZARD_POSTFIRDETAILS, GETSUMMARYREPORT_URL, DAMAGEDETAILS_URL, GENERATESPOTREPORT, DOWNLOADSPOTREPORT,
-        WIZARD_DAMAGEDETAILSURL_PRE, WIZARD_DAMAGEPARTSLIST_PRE, REGISTRATION_SEARCH_URL, SPOTCOMPLETIONURL
-        } from '../../shared/urls';
+import * as urls from '../../shared/urls';
 import * as IMAGEURL from '../../shared/img.urls';        
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -23,7 +18,7 @@ export class WizardService{
     getClaimDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('CaseID', CaseID);
-        return this.http.get(WIZARD_GETCLAIMURL, {params})
+        return this.http.get(urls.WIZARD_GETCLAIMURL, {params})
             .map((res) =>{
                 if(res){
                     return res;
@@ -33,7 +28,7 @@ export class WizardService{
     }
 
     postClaimDetails(payload: any): Observable<any> {
-        return this.http.post(WIZARD_POSTCLAIMURL, payload)        
+        return this.http.post(urls.WIZARD_POSTCLAIMURL, payload)        
           .map((res: any) =>  {
             if (res) {          
               return res;
@@ -49,7 +44,7 @@ export class WizardService{
     // ============ Surveyor Details ============ // 
 
     postSurveyorDetails(payload: any): Observable<any> { 
-        return this.http.post(WIZARD_POSTSURVEYORURL, payload)        
+        return this.http.post(urls.WIZARD_POSTSURVEYORURL, payload)        
           .map((res: any) =>  {
             if (res) {          
               return res;
@@ -67,7 +62,7 @@ export class WizardService{
     getVehicleDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-        return this.http.get(WIZARD_GETVEHICLEDETAILSURL, {params})
+        return this.http.get(urls.WIZARD_GETVEHICLEDETAILSURL, {params})
             .map((res) =>{
                 if(res){
                     return res;
@@ -77,7 +72,7 @@ export class WizardService{
     }
 
     postVehicleDetails(payload: any): Observable<any> { 
-        return this.http.post(WIZARD_POSTVEHICLEDETAILSURL, payload)        
+        return this.http.post(urls.WIZARD_POSTVEHICLEDETAILSURL, payload)        
           .map((res: any) =>  {
             if (res) {          
               return res;
@@ -92,7 +87,7 @@ export class WizardService{
      // ============ Registraion Search for vehicle Details ============ // 
 
      SearchRegistration(payload:any):Observable<any>{        
-        return this.http.get(REGISTRATION_SEARCH_URL+"/"+payload)
+        return this.http.get(urls.REGISTRATION_SEARCH_URL+"/"+payload)
             .map((res) =>{
                 if(res){
                     return res;
@@ -106,7 +101,7 @@ export class WizardService{
     getDriverDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-        return this.http.get(WIZARD_GETDRIVERDETAILSURL, {params})
+        return this.http.get(urls.WIZARD_GETDRIVERDETAILSURL, {params})
             .map((res) =>{
                 if(res){
                     return res;
@@ -118,7 +113,7 @@ export class WizardService{
     
 
     postDriverDetails(payload: any): Observable<any> { 
-        return this.http.post(WIZARD_POSTDRIVERDETAILSURL, payload)        
+        return this.http.post(urls.WIZARD_POSTDRIVERDETAILSURL, payload)        
           .map((res: any) =>  {
             if (res) {          
               return res;
@@ -135,7 +130,7 @@ export class WizardService{
     geAccidentDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-        return this.http.get(WIZARD_GETACCIDENTDETAILSURL, {params})
+        return this.http.get(urls.WIZARD_GETACCIDENTDETAILSURL, {params})
             .map((res) =>{
                 if(res){
                     return res;
@@ -147,7 +142,7 @@ export class WizardService{
     
 
     postAccidentDetails(payload: any): Observable<any> { 
-        return this.http.post(WIZARD_POSTACCIDENTDETAILSURL, payload)        
+        return this.http.post(urls.WIZARD_POSTACCIDENTDETAILSURL, payload)        
           .map((res: any) =>  {
             if (res) {          
               return res;
@@ -164,7 +159,7 @@ export class WizardService{
     geFirDetails():Observable<any>{
       var CaseID= localStorage.getItem('CaseID');
       const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-      return this.http.get(WIZARD_GETFIRDETAILS, {params})
+      return this.http.get(urls.WIZARD_GETFIRDETAILS, {params})
           .map((res) =>{
               if(res){
                   return res;
@@ -176,7 +171,7 @@ export class WizardService{
   
 
   postFirDetails(payload: any): Observable<any> { 
-      return this.http.post(WIZARD_POSTFIRDETAILS, payload)        
+      return this.http.post(urls.WIZARD_POSTFIRDETAILS, payload)        
         .map((res: any) =>  {
           if (res) {          
             return res;
@@ -193,7 +188,7 @@ export class WizardService{
   GetDamageDetails():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-    return this.http.get(WIZARD_DAMAGEDETAILSURL_PRE, {params})
+    return this.http.get(urls.WIZARD_DAMAGEDETAILSURL_PRE, {params})
         .map((res) =>{
             if(res){
                 return res;
@@ -205,7 +200,7 @@ export class WizardService{
 GetDamagePartList():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-    return this.http.get(WIZARD_DAMAGEPARTSLIST_PRE, {params})
+    return this.http.get(urls.WIZARD_DAMAGEPARTSLIST_PRE, {params})
         .map((res) =>{
             if(res){
                 return res;
@@ -215,7 +210,7 @@ GetDamagePartList():Observable<any>{
 }
 
 PostDamageDetails(payload: any): Observable<any> { 
-    return this.http.post(WIZARD_DAMAGEDETAILSURL_PRE, payload)        
+    return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE, payload)        
       .map((res: any) =>  {
         if (res) {          
           return res;
@@ -235,6 +230,19 @@ PostDamageDetails(payload: any): Observable<any> {
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
     return this.http.get(IMAGEURL.CLAIMPOLICYIMG_URL, {params})
+        .map((res) =>{
+            if(res){
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
+
+  // GET DRIVER LICENSE IMAGE //
+  getDriverLicenseImg():Observable<any>{
+    var CaseID= localStorage.getItem('CaseID');
+    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
+    return this.http.get(IMAGEURL.DRIVERLICENSE_URL, {params})
         .map((res) =>{
             if(res){
                 return res;
@@ -416,7 +424,7 @@ PostDamageDetails(payload: any): Observable<any> {
   getSummaryReportDetails():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-    return this.http.get(GETSUMMARYREPORT_URL, {params})
+    return this.http.get(urls.GETSUMMARYREPORT_URL, {params})
         .map((res) =>{
             if(res){
                 return res;
@@ -442,7 +450,7 @@ PostDamageDetails(payload: any): Observable<any> {
   generateSpotSurvey():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-    return this.http.get(GENERATESPOTREPORT, {params})
+    return this.http.get(urls.GENERATESPOTREPORT, {params})
         .map((res) =>{
             if(res){
                 return res;

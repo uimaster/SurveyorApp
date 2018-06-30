@@ -9,6 +9,8 @@ export const RIGHTFRONTCRASH_URL = BASE2URL + 'RightFrontImg';
 export const RIGHTCRASH_URL = BASE2URL + 'CarRightSideimg';
 export const RIGHTREARCRASH_URL = BASE2URL + 'RightRearImg';
 export const CLAIMFORMSTATEMENT_URL = BASE2URL + 'ClaimFormimg';
+export const DRIVERLICENSE_URL = BASE2URL + 'DriverLicenceimg';
+
 
 // REPORT SUMMARY IMAGES ULRS//
 export const CLAIMFORM_URL = BASE2URL + 'ClaimFormimg';

@@ -61,13 +61,13 @@
           <input matInput placeholder="Surveyor Name" formControlName="SurveyorsName">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Date of Allotment of Survey" formControlName="DateofAllotmentofsurvey" [matDatepicker]="picker1"
+          <input matInput placeholder="Date of Allotment of Survey" [max]="maxDateToday" formControlName="DateofAllotmentofsurvey" [matDatepicker]="picker1"
             required>
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Date of Survey" formControlName="DateofSurvey" required [matDatepicker]="picker2">
+          <input matInput placeholder="Date of Survey" formControlName="DateofSurvey" [max]="maxDateToday" required [matDatepicker]="picker2">
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -88,12 +88,14 @@
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Vehicle</ng-template>
         <h4>Vehicle Details </h4>       
-        <div class="alert success" *ngIf="RegistrationMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">{{RegistrationMsg}}</div>            
+        <div class="alert error" *ngIf="RegSearchFailedMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record not found, Please try again. </div>
+        <div class="alert success" *ngIf="RegSearchSuccessMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record found !</div> 
+         
         <mat-form-field style="display:none;">
           <input matInput placeholder="CaseVehicle Id" formControlName="CaseVehicleId">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Registration No. (Search Registaration No.)" formControlName="Registration_No" id="RegistrationNum" required>
+          <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum" required>
           <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;">
             <i class="material-icons">
             search
@@ -197,21 +199,29 @@
         <mat-form-field>
           <input matInput placeholder="Driver Name" formControlName="Drivername">
         </mat-form-field>
+        <div class="mat-form-checkfield">
+          <label>Upload Driving License</label>
+          <input type="file" name="file" (change)="onFileChangedD($event)" class="custom-file-input" />
+          <img alt="" id="imageUrl" [src]="imageToShowD" />
+        </div>
         <mat-form-field>
           <input matInput placeholder="Driver License Number" formControlName="DriverLicenseNo">
         </mat-form-field>
+        
         <mat-form-field>
-          <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate" [matDatepicker]="picker4">
-          <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-          <mat-datepicker #picker4></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Issue Date" formControlName="IssueDate" [matDatepicker]="picker5">
+          <input matInput placeholder="Issue Date" formControlName="IssueDate" [max]="maxDateToday" [matDatepicker]="picker5" (dateChange)="getIssueDate('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
           <mat-datepicker #picker5></mat-datepicker>
         </mat-form-field>
+
         <mat-form-field>
-          <input matInput placeholder="Date Of Birth" formControlName="DOB" [matDatepicker]="picker6" [(ngModel)]="Age" (dateChange)="getDriverAge('change', $event)">
+          <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate" [min]="expiryMinDate" [matDatepicker]="picker4" />
+          <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+          <mat-datepicker #picker4></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Date Of Birth" [max]="maxDate" formControlName="DOB" [matDatepicker]="picker6" [(ngModel)]="Age" (dateChange)="getDriverAge('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
           <mat-datepicker #picker6></mat-datepicker>
         </mat-form-field>
