@@ -80,6 +80,7 @@ export class WizardComponent implements OnInit {
   maxDate :any;
   maxDateToday = new Date();
   expiryMinDate:any;
+  uploadImageModal:boolean = false;
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
      private router: Router, public dialog: MatDialog, private companyService: CompaniesService)
@@ -813,6 +814,7 @@ export class WizardComponent implements OnInit {
 
     getDamagePartList(){
         this.Loader = true; 
+        this.uploadImageModal = true;
         this.wizardService.GetDamagePartList()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -820,6 +822,10 @@ export class WizardComponent implements OnInit {
                 this.Loader = false;               
             }
         })
+    }
+
+    closeImageModal(){
+        this.uploadImageModal = false;
     }
 
     showdamageListData(data){
@@ -846,6 +852,7 @@ export class WizardComponent implements OnInit {
             this.Loader = true;
             this.wizardService.PostDamageDetails(this.eightthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
+                    this.uploadImageModal = false;
                     this.postResponseData = res.Data;        
                     this.successMessage = res.Message;
                     alert("You have updated part "+ this.successMessage+'lly');

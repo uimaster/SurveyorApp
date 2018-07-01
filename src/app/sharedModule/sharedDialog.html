@@ -1,18 +1,19 @@
 <h2 mat-dialog-title style="color:#000;">Completion Confirmation.</h2>
-     <mat-dialog-content>
-        <p *ngIf="showFirstData">Do you want to complete the case?</p>
-        <p *ngIf="showSecondData">Do you want to Download OR Generate report?</p>
-    </mat-dialog-content>
-     <mat-dialog-actions style="margin-top: 20px; text-align: center; display: block;">
-         
-         <div *ngIf="showFirstData">
-            <button mat-raised-button  (click)="toShowSecondData()">No</button>
-            <button mat-raised-button color="primary" (click)="PostSpotCompletion();">Yes</button>
+<mat-dialog-content>
+    <p *ngIf="showFirstData">Do you want to complete the case?</p>
+    <p *ngIf="showSecondData">Do you want to Download OR Generate report?</p>
+</mat-dialog-content>
+<mat-dialog-actions style="margin-top: 20px; text-align: center; display: block;">
+    <div *ngIf="showFirstData">
+        <button mat-raised-button (click)="toShowSecondData()">No</button>
+        <button mat-raised-button color="primary" (click)="PostSpotCompletion();">Yes</button>
+    </div>
+    <div *ngIf="showSecondData">
+        <div class="alert success" style="padding:10px; width: 90%; margin-bottom: 10px; margin-top: 0;">
+            <small>You have {{msg}}fully completed the Process.</small>
         </div>
-        <div *ngIf="showSecondData">
-            <div class="alert success" style="padding:10px; width: 90%; margin-bottom: 10px; margin-top: 0;"><small>You have {{msg}}fully completed the Process.</small></div>
-            <button mat-raised-button mat-dialog-close class="smallBtn" (click)="closeDialog()">Cancel</button>
-            <a mat-raised-button color="ascent" class="smallBtn" target="_blank" href="{{downloadUrl}}">DownLoad</a>
-            <button mat-raised-button class="smallBtn" color="primary" (click)="generateSpotSurvey();">Generate</button>
-        </div>
-     </mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close class="smallBtn" (click)="closeDialog()">Cancel</button>
+        <a mat-raised-button color="ascent" class="smallBtn" target="_blank" href="{{downloadUrl}}">DownLoad</a>
+        <button mat-raised-button class="smallBtn" color="primary" (click)="generateSpotSurvey();">Generate</button>
+    </div>
+</mat-dialog-actions>

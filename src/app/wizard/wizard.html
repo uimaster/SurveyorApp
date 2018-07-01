@@ -61,8 +61,8 @@
           <input matInput placeholder="Surveyor Name" formControlName="SurveyorsName">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Date of Allotment of Survey" [max]="maxDateToday" formControlName="DateofAllotmentofsurvey" [matDatepicker]="picker1"
-            required>
+          <input matInput placeholder="Date of Allotment of Survey" [max]="maxDateToday" formControlName="DateofAllotmentofsurvey"
+            [matDatepicker]="picker1" required>
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -87,18 +87,19 @@
     <mat-step [stepControl]="thirdFormGroup">
       <form [formGroup]="thirdFormGroup">
         <ng-template matStepLabel>Vehicle</ng-template>
-        <h4>Vehicle Details </h4>       
+        <h4>Vehicle Details </h4>
         <div class="alert error" *ngIf="RegSearchFailedMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record not found, Please try again. </div>
-        <div class="alert success" *ngIf="RegSearchSuccessMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record found !</div> 
-         
+        <div class="alert success" *ngIf="RegSearchSuccessMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record found !</div>
+
         <mat-form-field style="display:none;">
           <input matInput placeholder="CaseVehicle Id" formControlName="CaseVehicleId">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum" required>
+          <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum"
+            required>
           <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;">
             <i class="material-icons">
-            search
+              search
             </i>
           </mat-icon>
         </mat-form-field>
@@ -109,7 +110,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        
+
         <mat-form-field>
           <input matInput placeholder="Chasis No" formControlName="ChasisNo" required>
         </mat-form-field>
@@ -207,7 +208,7 @@
         <mat-form-field>
           <input matInput placeholder="Driver License Number" formControlName="DriverLicenseNo">
         </mat-form-field>
-        
+
         <mat-form-field>
           <input matInput placeholder="Issue Date" formControlName="IssueDate" [max]="maxDateToday" [matDatepicker]="picker5" (dateChange)="getIssueDate('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
@@ -215,13 +216,15 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate" [min]="expiryMinDate" [matDatepicker]="picker4" />
+          <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate" [min]="expiryMinDate" [matDatepicker]="picker4"
+          />
           <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
           <mat-datepicker #picker4></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Date Of Birth" [max]="maxDate" formControlName="DOB" [matDatepicker]="picker6" [(ngModel)]="Age" (dateChange)="getDriverAge('change', $event)">
+          <input matInput placeholder="Date Of Birth" [max]="maxDate" formControlName="DOB" [matDatepicker]="picker6" [(ngModel)]="Age"
+            (dateChange)="getDriverAge('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
           <mat-datepicker #picker6></mat-datepicker>
         </mat-form-field>
@@ -370,54 +373,60 @@
           <br/>
         </div>
         <p *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p>
-        <div style="max-height: 450px; overflow: auto;" *ngIf="damagePartList.length > 0">
+        <div class="backdrop" *ngIf="uploadImageModal">
+          <div class="smallModal" >
+            <h4> Add Damage Details</h4>
+            <div style="max-height: 450px; overflow: auto; padding: 10px;">
+              <mat-accordion class="example-headers-align" *ngIf="damagePartList.length > 0">
+                <mat-expansion-panel hideToggle="true" *ngFor="let item of damagePartList; let i = index;">
 
-          <mat-accordion class="example-headers-align">
-            <mat-expansion-panel hideToggle="true" *ngFor="let item of damagePartList; let i = index;">
-
-              <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
-                <mat-panel-title>
-                  Part Name: &nbsp; {{item.PartName}}
-                </mat-panel-title>
-                <mat-panel-description>
-                  <i class="material-icons">
-                    keyboard_arrow_down
-                  </i>
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-
-
-              <input formControlName="CaseID" value="{{item.CaseID}}" style="display: none">
-
-              <input formControlName="PartType" value="{{item.PartType}}" style="display: none">
-
-              <input formControlName="PartID" value="{{item.PartID}}" style="display: none">
-
-              <input formControlName="PartName" value="{{item.PartName}}" style="display: none">
-
-              <input formControlName="PartStatusID" value="{{PartStatusID}}" style="display: none">
+                  <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
+                    <mat-panel-title>
+                      Part Name: &nbsp; {{item.PartName}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <i class="material-icons">
+                        keyboard_arrow_down
+                      </i>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
 
 
+                  <input formControlName="CaseID" value="{{item.CaseID}}" style="display: none">
 
-              <mat-radio-group style="width: 40%; margin: 0 45px;" formControlName="PartStatus" (change)="getPartStatusID($event);">
-                <mat-radio-button value="1" checked>Safe</mat-radio-button>
-                <mat-radio-button value="2">Scratched</mat-radio-button>
-                <mat-radio-button value="3">Dented</mat-radio-button>
-                <mat-radio-button value="4">Broken</mat-radio-button>
-              </mat-radio-group>
-              <br/>
-              <br/>
-              <mat-form-field>
-                <textarea matInput placeholder="Part Remark" formControlName="PartRemark"></textarea>
-              </mat-form-field>
+                  <input formControlName="PartType" value="{{item.PartType}}" style="display: none">
 
-              <mat-action-row>
-                <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value)">Save</button>
-              </mat-action-row>
+                  <input formControlName="PartID" value="{{item.PartID}}" style="display: none">
 
-            </mat-expansion-panel>
-          </mat-accordion>
+                  <input formControlName="PartName" value="{{item.PartName}}" style="display: none">
 
+                  <input formControlName="PartStatusID" value="{{PartStatusID}}" style="display: none">
+
+
+
+                  <mat-radio-group style="width: 40%; margin: 0 45px;" formControlName="PartStatus" (change)="getPartStatusID($event);">
+                    <mat-radio-button value="1" checked>Safe</mat-radio-button>
+                    <mat-radio-button value="2">Scratched</mat-radio-button>
+                    <mat-radio-button value="3">Dented</mat-radio-button>
+                    <mat-radio-button value="4">Broken</mat-radio-button>
+                  </mat-radio-group>
+                  <br/>
+                  <br/>
+                  <mat-form-field style="width: 90%;">
+                    <textarea matInput placeholder="Part Remark" formControlName="PartRemark"></textarea>
+                  </mat-form-field>
+
+                  <mat-action-row>
+                    <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value)">Save</button>
+                  </mat-action-row>
+
+                </mat-expansion-panel>
+              </mat-accordion>
+              <p *ngIf="damagePartList.length < 1" > 0>No part list available !</p>
+            </div>
+            <br/>
+            <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button>
+          </div>
         </div>
 
         <div style="text-align: center; margin-top: 50px;">

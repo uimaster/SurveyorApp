@@ -64,6 +64,7 @@ export class PreWizardComponent implements OnInit {
     RegSearchSuccessMsg = false;
     RegSearchFailedMsg = false;
     policyEndMaxDate: any;
+    uploadImageModal:boolean = false;
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService
@@ -407,7 +408,7 @@ export class PreWizardComponent implements OnInit {
     }
 
     getDamageDetails() {
-        this.Loader = true;
+        this.Loader = true;        
         this.wizardService.pre_GetDamageDetails()
             .subscribe(res => {
                 if (res && res.Status == 200) {
@@ -417,8 +418,13 @@ export class PreWizardComponent implements OnInit {
             })
     }
 
-    getDamagePartList() {
+    closeImageModal(){
+        this.uploadImageModal = false;
+    }
+
+    getDamagePartList() {        
         this.Loader = true;
+        this.uploadImageModal = true;
         this.wizardService.pre_GetDamagePartList()
             .subscribe(res => {
                 if (res && res.Status == 200) {

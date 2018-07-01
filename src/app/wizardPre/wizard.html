@@ -262,48 +262,54 @@
         </div> 
         <p  *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p> 
        
-        <div style="max-height: 450px; overflow: auto;"  *ngIf="damagePartList.length > 0">
-            
-            <mat-accordion class="example-headers-align">
-              <mat-expansion-panel  hideToggle="false"  *ngFor="let item of damagePartList; let i = index;" [expanded]="allExpandState">
+        <div class="backdrop" *ngIf="uploadImageModal">
+          <div class="smallModal">
+            <h4> Add Damage Details</h4>
+              <div style="max-height: 450px; overflow: auto; padding: 10px;">
+              <mat-accordion class="example-headers-align" *ngIf="damagePartList.length > 0">
+                <mat-expansion-panel  hideToggle="false"  *ngFor="let item of damagePartList; let i = index;" [expanded]="allExpandState">
+                  
+                  <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
+                    <mat-panel-title>
+                      <span>{{i+1}}.</span>&nbsp; &nbsp;Part Name: &nbsp; {{item.PartName}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <!-- <i class="material-icons">
+                        keyboard_arrow_down
+                      </i> -->
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  
+                  
+                    <input  formControlName="PartType" value="{{item.PartType}}" style="display: none" />
                 
-                <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
-                  <mat-panel-title>
-                     <span>{{i+1}}.</span>&nbsp; &nbsp;Part Name: &nbsp; {{item.PartName}}
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <!-- <i class="material-icons">
-                      keyboard_arrow_down
-                    </i> -->
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                
-                
-                  <input  formControlName="PartType" value="{{item.PartType}}" style="display: none" />
-               
-                  <input  formControlName="PartID" value="{{item.PartID}}" style="display: none" />
-                
-                  <input  formControlName="PartName" value="{{item.PartName}}" style="display: none" />
-                
-                  <input  formControlName="PartStatusID" value="{{PartStatusID}}" style="display: none" /> 
+                    <input  formControlName="PartID" value="{{item.PartID}}" style="display: none" />
+                  
+                    <input  formControlName="PartName" value="{{item.PartName}}" style="display: none" />
+                  
+                    <input  formControlName="PartStatusID" value="{{PartStatusID}}" style="display: none" /> 
 
-                <mat-radio-group style="width: 40%; margin: 0 45px;" formControlName="PartStatus" (change)="getPartStatusID($event);">
-                  <mat-radio-button value="1" checked>Safe</mat-radio-button>
-                  <mat-radio-button value="2">Scratched</mat-radio-button>
-                  <mat-radio-button value="3">Dented</mat-radio-button>
-                  <mat-radio-button value="4">Broken</mat-radio-button>
-                </mat-radio-group>
-                <mat-form-field style="width:55%">
-                  <textarea matInput placeholder="Part Remark" formControlName="PartRemark"></textarea>
-                </mat-form-field>
-            
-                <mat-action-row >
-                  <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value);">Save</button>
-                </mat-action-row>
-                
-              </mat-expansion-panel>
-            </mat-accordion>
-          
+                  <mat-radio-group style="width: 40%; margin: 0 45px;" formControlName="PartStatus" (change)="getPartStatusID($event);">
+                    <mat-radio-button value="1" checked>Safe</mat-radio-button>
+                    <mat-radio-button value="2">Scratched</mat-radio-button>
+                    <mat-radio-button value="3">Dented</mat-radio-button>
+                    <mat-radio-button value="4">Broken</mat-radio-button>
+                  </mat-radio-group>
+                  <mat-form-field style="width:55%">
+                    <textarea matInput placeholder="Part Remark" formControlName="PartRemark"></textarea>
+                  </mat-form-field>
+              
+                  <mat-action-row >
+                    <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value);">Save</button>
+                  </mat-action-row>
+                  
+                </mat-expansion-panel>
+              </mat-accordion>
+              <p *ngIf="damagePartList.length < 1">No part list available !</p>
+            </div>
+            <br/>
+            <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button>
+          </div>
         </div>
 
         <div style="text-align: center; margin-top: 50px;">

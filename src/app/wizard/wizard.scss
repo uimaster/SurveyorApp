@@ -59,3 +59,22 @@ h2{ color: #fff; font-size: 18px;}
     top: 19px;
     width: 45%;
   }
+
+.backdrop{     position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(21, 21, 21, 0.6);
+    z-index: 99;
+} 
+.smallModal{ 
+    position: fixed; left: 20%; top: 15%; width: 58%; z-index: 999; padding: 10px 1%; background-color: #fff; border-radius: 10px; overflow: hidden;
+   
+    h2{
+        margin: 0 0 35px 0;
+    }
+    p{
+        text-align: center; font-size: 14px; color: #333;
+    }
+}    
