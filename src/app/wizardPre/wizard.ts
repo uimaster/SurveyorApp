@@ -51,10 +51,15 @@ export class PreWizardComponent implements OnInit {
     ];
 
     FuelType = [
-        { FuelType: '0', Name: 'Diesel' },
-        { FuelType: '1', Name: 'Petrol' },
-        { FuelType: '2', Name: 'CNG' }
-    ];
+        {FuelType: 'PETROL/CNG'},
+        {FuelType: 'PETROL/ELECTRIC/HYBRID'},
+        {FuelType: 'DIESEL'},
+        {FuelType: 'ELECTRIC'},
+        {FuelType: 'PETROL/HYBRID'},
+        {FuelType: 'PETROL'},
+        {FuelType: 'CNG'},
+        {FuelType: 'PETROL/LPG'}
+      ];
     PartStatusID: any;
     companyListData = [];
     selectedCompany: any;
@@ -203,11 +208,10 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['ChasisNo'].setValue(res.GetVehicleDataResult.vehicle.chasis_no);
                     this.thirdFormGroup.controls['EngineNo'].setValue(res.GetVehicleDataResult.vehicle.engine_no);
                     this.thirdFormGroup.controls['Make'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
-                    this.thirdFormGroup.controls['Model'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
+                    this.thirdFormGroup.controls['Model'].setValue(res.GetVehicleDataResult.vehicle.fla_model_desc);
                     this.thirdFormGroup.controls['Variant'].setValue('');
                     this.thirdFormGroup.controls['MgfYear'].setValue(res.GetVehicleDataResult.vehicle.manufaturer_year);
                     this.thirdFormGroup.controls['Color'].setValue(res.GetVehicleDataResult.vehicle.color);
-                    this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue('');
                     this.thirdFormGroup.controls['RegistrationDate'].setValue(res.GetVehicleDataResult.vehicle.regn_dt);
                     this.thirdFormGroup.controls['FuelType'].setValue(res.GetVehicleDataResult.vehicle.fuel_type_desc);
                     this.thirdFormGroup.controls['HypoticatedTo'].setValue('');
@@ -235,7 +239,6 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['Variant'].setValue('');
                     this.thirdFormGroup.controls['MgfYear'].setValue('');
                     this.thirdFormGroup.controls['Color'].setValue('');
-                    this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue('');
                     this.thirdFormGroup.controls['RegistrationDate'].setValue('');
                     this.thirdFormGroup.controls['FuelType'].setValue('');
                     this.thirdFormGroup.controls['HypoticatedTo'].setValue('');

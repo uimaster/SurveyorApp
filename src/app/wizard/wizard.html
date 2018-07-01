@@ -125,8 +125,6 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Year Manufacture" formControlName="MgfYear" />
-          <!-- <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-          <mat-datepicker #picker3></mat-datepicker> -->
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Color" formControlName="Color">
@@ -145,7 +143,7 @@
         <mat-form-field>
           <mat-select placeholder="Fuel Type" formControlName="FuelType">
             <mat-option *ngFor="let item of FuelType" [value]="item.FuelType">
-              {{ item.Name }}
+              {{ item.FuelType }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -216,7 +214,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate" [min]="expiryMinDate" [matDatepicker]="picker4"
+          <input matInput placeholder="Expiry Date" formControlName="ValidUptoDate" [max]="expiryMaxDate" [matDatepicker]="picker4"
           />
           <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
           <mat-datepicker #picker4></mat-datepicker>
@@ -274,7 +272,7 @@
           <mat-datepicker #AllotementDate></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <textarea matInput placeholder="Cause of Lost" formControlName="CauseofLoss"></textarea>
+          <textarea matInput placeholder="Cause of Loss" formControlName="CauseofLoss"></textarea>
         </mat-form-field>
 
 
@@ -313,10 +311,7 @@
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no" checked>No</mat-radio-button>
           </mat-radio-group>
-        </div>
-        <mat-form-field>
-          <input matInput placeholder="Hospital Details" formControlName="HospitalDetails">
-        </mat-form-field>
+        </div>       
         <div class="mat-form-checkfield">
           <label>Accident Third Party Property Damages: </label>
           <mat-radio-group formControlName="ThirdPartyPropertyDamages">
@@ -325,14 +320,42 @@
           </mat-radio-group>
         </div>
 
+        <div class="mat-form-checkfield">
+            <label>Police Report : </label>
+            <mat-radio-group formControlName="FIRReported">
+              <mat-radio-button value="yes">Yes</mat-radio-button>
+              <mat-radio-button value="no" checked>No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        <mat-form-field>
+          <input matInput placeholder="Police Report Date" formControlName="FIRDate" required [matDatepicker]="FIRDate">
+          <mat-datepicker-toggle matSuffix [for]="FIRDate"></mat-datepicker-toggle>
+          <mat-datepicker #FIRDate></mat-datepicker>
+        </mat-form-field>  
+
+        <mat-form-field>
+          <input matInput placeholder="Police Station Name" formControlName="FIRPoliceStation">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Police Diary No" formControlName="FIRStationDiaryNo">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Hospital Details" formControlName="HospitalDetails">
+        </mat-form-field>
+
         <mat-form-field class="example-full-width">
           <textarea matInput placeholder="Leave a Remarks" formControlName="Remarks"></textarea>
         </mat-form-field>
 
         <div style="text-align: center; margin-top: 50px;">
+          <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+          <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
           <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="sixthSubmit(sixthFormGroup.value);" [disabled]="sixthFormGroup.invalid || submitDisabled">Next</button>
+          
         </div>
       </form>
     </mat-step>

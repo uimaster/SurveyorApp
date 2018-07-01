@@ -111,8 +111,8 @@
 
         <mat-form-field>
           <mat-select placeholder="Fuel Type" formControlName="FuelType">
-            <mat-option *ngFor="let item of FuelType" [value]="item.Name">
-              {{ item.Name }}
+            <mat-option *ngFor="let item of FuelType" [value]="item.FuelType">
+              {{ item.FuelType }}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -175,8 +175,12 @@
             <input matInput placeholder="Proposer Name" formControlName="CaseProposerName">
           </mat-form-field>
 
-        <mat-form-field>            
-          <input matInput placeholder="Previous Insurer Name" formControlName="CurrentInsurerName">
+        <mat-form-field>
+          <mat-select placeholder="Previous Insurer Name" formControlName="CurrentInsurerName">
+            <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
+              {{item.Name}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         
         <mat-form-field>
@@ -349,15 +353,16 @@
           <textarea matInput placeholder="Conclusion Remarks" formControlName="ConclusionRemarks"></textarea>
         </mat-form-field>
         <p>Declaration of the Owner</p>
-        <p>I hereby confirm and declare that the above mentioned identification details of my<br/> vehicle ------- REG NO ------- as well as
+        <p class="smallPara">I hereby confirm and declare that the above mentioned identification details of my<br/> vehicle ------- REG NO ------- as well as
            that of damage to the vehicle noticed by <br/>inspecting officer are correct and nothing has been hidden undisclosed.</p>
-        <p>Signature of the Inspecting officer Surveyor.<br/>
+        <p class="smallPara">Signature of the Inspecting officer Surveyor.<br/>
             Signature of the propserRepresentive</p>
         
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div> 
-          <button mat-raised-button matStepperPrevious>Back</button>        
+          <button mat-raised-button matStepperPrevious>Back</button>      
+          <a routerLink="/dashboard" mat-raised-button  matStepperNext style="margin-left: 10px;">Skip</a>  
           <button mat-raised-button color="primary" (click)="tenthStepSubmit(tenthFormGroup.value);"
           [disabled]="tenthFormGroup.invalid || submitDisabled" style="margin-left: 10px;">Submit</button>
         </div>    

@@ -26,7 +26,7 @@ export class CreateAreaComponent implements OnInit {
   ngOnInit() {
     this.Loader = false;
     this.myForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]]
+      name: ['', Validators.required]
 
     });
     this.sub = this.route.params.subscribe((params: Params) => {
@@ -62,12 +62,22 @@ export class CreateAreaComponent implements OnInit {
     this.areaService.addArea(bodyObj).subscribe (
       result => {
         // Handle result
-        this.showSuccess = true;
-        this.successMessage = result.Message;
-        setTimeout(()=>{    //<<<---    using ()=> syntax
-          this.router.navigate(['/area']);
-        },2000);
-        this.Loader = false;
+        if(result.sms.StatusCode === 200){
+          this.showSuccess = true;
+          this.showError = false;
+          this.successMessage = result.sms.Message;
+          setTimeout(()=>{    //<<<---    using ()=> syntax
+            this.router.navigate(['/area']);
+          },2000);
+          this.Loader = false;
+        }
+        else{
+          this.showSuccess = false;
+          this.showError = true;
+          this.errorMessage = result.sms.Message;
+          this.Loader = false;
+        }
+        
       },
       error => {
         this.Loader = false;

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {UsersService} from "../users.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
+import {CompaniesService} from "../../companies/companies.service";
 
 @Component({
   selector: 'app-create',
@@ -18,8 +19,9 @@ export class CreateComponent implements OnInit {
   public sub: Subscription;
   public userId: Number = 0;
   Loader: boolean = true;
+  companyListData =[];
 
-  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private route: ActivatedRoute, private companyService: CompaniesService) {
   }
 
   ngOnInit() {
@@ -30,7 +32,7 @@ export class CreateComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
       password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/), Validators.minLength(5)]],
       userType: ['', [Validators.required]],
-      company: ['', [Validators.required]],
+      company: [{value:'', disabled:true}, [Validators.required]],
       active: [true, [Validators.required]]
 
     });
@@ -58,9 +60,25 @@ export class CreateComponent implements OnInit {
 
 
     });
-
+    this.getCompanyList();
 
   }
+
+  getUserType(event){
+    if(event.value===2){
+      this.myForm.controls['company'].enable();
+    }
+    else{
+      this.myForm.controls['company'].disable();
+    }
+  }
+
+  getCompanyList() {
+    this.companyService.getCompanyList()
+        .subscribe(res =>{
+        this.companyListData = res.Data;
+    });
+}
 
   onSubmit(formD) {
     this.Loader = true;
@@ -79,15 +97,26 @@ export class CreateComponent implements OnInit {
     this.userService.addUser(bodyObj).subscribe(
       result => {
         // Handle result
-        this.showSuccess = true;
-        this.successMessage = result.Message;
-        setTimeout(() => {    //<<<---    using ()=> syntax
-          this.router.navigate(['/users']);
-        }, 2000);
-        this.Loader = false;
+        if(result.StatusCode == 200){
+          this.showSuccess = true;
+          this.showError = false;
+          this.successMessage = result.Message;
+          setTimeout(() => { 
+            this.router.navigate(['/users']);
+          }, 2000);
+          this.Loader = false;
+        }
+        else{
+          this.showSuccess = false;
+          this.showError = true;
+          this.errorMessage = result.Message;
+          this.Loader = false;
+        }
+        
       },
       error => {
         this.showError = true;
+        this.showError = false;
         this.errorMessage = error.Message;
         this.Loader = false;
       },

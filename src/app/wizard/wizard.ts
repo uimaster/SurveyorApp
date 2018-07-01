@@ -9,6 +9,7 @@ import{ WizardService } from './wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
 import { SharedComponent, DonwloadDialog} from '../sharedModule/shared.component';
 import {CompaniesService} from "../companies/companies.service";
+import { DISABLED } from '@angular/forms/src/model';
 
 
 @Component({
@@ -57,9 +58,14 @@ export class WizardComponent implements OnInit {
   ];
 
   FuelType = [
-    {FuelType: '0', Name: 'Diesel'},
-    {FuelType: '1', Name: 'Petrol'},
-    {FuelType: '2', Name: 'CNG'}
+    {FuelType: 'PETROL/CNG'},
+    {FuelType: 'PETROL/ELECTRIC/HYBRID'},
+    {FuelType: 'DIESEL'},
+    {FuelType: 'ELECTRIC'},
+    {FuelType: 'PETROL/HYBRID'},
+    {FuelType: 'PETROL'},
+    {FuelType: 'CNG'},
+    {FuelType: 'PETROL/LPG'}
   ];
 
   LicenseType = [
@@ -79,7 +85,7 @@ export class WizardComponent implements OnInit {
   RegSearchFailedMsg = false;
   maxDate :any;
   maxDateToday = new Date();
-  expiryMinDate:any;
+  expiryMaxDate:any;
   uploadImageModal:boolean = false;
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
@@ -177,7 +183,7 @@ export class WizardComponent implements OnInit {
         InjuryToThirdParty: new FormControl(''),
         HospitalDetails: new FormControl(''),
         ThirdPartyPropertyDamages: new FormControl(''),
-        FIRDate: new FormControl('1900-01-01',Validators.required),
+        FIRDate: new FormControl(' ',Validators.required),
         Remarks: new FormControl(''),
         ClaimForm: new FormControl(''),
     });
@@ -257,7 +263,7 @@ export class WizardComponent implements OnInit {
 
     getIssueDate(type: string, event: MatDatepickerInputEvent<Date>){
         let SelectedDate = event.value;
-        this.expiryMinDate = SelectedDate;
+        this.expiryMaxDate = SelectedDate;
         this.fourthFormGroup.controls['ValidUptoDate'].setValue('');
     }
     
@@ -368,19 +374,15 @@ export class WizardComponent implements OnInit {
                 this.VehicleDetailData = res.GetVehicleDataResult.vehicle;  
                 this.RegSearchFailedMsg = false;
                 this.RegSearchSuccessMsg = true;
-                this.thirdFormGroup.controls['CaseVehicleId'].setValue('');
-                this.thirdFormGroup.controls['SurveyorsId'].setValue('');
-                this.thirdFormGroup.controls['VehicleId'].setValue('');
-                this.thirdFormGroup.controls['VehicleName'].setValue('');
                 this.thirdFormGroup.controls['Registration_No'].setValue(data);
                 this.thirdFormGroup.controls['RegistrationDate'].setValue(res.GetVehicleDataResult.vehicle.regn_dt);
                 this.thirdFormGroup.controls['ChasisNo'].setValue(res.GetVehicleDataResult.vehicle.chasis_no);
                 this.thirdFormGroup.controls['EngineNo'].setValue(res.GetVehicleDataResult.vehicle.engine_no);
-                this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue('');
+                
                 this.thirdFormGroup.controls['PermitNo'].setValue('');
                 this.thirdFormGroup.controls['TypeofPermit'].setValue('');
                 this.thirdFormGroup.controls['Make'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
-                this.thirdFormGroup.controls['Model'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
+                this.thirdFormGroup.controls['Model'].setValue(res.GetVehicleDataResult.vehicle.fla_model_desc);
                 this.thirdFormGroup.controls['MgfYear'].setValue(res.GetVehicleDataResult.vehicle.manufaturer_year);
                 this.thirdFormGroup.controls['Color'].setValue(res.GetVehicleDataResult.vehicle.color);
                 this.thirdFormGroup.controls['OdometerReading'].setValue('');
@@ -399,15 +401,11 @@ export class WizardComponent implements OnInit {
             else{
                 this.RegSearchFailedMsg = true;
                 this.RegSearchSuccessMsg = false;
-                this.thirdFormGroup.controls['Registration_No'].setValue(data);                
-                this.thirdFormGroup.controls['CaseVehicleId'].setValue('');
-                this.thirdFormGroup.controls['SurveyorsId'].setValue('');
-                this.thirdFormGroup.controls['VehicleId'].setValue('');
+                this.thirdFormGroup.controls['Registration_No'].setValue(data);               
                 this.thirdFormGroup.controls['VehicleName'].setValue('');
                 this.thirdFormGroup.controls['RegistrationDate'].setValue('');
                 this.thirdFormGroup.controls['ChasisNo'].setValue('');
                 this.thirdFormGroup.controls['EngineNo'].setValue('');
-                this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue('');
                 this.thirdFormGroup.controls['PermitNo'].setValue('');
                 this.thirdFormGroup.controls['TypeofPermit'].setValue('');
                 this.thirdFormGroup.controls['Make'].setValue('');
@@ -491,7 +489,7 @@ export class WizardComponent implements OnInit {
                     TypeOfLicense: new FormControl(this.driverData[0].TypeOfLicense),
                     PSVBadgeNo: new FormControl(this.driverData[0].PSVBadgeNo),
                     DOB: new FormControl(this.driverData[0].DOB),
-                    Age: new FormControl(this.driverAge),
+                    Age: new FormControl({value:this.driverAge, disabled:true}),
                     DLEndorsment: new FormControl(this.driverData[0].DLEndorsment),
                     IssueDate: new FormControl(this.driverData[0].IssueDate)
                 });  

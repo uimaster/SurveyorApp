@@ -8,16 +8,15 @@
 
   <div class="tabularData card">
     <div *ngIf="showSuccess" class="alert success">
-      {{successMessage}}
+      Area Created/Updated {{successMessage}}fully.
     </div>
     <div *ngIf="showError" class="alert error">
       {{errorMessage}}
     </div>
     <form [formGroup]="myForm">
       <mat-form-field style="margin: 0 30%;">
-        <input matInput placeholder="Name" formControlName="name" >
-        <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
-        <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
+        <input matInput placeholder="Ente Area Name" formControlName="name" >
+        <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Area Name is required.</mat-error>
       </mat-form-field>
 
 

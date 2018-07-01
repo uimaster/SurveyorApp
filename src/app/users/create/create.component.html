@@ -9,7 +9,7 @@
   <div class="tabularData card">
     
     <div *ngIf="showSuccess" class="alert success">
-      {{successMessage}}
+      User created/Updated {{successMessage}}fully.
     </div>
     <div *ngIf="showError" class="alert error">
       {{errorMessage}}
@@ -45,14 +45,13 @@
 
       <div class="form-group">
         <mat-form-field>
-          <mat-select placeholder="User Type" formControlName="userType">
+          <mat-select placeholder="User Type" formControlName="userType" (change)="getUserType($event);"> 
             <mat-option [value]="1">
               Admin
             </mat-option>
             <mat-option [value]="2">
               Company User
             </mat-option>
-
             <mat-option [value]="3">
               Surveyor
             </mat-option>
@@ -65,12 +64,9 @@
       <div class="form-group">
         <mat-form-field>
           <mat-select placeholder="Company" formControlName="company">
-            <mat-option [value]="1">
-              Bajaj Allianz General Insurance Co. Ltd.
-            </mat-option>
-            <mat-option [value]="2">
-              ICICI Lombard General Insurance Co. Ltd.
-            </mat-option>
+              <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
+                {{item.Name}}
+              </mat-option>
             <mat-error *ngIf="myForm.controls['company'].hasError('required') && myForm.controls['company'].touched">Company is required</mat-error>
           </mat-select>
         </mat-form-field>
