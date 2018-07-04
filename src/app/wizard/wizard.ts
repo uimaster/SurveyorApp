@@ -76,22 +76,25 @@ export class WizardComponent implements OnInit {
   ];
 
 
-  submitDisabled: boolean = false;
+  submitDisabled = false;
   companyListData =[];
-  thisYear: number = new Date().getFullYear();
-  driverAge:number =0;
-  CaseVehicleId:any = 0;
+  thisYear = new Date().getFullYear();
+  driverAge =0;
+  CaseVehicleId = 0;
   RegSearchSuccessMsg = false;
   RegSearchFailedMsg = false;
   maxDate :any;
   maxDateToday = new Date();
   expiryMaxDate:any;
-  uploadImageModal:boolean = false;
+  uploadImageModal = false;
+  IsCompleted:boolean;
+
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
      private router: Router, public dialog: MatDialog, private companyService: CompaniesService)
     {
-    this.files = [];         
+
+    this.files = [];
     this.firstFormGroup = new FormGroup({
         CaseID: new FormControl(this.caseId),
         CaseNo: new FormControl(''),
@@ -200,7 +203,7 @@ export class WizardComponent implements OnInit {
         kycdocaddress: new FormControl('')
     });
 
-    this.eightthFormGroup = new FormGroup({         
+    this.eightthFormGroup = new FormGroup({
         CaseID: new FormControl(this.caseId),
         PartType: new FormControl(''),
         PartID: new FormControl(''),
@@ -213,18 +216,18 @@ export class WizardComponent implements OnInit {
     this.tenthFormGroup = this._formBuilder.group({
         tenthCtrl: ['', Validators.required]
     });
-    
-   
+
+
     var today:any = new Date();
     var dd:any = today.getDate();
     var mm:any = today.getMonth()+1; //January is 0!
     var yyyy:any = today.getFullYear()-18;
     if(dd<10){
             dd='0'+dd
-        } 
+        }
         if(mm<10){
             mm='0'+mm
-        } 
+        }
 
     today = yyyy+'-'+mm+'-'+dd;
     this.maxDate = today;
@@ -243,7 +246,7 @@ export class WizardComponent implements OnInit {
     }
 
 
-   
+
 
     getCompanyList() {
         this.companyService.getCompanyList()
@@ -252,12 +255,12 @@ export class WizardComponent implements OnInit {
         });
     }
 
-    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>){        
+    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>){
         let today = new Date();
         let thisYear = today.getFullYear();
-        let selectedDate = event.value;        
+        let selectedDate = event.value;
         let selectedYear = selectedDate.getFullYear();
-        let DriverAge = thisYear - selectedYear;      
+        let DriverAge = thisYear - selectedYear;
         this.fourthFormGroup.controls['Age'].setValue(DriverAge);
     }
 
@@ -266,13 +269,18 @@ export class WizardComponent implements OnInit {
         this.expiryMaxDate = SelectedDate;
         this.fourthFormGroup.controls['ValidUptoDate'].setValue('');
     }
+
+
+
+  ngOnInit() {
+    this.Loader = false;
+    let completedState = localStorage.getItem('IsCompleted');
+    if(completedState != undefined){
+        this.IsCompleted = JSON.parse(completedState);
+    }
     
-
-
-  ngOnInit() { 
-    this.Loader= false;
     this.getCompanyList();
-    setTimeout(() => {        
+    setTimeout(() => {
         this.getVehicleDetails();
     },5000);
     setTimeout(() => {
@@ -306,7 +314,7 @@ export class WizardComponent implements OnInit {
     setTimeout(() => {
         this.getDriverLicenseImg();
     }, 3050);
-    
+
     setTimeout(() => {
         this.getCrashImage12();
     }, 3400);
@@ -332,10 +340,10 @@ export class WizardComponent implements OnInit {
 
 
 
-    getClaimDetails(){  
+    getClaimDetails(){
         this.wizardService.getClaimDetails()
         .subscribe(res =>{
-            if(res && res.Status == 200){
+            if(res && res.Status == 200) {
             this.claimDetailData = res.Data;
             if(this.claimDetailData.length > 0){
                 this.firstFormGroup = new FormGroup({
@@ -347,7 +355,8 @@ export class WizardComponent implements OnInit {
                     InsuredName:  new FormControl(this.claimDetailData[0].InsuredName, Validators.required),
                     InsuredAddress:  new FormControl(this.claimDetailData[0].InsuredAddress, Validators.required),
                     InsuredMobile:  new FormControl(this.claimDetailData[0].InsuredMobile, [Validators.required, Validators.minLength(10)]),
-                    EmailID:  new FormControl(this.claimDetailData[0].EmailID, [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)])
+                    EmailID:  new FormControl(this.claimDetailData[0].EmailID,
+                      [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)])
                 });
 
                 this.secondFormGroup = new FormGroup({
@@ -365,20 +374,20 @@ export class WizardComponent implements OnInit {
     }
 
 
-    SearchRegistration(){ 
+    SearchRegistration(){
 
-        let data= ((document.getElementById("RegistrationNum") as HTMLInputElement).value);       
+        let data= ((document.getElementById("RegistrationNum") as HTMLInputElement).value);
         this.wizardService.SearchRegistration(data)
         .subscribe(res =>{
             if(res && res.GetVehicleDataResult.status === '200'){
-                this.VehicleDetailData = res.GetVehicleDataResult.vehicle;  
+                this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
                 this.RegSearchFailedMsg = false;
                 this.RegSearchSuccessMsg = true;
                 this.thirdFormGroup.controls['Registration_No'].setValue(data);
                 this.thirdFormGroup.controls['RegistrationDate'].setValue(res.GetVehicleDataResult.vehicle.regn_dt);
                 this.thirdFormGroup.controls['ChasisNo'].setValue(res.GetVehicleDataResult.vehicle.chasis_no);
                 this.thirdFormGroup.controls['EngineNo'].setValue(res.GetVehicleDataResult.vehicle.engine_no);
-                
+
                 this.thirdFormGroup.controls['PermitNo'].setValue('');
                 this.thirdFormGroup.controls['TypeofPermit'].setValue('');
                 this.thirdFormGroup.controls['Make'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
@@ -401,7 +410,7 @@ export class WizardComponent implements OnInit {
             else{
                 this.RegSearchFailedMsg = true;
                 this.RegSearchSuccessMsg = false;
-                this.thirdFormGroup.controls['Registration_No'].setValue(data);               
+                this.thirdFormGroup.controls['Registration_No'].setValue(data);
                 this.thirdFormGroup.controls['VehicleName'].setValue('');
                 this.thirdFormGroup.controls['RegistrationDate'].setValue('');
                 this.thirdFormGroup.controls['ChasisNo'].setValue('');
@@ -428,7 +437,7 @@ export class WizardComponent implements OnInit {
         })
     }
 
-    getVehicleDetails(){ 
+    getVehicleDetails(){
         this.wizardService.getVehicleDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -468,13 +477,13 @@ export class WizardComponent implements OnInit {
         })
     }
 
-    getDriverDetails(){  
+    getDriverDetails(){
         this.wizardService.getDriverDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
             this.driverData = res.Data;
             if(this.driverData.length > 0){
-                if(this.driverData[0].DOB !== null){                   
+                if(this.driverData[0].DOB !== null){
                     let dateString : string = this.driverData[0].DOB.toString();
                     let years : number = parseInt(dateString.substring(0, 5));
                     this.driverAge = this.thisYear - years;
@@ -492,17 +501,17 @@ export class WizardComponent implements OnInit {
                     Age: new FormControl({value:this.driverAge, disabled:true}),
                     DLEndorsment: new FormControl(this.driverData[0].DLEndorsment),
                     IssueDate: new FormControl(this.driverData[0].IssueDate)
-                });  
+                });
             }
             }
         })
     }
 
-    getAccidentDetails(){  
+    getAccidentDetails(){
         this.wizardService.geAccidentDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
-            this.accidentData = res.Data;     
+            this.accidentData = res.Data;
             if(this.accidentData.length > 0){
                 this.fifthFormGroup = new FormGroup({
                     CaseID: new FormControl(this.accidentData[0].CaseID, Validators.required),
@@ -521,11 +530,11 @@ export class WizardComponent implements OnInit {
         })
     }
 
-    getFirDetails(){  
+    getFirDetails(){
         this.wizardService.geFirDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
-            this.firData = res.Data;     
+            this.firData = res.Data;
             if(this.firData.length > 0){
 
                 this.sixthFormGroup = new FormGroup({
@@ -548,8 +557,8 @@ export class WizardComponent implements OnInit {
             }
         })
     }
-    
-    getSummaryReportDetails(){  
+
+    getSummaryReportDetails(){
         this.wizardService.getSummaryReportDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
@@ -572,29 +581,29 @@ export class WizardComponent implements OnInit {
         })
     }
 
-    
+
     firstStepSubmit(formdata){
-        this.Loader = true; 
+        this.Loader = true;
         if(this.firstFormGroup.valid){
             this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
-                    this.postResponseData = res.Data;        
+                    this.postResponseData = res.Data;
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
                     this.submitDisabled = true;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showSuccess = false;
                         this.stepper.next();
                         this.submitDisabled = false;
                     }, 3000);
-                    this.Loader = false; 	
+                    this.Loader = false;
                 }
                 else{
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
                     this.Loader = false;
@@ -603,35 +612,35 @@ export class WizardComponent implements OnInit {
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })			
+            })
         }
     }
 
     secondStepSubmit(formdata){
         if(this.secondFormGroup.valid){
-            this.Loader = true; 
+            this.Loader = true;
             this.wizardService.postSurveyorDetails(this.secondFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
-                    this.postResponseData = res.Data;        
+                    this.postResponseData = res.Data;
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
                     this.submitDisabled = true;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showSuccess = false;
                         this.stepper.next();
                         this.submitDisabled = false;
-                    }, 3000);	
-                    this.Loader = false; 
+                    }, 3000);
+                    this.Loader = false;
                 }
                 else{
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
                     this.Loader = false;
@@ -640,35 +649,35 @@ export class WizardComponent implements OnInit {
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })			
+            })
         }
     }
 
     thirdStepSubmit(formdata){
         if(this.thirdFormGroup.valid){
-            this.Loader = true; 
+            this.Loader = true;
             this.wizardService.postVehicleDetails(this.thirdFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
-                    this.postResponseData = res.Data;        
+                    this.postResponseData = res.Data;
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
                     this.submitDisabled = true;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showSuccess = false;
                         this.stepper.next();
                         this.submitDisabled = false;
-                    }, 3000);	
-                    this.Loader = false; 
+                    }, 3000);
+                    this.Loader = false;
                 }
                 else{
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
                     this.Loader = false;
@@ -678,35 +687,35 @@ export class WizardComponent implements OnInit {
                 this.showError = true;
                 this.showSuccess = false;
                 this.Loader = false;
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })			
+            })
         }
     }
 
     fourthSubmit(formdata){
         if(this.fourthFormGroup.valid){
-            this.Loader = true; 
-            this.wizardService.postDriverDetails(this.fourthFormGroup.value).subscribe(res =>{        
+            this.Loader = true;
+            this.wizardService.postDriverDetails(this.fourthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
-                    this.postResponseData = res.Data;        
+                    this.postResponseData = res.Data;
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
                     this.submitDisabled = true;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showSuccess = false;
                         this.stepper.next();
                         this.submitDisabled = false;
                     }, 3000);
-                    this.Loader = false; 	
+                    this.Loader = false;
                 }
                 else{
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
                     this.Loader = false;
@@ -716,35 +725,35 @@ export class WizardComponent implements OnInit {
                     this.showError = true;
                     this.showSuccess = false;
                     this.Loader = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
-            })			
+            })
         }
     }
 
     fifthSubmit(formdata){
         if(this.fifthFormGroup.valid){
-        this.Loader = true; 
+        this.Loader = true;
         this.wizardService.postAccidentDetails(this.fifthFormGroup.value).subscribe(res =>{
             if(res && res.Status == 200){
-                this.postResponseData = res.Data;        
+                this.postResponseData = res.Data;
                 this.successMessage = res.Message;
                 this.showError = false;
                 this.showSuccess = true;
                 this.submitDisabled = true;
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showSuccess = false;
                     this.stepper.next();
                     this.submitDisabled = false;
-                }, 3000);	
-                this.Loader = false; 
+                }, 3000);
+                this.Loader = false;
             }
             else{
                 this.errorMessage = res.Message;
                 this.showError = true;
                 this.showSuccess = false;
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showError = false;
                 }, 3000);
                 this.Loader = false;
@@ -754,35 +763,35 @@ export class WizardComponent implements OnInit {
                 this.showError = true;
                 this.showSuccess = false;
                 this.Loader = false;
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-        })			
+        })
         }
     }
 
     sixthSubmit(formdata){
         if(this.sixthFormGroup.valid){
-            this.Loader = true; 
+            this.Loader = true;
             this.wizardService.postFirDetails(this.sixthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
-                    this.postResponseData = res.Data;        
+                    this.postResponseData = res.Data;
                     this.successMessage = res.Message;
                     this.showError = false;
                     this.showSuccess = true;
                     this.submitDisabled = true;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showSuccess = false;
                         this.stepper.next();
                         this.submitDisabled = false;
                     }, 3000);
-                    this.Loader = false; 	
+                    this.Loader = false;
                 }
                 else{
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
                     this.Loader = false;
@@ -792,32 +801,32 @@ export class WizardComponent implements OnInit {
                     this.showError = true;
                     this.showSuccess = false;
                     this.Loader = false;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
-            })			
+            })
         }
     }
 
-    getDamageDetails(){ 
+    getDamageDetails(){
         this.Loader = true;
         this.wizardService.GetDamageDetails()
         .subscribe(res =>{
             if(res && res.Status == 200){
                 this.damageDetailsData = res.Data;
-                this.Loader = false;               
+                this.Loader = false;
             }
         })
     }
 
     getDamagePartList(){
-        this.Loader = true; 
+        this.Loader = true;
         this.uploadImageModal = true;
         this.wizardService.GetDamagePartList()
         .subscribe(res =>{
             if(res && res.Status == 200){
                 this.damagePartList = res.Data;
-                this.Loader = false;               
+                this.Loader = false;
             }
         })
     }
@@ -828,7 +837,7 @@ export class WizardComponent implements OnInit {
 
     showdamageListData(data){
         this.PartStatusID = localStorage.getItem('PartStatusID')
-        this.eightthFormGroup = new FormGroup({         
+        this.eightthFormGroup = new FormGroup({
             CaseID: new FormControl(this.caseId),
             PartType: new FormControl(data.PartType),
             PartID: new FormControl(data.PartID),
@@ -837,9 +846,9 @@ export class WizardComponent implements OnInit {
             PartStatusID: new FormControl(this.PartStatusID),
             PartRemark: new FormControl(data.PartRemark)
         })
-    }    
+    }
 
-    getPartStatusID(event){        
+    getPartStatusID(event){
         localStorage.setItem('PartStatusID', event.value);
         this.PartStatusID = localStorage.getItem('PartStatusID')
         this.eightthFormGroup.controls['PartStatusID'].setValue(this.PartStatusID);
@@ -851,15 +860,15 @@ export class WizardComponent implements OnInit {
             this.wizardService.PostDamageDetails(this.eightthFormGroup.value).subscribe(res =>{
                 if(res && res.Status == 200){
                     this.uploadImageModal = false;
-                    this.postResponseData = res.Data;        
+                    this.postResponseData = res.Data;
                     this.successMessage = res.Message;
                     alert("You have updated part "+ this.successMessage+'lly');
                     this.showError = false;
                     this.showSuccess = true;
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showSuccess = false;
                         // this.stepper.next();
-                    }, 3000);	
+                    }, 3000);
                 }
                 else{
                     this.errorMessage = res.Message;
@@ -867,7 +876,7 @@ export class WizardComponent implements OnInit {
                     this.showSuccess = false;
                     alert(this.errorMessage);
                     alert("You have failed to updated part, "+ this.errorMessage);
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.showError = false;
                     }, 3000);
                 }
@@ -878,14 +887,14 @@ export class WizardComponent implements OnInit {
                 this.showError = true;
                 this.showSuccess = false;
                 alert("You have failed to updated part, "+ this.errorMessage);
-                setTimeout(() => {  
+                setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })			
+            })
         }
     }
 
-    
+
     // DETAILS IMAGE //
 
     createImageFromBlob0(image: Blob) {
@@ -897,7 +906,7 @@ export class WizardComponent implements OnInit {
         this.files = event.target.files;
         this.postDetailImage();
       }
-  
+
       imageToShow: any;
       isImageLoading:boolean = false;
 
@@ -914,7 +923,7 @@ export class WizardComponent implements OnInit {
         setTimeout(() => {
             this.getDetailImage();
         }, 1000);
-        
+
     }
 
     getDetailImage() {
@@ -941,7 +950,7 @@ export class WizardComponent implements OnInit {
         this.files = event.target.files;
         this.postDetailImageD();
       }
-  
+
       imageToShowD: any;
       isImageLoadingD:boolean = false;
 
@@ -958,7 +967,7 @@ export class WizardComponent implements OnInit {
         setTimeout(() => {
             this.getDriverLicenseImg();
         }, 1000);
-        
+
     }
 
     getDriverLicenseImg() {
@@ -985,7 +994,7 @@ export class WizardComponent implements OnInit {
         this.files = event.target.files;
         this.postClaimFormStatement();
       }
-  
+
       imageToShowForm: any;
       isImageLoadingForm:boolean = false;
 
@@ -1002,7 +1011,7 @@ export class WizardComponent implements OnInit {
         setTimeout(() => {
             this.getClaimFormStatement();
         }, 1000);
-        
+
     }
 
     getClaimFormStatement() {
@@ -1215,7 +1224,7 @@ export class WizardComponent implements OnInit {
         }, 2000);
     }
 
-    getCrashImage13() {        
+    getCrashImage13() {
         this.isImageLoading13 = true;
         this.wizardService.getSignatureImage().subscribe(data => {
             if(data.Data[0] !== null && data.Data[0] !== undefined){
@@ -1227,7 +1236,7 @@ export class WizardComponent implements OnInit {
             console.log(error);
         });
     }
-    
+
 }
 
 

@@ -1,15 +1,15 @@
 
 <div style="clear: both; max-height: 400px; overflow: auto; min-height: 200px;">
 
-  <button mat-raised-button style="float: right;" color="primary" class="customPositoned"  (click)="openImageDialog()" *ngIf="!showUpdateBtn">Upload Image</button>
-  <button mat-raised-button style="float: right;" color="primary" class="customPositoned"  (click)="openImageDialog()" *ngIf="showUpdateBtn">Update Image</button>
+  <button mat-raised-button style="float: right;" color="primary" class="customPositoned"  (click)="openImageDialog()" *ngIf="!showUpdateBtn && !IsCompleted">Upload Image</button>
+  <button mat-raised-button style="float: right;" color="primary" class="customPositoned"  (click)="openImageDialog()" *ngIf="showUpdateBtn && !IsCompleted">Update Image</button>
   <div class="tabularData card" *ngFor="let item of fileList">
     <img alt="" src="http://apiflacors.iflotech.in{{item.Image}}" />
     <span>
       <mat-radio-button name="multiImages" (change)="updateImgRadio(item)" unchecked>Select to Update.</mat-radio-button>
     </span>
     <br/>
-    <span>Name: {{item.ImageName}}</span>    
+    <span>Name: {{item.ImageName}}</span>
   </div>
   <h5 *ngIf="fileList.length < 1" style="text-align: center;">No Photos/Images available !</h5>
 </div>

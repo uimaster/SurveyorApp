@@ -3,17 +3,17 @@ import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
 import { LoginRequest, LoginResponse} from '../login/login.model';
 import * as urls from '../../shared/urls';
-import * as IMAGEURL from '../../shared/img.urls';        
+import * as IMAGEURL from '../../shared/img.urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 @Injectable()
 
 export class WizardService{
-    
+
     constructor(private http: HttpClient){}
 
-    // ============ Claim Details ============ // 
+    // ============ Claim Details ============ //
 
     getClaimDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -28,36 +28,36 @@ export class WizardService{
     }
 
     postClaimDetails(payload: any): Observable<any> {
-        return this.http.post(urls.WIZARD_POSTCLAIMURL, payload)        
+        return this.http.post(urls.WIZARD_POSTCLAIMURL, payload)
           .map((res: any) =>  {
-            if (res) {          
-              return res;
-            } 
-            else{          
+            if (res) {
               return res;
             }
-    
+            else{
+              return res;
+            }
+
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Surveyor Details ============ // 
+    // ============ Surveyor Details ============ //
 
-    postSurveyorDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_POSTSURVEYORURL, payload)        
+    postSurveyorDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_POSTSURVEYORURL, payload)
           .map((res: any) =>  {
-            if (res) {          
-              return res;
-            } 
-            else{          
+            if (res) {
               return res;
             }
-    
+            else{
+              return res;
+            }
+
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Vehicle Details ============ // 
+    // ============ Vehicle Details ============ //
 
     getVehicleDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -71,22 +71,22 @@ export class WizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    postVehicleDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_POSTVEHICLEDETAILSURL, payload)        
+    postVehicleDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_POSTVEHICLEDETAILSURL, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-     // ============ Registraion Search for vehicle Details ============ // 
+     // ============ Registraion Search for vehicle Details ============ //
 
-     SearchRegistration(payload:any):Observable<any>{        
+     SearchRegistration(payload:any):Observable<any>{
         return this.http.get(urls.REGISTRATION_SEARCH_URL+"/"+payload)
             .map((res) =>{
                 if(res){
@@ -96,7 +96,7 @@ export class WizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    // ============ Driver Details ============ // 
+    // ============ Driver Details ============ //
 
     getDriverDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -110,22 +110,22 @@ export class WizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    
 
-    postDriverDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_POSTDRIVERDETAILSURL, payload)        
+
+    postDriverDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_POSTDRIVERDETAILSURL, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Accident Details ============ // 
+    // ============ Accident Details ============ //
 
     geAccidentDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -139,22 +139,22 @@ export class WizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    
 
-    postAccidentDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_POSTACCIDENTDETAILSURL, payload)        
+
+    postAccidentDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_POSTACCIDENTDETAILSURL, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ FIR Details ============ // 
+    // ============ FIR Details ============ //
 
     geFirDetails():Observable<any>{
       var CaseID= localStorage.getItem('CaseID');
@@ -168,22 +168,22 @@ export class WizardService{
           .catch((error) => Observable.throw('server Error.'));
     }
 
-  
 
-  postFirDetails(payload: any): Observable<any> { 
-      return this.http.post(urls.WIZARD_POSTFIRDETAILS, payload)        
+
+  postFirDetails(payload: any): Observable<any> {
+      return this.http.post(urls.WIZARD_POSTFIRDETAILS, payload)
         .map((res: any) =>  {
-          if (res) {          
+          if (res) {
             return res;
-          } 
-          else{          
+          }
+          else{
             return res;
-          }    
+          }
         })
         .catch((error) => Observable.throw(error.json() || 'Server error'));
   }
 
-  // ============ Damage Details ============ // 
+  // ============ Damage Details ============ //
 
   GetDamageDetails():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
@@ -209,15 +209,15 @@ GetDamagePartList():Observable<any>{
         .catch((error) => Observable.throw('server Error.'));
 }
 
-PostDamageDetails(payload: any): Observable<any> { 
-    return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE, payload)        
+PostDamageDetails(payload: any): Observable<any> {
+    return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE, payload)
       .map((res: any) =>  {
-        if (res) {          
+        if (res) {
           return res;
-        } 
-        else{          
+        }
+        else{
           return res;
-        }    
+        }
       })
       .catch((error) => Observable.throw(error.json() || 'Server error'));
 }
@@ -434,12 +434,12 @@ PostDamageDetails(payload: any): Observable<any> {
   }
 
   // GET DIGITAL SIGNATURE IMAGE //
-  getSignatureImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
+  getSignatureImage(): Observable<any> {
+    var CaseID = localStorage.getItem('CaseID');
     const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
     return this.http.get(IMAGEURL.SIGNATURE_URL, {params})
-        .map((res) =>{
-            if(res){
+        .map((res) => {
+            if (res) {
                 return res;
             }
         })
@@ -447,12 +447,25 @@ PostDamageDetails(payload: any): Observable<any> {
   }
 
   // GET generateSpotSurvey //
-  generateSpotSurvey():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
+  generateSpotSurvey(caseid): Observable<any> {
+    var CaseID = localStorage.getItem('SpotCaseId');
+    const params = new HttpParams().set('CaseID', JSON.parse(caseid));
     return this.http.get(urls.GENERATESPOTREPORT, {params})
-        .map((res) =>{
-            if(res){
+        .map((res) => {
+            if (res) {
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
+
+  // GET generate Pre Survey //
+  generatePreSurvey(caseid): Observable<any> {
+    const CaseID = localStorage.getItem('PreCaseId');
+    const params = new HttpParams().set('CaseID', JSON.parse(caseid));
+    return this.http.get(urls.GENERATEPREREPORT, {params})
+        .map((res) => {
+            if (res) {
                 return res;
             }
         })

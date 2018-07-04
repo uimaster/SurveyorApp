@@ -48,7 +48,7 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
 
           <button mat-raised-button matStepperNext>Skip</button>
-          <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="firstStepSubmit(firstFormGroup.value);" [disabled]="firstFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="firstStepSubmit(firstFormGroup.value);" [disabled]="firstFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -79,7 +79,7 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="secondStepSubmit(secondFormGroup.value);" [disabled]="secondFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="secondStepSubmit(secondFormGroup.value);" [disabled]="secondFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -97,7 +97,7 @@
         <mat-form-field>
           <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum"
             required>
-          <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;">
+          <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;" *ngIf="!IsCompleted">
             <i class="material-icons">
               search
             </i>
@@ -186,7 +186,7 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="thirdStepSubmit(thirdFormGroup.value);" [disabled]="thirdFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="thirdStepSubmit(thirdFormGroup.value);" [disabled]="thirdFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -200,7 +200,7 @@
         </mat-form-field>
         <div class="mat-form-checkfield">
           <label>Upload Driving License</label>
-          <input type="file" name="file" (change)="onFileChangedD($event)" class="custom-file-input" />
+          <input type="file" name="file" (change)="onFileChangedD($event)" class="custom-file-input" *ngIf="!IsCompleted" />
           <img alt="" id="imageUrl" [src]="imageToShowD" />
         </div>
         <mat-form-field>
@@ -242,7 +242,7 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="fourthSubmit(fourthFormGroup.value);" [disabled]="fourthFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="fourthSubmit(fourthFormGroup.value);" [disabled]="fourthFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -259,7 +259,7 @@
 
         <div class="mat-form-checkfield">
           <label>Upload Claim Form/Statement</label>
-          <input type="file" name="file" id="file" (change)="onFileChangedForm($event)" class="custom-file-input" />
+          <input type="file" name="file" id="file" (change)="onFileChangedForm($event)" class="custom-file-input" *ngIf="!IsCompleted" />
           <img alt="" id="imageUrl" [src]="imageToShowForm" />
         </div>
 
@@ -282,7 +282,7 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="fifthSubmit(fifthFormGroup.value)" [disabled]="fifthFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="fifthSubmit(fifthFormGroup.value)" [disabled]="fifthFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -311,7 +311,7 @@
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no" checked>No</mat-radio-button>
           </mat-radio-group>
-        </div>       
+        </div>
         <div class="mat-form-checkfield">
           <label>Accident Third Party Property Damages: </label>
           <mat-radio-group formControlName="ThirdPartyPropertyDamages">
@@ -331,7 +331,7 @@
           <input matInput placeholder="Police Report Date" formControlName="FIRDate" required [matDatepicker]="FIRDate">
           <mat-datepicker-toggle matSuffix [for]="FIRDate"></mat-datepicker-toggle>
           <mat-datepicker #FIRDate></mat-datepicker>
-        </mat-form-field>  
+        </mat-form-field>
 
         <mat-form-field>
           <input matInput placeholder="Police Station Name" formControlName="FIRPoliceStation">
@@ -354,8 +354,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button style="margin-left: 10px;" color="primary" (click)="sixthSubmit(sixthFormGroup.value);" [disabled]="sixthFormGroup.invalid || submitDisabled">Next</button>
-          
+          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="sixthSubmit(sixthFormGroup.value);" [disabled]="sixthFormGroup.invalid || submitDisabled">Next</button>
+
         </div>
       </form>
     </mat-step>
@@ -379,7 +379,7 @@
       <form [formGroup]="eightthFormGroup">
         <ng-template matStepLabel>Damage Details</ng-template>
         <h4>Damage Details
-          <button mat-raised-button color="primary" (click)="getDamagePartList()" style="float: right;">Add Part</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" (click)="getDamagePartList()" style="float: right;">Add Part</button>
         </h4>
         <br/>
         <div style="max-height: 400px; overflow: auto;" *ngIf="damageDetailsData.length > 0">
@@ -470,7 +470,7 @@
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
           <img alt="" [src]="imageToShow10" />
-          <input type="file" name="" id="" (change)="onFileChanged10($event)" class="custom-file-input" />
+          <input type="file" name="" id="" (change)="onFileChanged10($event)" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>Survey Fees Bill</h5>
@@ -479,7 +479,7 @@
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
           <img alt="" [src]="imageToShow11" />
-          <input type="file" name="" id="" (change)="onFileChanged11($event)" class="custom-file-input" />
+          <input type="file" name="" id="" (change)="onFileChanged11($event)" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>KYC Doc Identity</h5>
@@ -488,7 +488,7 @@
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
           <img alt="" [src]="imageToShow12" />
-          <input type="file" name="" id="" (change)="onFileChanged12($event)" class="custom-file-input" />
+          <input type="file" name="" id="" (change)="onFileChanged12($event)" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>KYC Address </h5>
@@ -497,7 +497,7 @@
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
           <img alt="" [src]="imageToShow9" />
-          <input type="file" name="" id="" (change)="onFileChanged9($event)" class="custom-file-input" />
+          <input type="file" name="" id="" (change)="onFileChanged9($event)" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>Driving License</h5>
@@ -539,12 +539,12 @@
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5>Upload Digital Signature</h5>
           <img alt="" [src]="imageToShow13" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-          <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input" />
+          <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input" *ngIf="!IsCompleted" />
           <input type="hidden" formControlName="tenthCtrl" />
         </div>
         <div style="text-align: center; margin-top: 50px;">
           <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button color="primary" (click)="openDialog()">Done</button>
+          <button mat-raised-button color="primary" (click)="openDialog()" *ngIf="!IsCompleted">Done</button>
         </div>
       </form>
     </mat-step>

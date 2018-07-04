@@ -4,6 +4,7 @@ import {UsersService} from "../users.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 import {CompaniesService} from "../../companies/companies.service";
+import { SurveyorService } from '../../surveyor/surveyor.service';
 
 @Component({
   selector: 'app-create',
@@ -14,25 +15,35 @@ export class CreateComponent implements OnInit {
   public myForm: FormGroup;
   public successMessage: String;
   public errorMessage: String;
-  public showError: boolean = false;
-  public showSuccess: boolean = false;
+  public showError = false;
+  public showSuccess = false;
   public sub: Subscription;
   public userId: Number = 0;
-  Loader: boolean = true;
-  companyListData =[];
+  Loader = true;
+  companyListData = [];
+  surveyorList = [];
 
-  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private route: ActivatedRoute, private companyService: CompaniesService) {
+  constructor(private fb: FormBuilder, private userService: UsersService, private router: Router, private route: ActivatedRoute,
+     private companyService: CompaniesService, private surveyorService: SurveyorService) {
+  }
+
+  getSurveyorList() {
+    this.surveyorService.getSurveyorList()
+    .subscribe(res => {
+      this.surveyorList = res.Data;
+    });
   }
 
   ngOnInit() {
-
+    this.getSurveyorList();
     this.Loader = false;
     this.myForm = this.fb.group({
       name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
       password: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/), Validators.minLength(5)]],
       userType: ['', [Validators.required]],
-      company: [{value:'', disabled:true}, [Validators.required]],
+      company: [{value: '', disabled: true}, [Validators.required]],
+      SurveyorsId: ['', [Validators.required]],
       active: [true, [Validators.required]]
 
     });
@@ -50,6 +61,7 @@ export class CreateComponent implements OnInit {
                 this.myForm.controls['userType'].setValue(data[i].UserTypeId);
                 this.myForm.controls['company'].setValue(data[i].CompanyId);
                 this.myForm.controls['active'].setValue(data[i].IsActive);
+                this.myForm.controls['SurveyorsId'].setValue(data[i].SurveyorsId);
               }
             }
           }, (error) => {
@@ -60,7 +72,10 @@ export class CreateComponent implements OnInit {
 
 
     });
-    this.getCompanyList();
+    setTimeout(() => {
+      this.getCompanyList();
+    }, 1000);
+
 
   }
 
@@ -90,7 +105,7 @@ export class CreateComponent implements OnInit {
       "Password": formValues.password,
       "UserTypeId": formValues.userType,
       "CompanyId": formValues.company,
-      "SurveyorsId": 2,
+      "SurveyorsId": formValues.SurveyorsId,
       "IsActive": formValues.active
     };
 
@@ -101,7 +116,7 @@ export class CreateComponent implements OnInit {
           this.showSuccess = true;
           this.showError = false;
           this.successMessage = result.Message;
-          setTimeout(() => { 
+          setTimeout(() => {
             this.router.navigate(['/users']);
           }, 2000);
           this.Loader = false;
@@ -112,7 +127,6 @@ export class CreateComponent implements OnInit {
           this.errorMessage = result.Message;
           this.Loader = false;
         }
-        
       },
       error => {
         this.showError = true;

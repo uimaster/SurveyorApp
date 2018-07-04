@@ -24,11 +24,13 @@ export const CREATECOMPANY = BASEURL + 'MasterCompany';
 
 export const GETSUMMARYREPORT_URL = BASEURL + 'CaseReportSumary';
 export const DAMAGEDETAILS_URL = BASEURL + 'CarDemageDetailEntry';
-export const GENERATESPOTREPORT= BASEURL + 'Reports';
-export const DOWNLOADSPOTREPORT= BASEURL + 'DownloadReport/getSpotSurveyReport';
+export const GENERATESPOTREPORT = BASEURL + 'Reports';
+export const GENERATEPREREPORT = BASEURL + 'PIReports/GeneratPIReportPDF';
+export const DOWNLOADSPOTREPORT = BASEURL + 'DownloadReport/getSpotSurveyReport';
 export const SPOTCOMPLETIONURL = BASEURL + 'CaseCompleteStatus';
-
-//URLS FOR PRE WIZARD//
+export const SPOTCREATECASE = BASEURL + 'CreateCase';
+export const PRECREATECASE = BASEURL + 'CreateCasePI';    
+// URLS FOR PRE WIZARD //
 
 export const WIZARD_CASEDETAILS_URL = BASEURL + 'PICaseDetails';
 export const WIZARD_VEHICLEDETAILSURL_PRE = BASEURL + 'PIVehicleDetails';
@@ -41,5 +43,5 @@ export const WIZARD_CASECOMPLETEURL_PRE = BASEURL + 'CaseCompleteStatus';
 export const GENERATESPOTREPORT_PRE = BASEURL + 'PIReports';
 export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport';
 
-//REGISTRATION NUMBER SEARCH URL//
-export const REGISTRATION_SEARCH_URL='http://54.169.129.132:90/DataAccessService.svc/GetVehicleData';
+// REGISTRATION NUMBER SEARCH URL //
+export const REGISTRATION_SEARCH_URL = 'http://54.169.129.132:90/DataAccessService.svc/GetVehicleData';

@@ -18,15 +18,17 @@ export class SharedComponent implements OnInit {
     public files: any[];
     caseId: any = localStorage.getItem('CaseID');
     fileList = [];
-    showUpdateBtn: boolean = false;
+    showUpdateBtn = false;
     uploadCrashImageForm: FormGroup;
-    uploadImageModal:boolean = false;
-    Loader: boolean = true;
+    uploadImageModal = false;
+    Loader = true;
     CaseImageID: any;
-    showfileEmptyMsg: boolean = false;
+    showfileEmptyMsg = false;
+    IsCompleted: boolean;
+    multiImages: any;
 
     constructor(private sharedService: SharedModuleServices, private http: HttpClient, public dialog: MatDialog,
-        private wizardService: WizardService, private fb: FormBuilder) { 
+        private wizardService: WizardService, private fb: FormBuilder) {
             this.uploadCrashImageForm = this.fb.group({
                 ImageName: new FormControl('', Validators.required)
             })
@@ -35,8 +37,13 @@ export class SharedComponent implements OnInit {
     ngOnInit() {
         this.getMultiImages();
         this.Loader = false;
+        let completedState = localStorage.getItem('IsCompleted');
+        if(completedState != undefined) {
+            this.IsCompleted = JSON.parse(completedState);
+        }
+
     }
-    
+
     // DETAILS IMAGE //
 
     createImageFromBlob0(image: Blob) {
@@ -52,16 +59,16 @@ export class SharedComponent implements OnInit {
     }
 
     onMultifileChange(event: any) {
-        this.files = event.target.files;        
+        this.files = event.target.files;
     }
     changeshowfileEmptyMsg(){
         this.showfileEmptyMsg= false;
     }
-    multiImages: any;
-    isImageLoading: boolean = false;
+    multiImage: any;
+    isImageLoading = false;
 
     postMultiImage(data) {
-        let imageName = this.uploadCrashImageForm.controls['ImageName'].value;   
+        let imageName = this.uploadCrashImageForm.controls['ImageName'].value;
         if(this.files==undefined || this.files.length < 1 || imageName === null || imageName ==''){
             this.showfileEmptyMsg = true;
             return false;
@@ -115,7 +122,7 @@ export class SharedComponent implements OnInit {
             console.log(error);
         });
     }
-    
+
 
 }
 
@@ -171,21 +178,10 @@ export class DonwloadDialog implements OnInit {
             if(res){
                 this.msg = res.Message;
             }
-            
+
         })
         this.showFirstData = false;
         this.showSecondData = true;
-    }
-
-    generateSpotSurvey() {
-        this.wizardService.generateSpotSurvey().subscribe(res => {
-            if (res && res.Status == 200) {
-                alert("You have generated Spot Survey Successfully.");
-            }
-            else {
-                alert("You have failed to generate Spot Survey.");
-            }
-        })
     }
 
 }

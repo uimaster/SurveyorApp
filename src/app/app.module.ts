@@ -50,6 +50,8 @@ import { CreateCompaniesComponent } from './companies/create-companies/create-co
 import { PreWizardComponent } from './wizardPre/wizard';
 import { PreWizardService } from './wizardPre/wizard.service';
 import {CompaniesService} from "./companies/companies.service";
+import {DashboardService} from './dashboard/dashboard.service';
+import { SurveyorService } from './surveyor/surveyor.service';
 
 import { SharedModule } from './sharedModule/shared.module';
 
@@ -101,7 +103,8 @@ import { SharedModule } from './sharedModule/shared.module';
     MatProgressSpinnerModule,
     SharedModule
   ],
-  providers: [LoginService, TabsService, WizardService, UsersService, CompaniesService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
+  providers: [LoginService, TabsService, DashboardService, SurveyorService, WizardService, UsersService, CompaniesService,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 

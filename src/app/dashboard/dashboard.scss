@@ -8,3 +8,21 @@
         margin: 0;
     }
 }
+
+.backdrop{     position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(21, 21, 21, 0.6);
+    z-index: 99;
+}
+.smallModal{ position: fixed; left: 40%; top: 25%; z-index: 999; padding: 30px; background-color: #fff; min-height:200px;
+    h2{
+        margin: 0 0 15px 0;
+    }
+    p{
+        text-align: center; font-size: 14px; color: #333;
+    }
+    .mat-raised-button{ padding: 0px 30px !important; }
+}

@@ -10,7 +10,7 @@ import { PreWizardService } from './wizard.service';
 import { WizardService } from '../wizard/wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
 import { DonwloadDialog } from '../sharedModule/shared.component';
-import { CompaniesService } from "../companies/companies.service";
+import { CompaniesService } from '../companies/companies.service';
 
 @Component({
     selector: 'wizard-selector',
@@ -35,13 +35,13 @@ export class PreWizardComponent implements OnInit {
     postResponseData = [];
     successMessage: string;
     errorMessage: string;
-    showError: boolean = false;
-    showSuccess: boolean = false;
+    showError = false;
+    showSuccess = false;
     caseId: any = localStorage.getItem('CaseID');
     caseNO: any = localStorage.getItem('CaseNO');
-    showPartsList: boolean = false;
+    showPartsList = false;
     public files: any[];
-    Loader: boolean = true;
+    Loader = true;
     VehicleTypeID = [
         { VehicleTypeID: 0, Name: 'LCV/HCV' },
         { VehicleTypeID: 1, Name: 'HTV/BUS' },
@@ -63,13 +63,14 @@ export class PreWizardComponent implements OnInit {
     PartStatusID: any;
     companyListData = [];
     selectedCompany: any;
-    submitDisabled: boolean = false;
+    submitDisabled = false;
     @ViewChild(MatAccordion) accordion: MatAccordion;
     allExpandState: boolean;
     RegSearchSuccessMsg = false;
     RegSearchFailedMsg = false;
     policyEndMaxDate: any;
-    uploadImageModal:boolean = false;
+    uploadImageModal = false;
+    IsCompleted: boolean;
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService
@@ -155,6 +156,10 @@ export class PreWizardComponent implements OnInit {
 
     ngOnInit() {
         this.Loader = false;
+        let completedState = localStorage.getItem('IsCompleted');
+        if(completedState != undefined){
+            this.IsCompleted = JSON.parse(completedState);
+        }
         setTimeout(() => {
             this.getCaseDetails();
         }, 200);
@@ -225,8 +230,7 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
                     this.thirdFormGroup.controls['Permit_Area'].setValue('');
                     this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
-                }
-                else {
+                } else {
                     this.RegSearchFailedMsg = true;
                     this.RegSearchSuccessMsg = false;
                     this.thirdFormGroup.controls['VehicleTypeID'].setValue('');
@@ -283,10 +287,10 @@ export class PreWizardComponent implements OnInit {
         var yyyy:any = SelectedDate.getFullYear()-1;
         if(dd<10){
                 dd='0'+dd
-            } 
+            }
             if(mm<10){
                 mm='0'+mm
-            } 
+            }
 
         let backYear = yyyy+'-'+mm+'-'+dd;
 
@@ -299,7 +303,6 @@ export class PreWizardComponent implements OnInit {
             .subscribe(res => {
                 if (res && res.Status == 200) {
                     this.caseDetailData = res.Data;
-                    console.log('caseDetails:', this.caseDetailData);
                     this.selectedCompany = this.caseDetailData[0].CompanyID;
                     if (this.caseDetailData.length > 0) {
                         let AssDateTime = (new Date(this.caseDetailData[0].AssignedDateTime)).toISOString();
@@ -373,7 +376,7 @@ export class PreWizardComponent implements OnInit {
                         this.ninethFormGroup = new FormGroup({
                             CaseID: new FormControl(this.caseId),
                             CaseProposerName: new FormControl(this.insuranceDetailsData[0].CaseProposerName),
-                            CurrentInsurerName: new FormControl(this.insuranceDetailsData[0].CurrentInsurerName),
+                            CurrentInsurerName: new FormControl(JSON.parse(this.insuranceDetailsData[0].CurrentInsurerName)),
                             CurrentPolicyNo: new FormControl(this.insuranceDetailsData[0].CurrentPolicyNo),
                             PolicyStartDate: new FormControl(this.insuranceDetailsData[0].PolicyStartDate),
                             PolicyEndDate: new FormControl(this.insuranceDetailsData[0].PolicyEndDate),
@@ -411,7 +414,7 @@ export class PreWizardComponent implements OnInit {
     }
 
     getDamageDetails() {
-        this.Loader = true;        
+        this.Loader = true;
         this.wizardService.pre_GetDamageDetails()
             .subscribe(res => {
                 if (res && res.Status == 200) {
@@ -425,7 +428,7 @@ export class PreWizardComponent implements OnInit {
         this.uploadImageModal = false;
     }
 
-    getDamagePartList() {        
+    getDamagePartList() {
         this.Loader = true;
         this.uploadImageModal = true;
         this.wizardService.pre_GetDamagePartList()

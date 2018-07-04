@@ -16,13 +16,13 @@
                 {{item.Name}}
               </mat-option>
             </mat-select>
-          </mat-form-field>        
+          </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Case Ref No" formControlName="CaseRefNo">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Case Proposer Name" formControlName="CaseProposerName">
-        </mat-form-field>       
+        </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Assigned Date Time" formControlName="AssignedDateTime"  [matDatepicker]="Prepicker1">
           <mat-datepicker-toggle matSuffix [for]="Prepicker1"></mat-datepicker-toggle>
@@ -31,7 +31,7 @@
         <mat-form-field>
           <input matInput placeholder="Case Address" formControlName="caseAddress">
         </mat-form-field>
-       
+
         <mat-form-field>
           <input matInput placeholder="Inspection Date" formControlName="InspectionDate"  [matDatepicker]="Prepicker2" >
           <mat-datepicker-toggle matSuffix [for]="Prepicker2"></mat-datepicker-toggle>
@@ -39,9 +39,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Inspection Time" formControlName="InspectionTime"  [matDatepicker]="InspectionTime" >
-          <mat-datepicker-toggle matSuffix [for]="InspectionTime"></mat-datepicker-toggle>
-          <mat-datepicker #InspectionTime></mat-datepicker>
+          <input matInput placeholder="Inspection Time" formControlName="InspectionTime"  />
         </mat-form-field>
 
         <mat-form-field>
@@ -49,12 +47,12 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Inspection Geo Codes" formControlName="InspectionGeoCodes">
-        </mat-form-field>        
+        </mat-form-field>
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button  matStepperNext >Skip</button>
-          <button mat-raised-button color="primary" style="margin-left: 10px;"
+          <button mat-raised-button color="primary" style="margin-left: 10px;" *ngIf="!IsCompleted"
            (click)="firstStepSubmit(firstFormGroup.value);" [disabled]="firstFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
@@ -68,7 +66,7 @@
         <div class="alert success" *ngIf="RegSearchSuccessMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record found !</div>
         <mat-form-field>
           <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum" required>
-          <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;">
+          <mat-icon matSuffix (click)="SearchRegistration()" style="cursor: pointer;" *ngIf="!IsCompleted">
             <i class="material-icons">
             search
             </i>
@@ -81,7 +79,7 @@
               {{ item.Name }}
             </mat-option>
           </mat-select>
-        </mat-form-field>        
+        </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Chasis No" formControlName="ChasisNo">
         </mat-form-field>
@@ -98,7 +96,7 @@
           <input matInput placeholder="Variant" formControlName="Variant">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Manufacture Year" formControlName="MgfYear">          
+          <input matInput placeholder="Manufacture Year" formControlName="MgfYear">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Color" formControlName="Color">
@@ -107,7 +105,7 @@
           <input matInput placeholder="Registration Date" formControlName="RegistrationDate" required  [matDatepicker]="picker5">
           <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
           <mat-datepicker #picker5></mat-datepicker>
-        </mat-form-field>       
+        </mat-form-field>
 
         <mat-form-field>
           <mat-select placeholder="Fuel Type" formControlName="FuelType">
@@ -153,13 +151,13 @@
         <mat-form-field>
           <input matInput placeholder="Road Tax ValidUpto" formControlName="Road_Tax_ValidUpto">
         </mat-form-field>
-        
+
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button  matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button color="primary" style="margin-left: 10px;"  (click)="thirdStepSubmit(thirdFormGroup.value);"
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;"  (click)="thirdStepSubmit(thirdFormGroup.value);"
           [disabled]="thirdFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
@@ -169,9 +167,9 @@
       <form [formGroup]="ninethFormGroup">
         <ng-template matStepLabel>Insurance Details</ng-template>
         <h4>Insurance Details</h4>
-        
 
-        <mat-form-field>            
+
+        <mat-form-field>
             <input matInput placeholder="Proposer Name" formControlName="CaseProposerName">
           </mat-form-field>
 
@@ -182,24 +180,24 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        
+
         <mat-form-field>
           <input matInput placeholder="Previous Policy No" formControlName="CurrentPolicyNo">
         </mat-form-field>
-        
+
 
         <mat-form-field>
             <input matInput placeholder="Policy Start Date" formControlName="PolicyStartDate"  [matDatepicker]="PolicyStartDate" (dateChange)="getPolicyStartDate('change', $event)">
             <mat-datepicker-toggle matSuffix [for]="PolicyStartDate"></mat-datepicker-toggle>
             <mat-datepicker #PolicyStartDate></mat-datepicker>
           </mat-form-field>
-       
+
         <mat-form-field>
           <input matInput placeholder="Policy End Date" [max]="policyEndMaxDate" formControlName="PolicyEndDate"  [matDatepicker]="picker5a">
           <mat-datepicker-toggle matSuffix [for]="picker5a"></mat-datepicker-toggle>
           <mat-datepicker #picker5a></mat-datepicker>
         </mat-form-field>
-        
+
         <div class="mat-form-checkfield">
           <label for="ClaimHistory">Claim History</label>
           <mat-radio-group formControlName="ClaimHistory" id="ClaimHistory" [(ngModel)]="ClaimHistory">
@@ -207,21 +205,21 @@
             <mat-radio-button value="1">Yes</mat-radio-button>
           </mat-radio-group>
         </div>
-        <div class="mat-form-checkfield">  
+        <div class="mat-form-checkfield">
           <label for="GapInInsurance">Gap InInsurance</label>
           <mat-radio-group formControlName="GapInInsurance" id="GapInInsurance" [(ngModel)]="GapInInsurance">
             <mat-radio-button value="0">No</mat-radio-button>
             <mat-radio-button value="1">Yes</mat-radio-button>
           </mat-radio-group>
-        </div>  
-        <div class="mat-form-checkfield">  
+        </div>
+        <div class="mat-form-checkfield">
           <label for="GapInInsurance">Proposed Insured</label>
           <mat-radio-group formControlName="ProposedInsured" id="GapInInsurance" [(ngModel)]="ProposedInsured">
             <mat-radio-button value="0">No</mat-radio-button>
             <mat-radio-button value="1">Yes</mat-radio-button>
           </mat-radio-group>
-        </div>    
-        
+        </div>
+
         <mat-form-field>
           <textarea matInput placeholder="Case Remarks" formControlName="CaseRemarks"></textarea>
         </mat-form-field>
@@ -230,7 +228,7 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button  matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button color="primary" style="margin-left: 10px;"  (click)="ninthStepSubmit(ninethFormGroup.value);"
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;"  (click)="ninthStepSubmit(ninethFormGroup.value);"
           [disabled]="ninethFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
@@ -248,31 +246,31 @@
         </div>
       </form>
     </mat-step>
-    
+
     <mat-step [stepControl]="eightthFormGroup">
       <form [formGroup]="eightthFormGroup">
         <ng-template matStepLabel>Damage Details</ng-template>
-        <h4>Damage Details <button mat-raised-button color="primary" (click)="getDamagePartList()" style="float: right;">Add Part</button></h4><br/>
-        <div style="max-height: 400px; overflow: auto;"  *ngIf="damageDetailsData.length > 0">                   
+        <h4>Damage Details <button mat-raised-button color="primary" *ngIf="!IsCompleted" (click)="getDamagePartList()" style="float: right;">Add Part</button></h4><br/>
+        <div style="max-height: 400px; overflow: auto;"  *ngIf="damageDetailsData.length > 0">
             <mat-list role="list"  *ngFor="let data of damageDetailsData; let i = index">
               <mat-list-item role="listitem" >
                 <p style="display: inline-block; width: 10%;"><b>S. No:</b> {{i+1}}</p>
                 <p style="display: inline-block; width: 30%;"><b>Part Name:</b> {{data.PartName}}</p>
                 <p style="display: inline-block; width: 30%;"><b>Part Status:</b> {{data.PartStatus}}</p>
                 <p style="display: inline-block; width: 30%;"><b>Part Remark:</b> {{data.PartRemark}}</p>
-              </mat-list-item>               
-            </mat-list> 
+              </mat-list-item>
+            </mat-list>
             <br/>
-        </div> 
-        <p  *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p> 
-       
+        </div>
+        <p  *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p>
+
         <div class="backdrop" *ngIf="uploadImageModal">
           <div class="smallModal">
             <h4> Add Damage Details</h4>
               <div style="max-height: 450px; overflow: auto; padding: 10px;">
               <mat-accordion class="example-headers-align" *ngIf="damagePartList.length > 0">
                 <mat-expansion-panel  hideToggle="false"  *ngFor="let item of damagePartList; let i = index;" [expanded]="allExpandState">
-                  
+
                   <mat-expansion-panel-header (click)="showdamageListData(damagePartList[i]);">
                     <mat-panel-title>
                       <span>{{i+1}}.</span>&nbsp; &nbsp;Part Name: &nbsp; {{item.PartName}}
@@ -283,15 +281,15 @@
                       </i> -->
                     </mat-panel-description>
                   </mat-expansion-panel-header>
-                  
-                  
+
+
                     <input  formControlName="PartType" value="{{item.PartType}}" style="display: none" />
-                
+
                     <input  formControlName="PartID" value="{{item.PartID}}" style="display: none" />
-                  
+
                     <input  formControlName="PartName" value="{{item.PartName}}" style="display: none" />
-                  
-                    <input  formControlName="PartStatusID" value="{{PartStatusID}}" style="display: none" /> 
+
+                    <input  formControlName="PartStatusID" value="{{PartStatusID}}" style="display: none" />
 
                   <mat-radio-group style="width: 40%; margin: 0 45px;" formControlName="PartStatus" (change)="getPartStatusID($event);">
                     <mat-radio-button value="1" checked>Safe</mat-radio-button>
@@ -302,11 +300,11 @@
                   <mat-form-field style="width:55%">
                     <textarea matInput placeholder="Part Remark" formControlName="PartRemark"></textarea>
                   </mat-form-field>
-              
+
                   <mat-action-row >
                     <button mat-raised-button color="primary" (click)="eightthStepSubmit(eightthFormGroup.value);">Save</button>
                   </mat-action-row>
-                  
+
                 </mat-expansion-panel>
               </mat-accordion>
               <p *ngIf="damagePartList.length < 1">No part list available !</p>
@@ -327,9 +325,9 @@
         <form [formGroup]="seventhFormGroup">
           <ng-template matStepLabel>Surveyor Signature</ng-template>
           <div class="tabularData card" style="width:50%; margin-left: 23%;" >
-            <h5 style="color:#333;">Upload Surveyor Signature</h5>           
+            <h5 style="color:#333;">Upload Surveyor Signature</h5>
             <img  alt="" [src]="imageToShow13" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-            <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input"  />
+            <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input" *ngIf="!IsCompleted" />
           </div>
           <div  style="text-align: center; margin-top: 50px;">
               <button mat-raised-button matStepperPrevious>Back</button>
@@ -357,20 +355,20 @@
            that of damage to the vehicle noticed by <br/>inspecting officer are correct and nothing has been hidden undisclosed.</p>
         <p class="smallPara">Signature of the Inspecting officer Surveyor.<br/>
             Signature of the propserRepresentive</p>
-        
+
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess" >Data Saved {{successMessage}}fully.</div>
-          <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div> 
-          <button mat-raised-button matStepperPrevious>Back</button>      
-          <a routerLink="/dashboard" mat-raised-button  matStepperNext style="margin-left: 10px;">Skip</a>  
+          <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+          <button mat-raised-button matStepperPrevious>Back</button>
+          <a routerLink="/dashboard" mat-raised-button  matStepperNext style="margin-left: 10px;">Skip</a>
           <button mat-raised-button color="primary" (click)="tenthStepSubmit(tenthFormGroup.value);"
-          [disabled]="tenthFormGroup.invalid || submitDisabled" style="margin-left: 10px;">Submit</button>
-        </div>    
+          [disabled]="tenthFormGroup.invalid || submitDisabled" style="margin-left: 10px;" *ngIf="!IsCompleted">Submit</button>
+        </div>
       </form>
     </mat-step>
 
   </mat-horizontal-stepper>
-</div>  
+</div>
 
 
 
