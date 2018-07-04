@@ -1,10 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { TabsService } from './dashboardTabs/tabs.service';
 import { TabsResponse, TabsGenericResponse} from './dashboardTabs/tabs.model';
 import { WizardService } from '../wizard/wizard.service';
 import { DashboardService } from './dashboard.service';
+import {CompaniesService} from '../companies/companies.service';
+import { SurveyorService } from '../surveyor/surveyor.service';
+import { AreaService } from '../area/area.service';
 
 @Component({
   selector: 'dashboard-selector',
@@ -24,11 +28,57 @@ export class DashboardComponent implements OnInit{
   showActionColumn = false;
   completedCasebuttons = false;
   openCreateCaseModal = false;
+  companyListData = [];
+  surveyorList = [];
+  areaList = [];
+  createCaseForm: FormGroup;
+  companyDisabled = false;
+  surveyorDisabled = false;
+  areaDisabled = false;
 
+  constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
+    private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
+    private areaService: AreaService
+  ) {
+    this.createCase();
+  }
 
-  constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router,
-    private dashboardService: DashboardService
-  ){}
+  createCase() {
+    const date = new Date();
+    this.createCaseForm = this.fb.group({
+      SurveyorsId: ['', Validators.required],
+      CaseStatusID: ['0'],
+      CompanyId: [''],
+      CaseID: ['0'],
+      CaseNo: [''],
+      CaseDate: [date.toISOString()],
+      PolicyNO: [''],
+      ClaimNO: [''],
+      AreaID: ['0']
+    });
+  }
+
+  createCaseInit() {
+    const SurveyorsId = localStorage.getItem('SurveyorsId');
+    const companyId = localStorage.getItem('CompanyId');
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(SurveyorsId));
+    this.createCaseForm.controls['CompanyId'].setValue(JSON.parse(companyId));
+
+    if (userTypeId === 1) {
+      this.areaDisabled = false;
+      this.companyDisabled = false;
+      this.surveyorDisabled = false;
+    } else if (userTypeId === 2) {
+      this.areaDisabled = false;
+      this.companyDisabled = true;
+      this.surveyorDisabled = false;
+    } else if (userTypeId === 3) {
+      this.areaDisabled = true;
+      this.companyDisabled = true;
+      this.surveyorDisabled = true;
+    }
+  }
 
   getDashboardList() {
     this.tabsServices.getDashboardList()
@@ -49,32 +99,55 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-  openCreateCase(){
+  getSurveyorList() {
+    this.surveyorService.getSurveyorList()
+    .subscribe(res => {
+      this.surveyorList = res.Data;
+    });
+  }
+
+  getCompanyList() {
+    this.companyService.getCompanyList()
+        .subscribe(res => {
+        this.companyListData = res.Data;
+    });
+  }
+
+  getAreaList() {
+    this.areaService.getAreaList()
+      .subscribe(res => {
+        this.areaList = res.Data;
+    });
+  }
+
+  openCreateCase() {
     this.openCreateCaseModal = true;
   }
 
-  closeCreateCase(){
+  closeCreateCase() {
     this.openCreateCaseModal = false;
   }
 
-  createSpotCase(){
-    this.dashboardService.createSpotCase()
+  createSpotCase(data) {
+    console.log(data);
+    this.dashboardService.createSpotCase(data)
     .subscribe(res =>{
       if(res && res.Status === '200'){
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       }
-    })
+    });
   }
 
-  createPreCase(){
-    this.dashboardService.createPreCase()
+  createPreCase(data) {
+    console.log(data);
+    this.dashboardService.createPreCase(data)
     .subscribe(res =>{
       if(res && res.Status === '200'){
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       }
-    })
+    });
   }
 
   getCompletedList() {
@@ -128,10 +201,29 @@ export class DashboardComponent implements OnInit{
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
     setTimeout(() => {
       this.getDashboardList();
     }, 100);
+
+    setTimeout(() => {
+      this.getSurveyorList();
+    }, 400);
+
+    setTimeout(() => {
+      this.getCompanyList();
+    }, 700);
+
+    setTimeout(() => {
+      this.getAreaList();
+    }, 1000);
+
+    setTimeout(() => {
+      this.createCaseInit();
+    }, 1200);
+
+
+
     this.showDownload = JSON.parse(localStorage.getItem('showDownload'));
     if(this.showDownload === null || this.showDownload === undefined){
       localStorage.setItem('showTittle', 'true');

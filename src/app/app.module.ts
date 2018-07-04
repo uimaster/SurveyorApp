@@ -42,14 +42,15 @@ import { UsersComponent } from './users/users.component';
 import { SurveyorComponent } from './surveyor/surveyor.component';
 import { AreaComponent } from './area/area.component';
 import { CompaniesComponent } from './companies/companies.component';
-import { UsersService } from "./users/users.service";
+import { UsersService } from './users/users.service';
+import { AreaService } from './area/area.service';
 import { CreateComponent } from './users/create/create.component';
 import { CreateSurveyorComponent } from './surveyor/create-surveyor/create-surveyor.component';
 import { CreateAreaComponent } from './area/create-area/create-area.component';
 import { CreateCompaniesComponent } from './companies/create-companies/create-companies.component';
 import { PreWizardComponent } from './wizardPre/wizard';
 import { PreWizardService } from './wizardPre/wizard.service';
-import {CompaniesService} from "./companies/companies.service";
+import {CompaniesService} from './companies/companies.service';
 import {DashboardService} from './dashboard/dashboard.service';
 import { SurveyorService } from './surveyor/surveyor.service';
 
@@ -103,7 +104,7 @@ import { SharedModule } from './sharedModule/shared.module';
     MatProgressSpinnerModule,
     SharedModule
   ],
-  providers: [LoginService, TabsService, DashboardService, SurveyorService, WizardService, UsersService, CompaniesService,
+  providers: [LoginService, TabsService, DashboardService, SurveyorService, WizardService, UsersService, CompaniesService, AreaService,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

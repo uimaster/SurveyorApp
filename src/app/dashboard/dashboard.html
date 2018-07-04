@@ -1,97 +1,136 @@
 <header-selector></header-selector>
 <sidebar-selector></sidebar-selector>
 <div class="container">
-<div class="loader" *ngIf="Loader">
+  <div class="loader" *ngIf="Loader">
     <mat-spinner [color]="accent"></mat-spinner>
-</div>
-<h2>Dashboard
-
-  <button mat-raised-button color="accent" (click)="openCreateCase();" style="float:right;">
-    Create Case
-  </button>
-</h2>
-
-<div class="backdrop" *ngIf="openCreateCaseModal">
-  <div class="tabularData card smallModal">
-    <h2 style="color:#000;">Create Case
-
-      <button mat-raised-button (click)="closeCreateCase();" style="float:right; padding:5px 10px!important;
-       min-width: 30px; height: 30px; line-height:15px;">
-      <i class="material-icons" style="line-height:15px; font-size: 14px;">
-        clear
-        </i>
-      </button>
-    </h2>
-    <hr/><br/>
-    <h5 style="color:#000;">What type of case do you want to create ?</h5>
-    <button mat-raised-button color="primary" (click)="createSpotCase();">
-      Spot Survey
-    </button>
-    <button mat-raised-button color="primary" (click)="createPreCase();" style="float:right;">
-      Pre Inspection
-    </button>
   </div>
-</div>
+  <h2>Dashboard
 
-<tabs-selector></tabs-selector>
-<div class="tabularData card">
+    <button mat-raised-button color="accent" (click)="openCreateCase();" style="float:right;">
+      Create Case
+    </button>
+  </h2>
+
+  <div class="backdrop" *ngIf="openCreateCaseModal">
+    <form [formGroup]="createCaseForm">
+      <div class="tabularData card smallModal">
+        <h2 style="color:#000;">Create Case
+
+          <button mat-raised-button (click)="closeCreateCase();" style="float:right; padding:5px 10px!important;
+              min-width: 30px; height: 30px; line-height:15px;">
+            <i class="material-icons" style="line-height:15px; font-size: 14px;">
+              clear
+            </i>
+          </button>
+        </h2>
+        <hr/>
+
+
+
+        <mat-form-field >
+          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" required [disabled]="surveyorDisabled">
+            <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
+              {{item.Name}}
+            </mat-option>
+            <mat-error *ngIf="createCaseForm.controls['SurveyorsId'].hasError('required') && createCaseForm.controls['SurveyorsId'].touched">Surveyor is required</mat-error>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="float: right;" >
+          <mat-select placeholder="Area" formControlName="AreaID" [disabled]="areaDisabled">
+            <mat-option *ngFor="let item of areaList" [value]="item.AreaId">
+              {{item.AreaName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+          <mat-select placeholder="Company" formControlName="CompanyId" [disabled]="companyDisabled">
+            <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
+              {{item.Name}}
+            </mat-option>
+            <mat-error *ngIf="createCaseForm.controls['CompanyId'].hasError('required') && createCaseForm.controls['CompanyId'].touched">Company is required</mat-error>
+          </mat-select>
+        </mat-form-field>
+
+        <h5 style="color:#000;">What type of case do you want to create ?</h5>
+        <button mat-raised-button color="primary" (click)="createSpotCase(createCaseForm.value)">
+          Spot Survey
+        </button>
+        <button mat-raised-button color="primary" (click)="createPreCase(createCaseForm.value)" style="float:right;">
+          Pre Inspection
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <tabs-selector></tabs-selector>
+  <div class="tabularData card">
     <table width="100%" class="table">
-        <thead>
-            <tr>
-                <th width="5%">S No.</th>
-                <th width="8%">Case Date</th>
-                <th width="8%">Case No</th>
-                <th width="8%">Claim No</th>
-                <th width="15%">Company Name</th>
-                <th width="11%">Customer Name</th>
-                <th width="12%">Customer Mobile</th>
-                <th width="10%">Case Type</th>
-                <th width="8%">Status</th>
-                <th width="15%" *ngIf="showActionColumn">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of TotalDada; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{item.CaseDate | date:'dd/MM/yyyy' }}</td>
-                <td>{{item.CaseNo}}</td>
-                <td>{{item.ClaimNO}}</td>
-                <td>{{item.CompanyName}}</td>
-                <td>{{item.CustomerName}}</td>
-                <td>{{item.CustomerMobile}}</td>
-                <td>{{item.CaseTypeName}}</td>
-                <td>{{item.SurveyStatusName}}</td>
-                <td *ngIf="showActionColumn">
-                    <a *ngIf="completedCasebuttons" mat-raised-button color="primary" title="DownLoad Report" target="_blank" (click)="downloadSpotSurvey(item.CaseID)" href="{{downloadUrl}}">
-                        <i class="material-icons">
-                            assignment_returned
-                        </i>
-                    </a>
-                    <button *ngIf="completedCasebuttons && item.CaseTypeName =='Spot Survey'" mat-raised-button color="accent" title="Generate Spot Report" (click)="generateSpotSurvey(item.CaseID);">
-                        <i class="material-icons">
-                            assignment_turned_in
-                        </i>
-                    </button>
-                    <button *ngIf="completedCasebuttons && item.CaseTypeName =='Pre-Inspection'" mat-raised-button color="accent" title="Generate Pre Report" (click)="generatePreSurvey(item.CaseID);">
-                      <i class="material-icons">
-                          assignment_turned_in
-                      </i>
-                  </button>
-                    <button *ngIf="completedCasebuttons" mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo, 'true');" title="View Completed Case" >
-                      <i class="material-icons">
-                          remove_red_eye
-                      </i>
-                  </button>
-                    <button *ngIf="showProcessButtton" mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo, 'false');" title="Process Case">
-                        <i class="material-icons">
-                            forward
-                        </i>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th width="5%">S No.</th>
+          <th width="8%">Case Date</th>
+          <th width="8%">Case No</th>
+          <th width="8%">Claim No</th>
+          <th width="15%">Company Name</th>
+          <th width="11%">Customer Name</th>
+          <th width="12%">Customer Mobile</th>
+          <th width="10%">Case Type</th>
+          <th width="8%">Status</th>
+          <th width="15%" *ngIf="showActionColumn">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of TotalDada; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{item.CaseDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{item.CaseNo}}</td>
+          <td>{{item.ClaimNO}}</td>
+          <td>{{item.CompanyName}}</td>
+          <td>{{item.CustomerName}}</td>
+          <td>{{item.CustomerMobile}}</td>
+          <td>{{item.CaseTypeName}}</td>
+          <td>{{item.SurveyStatusName}}</td>
+          <td *ngIf="showActionColumn">
+            <a *ngIf="completedCasebuttons" mat-raised-button color="primary" title="DownLoad Report" target="_blank" (click)="downloadSpotSurvey(item.CaseID)"
+              href="{{downloadUrl}}">
+              <i class="material-icons">
+                assignment_returned
+              </i>
+            </a>
+            <button *ngIf="completedCasebuttons && item.CaseTypeName =='Spot Survey'" mat-raised-button color="accent" title="Generate Spot Report"
+              (click)="generateSpotSurvey(item.CaseID);">
+              <i class="material-icons">
+                assignment_turned_in
+              </i>
+            </button>
+            <button *ngIf="completedCasebuttons && item.CaseTypeName =='Pre-Inspection'" mat-raised-button color="accent" title="Generate Pre Report"
+              (click)="generatePreSurvey(item.CaseID);">
+              <i class="material-icons">
+                assignment_turned_in
+              </i>
+            </button>
+            <button *ngIf="completedCasebuttons" mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo, 'true');"
+              title="View Completed Case">
+              <i class="material-icons">
+                remove_red_eye
+              </i>
+            </button>
+            <button *ngIf="showProcessButtton" mat-raised-button color="accent" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo, 'false');"
+              title="Process Case">
+              <i class="material-icons">
+                forward
+              </i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-    <h5 *ngIf="noData" style="text-align: center"><br/><br/><br/>No Data Available !</h5>
-</div>
+    <h5 *ngIf="noData" style="text-align: center">
+      <br/>
+      <br/>
+      <br/>No Data Available !</h5>
+  </div>
 </div>
 <!-- <wizard-selector></wizard-selector> -->

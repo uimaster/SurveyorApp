@@ -17,7 +17,7 @@
     background-color: rgba(21, 21, 21, 0.6);
     z-index: 99;
 }
-.smallModal{ position: fixed; left: 40%; top: 25%; z-index: 999; padding: 30px; background-color: #fff; min-height:200px;
+.smallModal{ position: fixed; left: 50%; margin-left: -200px; width: 400px; top: 25%; z-index: 999; padding: 30px; background-color: #fff; min-height:250px;
     h2{
         margin: 0 0 15px 0;
     }
@@ -25,4 +25,6 @@
         text-align: center; font-size: 14px; color: #333;
     }
     .mat-raised-button{ padding: 0px 30px !important; }
+    hr{ margin-bottom: 40px;}
+    h5{ margin:20px auto 30px; text-align: center;}
 }

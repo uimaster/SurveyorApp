@@ -10,38 +10,24 @@ import 'rxjs/Rx';
 export class DashboardService{
     constructor(private http: HttpClient){}
 
-    createSpotCase():Observable<any>{
-        let SurveyorsId = localStorage.getItem('SurveyorsId');
-        // let companyId = localStorage.getItem('CompanyId');
-        let date = new Date();
-        const params = new HttpParams().set('SurveyorsId', SurveyorsId).set('CaseStatusID', '0')
-        .set('CompanyId', '1').set('CaseID', '0').set('CaseNo', '').set('CaseDate', date.toISOString())
-        .set('PolicyNO', '').set('ClaimNO', '').set('AreaID', '0');
-        return this.http.post(SPOTCREATECASE, {params})
-            .map((res) =>{
+    createSpotCase(payload: any): Observable<any> {
+        return this.http.post(SPOTCREATECASE, payload)
+            .map((res) => {
                 if (res) {
                     return res;
-                }
-                else{
+                } else {
                     return res;
                 }
             })
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    createPreCase():Observable<any>{
-      let SurveyorsId = localStorage.getItem('SurveyorsId');
-      // let companyId = localStorage.getItem('CompanyId');
-      let date = new Date();
-      const params = new HttpParams().set('SurveyorsId', SurveyorsId).set('CaseStatusID', '0')
-      .set('CompanyId', '1').set('CaseID', '0').set('CaseNo', '').set('CaseDate', date.toISOString()).set('PolicyNO', '')
-      .set('ClaimNO', '').set('AreaID', '0');
-      return this.http.post(PRECREATECASE, {params})
+    createPreCase(payload: any): Observable<any> {
+      return this.http.post(PRECREATECASE, payload)
           .map((res) => {
               if (res) {
                   return res;
-              }
-              else{
+              } else {
                   return res;
               }
           })

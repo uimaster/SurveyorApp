@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs/Subscription";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {CompaniesService} from "../companies.service";
+import {Subscription} from 'rxjs/Subscription';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {CompaniesService} from '../companies.service';
 
 
 @Component({
@@ -14,22 +14,22 @@ import {CompaniesService} from "../companies.service";
 export class CreateCompaniesComponent implements OnInit {
 
   public myForm: FormGroup;
-  public successMessage:String;
-  public errorMessage:String;
-  public showError: boolean=false;
-  public showSuccess: boolean=false;
+  public successMessage: String;
+  public errorMessage: String;
+  public showError = false;
+  public showSuccess = false;
   public sub: Subscription;
-  public companyId:Number = 0;
-  Loader: boolean = true;
+  public companyId = 0;
+  Loader = true;
 
   constructor(private fb: FormBuilder, private companyService: CompaniesService, private router: Router,private route: ActivatedRoute) { }
   ngOnInit() {
     this.Loader = false;
     this.myForm = this.fb.group({
-      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
+      name: ['', Validators.required],
       Contact: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       address: [''],
-      CompanyNos: ['na'],
+      CompanyNos: [''],
       CompanyTypeId: [1, Validators.required]
 
     });
@@ -49,7 +49,7 @@ export class CreateCompaniesComponent implements OnInit {
                 this.myForm.controls['CompanyTypeId'].setValue(finalData[i].CompanyTypeId);
               }
             }
-          },(error)=>{
+          }, (error) => {
 
           }
         );
@@ -65,21 +65,21 @@ export class CreateCompaniesComponent implements OnInit {
   onSubmit(formD) {
     this.Loader = true;
     let bodyObj = {
-      "CompanyId":this.companyId,
-      "Name":formD.name,
-      "Address":formD.address,
-      "Contact":formD.Contact,
-      "CompanyNos":formD.CompanyNos,
-      "CompanyTypeId":formD.CompanyTypeId,
+      'CompanyId': this.companyId,
+      'Name': formD.name,
+      'Address': formD.address,
+      'Contact': formD.Contact,
+      'CompanyNos': formD.CompanyNos,
+      'CompanyTypeId': formD.CompanyTypeId,
     };
 
     this.companyService.addCompanies(bodyObj).subscribe (
       result => {
         this.showSuccess = true;
         this.successMessage = result.Message;
-        setTimeout(()=>{    //<<<---    using ()=> syntax
+        setTimeout(() => {
           this.router.navigate(['/companies']);
-        },2000);
+        }, 2000);
         this.Loader = false;
       },
       error => {

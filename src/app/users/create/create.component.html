@@ -63,7 +63,7 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="Company" formControlName="company">
+          <mat-select placeholder="Company" formControlName="company" [disabled]="companyDisabled">
               <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
                 {{item.Name}}
               </mat-option>
@@ -74,7 +74,7 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="Surveyor" formControlName="SurveyorsId">
+          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" [disabled]="surveyorDisabled">
               <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
                 {{item.Name}}
               </mat-option>
@@ -84,7 +84,7 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="Active" formControlName="active">
+          <mat-select placeholder="Active" formControlName="IsActive">
             <mat-option [value]="true">
               True
             </mat-option>
@@ -92,7 +92,7 @@
               false
             </mat-option>
 
-            <mat-error *ngIf="myForm.controls['active'].hasError('required') && myForm.controls['active'].touched">Active is required</mat-error>
+            <mat-error *ngIf="myForm.controls['IsActive'].hasError('required') && myForm.controls['IsActive'].touched">Active is required</mat-error>
           </mat-select>
         </mat-form-field>
 

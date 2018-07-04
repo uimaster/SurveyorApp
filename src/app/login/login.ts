@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
   public loginForm : FormGroup;
   public loginSuccessMessage: string;
   public loginfailedMessage: string;
-  public showSuccessMessage: boolean = false;
-  public showErrorMessage : boolean = false;
+  public showSuccessMessage = false;
+  public showErrorMessage  = false;
   public isLoggedIn: any = false;
   loginData = {};
   constructor( private loginservice: LoginService, private router: Router){
@@ -23,11 +23,11 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       UserName : new FormControl('',[Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]),
       UserPassword : new FormControl('', [Validators.required, Validators.minLength(5)])
-    })  
+    });
   }
 
   loginSubmit(data){
-    if(this.loginForm.valid){     
+    if(this.loginForm.valid){
       this.loginservice.loginSubmit(this.loginForm.value)
         .subscribe(res =>{
           if(res && res.Status == 200){
@@ -38,14 +38,14 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('CompanyId', JSON.stringify(this.loginData[0].CompanyId));
             localStorage.setItem('userEmail', JSON.stringify(this.loginData[0].EmailId));
             localStorage.setItem('userName', JSON.stringify(this.loginData[0].Name));
+            localStorage.setItem('UserTypeId', JSON.stringify(this.loginData[0].UserTypeId));
             this.loginSuccessMessage = res.Message;
             this.showSuccessMessage = true;
             this.showErrorMessage = false;
-            setTimeout(() => { 
+            setTimeout(() => {
             this.router.navigate(['/dashboard']);
-            },2000);
-          }
-          else{
+            }, 2000);
+          } else {
             this.loginfailedMessage = res.Message;
             this.showSuccessMessage = false;
             this.showErrorMessage = true;
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit(){  
+  ngOnInit(){
   }
 
 }

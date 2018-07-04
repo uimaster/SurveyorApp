@@ -11,16 +11,16 @@ import {Component, OnInit} from '@angular/core';
 export class SidebarComponent implements OnInit {
     showFiller = false;
 
-    adminMenus: boolean = false;
-    username:string = '';
+    adminMenus = false;
+    userTypeId: number;
 
-    logOut(){
+    logOut() {
       localStorage.clear();
     }
 
-    ngOnInit(){
-      this.username = JSON.parse(localStorage.getItem('userName'));
-      if(this.username==='Admin'){
+    ngOnInit() {
+      this.userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+      if(this.userTypeId === 1) {
         this.adminMenus = true;
       }
       else{
