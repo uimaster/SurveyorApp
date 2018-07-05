@@ -1,11 +1,11 @@
 
     <mat-card>
         <h1 class="text-center">
-           
+
             <a href="#"><img src="../../assets/images/logo.jpg" alt="logo" /></a>
         </h1>
-       
-        <form [formGroup]="loginForm" (ngSubmit)="loginSubmit(loginForm.value)">
+
+        <form [formGroup]="loginForm" >
             <div class="example-container">
                 <div class="alert success" *ngIf="showSuccessMessage">You have Login {{loginSuccessMessage}}fully.</div>
                 <div class="alert error" *ngIf="showErrorMessage">{{loginfailedMessage}}, Please try again.</div><br/><br/>
@@ -17,14 +17,14 @@
                 <mat-form-field>
                     <input matInput placeholder="Password" type="password" formControlName="UserPassword">
                     <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('required') && loginForm.controls['UserPassword'].touched">Password is required !</div>
-                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('minlength') && loginForm.controls['UserPassword'].touched">Password length should have atleast 5 character !</div>     
+                    <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('minlength') && loginForm.controls['UserPassword'].touched">Password length should have atleast 5 character !</div>
                 </mat-form-field>
-                
-                <p>               
+
+                <p>
                 <button mat-raised-button color="secondary" style="float: left; width: 45%;" >Cancel</button>
-                <button mat-raised-button color="primary" style="float: right; width: 45%" type="submit" >Login</button>
+                <button mat-raised-button color="primary" style="float: right; width: 45%" type="button" (click)="loginSubmit(loginForm.value)">Login</button>
                 </p><br/><br/>
-                <p class="forget">                
+                <p class="forget">
                     <a href="#" style="float: right;">Forget Password?</a>
                 </p>
             <br/><br/>

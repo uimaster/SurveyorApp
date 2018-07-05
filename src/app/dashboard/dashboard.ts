@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit{
   companyDisabled = false;
   surveyorDisabled = false;
   areaDisabled = false;
+  hideAllCreateControls = false;
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
@@ -69,14 +70,17 @@ export class DashboardComponent implements OnInit{
       this.areaDisabled = false;
       this.companyDisabled = false;
       this.surveyorDisabled = false;
+      this.hideAllCreateControls = false;
     } else if (userTypeId === 2) {
       this.areaDisabled = false;
       this.companyDisabled = true;
       this.surveyorDisabled = false;
+      this.hideAllCreateControls = false;
     } else if (userTypeId === 3) {
       this.areaDisabled = true;
       this.companyDisabled = true;
       this.surveyorDisabled = true;
+      this.hideAllCreateControls = true;
     }
   }
 
@@ -142,8 +146,8 @@ export class DashboardComponent implements OnInit{
   createPreCase(data) {
     console.log(data);
     this.dashboardService.createPreCase(data)
-    .subscribe(res =>{
-      if(res && res.Status === '200'){
+    .subscribe(res => {
+      if (res && res.Status === '200'){
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       }
@@ -174,7 +178,7 @@ export class DashboardComponent implements OnInit{
     .subscribe(res => {
       if(res && res.Status == 200) {
         this.TotalDada = res.Data;
-        if(this.TotalDada.length > 0) {
+        if (this.TotalDada.length > 0) {
           this.showProcessButtton = true;
           this.showActionColumn = true;
           this.completedCasebuttons = false;

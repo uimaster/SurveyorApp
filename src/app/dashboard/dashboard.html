@@ -27,8 +27,8 @@
 
 
 
-        <mat-form-field >
-          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" required [disabled]="surveyorDisabled">
+        <mat-form-field *ngIf="!hideAllCreateControls">
+          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" required [disabled]="surveyorDisabled" >
             <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
               {{item.Name}}
             </mat-option>
@@ -36,7 +36,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="float: right;" >
+        <mat-form-field style="float: right;" *ngIf="!hideAllCreateControls">
           <mat-select placeholder="Area" formControlName="AreaID" [disabled]="areaDisabled">
             <mat-option *ngFor="let item of areaList" [value]="item.AreaId">
               {{item.AreaName}}
@@ -44,7 +44,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="width: 100%">
+        <mat-form-field style="width: 100%" *ngIf="!hideAllCreateControls">
           <mat-select placeholder="Company" formControlName="CompanyId" [disabled]="companyDisabled">
             <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
               {{item.Name}}
