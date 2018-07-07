@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -9,14 +9,14 @@ import { DashboardService } from './dashboard.service';
 import {CompaniesService} from '../companies/companies.service';
 import { SurveyorService } from '../surveyor/surveyor.service';
 import { AreaService } from '../area/area.service';
+import { SharedModuleServices } from '../sharedModule/shared.service';
 
 @Component({
   selector: 'dashboard-selector',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.scss'],
 })
-export class DashboardComponent implements OnInit{
-
+export class DashboardComponent implements OnInit {
   public TotalDada = [];
   itemsLength: number;
   showTittle: boolean;
@@ -36,10 +36,13 @@ export class DashboardComponent implements OnInit{
   surveyorDisabled = false;
   areaDisabled = false;
   hideAllCreateControls = false;
+  comletionForm: FormGroup;
+  createCaseDisabled = false;
+  userList = [];
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
-    private areaService: AreaService
+    private areaService: AreaService, private sharedModuleServices: SharedModuleServices
   ) {
     this.createCase();
   }
@@ -52,6 +55,7 @@ export class DashboardComponent implements OnInit{
       CompanyId: [''],
       CaseID: ['0'],
       CaseNo: [''],
+      UserID: ['', Validators.required],
       CaseDate: [date.toISOString()],
       PolicyNO: [''],
       ClaimNO: [''],
@@ -71,16 +75,21 @@ export class DashboardComponent implements OnInit{
       this.companyDisabled = false;
       this.surveyorDisabled = false;
       this.hideAllCreateControls = false;
+      this.createCaseDisabled = false;
     } else if (userTypeId === 2) {
       this.areaDisabled = false;
       this.companyDisabled = true;
       this.surveyorDisabled = false;
       this.hideAllCreateControls = false;
+      this.createCaseDisabled = false;
     } else if (userTypeId === 3) {
       this.areaDisabled = true;
       this.companyDisabled = true;
       this.surveyorDisabled = true;
       this.hideAllCreateControls = true;
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 4) {
+      this.createCaseDisabled = true;
     }
   }
 
@@ -93,8 +102,7 @@ export class DashboardComponent implements OnInit{
           this.Loader = false;
           this.noData = false;
           this.showProcessButtton = false;
-          this.completedCasebuttons = false;
-          this.showActionColumn = false;
+          this.completedCasebuttons = true;
         } else {
           this.noData = true;
           this.Loader = false;
@@ -124,6 +132,21 @@ export class DashboardComponent implements OnInit{
     });
   }
 
+  getUserList(data) {
+    this.dashboardService.getUserList(data)
+        .subscribe(res => {
+          this.userList = [];
+          if (res.Data.length > 0 ) {
+            this.userList = res.Data;
+            this.createCaseForm.controls['UserID'].setValue(this.userList[0].UserID);
+          }
+    });
+  }
+
+  getSurveyorsUser(event) {
+    this.getUserList(event.value);
+  }
+
   openCreateCase() {
     this.openCreateCaseModal = true;
   }
@@ -133,10 +156,9 @@ export class DashboardComponent implements OnInit{
   }
 
   createSpotCase(data) {
-    console.log(data);
     this.dashboardService.createSpotCase(data)
     .subscribe(res =>{
-      if(res && res.Status === '200'){
+      if(res && res.Status === '200') {
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       }
@@ -144,10 +166,9 @@ export class DashboardComponent implements OnInit{
   }
 
   createPreCase(data) {
-    console.log(data);
     this.dashboardService.createPreCase(data)
     .subscribe(res => {
-      if (res && res.Status === '200'){
+      if (res && res.Status === '200') {
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       }
@@ -162,7 +183,6 @@ export class DashboardComponent implements OnInit{
         if(this.TotalDada.length > 0) {
           this.Loader = false;
           this.showProcessButtton = false;
-          this.showActionColumn = true;
           this.noData = false;
           this.completedCasebuttons = true;
         } else {
@@ -180,7 +200,6 @@ export class DashboardComponent implements OnInit{
         this.TotalDada = res.Data;
         if (this.TotalDada.length > 0) {
           this.showProcessButtton = true;
-          this.showActionColumn = true;
           this.completedCasebuttons = false;
           this.Loader = false;
           this.noData = false;
@@ -204,6 +223,22 @@ export class DashboardComponent implements OnInit{
     }
   }
 
+  PostSpotCompletion(sur: any, caseId: number) {
+    const CaseID = JSON.stringify(caseId);
+    const surveyorId = JSON.stringify(sur);
+    this.comletionForm = this.fb.group({
+        CaseID: new FormControl(CaseID),
+        SurveyStatusId: new FormControl(surveyorId)
+    });
+    this.sharedModuleServices.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
+      if (res) {
+          alert(res.Message);
+          this.getDashboardList();
+      } else {
+        alert(res.Message);
+      }
+    });
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -226,10 +261,14 @@ export class DashboardComponent implements OnInit{
       this.createCaseInit();
     }, 1200);
 
+    setTimeout(() => {
+      let serveyorId = localStorage.getItem('SurveyorsId');
+      this.getUserList(serveyorId);
+    }, 2000);
 
 
     this.showDownload = JSON.parse(localStorage.getItem('showDownload'));
-    if(this.showDownload === null || this.showDownload === undefined){
+    if(this.showDownload === null || this.showDownload === undefined) {
       localStorage.setItem('showTittle', 'true');
     }
     this.showTittle = JSON.parse(localStorage.getItem('showTittle'));

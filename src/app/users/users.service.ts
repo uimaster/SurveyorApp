@@ -10,13 +10,16 @@ import 'rxjs/Rx';
 export class UsersService {
   SurveyorsId: any;
   companyId: any;
+  UserTypeId: any;
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
   getUsersList(): Observable<any> {
-    return this.http.get(USERSLIST)
+    this.UserTypeId = localStorage.getItem('UserTypeId');
+    const params = new HttpParams().set('UserTypeId', '0');
+    return this.http.get(USERSLIST, {params})
       .map((res) => {
-        if(res){
+        if (res) {
           return res;
         }
       })
@@ -28,8 +31,7 @@ export class UsersService {
       .map((res: any) =>  {
         if (res) {
           return res;
-        }
-        else{
+        } else {
           return res;
         }
 

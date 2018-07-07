@@ -15,7 +15,7 @@
     </div>
     <form [formGroup]="myForm" >
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name">
+        <input matInput placeholder="Name" formControlName="name" required>
         <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
         <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
       </mat-form-field>
@@ -23,23 +23,23 @@
 
 
       <mat-form-field>
-        <input matInput placeholder="email" formControlName="email">
+        <input matInput placeholder="email" formControlName="email" required>
         <mat-error *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched">Email is required</mat-error>
         <mat-error *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched">Please Enter valid email</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <!-- <mat-form-field>
         <input type="password" matInput placeholder="password" formControlName="password">
         <mat-error *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched">Password is required</mat-error>
         <mat-error *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched">No Whitespace please</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field>
-        <input matInput placeholder="Mobile" formControlName="mobile">
-        <mat-error *ngIf="myForm.controls['mobile'].hasError('required') && myForm.controls['mobile'].touched">Mobile is required</mat-error>
-        <mat-error *ngIf="myForm.controls['mobile'].hasError('pattern') && myForm.controls['mobile'].touched">Only Digits allowed</mat-error>
-        <mat-error *ngIf="myForm.controls['mobile'].hasError('minlength') && myForm.controls['mobile'].touched">Should be minimum 10 digits</mat-error>
-        <mat-error *ngIf="myForm.controls['mobile'].hasError('maxlength') && myForm.controls['mobile'].touched">Should be maximum 10 digits</mat-error>
+        <input matInput placeholder="Mobile Number" formControlName="MobileNo" required>
+        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('required') && myForm.controls['MobileNo'].touched">Mobile Number is required</mat-error>
+        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('pattern') && myForm.controls['MobileNo'].touched">Mobile Number Only Digits allowed</mat-error>
+        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('minlength') && myForm.controls['MobileNo'].touched">Mobile Number Should be minimum 10 digits</mat-error>
+        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('maxlength') && myForm.controls['MobileNo'].touched">Mobile Number Should be maximum 10 digits</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -48,7 +48,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Area" formControlName="area">
+        <input matInput placeholder="Area" formControlName="area" required>
       </mat-form-field>
 
 
@@ -92,7 +92,7 @@
         </mat-form-field> -->
 
       <mat-form-field>
-        <mat-select placeholder="Active" formControlName="active">
+        <mat-select placeholder="Active" formControlName="active" required>
           <mat-option [value]="true">
             True
           </mat-option>

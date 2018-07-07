@@ -9,19 +9,18 @@ import 'rxjs/Rx';
 @Injectable()
 
 export class TabsService {
-    SurveyorsId:any;
-    companyId:any;
+    SurveyorsId = localStorage.getItem('SurveyorsId');
+    companyId = localStorage.getItem('CompanyId');
+    UserID = localStorage.getItem('UserId');
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient) {}
 
-    getDashboardList():Observable<any>{
-        this.SurveyorsId = localStorage.getItem('SurveyorsId');
-        this.companyId = localStorage.getItem('CompanyId');
+    getDashboardList(): Observable<any> {
         const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '0')
-        .set('CompanyID', JSON.parse(this.companyId));
+        .set('CompanyID', JSON.parse(this.companyId)).set('UserID', JSON.parse(this.UserID));;
         return this.http.get(DASHBOARDLIST, {params})
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
@@ -29,13 +28,11 @@ export class TabsService {
     }
 
     getTabCounts(): Observable<any> {
-
-        this.SurveyorsId = localStorage.getItem('SurveyorsId');
-        this.companyId = localStorage.getItem('CompanyId');
-        const params = new HttpParams().set('SurveyorsID', JSON.parse(this.SurveyorsId)).set('CompanyID', JSON.parse(this.companyId));
+        const params = new HttpParams().set('SurveyorsID', JSON.parse(this.SurveyorsId)).set('CompanyID', JSON.parse(this.companyId))
+        .set('UserID', JSON.parse(this.UserID));
         return this.http.get(DASHBOARDTABCOUNTS, {params})
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
@@ -44,8 +41,6 @@ export class TabsService {
 
 
     getProcessList(): Observable<any> {
-        this.SurveyorsId = localStorage.getItem('SurveyorsId');
-        this.companyId = localStorage.getItem('CompanyId');
         const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '3')
         .set('CompanyID', JSON.parse(this.companyId));
         return this.http.get(DASHBOARD_CAT_CASES, {params})
@@ -57,14 +52,12 @@ export class TabsService {
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    getCompletedList():Observable<any>{
-        this.SurveyorsId = localStorage.getItem('SurveyorsId');
-        this.companyId = localStorage.getItem('CompanyId');
+    getCompletedList(): Observable<any> {
         const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '5')
         .set('CompanyID', JSON.parse(this.companyId));
         return this.http.get(DASHBOARD_CAT_CASES, {params})
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })

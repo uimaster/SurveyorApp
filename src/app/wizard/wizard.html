@@ -28,8 +28,17 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+
         <mat-form-field>
-          <input matInput placeholder="Policy No." formControlName="policyNo">
+          <mat-select placeholder="User Name" formControlName="UserID" required [disabled]="createCaseDisabled">
+            <mat-option *ngFor="let item of userList" [value]="item.UserID">
+              {{item.UserName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Policy No." formControlName="PolicyNO">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Insured's Name" formControlName="InsuredName">

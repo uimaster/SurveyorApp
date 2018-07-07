@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('userEmail', JSON.stringify(this.loginData[0].EmailId));
             localStorage.setItem('userName', JSON.stringify(this.loginData[0].Name));
             localStorage.setItem('UserTypeId', JSON.stringify(this.loginData[0].UserTypeId));
+            localStorage.setItem('UserId', JSON.stringify(this.loginData[0].UserId));
             this.loginSuccessMessage = res.Message;
             this.showSuccessMessage = true;
             this.showErrorMessage = false;

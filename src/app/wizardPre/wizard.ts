@@ -11,6 +11,7 @@ import { WizardService } from '../wizard/wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
 import { DonwloadDialog } from '../sharedModule/shared.component';
 import { CompaniesService } from '../companies/companies.service';
+import { DashboardService } from '../dashboard/dashboard.service';
 
 @Component({
     selector: 'wizard-selector',
@@ -71,9 +72,12 @@ export class PreWizardComponent implements OnInit {
     policyEndMaxDate: any;
     uploadImageModal = false;
     IsCompleted: boolean;
+    userList = [];
+    createCaseDisabled = false;
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
-        private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService
+        private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService,
+        private dashboardService: DashboardService
     ) {
 
         this.firstFormGroup = new FormGroup({
@@ -83,6 +87,7 @@ export class PreWizardComponent implements OnInit {
             CaseRefNo: new FormControl(''),
             CaseProposerName: new FormControl(''),
             CompanyID: new FormControl(''),
+            UserID: new FormControl('', Validators.required),
             CompanyName: new FormControl(''),
             CaseTypeId: new FormControl(''),
             SurveyorsID: new FormControl(''),
@@ -144,22 +149,41 @@ export class PreWizardComponent implements OnInit {
             PartStatus: new FormControl(''),
             PartStatusID: new FormControl(2),
             PartRemark: new FormControl('')
-        })
+        });
+
         this.tenthFormGroup = new FormGroup({
 
             CaseID: new FormControl(this.caseId),
             InsuranceRecommeded: new FormControl('', Validators.required),
             ConclusionRemarks: new FormControl('', Validators.required)
-        })
+        });
     }
 
+    getUserList(data) {
+      this.dashboardService.getUserList(data)
+          .subscribe(res => {
+          this.userList = res.Data;
+          this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
+      });
+    }
 
     ngOnInit() {
         this.Loader = false;
-        let completedState = localStorage.getItem('IsCompleted');
-        if(completedState != undefined){
+        const completedState = localStorage.getItem('IsCompleted');
+        if( completedState != undefined) {
             this.IsCompleted = JSON.parse(completedState);
         }
+        const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+        if (userTypeId === 1) {
+          this.createCaseDisabled = false;
+        } else if (userTypeId === 2) {
+          this.createCaseDisabled = false;
+        } else if (userTypeId === 3) {
+          this.createCaseDisabled = false;
+        } else if (userTypeId === 4) {
+          this.createCaseDisabled = true;
+        }
+
         setTimeout(() => {
             this.getCaseDetails();
         }, 200);
@@ -305,6 +329,7 @@ export class PreWizardComponent implements OnInit {
                     this.caseDetailData = res.Data;
                     this.selectedCompany = this.caseDetailData[0].CompanyID;
                     if (this.caseDetailData.length > 0) {
+                      this.getUserList(this.caseDetailData[0].SurveyorsID);
                         let AssDateTime = (new Date(this.caseDetailData[0].AssignedDateTime)).toISOString();
                         let inspectDate = (new Date(this.caseDetailData[0].InspectionDate)).toISOString();
                         let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toISOString();
@@ -314,9 +339,11 @@ export class PreWizardComponent implements OnInit {
                         this.firstFormGroup.controls['CaseRefNo'].setValue(this.caseDetailData[0].CaseRefNo);
                         this.firstFormGroup.controls['CaseProposerName'].setValue(this.caseDetailData[0].CaseProposerName);
                         this.firstFormGroup.controls['CompanyID'].setValue(this.caseDetailData[0].CompanyID);
+                        this.firstFormGroup.controls['UserID'].setValue(this.caseDetailData[0].UserID);
                         this.firstFormGroup.controls['CompanyName'].setValue(this.caseDetailData[0].CompanyName);
                         this.firstFormGroup.controls['CaseTypeId'].setValue(this.caseDetailData[0].CaseTypeId);
                         this.firstFormGroup.controls['SurveyorsID'].setValue(this.caseDetailData[0].SurveyorsID);
+
                         this.firstFormGroup.controls['AssignedDateTime'].setValue(AssDateTime);
                         this.firstFormGroup.controls['caseAddress'].setValue(this.caseDetailData[0].caseAddress);
                         this.firstFormGroup.controls['InspectionDate'].setValue(inspectDate);
@@ -564,7 +591,7 @@ export class PreWizardComponent implements OnInit {
                 setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })
+            });
         }
     }
 
@@ -647,7 +674,7 @@ export class PreWizardComponent implements OnInit {
 
     // DIGITAL SIGNATURE IMAGE //
     imageToShow13: any;
-    isImageLoading13: boolean = false;
+    isImageLoading13 = false;
 
     reateImageFromBlob13(image: Blob) {
         let reader = new FileReader();

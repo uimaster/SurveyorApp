@@ -110,6 +110,8 @@ export class CreateComponent implements OnInit {
   }
 
   getUserType(event) {
+    this.myForm.controls['company'].setValue('');
+    this.myForm.controls['SurveyorsId'].setValue('');
     if (event.value === 1) {
       this.companyDisabled = true;
       this.surveyorDisabled = true;
@@ -117,6 +119,9 @@ export class CreateComponent implements OnInit {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
     } else if (event.value === 3) {
+      this.companyDisabled = true;
+      this.surveyorDisabled = false;
+    } else if (event.value === 4) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
     }

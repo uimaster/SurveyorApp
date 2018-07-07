@@ -1,4 +1,4 @@
-export const BASEURL ='http://apiflacors.iflotech.in/api/';
+export const BASEURL = 'http://apiflacors.iflotech.in/api/';
 export const LOGINURL = BASEURL + 'CompanyLogin';
 export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard?';
 export const DASHBOARDLIST = BASEURL + 'SurveyCaseList?';
@@ -29,7 +29,7 @@ export const GENERATEPREREPORT = BASEURL + 'PIReports/GeneratPIReportPDF';
 export const DOWNLOADSPOTREPORT = BASEURL + 'DownloadReport/getSpotSurveyReport';
 export const SPOTCOMPLETIONURL = BASEURL + 'CaseCompleteStatus';
 export const SPOTCREATECASE = BASEURL + 'CreateCase';
-export const PRECREATECASE = BASEURL + 'CreateCasePI';    
+export const PRECREATECASE = BASEURL + 'CreateCasePI';
 // URLS FOR PRE WIZARD //
 
 export const WIZARD_CASEDETAILS_URL = BASEURL + 'PICaseDetails';
@@ -45,3 +45,4 @@ export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport
 
 // REGISTRATION NUMBER SEARCH URL //
 export const REGISTRATION_SEARCH_URL = 'http://54.169.129.132:90/DataAccessService.svc/GetVehicleData';
+export const GETUSERLIST_URL = 'http://54.169.129.132/api/SurveyorUsersList';

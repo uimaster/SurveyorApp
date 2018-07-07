@@ -2,41 +2,39 @@
 <sidebar-selector></sidebar-selector>
 <div class="loader" *ngIf="Loader">
     <mat-spinner [color]="accent"></mat-spinner>
-</div>  
+</div>
 
 <div class="container">
   <h2>Users List <a  mat-raised-button color="accent" [routerLink] = "['/users/create']" style="float:right">Create User</a></h2>
-  
+
   <div class="tabularData card">
     <table width="100%" class="table">
       <thead>
       <tr>
-        <th>S. No.</th>
-        <th>Name</th>
-        <!-- <th>Email</th> -->
-        <th>User Type</th>
+        <th width="5%">S. No.</th>
+        <th width="20%">Name</th>
+        <th width="20%">Email</th>
+        <th width="10%">User Type</th>
         <!-- <th>Company Id</th> -->
-        <th>Company Name</th>
+        <th width="20%">Company Name</th>
         <!-- <th>Surveyor Id</th> -->
-        <th>Active</th>
-        <th>Action</th>
+        <th width="5%">Active</th>
+        <th width="20%">Action</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let user of TotalDada;let i = index;">
           <td>{{i+1}}</td>
         <td>{{user.Name}}</td>
-        <!-- <td>{{user.EmailId}}</td> -->
+        <td>{{user.EmailId}}</td>
         <td>{{user.UserType}}</td>
         <!-- <td>{{user.CompanyId}}</td> -->
         <td>{{user.CompanyName}}</td>
         <!-- <td>{{user.SurveyorsId}}</td> -->
         <td>{{user.IsActive}}</td>
         <td>
-          <mat-chip-list>           
-            <mat-chip color="accent" selected="true" (click)="editUser(user.UserId)">Edit</mat-chip>
-            <mat-chip color="warn" selected="true">Delete</mat-chip>
-          </mat-chip-list>
+          <mat-chip color="accent" selected="true" (click)="editUser(user.UserId)">Edit</mat-chip>
+          <mat-chip color="warn" selected="true">Delete</mat-chip>
         </td>
       </tr>
       </tbody>

@@ -17,7 +17,7 @@
     background-color: rgba(21, 21, 21, 0.6);
     z-index: 99;
 }
-.smallModal{ position: fixed; left: 50%; margin-left: -200px; width: 400px; top: 25%; z-index: 999; padding: 30px; background-color: #fff; min-height:250px;
+.smallModal{ position: fixed; left: 50%; margin-left: -250px; width: 500px; top: 25%; z-index: 999; padding: 30px; background-color: #fff; min-height:250px;
     h2{
         margin: 0 0 15px 0;
     }
@@ -28,3 +28,5 @@
     hr{ margin-bottom: 40px;}
     h5{ margin:20px auto 30px; text-align: center;}
 }
+
+.mat-fab.mat-accent[disabled], .mat-fab.mat-primary[disabled], .mat-fab.mat-warn[disabled], .mat-fab[disabled][disabled], .mat-mini-fab.mat-accent[disabled], .mat-mini-fab.mat-primary[disabled], .mat-mini-fab.mat-warn[disabled], .mat-mini-fab[disabled][disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled]{ color:#899cb9 !important}

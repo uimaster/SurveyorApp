@@ -136,11 +136,11 @@ export class SharedComponent implements OnInit {
     styleUrls: ['./shared.component.scss']
 })
 export class DonwloadDialog implements OnInit {
-    showFirstData: boolean = true;
-    showSecondData: boolean = false;
-    downloadUrl: string = "";
+    showFirstData = true;
+    showSecondData = false;
+    downloadUrl = '';
     comletionForm: FormGroup;
-    msg:string='';
+    msg = '';
     constructor(
         public dialogRef: MatDialogRef<DonwloadDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private wizardService: WizardService,
@@ -168,14 +168,16 @@ export class DonwloadDialog implements OnInit {
         this.downloadUrl = baseurl + CaseID;
     }
 
-    PostSpotCompletion(){
+    PostSpotCompletion(data) {
+        debugger;
         var CaseID= localStorage.getItem('CaseID');
+        let surveyorId = JSON.stringify(data);
         this.comletionForm = this.fb.group({
-            CaseID:new FormControl(CaseID),
-            SurveyStatusId:new FormControl('5')
+            CaseID: new FormControl(CaseID),
+            SurveyStatusId: new FormControl(surveyorId)
         })
-        this.sharedService.PostSpotCompletion(this.comletionForm.value).subscribe(res=>{
-            if(res){
+        this.sharedService.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
+            if (res) {
                 this.msg = res.Message;
             }
 

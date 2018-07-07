@@ -55,8 +55,11 @@
             <mat-option [value]="3">
               Surveyor
             </mat-option>
-            <mat-error *ngIf="myForm.controls['userType'].hasError('required') && myForm.controls['userType'].touched">User Type is required</mat-error>
+            <mat-option [value]="4">
+                Surveyor-SubUser
+              </mat-option>
           </mat-select>
+          <mat-error *ngIf="myForm.controls['userType'].hasError('required') && myForm.controls['userType'].touched">User Type is required</mat-error>
         </mat-form-field>
 
 
@@ -67,8 +70,8 @@
               <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
                 {{item.Name}}
               </mat-option>
-            <mat-error *ngIf="myForm.controls['company'].hasError('required') && myForm.controls['company'].touched">Company is required</mat-error>
           </mat-select>
+          <mat-error *ngIf="myForm.controls['company'].hasError('required') && myForm.controls['company'].touched">Company is required</mat-error>
         </mat-form-field>
 
 
@@ -78,8 +81,8 @@
               <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
                 {{item.Name}}
               </mat-option>
-            <mat-error *ngIf="myForm.controls['SurveyorsId'].hasError('required') && myForm.controls['SurveyorsId'].touched">Surveyor is required</mat-error>
           </mat-select>
+          <mat-error *ngIf="myForm.controls['SurveyorsId'].hasError('required') && myForm.controls['SurveyorsId'].touched">Surveyor is required</mat-error>
         </mat-form-field>
 
 
@@ -91,9 +94,8 @@
             <mat-option [value]="false">
               false
             </mat-option>
-
-            <mat-error *ngIf="myForm.controls['IsActive'].hasError('required') && myForm.controls['IsActive'].touched">Active is required</mat-error>
           </mat-select>
+          <mat-error *ngIf="myForm.controls['IsActive'].hasError('required') && myForm.controls['IsActive'].touched">Active is required</mat-error>
         </mat-form-field>
 
 

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import {COMPANYLIST, CREATECOMPANY} from "../../shared/urls";
+import {COMPANYLIST, CREATECOMPANY} from '../../shared/urls';
 import 'rxjs/Rx';
 @Injectable()
 
 export class CompaniesService {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 /*get company list*/
 
   getCompanyList(): Observable<any> {

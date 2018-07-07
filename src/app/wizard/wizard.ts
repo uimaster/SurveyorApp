@@ -5,10 +5,11 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 
-import{ WizardService } from './wizard.service';
+import { WizardService } from './wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
 import { SharedComponent, DonwloadDialog} from '../sharedModule/shared.component';
-import {CompaniesService} from "../companies/companies.service";
+import {CompaniesService} from '../companies/companies.service';
+import { DashboardService } from '../dashboard/dashboard.service';
 import { DISABLED } from '@angular/forms/src/model';
 
 
@@ -41,13 +42,13 @@ export class WizardComponent implements OnInit {
   postResponseData = [];
   successMessage:string;
   errorMessage:string;
-  showError: boolean = false;
-  showSuccess: boolean = false;
+  showError = false;
+  showSuccess = false;
   caseId: any = localStorage.getItem('CaseID');
   caseNO: any = localStorage.getItem('CaseNO');
 //   url:any;
   public files: any[];
-  Loader: boolean = true;
+  Loader = true;
   PartStatusID: any ;
   VehicleId = [
     {VehicleId: 0, Name: 'LCV/HCV'},
@@ -83,24 +84,26 @@ export class WizardComponent implements OnInit {
   CaseVehicleId = 0;
   RegSearchSuccessMsg = false;
   RegSearchFailedMsg = false;
-  maxDate :any;
+  maxDate: any;
   maxDateToday = new Date();
   expiryMaxDate:any;
   uploadImageModal = false;
-  IsCompleted:boolean;
+  IsCompleted: boolean;
+  userList = [];
+  createCaseDisabled = false;
 
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
-     private router: Router, public dialog: MatDialog, private companyService: CompaniesService)
-    {
-
+     private router: Router, public dialog: MatDialog, private companyService: CompaniesService, private dashboardService: DashboardService)
+  {
     this.files = [];
     this.firstFormGroup = new FormGroup({
         CaseID: new FormControl(this.caseId),
         CaseNo: new FormControl(''),
         claimNo: new FormControl('', Validators.required),
-        policyNo: new FormControl('', Validators.required),
+        PolicyNO: new FormControl('', Validators.required),
         CompanyId: new FormControl(''),
+        UserID: new FormControl('', Validators.required),
         InsuredName:  new FormControl('', Validators.required),
         InsuredAddress:  new FormControl('', Validators.required),
         InsuredMobile:  new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -231,13 +234,13 @@ export class WizardComponent implements OnInit {
 
     today = yyyy+'-'+mm+'-'+dd;
     this.maxDate = today;
-   }
+  }
 
    openDialog() {
         const dialogRef = this.dialog.open(DonwloadDialog, {
             height: '300px',
             disableClose:true,
-            width:"350px"
+            width:'350px'
         });
 
         dialogRef.afterClosed().subscribe(result => {
@@ -250,12 +253,20 @@ export class WizardComponent implements OnInit {
 
     getCompanyList() {
         this.companyService.getCompanyList()
-            .subscribe(res =>{
+            .subscribe(res => {
             this.companyListData = res.Data;
         });
     }
 
-    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>){
+    getUserList(data) {
+      this.dashboardService.getUserList(data)
+          .subscribe(res => {
+          this.userList = res.Data;
+          this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
+      });
+    }
+
+    getDriverAge(type: string, event: MatDatepickerInputEvent<Date>) {
         let today = new Date();
         let thisYear = today.getFullYear();
         let selectedDate = event.value;
@@ -274,11 +285,22 @@ export class WizardComponent implements OnInit {
 
   ngOnInit() {
     this.Loader = false;
-    let completedState = localStorage.getItem('IsCompleted');
+    const completedState = localStorage.getItem('IsCompleted');
     if(completedState != undefined){
         this.IsCompleted = JSON.parse(completedState);
     }
-    
+
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    if (userTypeId === 1) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 2) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 3) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 4) {
+      this.createCaseDisabled = true;
+    }
+
     this.getCompanyList();
     setTimeout(() => {
         this.getVehicleDetails();
@@ -345,30 +367,28 @@ export class WizardComponent implements OnInit {
         .subscribe(res =>{
             if(res && res.Status == 200) {
             this.claimDetailData = res.Data;
-            if(this.claimDetailData.length > 0){
-                this.firstFormGroup = new FormGroup({
-                    CaseID: new FormControl(this.caseId),
-                    CaseNo: new FormControl(''),
-                    claimNo: new FormControl(this.claimDetailData[0].ClaimNO, Validators.required),
-                    policyNo: new FormControl(this.claimDetailData[0].PolicyNO, Validators.required),
-                    CompanyId: new FormControl(this.claimDetailData[0].CompanyId),
-                    InsuredName:  new FormControl(this.claimDetailData[0].InsuredName, Validators.required),
-                    InsuredAddress:  new FormControl(this.claimDetailData[0].InsuredAddress, Validators.required),
-                    InsuredMobile:  new FormControl(this.claimDetailData[0].InsuredMobile, [Validators.required, Validators.minLength(10)]),
-                    EmailID:  new FormControl(this.claimDetailData[0].EmailID,
-                      [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)])
-                });
+              if(this.claimDetailData.length > 0) {
+                this.getUserList(this.claimDetailData[0].SurveyorsId);
 
-                this.secondFormGroup = new FormGroup({
-                    CaseID: new FormControl(this.caseId),
-                    SurveyorsId: new FormControl(this.claimDetailData[0].SurveyorsId, Validators.required),
-                    SurveyorsName: new FormControl(this.claimDetailData[0].SurveyorsName, Validators.required),
-                    DateofAllotmentofsurvey: new FormControl(this.claimDetailData[0].DateofAllotmentofsurvey, Validators.required),
-                    DateofSurvey: new FormControl(this.claimDetailData[0].DateofSurvey),
-                    SurveyLocation:  new FormControl(this.claimDetailData[0].SurveyLocation, Validators.required),
-                    SurveyGeoCodes: new FormControl(this.claimDetailData[0].SurveyGeoCodes)
-                });
-            }
+                this.firstFormGroup.controls['CaseID'].setValue(this.caseId);
+                this.firstFormGroup.controls['CaseNo'].setValue('');
+                this.firstFormGroup.controls['claimNo'].setValue(this.claimDetailData[0].ClaimNO);
+                this.firstFormGroup.controls['PolicyNO'].setValue(this.claimDetailData[0].PolicyNO);
+                this.firstFormGroup.controls['CompanyId'].setValue(this.claimDetailData[0].CompanyId);
+                this.firstFormGroup.controls['UserID'].setValue(this.claimDetailData[0].UserID);
+                this.firstFormGroup.controls['InsuredName'].setValue(this.claimDetailData[0].InsuredName);
+                this.firstFormGroup.controls['InsuredAddress'].setValue(this.claimDetailData[0].InsuredAddress);
+                this.firstFormGroup.controls['InsuredMobile'].setValue(this.claimDetailData[0].InsuredMobile);
+                this.firstFormGroup.controls['EmailID'].setValue(this.claimDetailData[0].EmailID);
+
+                this.secondFormGroup.controls['CaseID'].setValue(this.caseId);
+                this.secondFormGroup.controls['SurveyorsId'].setValue(this.claimDetailData[0].SurveyorsId);
+                this.secondFormGroup.controls['SurveyorsName'].setValue(this.claimDetailData[0].SurveyorsName);
+                this.secondFormGroup.controls['DateofAllotmentofsurvey'].setValue(this.claimDetailData[0].DateofAllotmentofsurvey);
+                this.secondFormGroup.controls['DateofSurvey'].setValue(this.claimDetailData[0].DateofSurvey);
+                this.secondFormGroup.controls['SurveyLocation'].setValue(this.claimDetailData[0].SurveyLocation);
+                this.secondFormGroup.controls['SurveyGeoCodes'].setValue(this.claimDetailData[0].SurveyGeoCodes);
+              }
             }
         })
     }
@@ -376,7 +396,7 @@ export class WizardComponent implements OnInit {
 
     SearchRegistration(){
 
-        let data= ((document.getElementById("RegistrationNum") as HTMLInputElement).value);
+        let data= ((document.getElementById('RegistrationNum') as HTMLInputElement).value);
         this.wizardService.SearchRegistration(data)
         .subscribe(res =>{
             if(res && res.GetVehicleDataResult.status === '200'){
@@ -555,13 +575,13 @@ export class WizardComponent implements OnInit {
                 });
             }
             }
-        })
+        });
     }
 
-    getSummaryReportDetails(){
+    getSummaryReportDetails() {
         this.wizardService.getSummaryReportDetails()
-        .subscribe(res =>{
-            if(res && res.Status == 200){
+        .subscribe(res => {
+            if(res && res.Status == 200) {
                 this.summaryReportData = res.Data;
                 this.ninethFormGroup = new FormGroup({
                     PNo: new FormControl(this.summaryReportData[0].PNo),
@@ -574,18 +594,17 @@ export class WizardComponent implements OnInit {
                     kycdocidentity: new FormControl(this.summaryReportData[0].kycdocidentity),
                     kycdocaddress: new FormControl(this.summaryReportData[0].kycdocaddress)
                 });
-            }
-            else{
+            } else {
                 console.log(res.Message);
             }
-        })
+        });
     }
 
 
-    firstStepSubmit(formdata){
+    firstStepSubmit(formdata) {
         this.Loader = true;
-        if(this.firstFormGroup.valid){
-            this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(res =>{
+        if(this.firstFormGroup.valid) {
+            this.wizardService.postClaimDetails(this.firstFormGroup.value).subscribe(res => {
                 if(res && res.Status == 200){
                     this.postResponseData = res.Data;
                     this.successMessage = res.Message;
@@ -598,15 +617,14 @@ export class WizardComponent implements OnInit {
                         this.submitDisabled = false;
                     }, 3000);
                     this.Loader = false;
-                }
-                else{
-                    this.errorMessage = res.Message;
-                    this.showError = true;
-                    this.showSuccess = false;
-                    setTimeout(() => {
-                        this.showError = false;
-                    }, 3000);
-                    this.Loader = false;
+                } else {
+                  this.errorMessage = res.Message;
+                  this.showError = true;
+                  this.showSuccess = false;
+                  setTimeout(() => {
+                      this.showError = false;
+                  }, 3000);
+                  this.Loader = false;
                 }
             }, error =>{
                 this.errorMessage = error;
@@ -652,7 +670,7 @@ export class WizardComponent implements OnInit {
                 setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })
+            });
         }
     }
 
@@ -672,8 +690,7 @@ export class WizardComponent implements OnInit {
                         this.submitDisabled = false;
                     }, 3000);
                     this.Loader = false;
-                }
-                else{
+                } else {
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
@@ -682,7 +699,7 @@ export class WizardComponent implements OnInit {
                     }, 3000);
                     this.Loader = false;
                 }
-            }, error =>{
+            }, error => {
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
@@ -690,7 +707,7 @@ export class WizardComponent implements OnInit {
                 setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })
+            });
         }
     }
 
@@ -862,7 +879,7 @@ export class WizardComponent implements OnInit {
                     this.uploadImageModal = false;
                     this.postResponseData = res.Data;
                     this.successMessage = res.Message;
-                    alert("You have updated part "+ this.successMessage+'lly');
+                    alert('You have updated part '+ this.successMessage+'lly');
                     this.showError = false;
                     this.showSuccess = true;
                     setTimeout(() => {
@@ -875,7 +892,7 @@ export class WizardComponent implements OnInit {
                     this.showError = true;
                     this.showSuccess = false;
                     alert(this.errorMessage);
-                    alert("You have failed to updated part, "+ this.errorMessage);
+                    alert('You have failed to updated part, '+ this.errorMessage);
                     setTimeout(() => {
                         this.showError = false;
                     }, 3000);
@@ -886,7 +903,7 @@ export class WizardComponent implements OnInit {
                 this.errorMessage = error;
                 this.showError = true;
                 this.showSuccess = false;
-                alert("You have failed to updated part, "+ this.errorMessage);
+                alert('You have failed to updated part, '+ this.errorMessage);
                 setTimeout(() => {
                     this.showError = false;
                 }, 3000);
