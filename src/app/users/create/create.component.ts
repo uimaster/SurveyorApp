@@ -107,6 +107,13 @@ export class CreateComponent implements OnInit {
     setTimeout(() => {
       this.getCompanyList();
     }, 1000);
+
+    setTimeout(() => {
+      debugger;
+      const userValue = this.myForm.controls['userType'].value;
+      this.getUserType(userValue);
+    }, 1500);
+
   }
 
   getUserType(event) {

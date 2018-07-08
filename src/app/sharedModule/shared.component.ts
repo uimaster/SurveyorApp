@@ -158,32 +158,36 @@ export class DonwloadDialog implements OnInit {
         this.downloadSpotSurvey();
     }
     toShowSecondData() {
-        this.showFirstData = false;
-        this.showSecondData = true;
+      this.dialogRef.close();
+      this.router.navigate(['/dashboard']);
     }
 
     downloadSpotSurvey() {
-        var CaseID = localStorage.getItem('CaseID');
-        let baseurl = 'http://apiflacors.iflotech.in/api/DownloadReport/getSpotSurveyReport?CaseID=';
+        const CaseID = localStorage.getItem('CaseID');
+        const baseurl = 'http://apiflacors.iflotech.in/api/DownloadReport/getSpotSurveyReport?CaseID=';
         this.downloadUrl = baseurl + CaseID;
     }
 
     PostSpotCompletion(data) {
-        debugger;
-        var CaseID= localStorage.getItem('CaseID');
-        let surveyorId = JSON.stringify(data);
+
+        const CaseID = localStorage.getItem('CaseID');
+        const surveyorId = JSON.stringify(data);
         this.comletionForm = this.fb.group({
             CaseID: new FormControl(CaseID),
             SurveyStatusId: new FormControl(surveyorId)
-        })
+        });
+
         this.sharedService.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
             if (res) {
                 this.msg = res.Message;
             }
+        });
 
-        })
-        this.showFirstData = false;
         this.showSecondData = true;
+        setTimeout(() => {
+          this.dialogRef.close();
+          this.router.navigate(['/dashboard']);
+        }, 2000);
     }
 
 }

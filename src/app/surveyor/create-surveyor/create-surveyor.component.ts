@@ -34,7 +34,7 @@ export class CreateSurveyorComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
       MobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       landline: ['', Validators.pattern(/^[0-9]*$/)],
-      area: [1, Validators.required],
+      // area: [1, Validators.required],
       city: ['0'],
       address: [],
       licenseNo: [],
@@ -60,7 +60,7 @@ export class CreateSurveyorComponent implements OnInit {
                 this.myForm.controls['password'].setValue('');
                 this.myForm.controls['MobileNo'].setValue(finalData[i].MobileNo);
                 this.myForm.controls['landline'].setValue(finalData[i].LandLine);
-                this.myForm.controls['area'].setValue(finalData[i].AreaId);
+                // this.myForm.controls['area'].setValue(finalData[i].AreaId);
                 //  this.myForm.controls['company'].setValue(finalData[i].COMPANY_ID);
                  this.myForm.controls['LicenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
                  this.myForm.controls['city'].setValue('0');
@@ -92,7 +92,7 @@ export class CreateSurveyorComponent implements OnInit {
       'Password': formD.password,
       'MobileNo': formD.MobileNo,
       'LandLine': formD.landline,
-      'AreaId': formD.area,
+      // 'AreaId': formD.area,
       'CityId': '0',
       'Address': formD.address,
       'LicenceNo': formD.licenseNo,
