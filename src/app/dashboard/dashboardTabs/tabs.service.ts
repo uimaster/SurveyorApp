@@ -15,9 +15,9 @@ export class TabsService {
 
     constructor(private http: HttpClient) {}
 
-    getDashboardList(): Observable<any> {
+    getDashboardList(payload: any): Observable<any> {
         const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '0')
-        .set('CompanyID', JSON.parse(this.companyId)).set('UserID', JSON.parse(this.UserID));;
+        .set('CompanyID', JSON.parse(this.companyId)).set('UserID', payload);
         return this.http.get(DASHBOARDLIST, {params})
             .map((res) => {
                 if (res) {
@@ -27,9 +27,9 @@ export class TabsService {
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    getTabCounts(): Observable<any> {
+    getTabCounts(payload: any): Observable<any> {
         const params = new HttpParams().set('SurveyorsID', JSON.parse(this.SurveyorsId)).set('CompanyID', JSON.parse(this.companyId))
-        .set('UserID', JSON.parse(this.UserID));
+        .set('UserID', payload);
         return this.http.get(DASHBOARDTABCOUNTS, {params})
             .map((res) => {
                 if (res) {
@@ -40,21 +40,21 @@ export class TabsService {
     }
 
 
-    getProcessList(): Observable<any> {
+    getProcessList(payload: any): Observable<any> {
         const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '3')
-        .set('CompanyID', JSON.parse(this.companyId));
+        .set('CompanyID', JSON.parse(this.companyId)).set('UserID', payload);
         return this.http.get(DASHBOARD_CAT_CASES, {params})
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    getCompletedList(): Observable<any> {
+    getCompletedList(payload: any): Observable<any> {
         const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '5')
-        .set('CompanyID', JSON.parse(this.companyId));
+        .set('CompanyID', JSON.parse(this.companyId)).set('UserID', payload);
         return this.http.get(DASHBOARD_CAT_CASES, {params})
             .map((res) => {
                 if (res) {

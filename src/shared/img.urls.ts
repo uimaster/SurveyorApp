@@ -1,4 +1,4 @@
-export const BASE2URL ='http://apiflacors.iflotech.in/api/';
+export const BASE2URL = 'http://apiflacors.iflotech.in/api/';
 export const CLAIMPOLICYIMG_URL = BASE2URL + 'PolicyNoimg';
 export const FRONTCRASH_URL = BASE2URL + 'CARfrontSideimg';
 export const BACKCRASH_URL = BASE2URL + 'CarBackSideimg';

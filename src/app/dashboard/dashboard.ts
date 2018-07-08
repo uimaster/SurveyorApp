@@ -37,8 +37,9 @@ export class DashboardComponent implements OnInit {
   areaDisabled = false;
   hideAllCreateControls = false;
   comletionForm: FormGroup;
-  createCaseDisabled = false;
+  createCaseDisabled: boolean;
   userList = [];
+  userId = 0;
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
@@ -94,7 +95,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboardList() {
-    this.tabsServices.getDashboardList()
+    this.tabsServices.getDashboardList(this.userId)
     .subscribe(res => {
       if(res && res.Status == 200) {
         this.TotalDada = res.Data;
@@ -103,6 +104,42 @@ export class DashboardComponent implements OnInit {
           this.noData = false;
           this.showProcessButtton = false;
           this.completedCasebuttons = true;
+        } else {
+          this.noData = true;
+          this.Loader = false;
+        }
+      }
+    });
+  }
+
+  getCompletedList() {
+    this.tabsServices.getCompletedList(this.userId)
+    .subscribe(res =>{
+      if(res && res.Status == 200) {
+        this.TotalDada = res.Data;
+        if(this.TotalDada.length > 0) {
+          this.Loader = false;
+          this.showProcessButtton = false;
+          this.noData = false;
+          this.completedCasebuttons = true;
+        } else {
+          this.noData = true;
+          this.Loader = false;
+        }
+      }
+    });
+  }
+
+  getProcessList() {
+    this.tabsServices.getProcessList(this.userId)
+    .subscribe(res => {
+      if(res && res.Status == 200) {
+        this.TotalDada = res.Data;
+        if (this.TotalDada.length > 0) {
+          this.showProcessButtton = true;
+          this.completedCasebuttons = false;
+          this.Loader = false;
+          this.noData = false;
         } else {
           this.noData = true;
           this.Loader = false;
@@ -175,41 +212,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getCompletedList() {
-    this.tabsServices.getCompletedList()
-    .subscribe(res =>{
-      if(res && res.Status == 200) {
-        this.TotalDada = res.Data;
-        if(this.TotalDada.length > 0) {
-          this.Loader = false;
-          this.showProcessButtton = false;
-          this.noData = false;
-          this.completedCasebuttons = true;
-        } else {
-          this.noData = true;
-          this.Loader = false;
-        }
-      }
-    });
-  }
 
-  getProcessList() {
-    this.tabsServices.getProcessList()
-    .subscribe(res => {
-      if(res && res.Status == 200) {
-        this.TotalDada = res.Data;
-        if (this.TotalDada.length > 0) {
-          this.showProcessButtton = true;
-          this.completedCasebuttons = false;
-          this.Loader = false;
-          this.noData = false;
-        } else {
-          this.noData = true;
-          this.Loader = false;
-        }
-      }
-    });
-  }
 
 
   getClaimDetails(id, caseid, caseNo, completed) {
@@ -241,6 +244,21 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    if (userTypeId === 1) {
+      this.createCaseDisabled = false;
+      this.userId = 0;
+    } else if (userTypeId === 2) {
+      this.createCaseDisabled = false;
+      this.userId = 0;
+    } else if (userTypeId === 3) {
+      this.createCaseDisabled = false;
+      this.userId = 0;
+    } else if (userTypeId === 4) {
+      this.createCaseDisabled = true;
+      this.userId = JSON.parse(localStorage.getItem('UserId'));
+    }
+
     setTimeout(() => {
       this.getDashboardList();
     }, 100);

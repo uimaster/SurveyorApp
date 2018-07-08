@@ -1,4 +1,6 @@
-export const BASEURL = 'http://apiflacors.iflotech.in/api/';
+// export const BASEURL = 'http://apiflacors.iflotech.in/api/';
+
+export const BASEURL = 'http://54.169.129.132/api/';
 export const LOGINURL = BASEURL + 'CompanyLogin';
 export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard?';
 export const DASHBOARDLIST = BASEURL + 'SurveyCaseList?';

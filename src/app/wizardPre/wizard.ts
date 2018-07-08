@@ -163,7 +163,7 @@ export class PreWizardComponent implements OnInit {
       this.dashboardService.getUserList(data)
           .subscribe(res => {
           this.userList = res.Data;
-          this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
+          // this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
       });
     }
 
@@ -403,7 +403,7 @@ export class PreWizardComponent implements OnInit {
                         this.ninethFormGroup = new FormGroup({
                             CaseID: new FormControl(this.caseId),
                             CaseProposerName: new FormControl(this.insuranceDetailsData[0].CaseProposerName),
-                            CurrentInsurerName: new FormControl(JSON.parse(this.insuranceDetailsData[0].CurrentInsurerName)),
+                            CurrentInsurerName: new FormControl(this.insuranceDetailsData[0].CurrentInsurerName),
                             CurrentPolicyNo: new FormControl(this.insuranceDetailsData[0].CurrentPolicyNo),
                             PolicyStartDate: new FormControl(this.insuranceDetailsData[0].PolicyStartDate),
                             PolicyEndDate: new FormControl(this.insuranceDetailsData[0].PolicyEndDate),

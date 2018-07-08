@@ -262,7 +262,7 @@ export class WizardComponent implements OnInit {
       this.dashboardService.getUserList(data)
           .subscribe(res => {
           this.userList = res.Data;
-          this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
+          // this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
       });
     }
 

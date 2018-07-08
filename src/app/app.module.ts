@@ -18,7 +18,7 @@ import { LoginService } from '../app/login/login.service';
 import { TabsService } from './dashboard/dashboardTabs/tabs.service';
 import { WizardService } from './wizard/wizard.service';
 
-//Material Modules
+// Material Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MAT_DATE_LOCALE, MatButtonModule, MatCheckboxModule, MatInputModule} from '@angular/material';
 import { MatCardModule } from '@angular/material/card';

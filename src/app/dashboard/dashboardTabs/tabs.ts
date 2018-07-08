@@ -10,46 +10,47 @@ import { DashboardComponent } from '../dashboard';
   templateUrl: './tabs.html',
   styleUrls: ['./tabs.scss'],
 })
-export class DashboardTabComponent implements OnInit { 
-  public AllocatedCases: number = 0;
-  public CompletedCases : number = 0;
-  public UnderProcessCases : number = 0;
-  public TotalCases : number = 0;
-  public BroadCastCase : number = 0;
-  showActiveAll: boolean = true;
-  showActiveCompleted: boolean = false;
-  showActiveUnderProcess: boolean = false;
+export class DashboardTabComponent implements OnInit {
+  public AllocatedCases = 0;
+  public CompletedCases  = 0;
+  public UnderProcessCases  = 0;
+  public TotalCases  = 0;
+  public BroadCastCase  = 0;
+  showActiveAll = true;
+  showActiveCompleted = false;
+  showActiveUnderProcess = false;
+  userId = 0;
 
   constructor( private tabsServices: TabsService, private dashboard: DashboardComponent){}
 
-  getTabCounts(){
-    this.tabsServices.getTabCounts()
-    .subscribe((res) =>{
-      if(res && res.Status == 200){
+  getTabCounts() {
+    this.tabsServices.getTabCounts(this.userId)
+    .subscribe((res) => {
+      if(res && res.Status == 200) {
         this.AllocatedCases = res.Data[0].AllocatedCaseCount;
         this.CompletedCases = res.Data[0].CompletedCaseCount;
         this.UnderProcessCases = res.Data[0].UnderProcessCaseCount;
         this.BroadCastCase = res.Data[0].BroadCaseCount;
         this.TotalCases = res.Data[0].TotalCaseCount;
       }
-    })
+    });
   }
 
-  getAllCases(){
+  getAllCases() {
     this.dashboard.getDashboardList();
     this.showActiveAll = true;
     this.showActiveCompleted = false;
     this.showActiveUnderProcess = false;
   }
 
-  getCompleteCases(){
+  getCompleteCases() {
     this.dashboard.getCompletedList();
     this.showActiveAll = false;
     this.showActiveCompleted = true;
     this.showActiveUnderProcess = false;
   }
 
-  getUnderProcessCases(){
+  getUnderProcessCases() {
     this.dashboard.getProcessList();
     this.showActiveAll = false;
     this.showActiveCompleted = false;
@@ -57,8 +58,18 @@ export class DashboardTabComponent implements OnInit {
   }
 
 
-  ngOnInit(){   
+  ngOnInit() {
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    if (userTypeId === 1) {
+      this.userId = 0;
+    } else if (userTypeId === 2) {
+      this.userId = 0;
+    } else if (userTypeId === 3) {
+      this.userId = 0;
+    } else if (userTypeId === 4) {
+      this.userId = JSON.parse(localStorage.getItem('UserId'));
+    }
+
     this.getTabCounts();
   }
-
 }

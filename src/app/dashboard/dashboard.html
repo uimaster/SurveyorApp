@@ -6,7 +6,7 @@
   </div>
   <h2>Dashboard
 
-    <button mat-raised-button color="accent" (click)="openCreateCase();" style="float:right;" [disabled]="createCaseDisabled">
+    <button mat-raised-button color="accent" (click)="openCreateCase();" style="float:right;" *ngIf="!createCaseDisabled">
       Create Case
     </button>
   </h2>
