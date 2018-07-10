@@ -125,11 +125,12 @@ export class PreWizardComponent implements OnInit {
             Unladen_Wt: new FormControl(''),
             CNG_KIT_Status: new FormControl(''),
             Permit_Area: new FormControl(''),
-            Road_Tax_ValidUpto: new FormControl('')
+            Road_Tax_ValidUpto: new FormControl(''),
+            Seating_Capacity: new FormControl('')
         });
 
         this.ninethFormGroup = new FormGroup({
-            CaseID: new FormControl(''),
+            CaseID: new FormControl(this.caseId),
             CaseProposerName: new FormControl(''),
             CurrentInsurerName: new FormControl(''),
             CurrentPolicyNo: new FormControl(''),
@@ -254,6 +255,7 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
                     this.thirdFormGroup.controls['Permit_Area'].setValue('');
                     this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
+                    this.thirdFormGroup.controls['Seating_Capacity'].setValue('');
                 } else {
                     this.RegSearchFailedMsg = true;
                     this.RegSearchSuccessMsg = false;
@@ -280,6 +282,7 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
                     this.thirdFormGroup.controls['Permit_Area'].setValue('');
                     this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
+                    this.thirdFormGroup.controls['Seating_Capacity'].setValue('');
                 }
             })
     }
@@ -332,7 +335,7 @@ export class PreWizardComponent implements OnInit {
                       this.getUserList(this.caseDetailData[0].SurveyorsID);
                         let AssDateTime = (new Date(this.caseDetailData[0].AssignedDateTime)).toISOString();
                         let inspectDate = (new Date(this.caseDetailData[0].InspectionDate)).toISOString();
-                        let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toISOString();
+                        let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toLocaleString();
                         this.firstFormGroup.controls['CaseID'].setValue(this.caseId);
                         this.firstFormGroup.controls['CaseNo'].setValue(this.caseDetailData[0].CaseNo);
                         this.firstFormGroup.controls['CaseDate'].setValue(this.caseDetailData[0].CaseDate);
@@ -362,36 +365,40 @@ export class PreWizardComponent implements OnInit {
                 if (res && res.Status == 200) {
                     this.VehicleDetailData = res.Data;
                     if (this.VehicleDetailData.length > 0) {
-                        this.thirdFormGroup = new FormGroup({
-                            CaseID: new FormControl(this.caseId),
-                            VehicleTypeID: new FormControl(this.VehicleDetailData[0].VehicleTypeID),
-                            VehicleTypeName: new FormControl(this.VehicleDetailData[0].VehicleTypeName),
-                            Registration_No: new FormControl(this.VehicleDetailData[0].Registration_No),
-                            FitnessCertifyValidDate: new FormControl(this.VehicleDetailData[0].FitnessCertifyValidDate),
-                            ChasisNo: new FormControl(this.VehicleDetailData[0].ChasisNo),
-                            EngineNo: new FormControl(this.VehicleDetailData[0].EngineNo),
-                            Make: new FormControl(this.VehicleDetailData[0].Make),
-                            Model: new FormControl(this.VehicleDetailData[0].Model),
-                            Variant: new FormControl(this.VehicleDetailData[0].Variant),
-                            MgfYear: new FormControl(this.VehicleDetailData[0].MgfYear),
-                            Color: new FormControl(this.VehicleDetailData[0].Color),
-                            RegistrationDate: new FormControl(this.VehicleDetailData[0].RegistrationDate, Validators.required),
-                            FuelType: new FormControl(this.VehicleDetailData[0].FuelType),
-                            HypoticatedTo: new FormControl(this.VehicleDetailData[0].HypoticatedTo),
-                            OdometerReading: new FormControl(this.VehicleDetailData[0].OdometerReading),
-                            RegisteredOwner: new FormControl(this.VehicleDetailData[0].RegisteredOwner),
-                            Transfer_Date: new FormControl(this.VehicleDetailData[0].Transfer_Date),
-                            Class_Vehicle: new FormControl(this.VehicleDetailData[0].Class_Vehicle),
-                            Pre_Accident_Condition: new FormControl(this.VehicleDetailData[0].Pre_Accident_Condition),
-                            Laden_Wt: new FormControl(this.VehicleDetailData[0].Laden_Wt),
-                            Unladen_Wt: new FormControl(this.VehicleDetailData[0].Unladen_Wt),
-                            CNG_KIT_Status: new FormControl(this.VehicleDetailData[0].CNG_KIT_Status),
-                            Permit_Area: new FormControl(this.VehicleDetailData[0].Permit_Area),
-                            Road_Tax_ValidUpto: new FormControl(this.VehicleDetailData[0].Road_Tax_ValidUpto)
-                        });
+                      this.thirdFormGroup.controls['CaseID'].setValue(this.caseId),
+                      this.thirdFormGroup.controls['CaseVehicleId'].setValue(this.VehicleDetailData[0].CaseVehicleId);
+                      this.thirdFormGroup.controls['SurveyorsId'].setValue(this.VehicleDetailData[0].SurveyorsId);
+                      this.thirdFormGroup.controls['VehicleId'].setValue(this.VehicleDetailData[0].VehicleId);
+                      this.thirdFormGroup.controls['VehicleName'].setValue(this.VehicleDetailData[0].VehicleName);
+                      this.thirdFormGroup.controls['Registration_No'].setValue(this.VehicleDetailData[0].Registration_No);
+                      this.thirdFormGroup.controls['RegistrationDate'].setValue(this.VehicleDetailData[0].RegistrationDate);
+                      this.thirdFormGroup.controls['ChasisNo'].setValue(this.VehicleDetailData[0].ChasisNo);
+                      this.thirdFormGroup.controls['EngineNo'].setValue(this.VehicleDetailData[0].EngineNo);
+                      this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue(this.VehicleDetailData[0].FitnessCertifyValidDate);
+                      this.thirdFormGroup.controls['PermitNo'].setValue(this.VehicleDetailData[0].PermitNo);
+                      this.thirdFormGroup.controls['TypeofPermit'].setValue(this.VehicleDetailData[0].TypeofPermit);
+                      this.thirdFormGroup.controls['Make'].setValue(this.VehicleDetailData[0].Make);
+                      this.thirdFormGroup.controls['Model'].setValue(this.VehicleDetailData[0].Model);
+                      this.thirdFormGroup.controls['MgfYear'].setValue(this.VehicleDetailData[0].MgfYear);
+                      this.thirdFormGroup.controls['Color'].setValue(this.VehicleDetailData[0].Color);
+                      this.thirdFormGroup.controls['OdometerReading'].setValue(this.VehicleDetailData[0].OdometerReading);
+                      this.thirdFormGroup.controls['Hypo'].setValue(this.VehicleDetailData[0].Hypo);
+                      this.thirdFormGroup.controls['RegisteredOwner'].setValue(this.VehicleDetailData[0].RegisteredOwner);
+                      this.thirdFormGroup.controls['Transfer_Date'].setValue(this.VehicleDetailData[0].Transfer_Date);
+                      this.thirdFormGroup.controls['Class_Vehicle'].setValue(this.VehicleDetailData[0].Class_Vehicle);
+                      this.thirdFormGroup.controls['Pre_Accident_Condition'].setValue(this.VehicleDetailData[0].Pre_Accident_Condition);
+                      this.thirdFormGroup.controls['Laden_Wt'].setValue(this.VehicleDetailData[0].Laden_Wt);
+                      this.thirdFormGroup.controls['Unladen_Wt'].setValue(this.VehicleDetailData[0].Unladen_Wt);
+                      this.thirdFormGroup.controls['CNG_KIT_Status'].setValue(this.VehicleDetailData[0].CNG_KIT_Status);
+                      this.thirdFormGroup.controls['Permit_Area'].setValue(this.VehicleDetailData[0].Permit_Area);
+                      this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue(this.VehicleDetailData[0].Road_Tax_ValidUpto);
+                      this.thirdFormGroup.controls['FuelType'].setValue(this.VehicleDetailData[0].FuelType);
+                      this.thirdFormGroup.controls['Seating_Capacity'].setValue(this.VehicleDetailData[0].Seating_Capacity);
+                      this.thirdFormGroup.controls['Variant'].setValue(this.VehicleDetailData[0].Variant);
+                      this.thirdFormGroup.controls['HypoticatedTo'].setValue(this.VehicleDetailData[0].HypoticatedTo);
                     }
                 }
-            })
+            });
     }
 
     getInsuranceDetails() {
@@ -400,18 +407,16 @@ export class PreWizardComponent implements OnInit {
                 if (res && res.Status == 200) {
                     this.insuranceDetailsData = res.Data;
                     if (this.insuranceDetailsData.length > 0) {
-                        this.ninethFormGroup = new FormGroup({
-                            CaseID: new FormControl(this.caseId),
-                            CaseProposerName: new FormControl(this.insuranceDetailsData[0].CaseProposerName),
-                            CurrentInsurerName: new FormControl(this.insuranceDetailsData[0].CurrentInsurerName),
-                            CurrentPolicyNo: new FormControl(this.insuranceDetailsData[0].CurrentPolicyNo),
-                            PolicyStartDate: new FormControl(this.insuranceDetailsData[0].PolicyStartDate),
-                            PolicyEndDate: new FormControl(this.insuranceDetailsData[0].PolicyEndDate),
-                            ClaimHistory: new FormControl(this.insuranceDetailsData[0].ClaimHistory),
-                            GapInInsurance: new FormControl(this.insuranceDetailsData[0].GapInInsurance),
-                            ProposedInsured: new FormControl(this.insuranceDetailsData[0].ProposedInsured),
-                            CaseRemarks: new FormControl(this.insuranceDetailsData[0].CaseRemarks)
-                        });
+                      this.ninethFormGroup.controls['CaseID'].setValue(this.insuranceDetailsData[0].CaseID);
+                      this.ninethFormGroup.controls['CaseProposerName'].setValue(this.insuranceDetailsData[0].CaseProposerName);
+                      this.ninethFormGroup.controls['CurrentInsurerName'].setValue(this.insuranceDetailsData[0].CurrentInsurerName);
+                      this.ninethFormGroup.controls['CurrentPolicyNo'].setValue(this.insuranceDetailsData[0].CurrentPolicyNo);
+                      this.ninethFormGroup.controls['PolicyStartDate'].setValue(this.insuranceDetailsData[0].PolicyStartDate);
+                      this.ninethFormGroup.controls['PolicyEndDate'].setValue(this.insuranceDetailsData[0].PolicyEndDate);
+                      this.ninethFormGroup.controls['ClaimHistory'].setValue(this.insuranceDetailsData[0].ClaimHistory);
+                      this.ninethFormGroup.controls['GapInInsurance'].setValue(this.insuranceDetailsData[0].GapInInsurance);
+                      this.ninethFormGroup.controls['ProposedInsured'].setValue(this.insuranceDetailsData[0].ProposedInsured);
+                      this.ninethFormGroup.controls['CaseRemarks'].setValue(this.insuranceDetailsData[0].CaseRemarks);
                     }
                 }
             })

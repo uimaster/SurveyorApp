@@ -127,6 +127,11 @@
         <mat-form-field>
           <input matInput placeholder="Hypoticated To" formControlName="HypoticatedTo">
         </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="number" placeholder="Seating Capacity" formControlName="Seating_Capacity">
+        </mat-form-field>
+
         <mat-form-field>
           <input matInput placeholder="Odometer Reading" formControlName="OdometerReading">
         </mat-form-field>
@@ -184,7 +189,7 @@
 
         <mat-form-field>
           <mat-select placeholder="Previous Insurer Name" formControlName="CurrentInsurerName">
-            <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
+            <mat-option *ngFor="let item of companyListData" [value]="item.Name">
               {{item.Name}}
             </mat-option>
           </mat-select>

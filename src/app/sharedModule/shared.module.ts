@@ -31,14 +31,12 @@ import { SharedComponent, DonwloadDialog } from './shared.component';
     ],
     providers: [SharedModuleServices]
   })
-  
+
   export class SharedModule {
-  
     static forRoot() {
       return {
         ngModule: SharedModule,
         providers: [],
       };
     }
-  
   }

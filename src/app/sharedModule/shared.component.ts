@@ -171,10 +171,10 @@ export class DonwloadDialog implements OnInit {
     PostSpotCompletion(data) {
 
         const CaseID = localStorage.getItem('CaseID');
-        const surveyorId = JSON.stringify(data);
+        // const surveyorId = JSON.stringify(data);
         this.comletionForm = this.fb.group({
             CaseID: new FormControl(CaseID),
-            SurveyStatusId: new FormControl(surveyorId)
+            SurveyStatusId: new FormControl(data)
         });
 
         this.sharedService.PostSpotCompletion(this.comletionForm.value).subscribe(res => {

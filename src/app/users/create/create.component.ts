@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, RequiredValidator } from '@angular/forms';
 import { UsersService } from '../users.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { CompaniesService } from '../../companies/companies.service';
 import { SurveyorService } from '../../surveyor/surveyor.service';
+import { REQUIRED_VALIDATOR } from '@angular/forms/src/directives/validators';
 
 @Component({
   selector: 'app-create',
@@ -64,8 +65,8 @@ export class CreateComponent implements OnInit {
         ]
       ],
       userType: ['', Validators.required],
-      company: [''],
-      SurveyorsId: [''],
+      company: ['', Validators.required],
+      SurveyorsId: ['', Validators.required],
       IsActive: ['', Validators.required]
     });
     this.sub = this.route.params.subscribe((params: Params) => {
@@ -79,6 +80,8 @@ export class CreateComponent implements OnInit {
                 this.myForm.controls['name'].setValue(data[i].Name);
                 this.myForm.controls['email'].setValue(data[i].EmailId);
                 this.myForm.controls['password'].setValue('');
+                this.myForm.controls['password'].clearValidators();
+                this.myForm.controls['password'].updateValueAndValidity();
                 this.myForm.controls['userType'].setValue(data[i].UserTypeId);
                 this.myForm.controls['company'].setValue(data[i].CompanyId);
                 this.myForm.controls['IsActive'].setValue(data[i].IsActive);
@@ -112,25 +115,39 @@ export class CreateComponent implements OnInit {
       debugger;
       const userValue = this.myForm.controls['userType'].value;
       this.getUserType(userValue);
-    }, 1500);
+    }, 500);
 
   }
 
   getUserType(event) {
-    this.myForm.controls['company'].setValue('');
-    this.myForm.controls['SurveyorsId'].setValue('');
-    if (event.value === 1) {
+
+    if (event === 1) {
+      this.myForm.controls['company'].setValue('');
+      this.myForm.controls['SurveyorsId'].setValue('');
+      this.myForm.controls['company'].clearValidators();
+      this.myForm.controls['company'].updateValueAndValidity();
+      this.myForm.controls['SurveyorsId'].clearValidators();
+      this.myForm.controls['SurveyorsId'].updateValueAndValidity();
       this.companyDisabled = true;
       this.surveyorDisabled = true;
-    } else if (event.value === 2) {
+    } else if (event === 2) {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
-    } else if (event.value === 3) {
+      this.myForm.controls['SurveyorsId'].setValue('');
+      this.myForm.controls['SurveyorsId'].clearValidators();
+      this.myForm.controls['SurveyorsId'].updateValueAndValidity();
+    } else if (event === 3) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
-    } else if (event.value === 4) {
+      this.myForm.controls['company'].setValue('');
+      this.myForm.controls['company'].clearValidators();
+      this.myForm.controls['company'].updateValueAndValidity();
+    } else if (event === 4) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
+      this.myForm.controls['company'].setValue('');
+      this.myForm.controls['company'].clearValidators();
+      this.myForm.controls['company'].updateValueAndValidity();
     }
   }
 

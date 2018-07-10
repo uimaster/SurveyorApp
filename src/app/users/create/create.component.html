@@ -45,7 +45,7 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="User Type" formControlName="userType" (change)="getUserType($event);">
+          <mat-select placeholder="User Type" formControlName="userType" (change)="getUserType($event.value);">
             <mat-option [value]="1">
               Admin
             </mat-option>
@@ -53,7 +53,7 @@
               Company User
             </mat-option>
             <mat-option [value]="3">
-              Surveyor
+              Surveyor-Admin
             </mat-option>
             <mat-option [value]="4">
                 Surveyor-SubUser

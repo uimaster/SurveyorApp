@@ -59,6 +59,7 @@ export class DashboardTabComponent implements OnInit {
 
 
   ngOnInit() {
+    this.getTabCounts();
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
     if (userTypeId === 1) {
       this.userId = 0;
@@ -69,7 +70,5 @@ export class DashboardTabComponent implements OnInit {
     } else if (userTypeId === 4) {
       this.userId = JSON.parse(localStorage.getItem('UserId'));
     }
-
-    this.getTabCounts();
   }
 }

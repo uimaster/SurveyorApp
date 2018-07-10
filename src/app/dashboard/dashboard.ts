@@ -95,6 +95,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboardList() {
+    this.Loader = true;
     this.tabsServices.getDashboardList(this.userId)
     .subscribe(res => {
       if(res && res.Status == 200) {
@@ -228,21 +229,21 @@ export class DashboardComponent implements OnInit {
 
   PostSpotCompletion(sur: any, caseId: number) {
     const CaseID = JSON.stringify(caseId);
-    const surveyorId = JSON.stringify(sur);
+    // const surveyorId = JSON.stringify(sur);
     this.comletionForm = this.fb.group({
         CaseID: new FormControl(CaseID),
-        SurveyStatusId: new FormControl(surveyorId)
+        SurveyStatusId: new FormControl(sur)
     });
     this.sharedModuleServices.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
       if (res) {
-          alert(res.Message);
+          alert('You have' + res.Message+'fully converted completed to UnderProcess case.');
           this.getDashboardList();
       } else {
         alert(res.Message);
       }
     });
   }
-
+  
   ngOnInit() {
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
     if (userTypeId === 1) {
@@ -280,13 +281,13 @@ export class DashboardComponent implements OnInit {
     }, 1200);
 
     setTimeout(() => {
-      let serveyorId = localStorage.getItem('SurveyorsId');
+      const serveyorId = localStorage.getItem('SurveyorsId');
       this.getUserList(serveyorId);
     }, 2000);
 
 
     this.showDownload = JSON.parse(localStorage.getItem('showDownload'));
-    if(this.showDownload === null || this.showDownload === undefined) {
+    if ( this.showDownload === null || this.showDownload === undefined) {
       localStorage.setItem('showTittle', 'true');
     }
     this.showTittle = JSON.parse(localStorage.getItem('showTittle'));
