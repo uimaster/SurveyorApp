@@ -19,16 +19,16 @@
       <mat-form-field>
 
         <input type="text" matInput placeholder="Name" formControlName="name">
-        <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
-        <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
+        <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required.</mat-error>
+        <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits.</mat-error>
 
       </mat-form-field>
 
 
         <mat-form-field class="example-full-width">
           <input type="text" matInput placeholder="Email" formControlName="email">
-          <mat-error *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched">Email is required</mat-error>
-          <mat-error *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched">Please Enter valid email</mat-error>
+          <mat-error *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched">Email is required.</mat-error>
+          <mat-error *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched">Please Enter valid email.</mat-error>
         </mat-form-field>
 
 
@@ -36,8 +36,9 @@
 
         <mat-form-field class="example-full-width">
           <input type="password" matInput placeholder="Password" formControlName="password">
-          <mat-error *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched">Password is required</mat-error>
-          <mat-error *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched">No Whitespace please</mat-error>
+          <mat-error *ngIf="myForm.controls['password'].hasError('required') && myForm.controls['password'].touched">Password is required.</mat-error>
+          <mat-error *ngIf="myForm.controls['password'].hasError('pattern') && myForm.controls['password'].touched">Whitespace not allowed.</mat-error>
+          <mat-error *ngIf="myForm.controls['password'].hasError('minlength') && myForm.controls['password'].touched">Password length can't be less than 5.</mat-error>
 
         </mat-form-field>
 
@@ -87,7 +88,7 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="Active" formControlName="IsActive">
+          <mat-select placeholder="User Active" formControlName="IsActive">
             <mat-option [value]="true">
               True
             </mat-option>

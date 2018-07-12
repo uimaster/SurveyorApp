@@ -199,6 +199,12 @@
           <input matInput placeholder="Previous Policy No" formControlName="CurrentPolicyNo">
         </mat-form-field>
 
+        <mat-form-field>
+          <input matInput placeholder="Policy Type" formControlName="PolicyType">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="IDV Value" formControlName="PolicyValue">
+        </mat-form-field>
 
         <mat-form-field>
             <input matInput placeholder="Policy Start Date" formControlName="PolicyStartDate"  [matDatepicker]="PolicyStartDate" (dateChange)="getPolicyStartDate('change', $event)">

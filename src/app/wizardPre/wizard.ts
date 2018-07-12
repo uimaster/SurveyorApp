@@ -139,7 +139,9 @@ export class PreWizardComponent implements OnInit {
             ClaimHistory: new FormControl('', Validators.required),
             GapInInsurance: new FormControl('', Validators.required),
             ProposedInsured: new FormControl('', Validators.required),
-            CaseRemarks: new FormControl('')
+            CaseRemarks: new FormControl(''),
+            PolicyType: new FormControl(''),
+            PolicyValue: new FormControl('')
         });
 
         this.eightthFormGroup = new FormGroup({
@@ -255,7 +257,7 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
                     this.thirdFormGroup.controls['Permit_Area'].setValue('');
                     this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
-                    this.thirdFormGroup.controls['Seating_Capacity'].setValue('');
+                    this.thirdFormGroup.controls['Seating_Capacity'].setValue(res.GetVehicleDataResult.vehicle.seat_cap);
                 } else {
                     this.RegSearchFailedMsg = true;
                     this.RegSearchSuccessMsg = false;
@@ -356,7 +358,7 @@ export class PreWizardComponent implements OnInit {
                         this.firstFormGroup.controls['SurveyStatusID'].setValue(this.caseDetailData[0].SurveyStatusID);
                     }
                 }
-            })
+            });
     }
 
     getVehicleDetails() {
@@ -364,25 +366,22 @@ export class PreWizardComponent implements OnInit {
             .subscribe(res => {
                 if (res && res.Status == 200) {
                     this.VehicleDetailData = res.Data;
-                    if (this.VehicleDetailData.length > 0) {
+                    if (this.VehicleDetailData !== null || this.VehicleDetailData !== undefined) {
                       this.thirdFormGroup.controls['CaseID'].setValue(this.caseId),
-                      this.thirdFormGroup.controls['CaseVehicleId'].setValue(this.VehicleDetailData[0].CaseVehicleId);
-                      this.thirdFormGroup.controls['SurveyorsId'].setValue(this.VehicleDetailData[0].SurveyorsId);
-                      this.thirdFormGroup.controls['VehicleId'].setValue(this.VehicleDetailData[0].VehicleId);
-                      this.thirdFormGroup.controls['VehicleName'].setValue(this.VehicleDetailData[0].VehicleName);
+                      this.thirdFormGroup.controls['VehicleTypeID'].setValue(this.VehicleDetailData[0].VehicleTypeID);
+                      this.thirdFormGroup.controls['VehicleTypeName'].setValue(this.VehicleDetailData[0].VehicleTypeName);
                       this.thirdFormGroup.controls['Registration_No'].setValue(this.VehicleDetailData[0].Registration_No);
                       this.thirdFormGroup.controls['RegistrationDate'].setValue(this.VehicleDetailData[0].RegistrationDate);
                       this.thirdFormGroup.controls['ChasisNo'].setValue(this.VehicleDetailData[0].ChasisNo);
                       this.thirdFormGroup.controls['EngineNo'].setValue(this.VehicleDetailData[0].EngineNo);
                       this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue(this.VehicleDetailData[0].FitnessCertifyValidDate);
-                      this.thirdFormGroup.controls['PermitNo'].setValue(this.VehicleDetailData[0].PermitNo);
-                      this.thirdFormGroup.controls['TypeofPermit'].setValue(this.VehicleDetailData[0].TypeofPermit);
                       this.thirdFormGroup.controls['Make'].setValue(this.VehicleDetailData[0].Make);
                       this.thirdFormGroup.controls['Model'].setValue(this.VehicleDetailData[0].Model);
+                      this.thirdFormGroup.controls['Variant'].setValue(this.VehicleDetailData[0].Variant);
                       this.thirdFormGroup.controls['MgfYear'].setValue(this.VehicleDetailData[0].MgfYear);
                       this.thirdFormGroup.controls['Color'].setValue(this.VehicleDetailData[0].Color);
                       this.thirdFormGroup.controls['OdometerReading'].setValue(this.VehicleDetailData[0].OdometerReading);
-                      this.thirdFormGroup.controls['Hypo'].setValue(this.VehicleDetailData[0].Hypo);
+                      this.thirdFormGroup.controls['HypoticatedTo'].setValue(this.VehicleDetailData[0].HypoticatedTo);
                       this.thirdFormGroup.controls['RegisteredOwner'].setValue(this.VehicleDetailData[0].RegisteredOwner);
                       this.thirdFormGroup.controls['Transfer_Date'].setValue(this.VehicleDetailData[0].Transfer_Date);
                       this.thirdFormGroup.controls['Class_Vehicle'].setValue(this.VehicleDetailData[0].Class_Vehicle);
@@ -417,6 +416,8 @@ export class PreWizardComponent implements OnInit {
                       this.ninethFormGroup.controls['GapInInsurance'].setValue(this.insuranceDetailsData[0].GapInInsurance);
                       this.ninethFormGroup.controls['ProposedInsured'].setValue(this.insuranceDetailsData[0].ProposedInsured);
                       this.ninethFormGroup.controls['CaseRemarks'].setValue(this.insuranceDetailsData[0].CaseRemarks);
+                      this.ninethFormGroup.controls['PolicyType'].setValue(this.insuranceDetailsData[0].PolicyType);
+                      this.ninethFormGroup.controls['PolicyValue'].setValue(this.insuranceDetailsData[0].PolicyValue);
                     }
                 }
             })

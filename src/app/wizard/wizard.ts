@@ -91,6 +91,7 @@ export class WizardComponent implements OnInit {
   IsCompleted: boolean;
   userList = [];
   createCaseDisabled = false;
+  policyEndDate:any;
 
 
   constructor(private _formBuilder: FormBuilder, private wizardService:WizardService, private httpClient: HttpClient,
@@ -103,6 +104,10 @@ export class WizardComponent implements OnInit {
         claimNo: new FormControl('', Validators.required),
         PolicyNO: new FormControl('', Validators.required),
         CompanyId: new FormControl(''),
+        Policy_Start_Date: new FormControl(''),
+        Policy_End_Date: new FormControl(''),
+        Policy_Type: new FormControl(''),
+        Policy_Value: new FormControl(''),
         UserID: new FormControl('', Validators.required),
         InsuredName:  new FormControl('', Validators.required),
         InsuredAddress:  new FormControl('', Validators.required),
@@ -276,12 +281,17 @@ export class WizardComponent implements OnInit {
         this.fourthFormGroup.controls['Age'].setValue(DriverAge);
     }
 
-    getIssueDate(type: string, event: MatDatepickerInputEvent<Date>){
+    getIssueDate(type: string, event: MatDatepickerInputEvent<Date>) {
         let SelectedDate = event.value;
         this.expiryMaxDate = SelectedDate;
         this.fourthFormGroup.controls['ValidUptoDate'].setValue('');
     }
 
+    getPolicyStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
+      let SelectedDate = event.value;
+      this.policyEndDate = SelectedDate;
+      this.firstFormGroup.controls['Policy_End_Date'].setValue('');
+  }
 
 
   ngOnInit() {
@@ -381,6 +391,10 @@ export class WizardComponent implements OnInit {
                 this.firstFormGroup.controls['InsuredAddress'].setValue(this.claimDetailData[0].InsuredAddress);
                 this.firstFormGroup.controls['InsuredMobile'].setValue(this.claimDetailData[0].InsuredMobile);
                 this.firstFormGroup.controls['EmailID'].setValue(this.claimDetailData[0].EmailID);
+                this.firstFormGroup.controls['Policy_Start_Date'].setValue(this.claimDetailData[0].Policy_Start_Date);
+                this.firstFormGroup.controls['Policy_End_Date'].setValue(this.claimDetailData[0].Policy_End_Date);
+                this.firstFormGroup.controls['Policy_Type'].setValue(this.claimDetailData[0].Policy_Type);
+                this.firstFormGroup.controls['Policy_Value'].setValue(this.claimDetailData[0].Policy_Value);
 
                 this.secondFormGroup.controls['CaseID'].setValue(this.caseId);
                 this.secondFormGroup.controls['SurveyorsId'].setValue(this.claimDetailData[0].SurveyorsId);
@@ -395,11 +409,11 @@ export class WizardComponent implements OnInit {
     }
 
 
-    SearchRegistration(){
+    SearchRegistration() {
 
-        let data= ((document.getElementById('RegistrationNum') as HTMLInputElement).value);
+        let data = ((document.getElementById('RegistrationNum') as HTMLInputElement).value);
         this.wizardService.SearchRegistration(data)
-        .subscribe(res =>{
+        .subscribe(res => {
             if(res && res.GetVehicleDataResult.status === '200'){
                 this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
                 this.RegSearchFailedMsg = false;
@@ -427,7 +441,7 @@ export class WizardComponent implements OnInit {
                 this.thirdFormGroup.controls['Permit_Area'].setValue('');
                 this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
                 this.thirdFormGroup.controls['FuelType'].setValue(res.GetVehicleDataResult.vehicle.fuel_type_desc);
-                this.thirdFormGroup.controls['Seating_Capacity'].setValue('');
+                this.thirdFormGroup.controls['Seating_Capacity'].setValue(res.GetVehicleDataResult.vehicle.seat_cap);
 
             }
             else{
@@ -497,18 +511,18 @@ export class WizardComponent implements OnInit {
               this.thirdFormGroup.controls['Seating_Capacity'].setValue(this.VehicleDetailData[0].Seating_Capacity);
             }
             }
-        })
+        });
     }
 
-    getDriverDetails(){
+    getDriverDetails() {
         this.wizardService.getDriverDetails()
         .subscribe(res =>{
-            if(res && res.Status == 200){
+            if(res && res.Status == 200) {
             this.driverData = res.Data;
-            if(this.driverData.length > 0){
-                if(this.driverData[0].DOB !== null){
-                    let dateString : string = this.driverData[0].DOB.toString();
-                    let years : number = parseInt(dateString.substring(0, 5));
+            if(this.driverData.length > 0) {
+                if(this.driverData[0].DOB !== null) {
+                    const dateString: string = this.driverData[0].DOB.toString();
+                    const years: number = parseInt(dateString.substring(0, 5));
                     this.driverAge = this.thisYear - years;
                 }
                 this.fourthFormGroup = new FormGroup({

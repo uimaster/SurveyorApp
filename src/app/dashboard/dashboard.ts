@@ -35,11 +35,11 @@ export class DashboardComponent implements OnInit {
   companyDisabled = false;
   surveyorDisabled = false;
   areaDisabled = false;
-  hideAllCreateControls = false;
   comletionForm: FormGroup;
-  createCaseDisabled: boolean;
+  userDisabled = true;
   userList = [];
   userId = 0;
+  noUserMsg = false;
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
@@ -68,29 +68,24 @@ export class DashboardComponent implements OnInit {
     const SurveyorsId = localStorage.getItem('SurveyorsId');
     const companyId = localStorage.getItem('CompanyId');
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
-    this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(SurveyorsId));
-    this.createCaseForm.controls['CompanyId'].setValue(JSON.parse(companyId));
+    // this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(SurveyorsId));
+    // this.createCaseForm.controls['CompanyId'].setValue(JSON.parse(companyId));
 
     if (userTypeId === 1) {
-      this.areaDisabled = false;
       this.companyDisabled = false;
       this.surveyorDisabled = false;
-      this.hideAllCreateControls = false;
-      this.createCaseDisabled = false;
+      this.userDisabled = true;
     } else if (userTypeId === 2) {
-      this.areaDisabled = false;
       this.companyDisabled = true;
       this.surveyorDisabled = false;
-      this.hideAllCreateControls = false;
-      this.createCaseDisabled = false;
+      this.userDisabled = true;
     } else if (userTypeId === 3) {
-      this.areaDisabled = true;
-      this.companyDisabled = true;
+      this.companyDisabled = false;
       this.surveyorDisabled = true;
-      this.hideAllCreateControls = true;
-      this.createCaseDisabled = false;
+      this.userDisabled = false;
     } else if (userTypeId === 4) {
-      this.createCaseDisabled = true;
+      this.userDisabled = false;
+      this.surveyorDisabled = true;
     }
   }
 
@@ -115,10 +110,10 @@ export class DashboardComponent implements OnInit {
 
   getCompletedList() {
     this.tabsServices.getCompletedList(this.userId)
-    .subscribe(res =>{
+    .subscribe(res => {
       if(res && res.Status == 200) {
         this.TotalDada = res.Data;
-        if(this.TotalDada.length > 0) {
+        if (this.TotalDada.length > 0) {
           this.Loader = false;
           this.showProcessButtton = false;
           this.noData = false;
@@ -172,12 +167,16 @@ export class DashboardComponent implements OnInit {
 
   getUserList(data) {
     this.dashboardService.getUserList(data)
-        .subscribe(res => {
-          this.userList = [];
-          if (res.Data.length > 0 ) {
-            this.userList = res.Data;
-            this.createCaseForm.controls['UserID'].setValue(this.userList[0].UserID);
-          }
+      .subscribe(res => {
+        this.userList = [];
+        if (res.Data.length > 0 ) {
+          this.userList = res.Data;
+          this.noUserMsg = false;
+          this.userDisabled = false;
+        } else {
+          this.noUserMsg = true;
+          this.userDisabled = true;
+        }
     });
   }
 
@@ -196,7 +195,7 @@ export class DashboardComponent implements OnInit {
   createSpotCase(data) {
     this.dashboardService.createSpotCase(data)
     .subscribe(res =>{
-      if(res && res.Status === '200') {
+      if (res && res.Status === '200') {
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       }
@@ -243,20 +242,16 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
     if (userTypeId === 1) {
-      this.createCaseDisabled = false;
       this.userId = 0;
     } else if (userTypeId === 2) {
-      this.createCaseDisabled = false;
       this.userId = 0;
     } else if (userTypeId === 3) {
-      this.createCaseDisabled = false;
       this.userId = 0;
     } else if (userTypeId === 4) {
-      this.createCaseDisabled = true;
       this.userId = JSON.parse(localStorage.getItem('UserId'));
     }
 
@@ -277,13 +272,14 @@ export class DashboardComponent implements OnInit {
     }, 1000);
 
     setTimeout(() => {
-      this.createCaseInit();
-    }, 1200);
-
-    setTimeout(() => {
       const serveyorId = localStorage.getItem('SurveyorsId');
       this.getUserList(serveyorId);
-    }, 2000);
+    }, 1300);
+
+    setTimeout(() => {
+      this.createCaseInit();
+    }, 1700);
+
 
 
     this.showDownload = JSON.parse(localStorage.getItem('showDownload'));

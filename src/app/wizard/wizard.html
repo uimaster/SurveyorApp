@@ -52,6 +52,27 @@
         <mat-form-field>
           <input matInput placeholder="Insured's Email id" formControlName="EmailID" type="email">
         </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Policy Start Date" formControlName="Policy_Start_Date" [max]="maxDateToday" required [matDatepicker]="PolicyStartDate" (dateChange)="getPolicyStartDate('change', $event)">
+          <mat-datepicker-toggle matSuffix [for]="PolicyStartDate"></mat-datepicker-toggle>
+          <mat-datepicker #PolicyStartDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Policy End Date" formControlName="Policy_End_Date" [max]="policyEndDate" required [matDatepicker]="PolicyEndDate">
+          <mat-datepicker-toggle matSuffix [for]="PolicyEndDate"></mat-datepicker-toggle>
+          <mat-datepicker #PolicyEndDate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Policy Type" formControlName="Policy_Type">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="IDV Value" formControlName="Policy_Value">
+        </mat-form-field>
+
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
@@ -266,7 +287,7 @@
         <ng-template matStepLabel>Accident</ng-template>
         <h4>Accident Details</h4>
         <mat-form-field>
-          <input matInput placeholder="Accident Date" formControlName="AccidentDate" [matDatepicker]="picker7">
+          <input matInput placeholder="Accident Date" [max]="maxDateToday" formControlName="AccidentDate" [matDatepicker]="picker7">
           <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
           <mat-datepicker #picker7></mat-datepicker>
         </mat-form-field>

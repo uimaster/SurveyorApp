@@ -23,11 +23,14 @@
             </i>
           </button>
         </h2>
-        <hr/>
+        <hr style="margin-bottom: 10px; "/>
+
+        <div *ngIf="noUserMsg" class="alert error" style="width: 100%; padding: 0;">
+          <p style="font-weight: normal">No users created for survyor, Please create Users to Create Case.</p>
+        </div><br/>
 
 
-
-        <mat-form-field *ngIf="!hideAllCreateControls">
+        <mat-form-field >
           <mat-select placeholder="Surveyor" formControlName="SurveyorsId" required [disabled]="surveyorDisabled" (change)="getSurveyorsUser($event)">
             <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
               {{item.Name}}
@@ -36,15 +39,15 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field style="float: right;" *ngIf="!hideAllCreateControls">
-          <mat-select placeholder="User Name" formControlName="UserID" [disabled]="createCaseDisabled" required>
+        <mat-form-field style="float: right;">
+          <mat-select placeholder="User Name" formControlName="UserID" [disabled]="userDisabled" required>
             <mat-option *ngFor="let item of userList" [value]="item.UserID">
               {{item.UserName}}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field  *ngIf="!hideAllCreateControls">
+        <mat-form-field >
           <mat-select placeholder="Area" formControlName="AreaID" [disabled]="areaDisabled">
             <mat-option *ngFor="let item of areaList" [value]="item.AreaId">
               {{item.AreaName}}
@@ -52,7 +55,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field  style="float: right;" *ngIf="!hideAllCreateControls">
+        <mat-form-field  style="float: right;">
           <mat-select placeholder="Company" formControlName="CompanyId" [disabled]="companyDisabled">
             <mat-option *ngFor="let item of companyListData" [value]="item.CompanyId">
               {{item.Name}}
@@ -82,7 +85,7 @@
           <th width="8%">Case No</th>
           <th width="5%">Claim No</th>
           <th width="6%">UserName</th>
-          <th width="12%">Company-Surveyor Name</th>
+          <th width="12%">Company Name</th>
           <th width="8%">Customer Name</th>
           <th width="12%">Customer Mobile</th>
           <th width="10%">Case Type</th>
