@@ -23,8 +23,8 @@ export class DashboardTabComponent implements OnInit {
 
   constructor( private tabsServices: TabsService, private dashboard: DashboardComponent){}
 
-  getTabCounts() {
-    this.tabsServices.getTabCounts(this.userId)
+  getTabCounts(data) {
+    this.tabsServices.getTabCounts(data)
     .subscribe((res) => {
       if(res && res.Status == 200) {
         this.AllocatedCases = res.Data[0].AllocatedCaseCount;
@@ -59,7 +59,7 @@ export class DashboardTabComponent implements OnInit {
 
 
   ngOnInit() {
-    this.getTabCounts();
+    //this.getTabCounts();
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
     if (userTypeId === 1) {
       this.userId = 0;
@@ -70,5 +70,6 @@ export class DashboardTabComponent implements OnInit {
     } else if (userTypeId === 4) {
       this.userId = JSON.parse(localStorage.getItem('UserId'));
     }
+    this.getTabCounts(this.userId);
   }
 }

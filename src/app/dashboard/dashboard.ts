@@ -14,7 +14,7 @@ import { SharedModuleServices } from '../sharedModule/shared.service';
 @Component({
   selector: 'dashboard-selector',
   templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.scss'],
+  styleUrls: ['./dashboard.scss']
 })
 export class DashboardComponent implements OnInit {
   public TotalDada = [];
@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
   userList = [];
   userId = 0;
   noUserMsg = false;
+  public searchText = '';
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
@@ -166,6 +167,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserList(data) {
+    this.createCaseForm.controls['UserID'].setValue('');
     this.dashboardService.getUserList(data)
       .subscribe(res => {
         this.userList = [];

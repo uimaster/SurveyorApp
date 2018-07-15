@@ -5,7 +5,10 @@
 </div>
 
 <div class="container">
-  <h2>Users List <a  mat-raised-button color="accent" [routerLink] = "['/users/create']" style="float:right">Create User</a></h2>
+  <h2>Users List
+    <a  mat-raised-button color="accent" [routerLink] = "['/users/create']" style="float:right">Create User</a>
+    <input [(ngModel)]="searchText" class="searchTextBox" placeholder="Search..." />
+  </h2>
 
   <div class="tabularData card">
     <table width="100%" class="table">
@@ -23,7 +26,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let user of TotalDada;let i = index;">
+      <tr *ngFor="let user of TotalDada | dashboardSearch: searchText ;let i = index;">
           <td>{{i+1}}</td>
         <td>{{user.Name}}</td>
         <td>{{user.EmailId}}</td>

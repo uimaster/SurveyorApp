@@ -48,3 +48,7 @@ export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport
 // REGISTRATION NUMBER SEARCH URL //
 export const REGISTRATION_SEARCH_URL = 'http://54.169.129.132:90/DataAccessService.svc/GetVehicleData';
 export const GETUSERLIST_URL = 'http://54.169.129.132/api/SurveyorUsersList';
+
+// TO GET CASE STATUS OF ALL STEPS //
+export const SPOTALLSTEPS_STATUS_URL = BASEURL + 'CaseSPOTStatus';
+export const PIALLSTEPS_STATUS_URL = BASEURL + 'CasePIStatus';

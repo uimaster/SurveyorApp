@@ -80,3 +80,14 @@ h2{ color: #fff; font-size: 18px;}
 }
 
 hidden{visibility: hidden;}
+.alert{
+  table {
+    width:100%;
+    tr{
+      td{
+        font-weight: normal; padding: 5px;
+        &:nth-child(odd){ text-align: right;}
+      }
+    }
+  }
+}

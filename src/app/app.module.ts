@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,  CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -55,6 +55,7 @@ import {DashboardService} from './dashboard/dashboard.service';
 import { SurveyorService } from './surveyor/surveyor.service';
 
 import { SharedModule } from './sharedModule/shared.module';
+import { DashboardSearchPipe } from '../shared/pipes/dashboard-search.pipe';
 
 
 @NgModule({
@@ -75,11 +76,13 @@ import { SharedModule } from './sharedModule/shared.module';
     CreateAreaComponent,
     CreateCompaniesComponent,
     PreWizardComponent,
+    DashboardSearchPipe,
   ],
   imports: [
     BrowserModule,
     routing,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     CommonModule,
     //Material Modules

@@ -472,4 +472,17 @@ PostDamageDetails(payload: any): Observable<any> {
         .catch((error) => Observable.throw('server Error.'));
   }
 
+
+  // TO GET ALL STEPS STATUS //
+  getSpotStepsStatus(caseid): Observable<any> {
+    const params = new HttpParams().set('CaseID', JSON.parse(caseid));
+    return this.http.get(urls.SPOTALLSTEPS_STATUS_URL, {params})
+        .map((res) => {
+            if (res) {
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
+
 }

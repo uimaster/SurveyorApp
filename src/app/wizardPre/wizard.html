@@ -207,7 +207,7 @@
         </mat-form-field>
 
         <mat-form-field>
-            <input matInput placeholder="Policy Start Date" formControlName="PolicyStartDate"  [matDatepicker]="PolicyStartDate" (dateChange)="getPolicyStartDate('change', $event)">
+            <input matInput placeholder="Policy Start Date" formControlName="PolicyStartDate"  [matDatepicker]="PolicyStartDate" [max]="maxDateToday" (dateChange)="getPolicyStartDate('change', $event)">
             <mat-datepicker-toggle matSuffix [for]="PolicyStartDate"></mat-datepicker-toggle>
             <mat-datepicker #PolicyStartDate></mat-datepicker>
           </mat-form-field>
@@ -385,7 +385,66 @@
           [disabled]="tenthFormGroup.invalid || submitDisabled" style="margin-left: 10px;" *ngIf="!IsCompleted">Submit</button>
         </div>
       </form>
+
+
+    <div class="backdrop" *ngIf="showStatusList">
+        <div class="tabularData card smallModal" style="width:40%; left:30%;">
+            <h3 style="color: #333"> Please complete below listed pending steps! </h3>
+            <div class="alert success" style="width:auto">
+                <h3>Case Missing info Section List: </h3>
+                <hr/>
+                <table>
+                  <tr>
+
+                    <td width="30%">
+                      <b>Claim Details: </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].CaseDetailsStatus}}</td>
+
+                    <td width="30%">
+                      <b>Conclusion: </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].ConclusionStatus}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%">
+                      <b>Inspection Officer Sign. </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].InspectionOfficerSignStatus}}</td>
+
+                    <td width="30%">
+                      <b>Insurance Details: </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].InsuranceDetailsStatus}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%">
+                      <b>Proposer Sign.: </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].ProposerSignStatus}}</td>
+
+                    <td width="30%">
+                      <b>Vehcile Images: </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].VehcileImagesStatus}}</td>
+                  </tr>
+                  <tr>
+                    <td width="30%">
+                      <b>Vehicle Details: </b>
+                    </td>
+                    <td width="20%">{{StatusData[0].VehicleDetailsStatus}}</td>
+                  </tr>
+
+
+                </table>
+              </div>
+              <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+                <a mat-raised-button (click)="caseStatusModalClose()">OK</a>
+              </div>
+        </div>
+      </div>
     </mat-step>
+
 
   </mat-horizontal-stepper>
 </div>

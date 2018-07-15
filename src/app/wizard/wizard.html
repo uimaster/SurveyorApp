@@ -9,7 +9,7 @@
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Claim form</ng-template>
+        <ng-template matStepLabel>Claim Details</ng-template>
         <h4>Claim Details</h4>
 
         <mat-form-field>
@@ -19,7 +19,6 @@
           <label>Policy Picture</label>
           <input type="file" name="file" id="file" (change)="onFileChanged0($event)" class="custom-file-input" />
           <img alt="" id="imageUrl" [src]="imageToShow" />
-
         </div>
         <mat-form-field>
           <mat-select placeholder="Company Name" formControlName="CompanyId">
@@ -54,7 +53,8 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Policy Start Date" formControlName="Policy_Start_Date" [max]="maxDateToday" required [matDatepicker]="PolicyStartDate" (dateChange)="getPolicyStartDate('change', $event)">
+          <input matInput placeholder="Policy Start Date" formControlName="Policy_Start_Date" [max]="maxDateToday" required [matDatepicker]="PolicyStartDate"
+            (dateChange)="getPolicyStartDate('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="PolicyStartDate"></mat-datepicker-toggle>
           <mat-datepicker #PolicyStartDate></mat-datepicker>
         </mat-form-field>
@@ -78,7 +78,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
 
           <button mat-raised-button matStepperNext>Skip</button>
-          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="firstStepSubmit(firstFormGroup.value);" [disabled]="firstFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="firstStepSubmit(firstFormGroup.value);"
+            [disabled]="firstFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -109,7 +110,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="secondStepSubmit(secondFormGroup.value);" [disabled]="secondFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="secondStepSubmit(secondFormGroup.value);"
+            [disabled]="secondFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -221,7 +223,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="thirdStepSubmit(thirdFormGroup.value);" [disabled]="thirdFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button color="primary" *ngIf="!IsCompleted" style="margin-left: 10px;" (click)="thirdStepSubmit(thirdFormGroup.value);"
+            [disabled]="thirdFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -257,12 +260,12 @@
 
         <mat-form-field>
           <input matInput placeholder="Date Of Birth" [max]="maxDate" formControlName="DOB" [matDatepicker]="picker6" [(ngModel)]="Age"
-            (dateChange)="getDriverAge('change', $event)" >
+            (dateChange)="getDriverAge('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
           <mat-datepicker #picker6></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Driver Age" formControlName="Age" >
+          <input matInput placeholder="Driver Age" formControlName="Age">
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Type Of License" formControlName="TypeOfLicense">
@@ -277,7 +280,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="fourthSubmit(fourthFormGroup.value);" [disabled]="fourthFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="fourthSubmit(fourthFormGroup.value);"
+            [disabled]="fourthFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -294,7 +298,8 @@
 
         <div class="mat-form-checkfield">
           <label>Upload Claim Form/Statement</label>
-          <input type="file" name="file" id="file" (change)="onFileChangedForm($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <input type="file" name="file" id="file" (change)="onFileChangedForm($event)" class="custom-file-input" *ngIf="!IsCompleted"
+          />
           <img alt="" id="imageUrl" [src]="imageToShowForm" />
         </div>
 
@@ -302,7 +307,7 @@
           <input matInput placeholder="Accident Place" formControlName="AccidentPlace">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Allotement Date" formControlName="AllotementDate" [matDatepicker]="AllotementDate">
+          <input matInput placeholder="Allotement Date" formControlName="AllotementDate" [max]="maxDateToday" [matDatepicker]="AllotementDate" >
           <mat-datepicker-toggle matSuffix [for]="AllotementDate"></mat-datepicker-toggle>
           <mat-datepicker #AllotementDate></mat-datepicker>
         </mat-form-field>
@@ -317,7 +322,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="fifthSubmit(fifthFormGroup.value)" [disabled]="fifthFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="fifthSubmit(fifthFormGroup.value)"
+            [disabled]="fifthFormGroup.invalid || submitDisabled">Next</button>
         </div>
       </form>
     </mat-step>
@@ -356,12 +362,12 @@
         </div>
 
         <div class="mat-form-checkfield">
-            <label>Police Report : </label>
-            <mat-radio-group formControlName="FIRReported">
-              <mat-radio-button value="yes">Yes</mat-radio-button>
-              <mat-radio-button value="no" checked>No</mat-radio-button>
-            </mat-radio-group>
-          </div>
+          <label>Police Report : </label>
+          <mat-radio-group formControlName="FIRReported">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no" checked>No</mat-radio-button>
+          </mat-radio-group>
+        </div>
         <mat-form-field>
           <input matInput placeholder="Police Report Date" formControlName="FIRDate" required [matDatepicker]="FIRDate">
           <mat-datepicker-toggle matSuffix [for]="FIRDate"></mat-datepicker-toggle>
@@ -389,7 +395,8 @@
           <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
           <button mat-raised-button matStepperPrevious>Back</button>
           <button mat-raised-button matStepperNext style="margin-left: 10px;">Skip</button>
-          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="sixthSubmit(sixthFormGroup.value);" [disabled]="sixthFormGroup.invalid || submitDisabled">Next</button>
+          <button mat-raised-button style="margin-left: 10px;" *ngIf="!IsCompleted" color="primary" (click)="sixthSubmit(sixthFormGroup.value);"
+            [disabled]="sixthFormGroup.invalid || submitDisabled">Next</button>
 
         </div>
       </form>
@@ -432,7 +439,7 @@
         </div>
         <p *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p>
         <div class="backdrop" *ngIf="uploadImageModal">
-          <div class="smallModal" >
+          <div class="smallModal">
             <h4> Add Damage Details</h4>
             <div style="max-height: 450px; overflow: auto; padding: 10px;">
               <mat-accordion class="example-headers-align" *ngIf="damagePartList.length > 0">
@@ -480,7 +487,7 @@
 
                 </mat-expansion-panel>
               </mat-accordion>
-              <p *ngIf="damagePartList.length < 1" > 0>No part list available !</p>
+              <p *ngIf="damagePartList.length < 1">No part list available !</p>
             </div>
             <br/>
             <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button>
@@ -571,6 +578,89 @@
     <mat-step [stepControl]="tenthFormGroup">
       <form [formGroup]="tenthFormGroup">
         <ng-template matStepLabel>Digital Signature</ng-template>
+        <div class="alert error" *ngIf="showError">
+          {{errorMessage}}
+        </div>
+
+        <div class="backdrop" *ngIf="showStatusList">
+          <div class="tabularData card smallModal" style="width:40%; left:30%;">
+              <h3 style="color: #333"> Please complete below listed pending steps! </h3>
+              <div class="alert success" style="width:auto">
+                  <h3>Case Missing info Section List: </h3>
+                  <hr/>
+                  <table>
+                    <tr>
+
+                      <td width="30%">
+                        <b>Claim Details: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].ClaimDetailsStatus}}</td>
+
+                      <td width="30%">
+                        <b>Crash Photos: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].CrashPhotoStatus}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%">
+                        <b>Damage Details </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].DamageDetailsStatus}}</td>
+
+                      <td width="30%">
+                        <b>Driver Details: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].DriverDetailsStatus}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%">
+                        <b>FIR Status: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].FIRStatus}}</td>
+
+                      <td width="30%">
+                        <b>KYC Address: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].KYCAddressStatus}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%">
+                        <b>KYC Doc: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].KYCDocStatus}}</td>
+
+                      <td width="30%">
+                        <b>Load Challan: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].LoadChallanStatus}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%">
+                        <b>Signature : </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].SignStatus}}</td>
+
+                      <td width="30%">
+                        <b>Survey Bill Status: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].SurveyBillStatus}}</td>
+                    </tr>
+                    <tr>
+                      <td width="30%">
+                        <b>Vehicle Details: </b>
+                      </td>
+                      <td width="20%">{{StatusData[0].VehicleDetailsStatus}}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+                  <a mat-raised-button (click)="caseStatusModalClose()">OK</a>
+                </div>
+          </div>
+        </div>
+
+
+
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5>Upload Digital Signature</h5>
           <img alt="" [src]="imageToShow13" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
@@ -579,7 +669,7 @@
         </div>
         <div style="text-align: center; margin-top: 50px;">
           <button mat-raised-button matStepperPrevious>Back</button>
-          <button mat-raised-button color="primary" (click)="openDialog()" *ngIf="!IsCompleted">Done</button>
+          <button mat-raised-button color="primary" (click)="getSpotStepsStatus()" *ngIf="!IsCompleted">Done</button>
         </div>
       </form>
     </mat-step>

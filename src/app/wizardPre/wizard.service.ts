@@ -3,36 +3,36 @@ import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
 import { LoginRequest, LoginResponse} from '../login/login.model';
 import * as urls from '../../shared/urls';
-import * as IMAGEURL from '../../shared/img.urls';        
+import * as IMAGEURL from '../../shared/img.urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 @Injectable()
 
 export class PreWizardService{
-    
+
     constructor(private http: HttpClient){}
 
-    // ============ Registraion Search for vehicle Details ============ // 
+    // ============ Registraion Search for vehicle Details ============ //
 
-    SearchRegistration(payload:any):Observable<any>{        
+    SearchRegistration(payload: any): Observable<any>{
         return this.http.get(urls.REGISTRATION_SEARCH_URL+"/"+payload)
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    // ============ CASE Details ============ // 
+    // ============ CASE Details ============ //
 
-    pre_GetCaseDetails():Observable<any>{
+    pre_GetCaseDetails(): Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('CaseID', CaseID);
         return this.http.get(urls.WIZARD_CASEDETAILS_URL, {params})
             .map((res) =>{
-                if(res){
+                if(res) {
                     return res;
                 }
             })
@@ -40,21 +40,21 @@ export class PreWizardService{
     }
 
     pre_PostCaseDetails(payload: any): Observable<any> {
-        return this.http.post(urls.WIZARD_CASEDETAILS_URL, payload)        
+        return this.http.post(urls.WIZARD_CASEDETAILS_URL, payload)
           .map((res: any) =>  {
-            if (res) {          
-              return res;
-            } 
-            else{          
+            if (res) {
               return res;
             }
-    
+            else{
+              return res;
+            }
+
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    
-    // ============ Vehicle Details ============ // 
+
+    // ============ Vehicle Details ============ //
 
     pre_GetInsuranceDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -68,20 +68,20 @@ export class PreWizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    pre_PostInsuranceDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_INSURANCEURL_PRE, payload)        
+    pre_PostInsuranceDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_INSURANCEURL_PRE, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Insurance Details ============ // 
+    // ============ Insurance Details ============ //
 
     pre_GetVehicleDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -95,20 +95,20 @@ export class PreWizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    pre_PostVehicleDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_VEHICLEDETAILSURL_PRE, payload)        
+    pre_PostVehicleDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_VEHICLEDETAILSURL_PRE, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ PreInspection Conclusion ============ // 
+    // ============ PreInspection Conclusion ============ //
 
     pre_GetConclusion():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -122,20 +122,20 @@ export class PreWizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    pre_PostConclusion(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_CONCLUSIONURL_PRE, payload)        
+    pre_PostConclusion(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_CONCLUSIONURL_PRE, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-    // ============ Damage Details ============ // 
+    // ============ Damage Details ============ //
 
     pre_GetDamageDetails():Observable<any>{
         var CaseID= localStorage.getItem('CaseID');
@@ -161,19 +161,19 @@ export class PreWizardService{
             .catch((error) => Observable.throw('server Error.'));
     }
 
-    pre_PostDamageDetails(payload: any): Observable<any> { 
-        return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE, payload)        
+    pre_PostDamageDetails(payload: any): Observable<any> {
+        return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE, payload)
           .map((res: any) =>  {
-            if (res) {          
+            if (res) {
               return res;
-            } 
-            else{          
+            }
+            else{
               return res;
-            }    
+            }
           })
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
- 
+
   // GET DIGITAL SIGNATURE IMAGE //
   pre_GetSignatureImage():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
@@ -200,6 +200,18 @@ export class PreWizardService{
         .catch((error) => Observable.throw('server Error.'));
   }
 
- 
+  // TO GET ALL STEPS STATUS //
+  getPIStepsStatus(caseid): Observable<any> {
+    const params = new HttpParams().set('CaseID', JSON.parse(caseid));
+    return this.http.get(urls.PIALLSTEPS_STATUS_URL, {params})
+        .map((res) => {
+            if (res) {
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
+
+
 
 }

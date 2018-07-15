@@ -73,7 +73,11 @@ export class PreWizardComponent implements OnInit {
     uploadImageModal = false;
     IsCompleted: boolean;
     userList = [];
+    StatusData = [];
+    showStatusList = false;
+    openCreateCaseModal = false;
     createCaseDisabled = false;
+    maxDateToday = new Date();
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService,
@@ -225,6 +229,14 @@ export class PreWizardComponent implements OnInit {
 
     }
 
+    convertToDateFormat(Datestr) {
+      if ( Datestr!="" ) { // Datestr="03/08/2016"
+          var datedata = Datestr.split("/");
+          var formatedDateString=datedata[2]+'-' + datedata[1] + '-' + datedata[0] + 'T00:00:00.000Z';
+          return formatedDateString;
+      }
+    }
+
     SearchRegistration() {
 
         let data = ((document.getElementById("RegistrationNum") as HTMLInputElement).value);
@@ -234,6 +246,10 @@ export class PreWizardComponent implements OnInit {
                     this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
                     this.RegSearchFailedMsg = false;
                     this.RegSearchSuccessMsg = true;
+
+                    var datedata = res.GetVehicleDataResult.vehicle.regn_dt;
+                    var formatedDatestring = this.convertToDateFormat(datedata);
+
                     this.thirdFormGroup.controls['VehicleTypeID'].setValue('');
                     this.thirdFormGroup.controls['VehicleTypeName'].setValue('');
                     this.thirdFormGroup.controls['Registration_No'].setValue(data);
@@ -244,7 +260,7 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['Variant'].setValue('');
                     this.thirdFormGroup.controls['MgfYear'].setValue(res.GetVehicleDataResult.vehicle.manufaturer_year);
                     this.thirdFormGroup.controls['Color'].setValue(res.GetVehicleDataResult.vehicle.color);
-                    this.thirdFormGroup.controls['RegistrationDate'].setValue(res.GetVehicleDataResult.vehicle.regn_dt);
+                    this.thirdFormGroup.controls['RegistrationDate'].setValue(formatedDatestring);
                     this.thirdFormGroup.controls['FuelType'].setValue(res.GetVehicleDataResult.vehicle.fuel_type_desc);
                     this.thirdFormGroup.controls['HypoticatedTo'].setValue('');
                     this.thirdFormGroup.controls['OdometerReading'].setValue('');
@@ -286,7 +302,7 @@ export class PreWizardComponent implements OnInit {
                     this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
                     this.thirdFormGroup.controls['Seating_Capacity'].setValue('');
                 }
-            })
+            });
     }
 
 
@@ -302,6 +318,31 @@ export class PreWizardComponent implements OnInit {
         });
     }
 
+
+    getSpotStepsStatus() {
+      let CaseID = this.caseId;
+      this.wizardService.getPIStepsStatus(CaseID).subscribe(res => {
+        if (res && res.Data !== null) {
+          this.StatusData = res.Data;
+          console.log(this.StatusData);
+          if (this.StatusData[0].CaseCompleteStatus === 'No') {
+            this.showStatusList = true;
+            this.showError = false;
+          } else {
+            this.openDialog();
+          }
+        } else {
+          this.errorMessage = 'Server Error!';
+          this.showError = true;
+          this.showStatusList = false;
+        }
+      });
+    }
+
+    caseStatusModalClose() {
+      this.showStatusList = false;
+    }
+
     getCompanyList() {
         this.companyService.getCompanyList()
             .subscribe(res => {
@@ -309,22 +350,30 @@ export class PreWizardComponent implements OnInit {
             });
     }
 
+    // getPolicyStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    //     var SelectedDate:any = event.value;
+    //     var dd:any = SelectedDate.getDate();
+    //     var mm:any = SelectedDate.getMonth()+1; //January is 0!
+    //     var yyyy:any = SelectedDate.getFullYear()-1;
+    //     if(dd<10){
+    //             dd='0'+dd
+    //         }
+    //         if(mm<10){
+    //             mm='0'+mm
+    //         }
+
+    //     let backYear = yyyy+'-'+mm+'-'+dd;
+
+    //     this.policyEndMaxDate = backYear;
+    //     this.ninethFormGroup.controls['PolicyEndDate'].setValue('');
+    // }
+
     getPolicyStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
-        var SelectedDate:any = event.value;
-        var dd:any = SelectedDate.getDate();
-        var mm:any = SelectedDate.getMonth()+1; //January is 0!
-        var yyyy:any = SelectedDate.getFullYear()-1;
-        if(dd<10){
-                dd='0'+dd
-            }
-            if(mm<10){
-                mm='0'+mm
-            }
-
-        let backYear = yyyy+'-'+mm+'-'+dd;
-
-        this.policyEndMaxDate = backYear;
-        this.ninethFormGroup.controls['PolicyEndDate'].setValue('');
+      const SelectedDate = event.value;
+      const dateString = new Date(SelectedDate);
+      const finalDate = new Date(dateString.getFullYear() - 1, dateString.getMonth(), dateString.getDate());
+      this.policyEndMaxDate = finalDate;
+      this.firstFormGroup.controls['PolicyEndDate'].setValue('');
     }
 
     getCaseDetails() {
@@ -615,8 +664,7 @@ export class PreWizardComponent implements OnInit {
                         this.router.navigate['/dashboard'];
                         this.submitDisabled = false;
                     }, 3000);
-                }
-                else {
+                } else {
                     this.errorMessage = res.Message;
                     this.showError = true;
                     this.showSuccess = false;
@@ -632,9 +680,9 @@ export class PreWizardComponent implements OnInit {
                 setTimeout(() => {
                     this.showError = false;
                 }, 3000);
-            })
+            });
         }
-        this.openDialog();
+        this.getSpotStepsStatus();
     }
 
 

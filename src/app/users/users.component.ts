@@ -5,11 +5,12 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
   public TotalDada = [];
-  Loader: boolean = true;
+  Loader = true;
+  public searchText = '';
   constructor( private userService: UsersService, private router:Router){}
 
   getUserList() {
