@@ -82,7 +82,7 @@ export class CreateComponent implements OnInit {
                 this.myForm.controls['name'].setValue(data[i].Name);
                 this.myForm.controls['email'].setValue(data[i].EmailId);
                 this.myForm.controls['password'].setValue('');
-                this.myForm.controls['password'].clearValidators();
+                this.myForm.controls['password'].setValidators(Validators.minLength(5));
                 this.myForm.controls['password'].updateValueAndValidity();
                 this.myForm.controls['userType'].setValue(data[i].UserTypeId);
                 this.myForm.controls['company'].setValue(data[i].CompanyId);

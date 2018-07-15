@@ -76,13 +76,5 @@ h2{ color: #fff; font-size: 18px;}
 }
 
 .alert{
-  table {
-    width:100%;
-    tr{
-      td{
-        font-weight: normal; padding: 5px;
-        &:nth-child(odd){ text-align: right;}
-      }
-    }
-  }
+  .listItem{ width: 40%; padding: 5px 5%;  text-align: left; float: left;}
 }

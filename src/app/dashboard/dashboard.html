@@ -34,7 +34,7 @@
 
 
         <mat-form-field >
-          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" required [disabled]="surveyorDisabled" (change)="getSurveyorsUser($event)">
+          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" [disabled]="surveyorDisabled" (change)="getSurveyorsUser($event)">
             <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
               {{item.Name}}
             </mat-option>
@@ -43,7 +43,7 @@
         </mat-form-field>
 
         <mat-form-field style="float: right;">
-          <mat-select placeholder="User Name" formControlName="UserID" [disabled]="userDisabled" required>
+          <mat-select placeholder="User Name" formControlName="UserID" [disabled]="userDisabled">
             <mat-option *ngFor="let item of userList" [value]="item.UserID">
               {{item.UserName}}
             </mat-option>

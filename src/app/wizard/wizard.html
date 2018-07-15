@@ -60,7 +60,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Policy End Date" formControlName="Policy_End_Date" [max]="policyEndDate" required [matDatepicker]="PolicyEndDate">
+          <input matInput placeholder="Policy End Date" formControlName="Policy_End_Date" [min]="maxDateToday" required [matDatepicker]="PolicyEndDate">
           <mat-datepicker-toggle matSuffix [for]="PolicyEndDate"></mat-datepicker-toggle>
           <mat-datepicker #PolicyEndDate></mat-datepicker>
         </mat-form-field>
@@ -307,7 +307,7 @@
           <input matInput placeholder="Accident Place" formControlName="AccidentPlace">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Allotement Date" formControlName="AllotementDate" [max]="maxDateToday" [matDatepicker]="AllotementDate" >
+          <input matInput placeholder="Allotement Date" formControlName="AllotementDate" [max]="maxDateToday" [matDatepicker]="AllotementDate">
           <mat-datepicker-toggle matSuffix [for]="AllotementDate"></mat-datepicker-toggle>
           <mat-datepicker #AllotementDate></mat-datepicker>
         </mat-form-field>
@@ -584,78 +584,80 @@
 
         <div class="backdrop" *ngIf="showStatusList">
           <div class="tabularData card smallModal" style="width:40%; left:30%;">
-              <h3 style="color: #333"> Please complete below listed pending steps! </h3>
-              <div class="alert success" style="width:auto">
-                  <h3>Case Missing info Section List: </h3>
-                  <hr/>
-                  <table>
-                    <tr>
+            <h3 style="color: #333"> Please complete below listed pending steps! </h3>
+            <div class="alert success" style="width:auto; overflow: hidden;">
 
-                      <td width="30%">
-                        <b>Claim Details: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].ClaimDetailsStatus}}</td>
-
-                      <td width="30%">
-                        <b>Crash Photos: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].CrashPhotoStatus}}</td>
-                    </tr>
-                    <tr>
-                      <td width="30%">
-                        <b>Damage Details </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].DamageDetailsStatus}}</td>
-
-                      <td width="30%">
-                        <b>Driver Details: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].DriverDetailsStatus}}</td>
-                    </tr>
-                    <tr>
-                      <td width="30%">
-                        <b>FIR Status: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].FIRStatus}}</td>
-
-                      <td width="30%">
-                        <b>KYC Address: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].KYCAddressStatus}}</td>
-                    </tr>
-                    <tr>
-                      <td width="30%">
-                        <b>KYC Doc: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].KYCDocStatus}}</td>
-
-                      <td width="30%">
-                        <b>Load Challan: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].LoadChallanStatus}}</td>
-                    </tr>
-                    <tr>
-                      <td width="30%">
-                        <b>Signature : </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].SignStatus}}</td>
-
-                      <td width="30%">
-                        <b>Survey Bill Status: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].SurveyBillStatus}}</td>
-                    </tr>
-                    <tr>
-                      <td width="30%">
-                        <b>Vehicle Details: </b>
-                      </td>
-                      <td width="20%">{{StatusData[0].VehicleDetailsStatus}}</td>
-                    </tr>
-                  </table>
+              <div *ngFor="let item of StatusData">
+                <div *ngIf="StatusData[0].ClaimDetailsStatus==='No'" class="listItem">
+                  <span>
+                    <b>1. Claim Details</b>
+                  </span>
                 </div>
-                <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-                  <a mat-raised-button (click)="caseStatusModalClose()">OK</a>
+
+                <div *ngIf="StatusData[0].VehicleDetailsStatus==='No'" class="listItem">
+                  <span>
+                    <b>3. Vehicle Details</b>
+                  </span>
                 </div>
+
+                <div *ngIf="StatusData[0].DriverDetailsStatus==='No'" class="listItem">
+                  <span>
+                    <b>4. Driver Details</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].FIRStatus==='No'" class="listItem">
+                  <span>
+                    <b>6. FIR</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].CrashPhotoStatus==='No'" class="listItem">
+                  <span>
+                    <b>7. Crash Photo</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].DamageDetailsStatus==='No'" class="listItem">
+                  <span>
+                    <b>8. Damage Details</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].KYCAddressStatus==='No'" class="listItem">
+                  <span>
+                    <b>9(a). KYC Address</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].KYCDocStatus==='No'" class="listItem">
+                  <span>
+                    <b>9(b). KYC Document</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].LoadChallanStatus==='No'" class="listItem">
+                  <span>
+                    <b>9(c). Load Challan</b>
+                  </span>
+                </div>
+
+                <div *ngIf="StatusData[0].SurveyBillStatus==='No'" class="listItem">
+                  <span>
+                    <b>9(d). Survey Bill</b>
+                  </span>
+                </div>
+                <div *ngIf="StatusData[0].SignStatus==='No'" class="listItem">
+                  <span>
+                    <b>10. Signature</b>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+              <a mat-raised-button (click)="caseStatusModalClose()">OK</a>&nbsp;&nbsp;
+              <a mat-raised-button routerLink="/dashboard">GO to Dashboard</a>
+            </div>
           </div>
         </div>
 

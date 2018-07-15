@@ -54,7 +54,7 @@ export class DashboardComponent implements OnInit {
     this.createCaseForm = this.fb.group({
       SurveyorsId: ['', Validators.required],
       CaseStatusID: ['0'],
-      CompanyId: [''],
+      CompanyId: ['', Validators.required],
       CaseID: ['0'],
       CaseNo: [''],
       UserID: ['', Validators.required],
@@ -76,17 +76,33 @@ export class DashboardComponent implements OnInit {
       this.companyDisabled = false;
       this.surveyorDisabled = false;
       this.userDisabled = true;
+      this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
+      this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
+      this.createCaseForm.controls['SurveyorsId'].setValidators(Validators.required);
+      this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 2) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
       this.userDisabled = true;
+      this.createCaseForm.controls['CompanyId'].clearValidators();
+      this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
+      this.createCaseForm.controls['SurveyorsId'].setValidators(Validators.required);
+      this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 3) {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
       this.userDisabled = false;
+      this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
+      this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
+      this.createCaseForm.controls['SurveyorsId'].clearValidators();
+      this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 4) {
       this.userDisabled = false;
       this.surveyorDisabled = true;
+      this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
+      this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
+      this.createCaseForm.controls['SurveyorsId'].clearValidators();
+      this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     }
   }
 
