@@ -22,11 +22,11 @@ export class UsersComponent implements OnInit {
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
     this.getUserList();
   }
 
-  editUser(UserId){
+  editUser(UserId) {
     this.router.navigate(['/users/create/' + UserId]);
   }
 
