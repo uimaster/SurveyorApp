@@ -9,14 +9,15 @@ import 'rxjs/Rx';
 
 @Injectable()
 
-export class PreWizardService{
+export class PreWizardService {
 
     constructor(private http: HttpClient){}
 
     // ============ Registraion Search for vehicle Details ============ //
 
-    SearchRegistration(payload: any): Observable<any>{
-        return this.http.get(urls.REGISTRATION_SEARCH_URL+"/"+payload)
+    SearchRegistration(payload: any): Observable<any> {
+        const params = new HttpParams().set('RegNo', payload);
+        return this.http.get(urls.REGISTRATION_SEARCH_URL, {params})
             .map((res) => {
                 if (res) {
                     return res;
@@ -27,7 +28,7 @@ export class PreWizardService{
 
     // ============ CASE Details ============ //
 
-    pre_GetCaseDetails(): Observable<any>{
+    pre_GetCaseDetails(): Observable<any> {
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('CaseID', CaseID);
         return this.http.get(urls.WIZARD_CASEDETAILS_URL, {params})
@@ -40,7 +41,7 @@ export class PreWizardService{
     }
 
     pre_PostCaseDetails(payload: any): Observable<any> {
-        return this.http.post(urls.WIZARD_CASEDETAILS_URL, payload)
+        return this.http.post(urls.WIZARD_CASEDETAILSPOST_URL, payload)
           .map((res: any) =>  {
             if (res) {
               return res;
@@ -56,7 +57,7 @@ export class PreWizardService{
 
     // ============ Vehicle Details ============ //
 
-    pre_GetInsuranceDetails():Observable<any>{
+    pre_GetInsuranceDetails(): Observable<any> {
         var CaseID= localStorage.getItem('CaseID');
         const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
         return this.http.get(urls.WIZARD_INSURANCEURL_PRE, {params})
@@ -69,12 +70,11 @@ export class PreWizardService{
     }
 
     pre_PostInsuranceDetails(payload: any): Observable<any> {
-        return this.http.post(urls.WIZARD_INSURANCEURL_PRE, payload)
+        return this.http.post(urls.WIZARD_INSURANCEURLPOST_PRE, payload)
           .map((res: any) =>  {
             if (res) {
               return res;
-            }
-            else{
+            } else {
               return res;
             }
           })
@@ -96,7 +96,7 @@ export class PreWizardService{
     }
 
     pre_PostVehicleDetails(payload: any): Observable<any> {
-        return this.http.post(urls.WIZARD_VEHICLEDETAILSURL_PRE, payload)
+        return this.http.post(urls.WIZARD_VEHICLEDETAILSURLPOST_PRE, payload)
           .map((res: any) =>  {
             if (res) {
               return res;
@@ -123,7 +123,7 @@ export class PreWizardService{
     }
 
     pre_PostConclusion(payload: any): Observable<any> {
-        return this.http.post(urls.WIZARD_CONCLUSIONURL_PRE, payload)
+        return this.http.post(urls.WIZARD_CONCLUSIONURLPOST_PRE, payload)
           .map((res: any) =>  {
             if (res) {
               return res;

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import {AREALIST, USERSLIST} from "../../shared/urls";
+import {AREALIST, USERSLIST, UPDATE_CRAETE_AREA_URL} from '../../shared/urls';
 import 'rxjs/Rx';
 @Injectable()
 
 export class AreaService {
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
   getAreaList(): Observable<any> {
     return this.http.get(AREALIST)
       .map((res) => {
-        if(res){
+        if (res) {
           return res;
         }
       })
@@ -19,12 +19,11 @@ export class AreaService {
   }
 
   addArea(payload: any): Observable<any> {
-    return this.http.post(AREALIST, payload)
+    return this.http.post(UPDATE_CRAETE_AREA_URL, payload)
       .map((res: any) =>  {
         if (res) {
           return res;
-        }
-        else{
+        } else {
           return res;
         }
 

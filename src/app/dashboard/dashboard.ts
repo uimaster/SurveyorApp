@@ -52,10 +52,10 @@ export class DashboardComponent implements OnInit {
   createCase() {
     const date = new Date();
     this.createCaseForm = this.fb.group({
-      SurveyorsId: ['', Validators.required],
-      CaseStatusID: ['0'],
-      CompanyId: ['', Validators.required],
-      CaseID: ['0'],
+      SurveyorsId: [0, Validators.required],
+      CaseStatusID: [0],
+      CompanyId: [0, Validators.required],
+      CaseID: [0],
       CaseNo: [''],
       UserID: ['', Validators.required],
       CaseDate: [date.toISOString()],
@@ -110,9 +110,9 @@ export class DashboardComponent implements OnInit {
     this.Loader = true;
     this.tabsServices.getDashboardList(this.userId)
     .subscribe(res => {
-      if(res && res.Status == 200) {
+      if (res && res.Status === '200') {
         this.TotalDada = res.Data;
-        if(this.TotalDada.length > 0) {
+        if (this.TotalDada.length > 0) {
           this.Loader = false;
           this.noData = false;
           this.showProcessButtton = false;
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
   getCompletedList() {
     this.tabsServices.getCompletedList(this.userId)
     .subscribe(res => {
-      if(res && res.Status == 200) {
+      if(res && res.Status === '200') {
         this.TotalDada = res.Data;
         if (this.TotalDada.length > 0) {
           this.Loader = false;
@@ -146,7 +146,7 @@ export class DashboardComponent implements OnInit {
   getProcessList() {
     this.tabsServices.getProcessList(this.userId)
     .subscribe(res => {
-      if(res && res.Status == 200) {
+      if(res && res.Status === '200') {
         this.TotalDada = res.Data;
         if (this.TotalDada.length > 0) {
           this.showProcessButtton = true;
@@ -212,7 +212,7 @@ export class DashboardComponent implements OnInit {
 
   createSpotCase(data) {
     this.dashboardService.createSpotCase(data)
-    .subscribe(res =>{
+    .subscribe(res => {
       if (res && res.Status === '200') {
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');

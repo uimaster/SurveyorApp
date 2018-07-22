@@ -88,7 +88,7 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="User Active" formControlName="IsActive">
+          <mat-select placeholder="User Active" formControlName="IsActive" ([ngModel])="IsActive">
             <mat-option [value]="true">
               True
             </mat-option>

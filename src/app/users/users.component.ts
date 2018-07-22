@@ -15,9 +15,11 @@ export class UsersComponent implements OnInit {
 
   getUserList() {
     this.userService.getUsersList()
-      .subscribe(res =>{
-        this.TotalDada = res;
-        this.Loader = false;
+      .subscribe(res => {
+        if (res && res.Status === '200') {
+          this.TotalDada = res.Data;
+          this.Loader = false;
+        }
       });
   }
 

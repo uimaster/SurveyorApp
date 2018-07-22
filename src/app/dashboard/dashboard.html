@@ -99,7 +99,7 @@
       <tbody>
         <tr *ngFor="let item of TotalDada | dashboardSearch: searchText ; let i = index">
           <td>{{i+1}}</td>
-          <td>{{item.CaseDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{item.CaseDate}}</td>
           <td>{{item.CaseNo}}</td>
           <td>{{item.ClaimNO}}</td>
           <td>{{item.UserName}}</td>

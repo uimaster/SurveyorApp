@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {SURVEYORLIST, USERSLIST} from '../../shared/urls';
+import {SURVEYORLIST, USERSLIST, UPDATE_CRAETE_SURVEYOR_URL} from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -9,12 +9,12 @@ import 'rxjs/Rx';
 
 export class SurveyorService {
 
-  constructor(private http: HttpClient){}
+  constructor(private http: HttpClient) {}
 
   getSurveyorList(): Observable<any> {
     return this.http.get(SURVEYORLIST)
       .map((res) => {
-        if(res){
+        if (res) {
           return res;
         }
       })
@@ -22,12 +22,11 @@ export class SurveyorService {
   }
 
   addSurveyor(payload: any): Observable<any> {
-    return this.http.post(SURVEYORLIST, payload)
+    return this.http.post(UPDATE_CRAETE_SURVEYOR_URL, payload)
       .map((res: any) =>  {
         if (res) {
           return res;
-        }
-        else{
+        } else {
           return res;
         }
 

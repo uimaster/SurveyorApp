@@ -77,21 +77,22 @@ export class CreateComponent implements OnInit {
       if (this.userId > 0) {
         this.userService.getUsersList().subscribe(
           data => {
-            for (let i = 0; i < data.length; i++) {
-              if (data[i].UserId == this.userId) {
-                this.myForm.controls['name'].setValue(data[i].Name);
-                this.myForm.controls['email'].setValue(data[i].EmailId);
+            console.log(data.Data);
+            for (let i = 0; i < data.Data.length; i++) {
+              if (data.Data[i].UserId == this.userId) {
+                this.myForm.controls['name'].setValue(data.Data[i].Name);
+                this.myForm.controls['email'].setValue(data.Data[i].EmailId);
                 this.myForm.controls['password'].setValue('');
                 this.myForm.controls['password'].setValidators(Validators.minLength(5));
                 this.myForm.controls['password'].updateValueAndValidity();
-                this.myForm.controls['userType'].setValue(data[i].UserTypeId);
-                this.myForm.controls['company'].setValue(data[i].CompanyId);
-                this.myForm.controls['IsActive'].setValue(data[i].IsActive);
+                this.myForm.controls['userType'].setValue(data.Data[i].UserTypeId);
+                this.myForm.controls['company'].setValue(data.Data[i].CompanyId);
+                this.myForm.controls['IsActive'].setValue(data.Data[i].IsActive);
                 this.myForm.controls['SurveyorsId'].setValue(
-                  data[i].SurveyorsId
+                  data.Data[i].SurveyorsId
                 );
 
-                const selectedUser = data[i].UserTypeId;
+                const selectedUser = data.Data[i].UserTypeId;
                 if (selectedUser === 1) {
                   this.companyDisabled = true;
                   this.surveyorDisabled = true;
@@ -115,7 +116,6 @@ export class CreateComponent implements OnInit {
 
     setTimeout(() => {
       const userValue = this.myForm.controls['userType'].value;
-      debugger;
       this.getUserType(userValue);
     }, 500);
 

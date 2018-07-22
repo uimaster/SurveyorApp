@@ -36,8 +36,8 @@ export class CreateCompaniesComponent implements OnInit {
     this.sub = this.route.params.subscribe((params: Params) => {
       this.companyId = params['id'];
 
-      if(this.companyId > 0){
-        this.companyService.getCompanyList().subscribe((data)=> {
+      if(this.companyId > 0) {
+        this.companyService.getCompanyList().subscribe((data) => {
             const finalData =  data.Data;
 
             for (let i = 0; i < finalData.length;  i++) {

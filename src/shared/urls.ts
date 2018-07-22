@@ -1,54 +1,64 @@
-export const BASEURL = 'http://apiflacors.iflotech.in/api/';
+export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
+// export const BASEURL = 'http://apiflacors.iflotech.in/api/';
 
 // export const BASEURL = 'http://54.169.129.132/api/';
-export const LOGINURL = BASEURL + 'CompanyLogin';
-export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard?';
-export const DASHBOARDLIST = BASEURL + 'SurveyCaseList?';
-export const DASHBOARD_CAT_CASES = BASEURL + 'SurveyCaseList?';
+export const LOGINURL = BASEURL + 'jwtAuth/token';
+export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard/GetDashboardCounts?';
+export const DASHBOARDLIST = BASEURL + 'Dashboard/GetCaseList?';
+export const GETUSERLIST_URL = BASEURL + 'masters/GetSurveyorUserList';
+export const DASHBOARD_CAT_CASES = BASEURL + 'Dashboard/GetCaseList?';
 
-export const WIZARD_GETCLAIMURL = BASEURL + 'ClaimDetaile?';
-export const WIZARD_POSTCLAIMURL = BASEURL + 'SpotClaimDetails';
-export const WIZARD_POSTSURVEYORURL = BASEURL + 'SpotSurveyDetails';
-export const WIZARD_GETVEHICLEDETAILSURL = BASEURL + 'CustomerVehData?';
-export const WIZARD_POSTVEHICLEDETAILSURL = BASEURL + 'UpdateVehicleDetails';
-export const WIZARD_GETDRIVERDETAILSURL = BASEURL + 'CaseDriverData';
-export const WIZARD_POSTDRIVERDETAILSURL = BASEURL + 'UpdateDriverDetails';
-export const WIZARD_GETACCIDENTDETAILSURL = BASEURL + 'SurveyAccidentDetails';
-export const WIZARD_POSTACCIDENTDETAILSURL = BASEURL + 'SurveyAccidentDetails';
-export const WIZARD_GETFIRDETAILS = BASEURL + 'ShowFirData?';
-export const WIZARD_POSTFIRDETAILS = BASEURL + 'UpdateFIRDetails';
+export const WIZARD_GETCLAIMURL = BASEURL + 'SpotCases/GetSpotCaseDetails?';
+export const WIZARD_POSTCLAIMURL = BASEURL + 'SpotCases/SpotClaimDetailsUpdate';
+export const WIZARD_POSTSURVEYORURL = BASEURL + 'SpotCases/SpotSurveyDetailsUpdate';
+export const WIZARD_GETVEHICLEDETAILSURL = BASEURL + 'SpotCases/GetSpotCaseVehicleDetails?';
+export const WIZARD_POSTVEHICLEDETAILSURL = BASEURL + 'SpotCases/SpotSurveyVehicleDetailsUpdate';
+export const WIZARD_GETDRIVERDETAILSURL = BASEURL + 'SpotCases/GetSpotCaseDriverDetails';
+export const WIZARD_POSTDRIVERDETAILSURL = BASEURL + 'SpotCases/SpotSurveyDriverDetailsUpdate';
+export const WIZARD_GETACCIDENTDETAILSURL = BASEURL + 'SpotCases/GetSpotCaseAccidentDetails';
+export const WIZARD_POSTACCIDENTDETAILSURL = BASEURL + 'SpotCases/SpotSurveyAccidentDetailsUpdate';
+export const WIZARD_GETFIRDETAILS = BASEURL + 'SpotCases/GetSpotCaseFIRDetails?';
+export const WIZARD_POSTFIRDETAILS = BASEURL + 'SpotCases/SpotSurveyFIRDetailsUpdate';
 
-export const USERSLIST = BASEURL + 'CompanyUserList';
-export const SURVEYORLIST = BASEURL + 'MasterSurveyor';
-export const AREALIST = BASEURL + 'MasterArea';
-export const COMPANYLIST = BASEURL + 'CompanyList';
+export const USERSLIST = BASEURL + 'Masters/getUserList';
+export const UPDATE_CRAETE_USERS_URL = BASEURL + 'Masters/UpdateUser';
+export const SURVEYORLIST = BASEURL + 'Masters/getSurveyors';
+export const UPDATE_CRAETE_SURVEYOR_URL = BASEURL + 'Masters/UpdateSurveyor';
+export const AREALIST = BASEURL + 'Masters/getAreas';
+export const UPDATE_CRAETE_AREA_URL = BASEURL + 'Masters/UpdateArea';
+export const COMPANYLIST = BASEURL + 'Masters/getCompanyList';
+export const UPDATE_CRAETE_COMPANY_URL = BASEURL + 'Masters/UpdateCompany';
 export const CREATECOMPANY = BASEURL + 'MasterCompany';
 
-export const GETSUMMARYREPORT_URL = BASEURL + 'CaseReportSumary';
+export const GETSUMMARYREPORT_URL = BASEURL + 'SpotCases/GetSpotReportSummary';
 export const DAMAGEDETAILS_URL = BASEURL + 'CarDemageDetailEntry';
 export const GENERATESPOTREPORT = BASEURL + 'Reports';
 export const GENERATEPREREPORT = BASEURL + 'PIReports/GeneratPIReportPDF';
 export const DOWNLOADSPOTREPORT = BASEURL + 'DownloadReport/getSpotSurveyReport';
 export const SPOTCOMPLETIONURL = BASEURL + 'CaseCompleteStatus';
-export const SPOTCREATECASE = BASEURL + 'CreateCase';
-export const PRECREATECASE = BASEURL + 'CreateCasePI';
+export const SPOTCREATECASE = BASEURL + 'SpotCases/SPOTCreateCase';
+export const PRECREATECASE = BASEURL + 'PICases/PICreateCase';
+
 // URLS FOR PRE WIZARD //
+export const WIZARD_CASEDETAILS_URL = BASEURL + 'PICases/GetPICaseDetails';
+export const WIZARD_CASEDETAILSPOST_URL = BASEURL + 'PICases/PICaseDeailsUpdate';
+export const WIZARD_VEHICLEDETAILSURL_PRE = BASEURL + 'PICases/GetPIVehicleDetails';
+export const WIZARD_VEHICLEDETAILSURLPOST_PRE = BASEURL + 'PICases/PICaseVehicleDetailsUpdate';
+export const WIZARD_INSURANCEURL_PRE = BASEURL + 'PICases/GetPIInsuranceDetails';
+export const WIZARD_INSURANCEURLPOST_PRE = BASEURL + 'PICases/PICaseInsuranceDetailsUpdate';
+export const WIZARD_CONCLUSIONURL_PRE = BASEURL + 'PICases/GetPIConclusionDetails';
+export const WIZARD_CONCLUSIONURLPOST_PRE = BASEURL + 'PICases/PICaseConclusionUpdate';
 
-export const WIZARD_CASEDETAILS_URL = BASEURL + 'PICaseDetails';
-export const WIZARD_VEHICLEDETAILSURL_PRE = BASEURL + 'PIVehicleDetails';
-export const WIZARD_INSURANCEURL_PRE = BASEURL + 'PIinsuranceDetails';
-export const WIZARD_CONCLUSIONURL_PRE = BASEURL + 'PIConclusion';
-
-export const WIZARD_DAMAGEDETAILSURL_PRE = BASEURL + 'CaseDamageDetails';
-export const WIZARD_DAMAGEPARTSLIST_PRE = BASEURL + 'CarDemageDetailEntry';
+export const WIZARD_DAMAGEDETAILSURL_PRE = BASEURL + 'VehicleInfo/getVehicleDamageDetails';
+export const WIZARD_DAMAGEDETAILSURL_PRE_POST = BASEURL + 'VehicleInfo/VehicleDamageDetailsUpdate';
+export const WIZARD_DAMAGEPARTSLIST_PRE = BASEURL + 'VehicleInfo/GetVehiclePartsList';
 export const WIZARD_CASECOMPLETEURL_PRE = BASEURL + 'CaseCompleteStatus';
 export const GENERATESPOTREPORT_PRE = BASEURL + 'PIReports';
 export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport';
 
 // REGISTRATION NUMBER SEARCH URL //
-export const REGISTRATION_SEARCH_URL = 'http://54.169.129.132:90/DataAccessService.svc/GetVehicleData';
-export const GETUSERLIST_URL = 'http://54.169.129.132/api/SurveyorUsersList';
+export const REGISTRATION_SEARCH_URL = BASEURL + 'VehicleInfo/GetVehicleRegNoData?';
 
 // TO GET CASE STATUS OF ALL STEPS //
-export const SPOTALLSTEPS_STATUS_URL = BASEURL + 'CaseSPOTStatus';
-export const PIALLSTEPS_STATUS_URL = BASEURL + 'CasePIStatus';
+export const SPOTALLSTEPS_STATUS_URL = BASEURL + 'SpotCases/GetCaseSPOTStatus';
+export const PIALLSTEPS_STATUS_URL = BASEURL + 'PICases/GetCasePIStatus';

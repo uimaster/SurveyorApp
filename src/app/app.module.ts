@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule,  CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -56,6 +56,7 @@ import { SurveyorService } from './surveyor/surveyor.service';
 
 import { SharedModule } from './sharedModule/shared.module';
 import { DashboardSearchPipe } from '../shared/pipes/dashboard-search.pipe';
+import { TokenInterceptor } from '../app/login/login.inteceptor';
 
 
 @NgModule({
@@ -108,7 +109,13 @@ import { DashboardSearchPipe } from '../shared/pipes/dashboard-search.pipe';
     SharedModule
   ],
   providers: [LoginService, TabsService, DashboardService, SurveyorService, WizardService, UsersService, CompaniesService, AreaService,
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService],
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 

@@ -1,10 +1,14 @@
-export interface LoginRequest{
-    UserName: string,
-    UserPassword: string
+
+export class LoginRequest {
+  id?: string;
+  UserName?: string;
+  UserPassword?: string;
+  token?: string;
 }
 
-export interface LoginResponse{
-    Message: string,
-    Status: number,
-    Data:{}
+
+export interface LoginResponse {
+    Message: string;
+    Status: string;
+    Data: {};
 }

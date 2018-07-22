@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {USERSLIST, WIZARD_POSTCLAIMURL} from '../../shared/urls';
+import {USERSLIST, UPDATE_CRAETE_USERS_URL, WIZARD_POSTCLAIMURL} from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   addUser(payload: any): Observable<any> {
-    return this.http.post(USERSLIST, payload)
+    return this.http.post(UPDATE_CRAETE_USERS_URL, payload)
       .map((res: any) =>  {
         if (res) {
           return res;

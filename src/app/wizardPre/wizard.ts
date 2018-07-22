@@ -78,6 +78,7 @@ export class PreWizardComponent implements OnInit {
     openCreateCaseModal = false;
     createCaseDisabled = false;
     maxDateToday = new Date();
+    VehicleSearchData = [ ]
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService,
@@ -105,7 +106,7 @@ export class PreWizardComponent implements OnInit {
         });
 
         this.thirdFormGroup = new FormGroup({
-            CaseID: new FormControl(this.caseId),
+            CaseID: new FormControl(JSON.parse(this.caseId)),
             VehicleTypeID: new FormControl(''),
             VehicleTypeName: new FormControl(''),
             Registration_No: new FormControl(''),
@@ -242,38 +243,38 @@ export class PreWizardComponent implements OnInit {
         let data = ((document.getElementById("RegistrationNum") as HTMLInputElement).value);
         this.wizardService.SearchRegistration(data)
             .subscribe(res => {
-                if (res && res.GetVehicleDataResult.status === '200') {
-                    this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
+                if (res && res.Status === '200') {
+                    this.VehicleSearchData = res.Data;
                     this.RegSearchFailedMsg = false;
                     this.RegSearchSuccessMsg = true;
 
-                    var datedata = res.GetVehicleDataResult.vehicle.regn_dt;
+                    var datedata = this.VehicleSearchData[0].regn_dt;
                     var formatedDatestring = this.convertToDateFormat(datedata);
 
                     this.thirdFormGroup.controls['VehicleTypeID'].setValue('');
                     this.thirdFormGroup.controls['VehicleTypeName'].setValue('');
                     this.thirdFormGroup.controls['Registration_No'].setValue(data);
-                    this.thirdFormGroup.controls['ChasisNo'].setValue(res.GetVehicleDataResult.vehicle.chasis_no);
-                    this.thirdFormGroup.controls['EngineNo'].setValue(res.GetVehicleDataResult.vehicle.engine_no);
-                    this.thirdFormGroup.controls['Make'].setValue(res.GetVehicleDataResult.vehicle.fla_maker_desc);
-                    this.thirdFormGroup.controls['Model'].setValue(res.GetVehicleDataResult.vehicle.fla_model_desc);
+                    this.thirdFormGroup.controls['ChasisNo'].setValue(this.VehicleSearchData[0].chasis_no);
+                    this.thirdFormGroup.controls['EngineNo'].setValue(this.VehicleSearchData[0].engine_no);
+                    this.thirdFormGroup.controls['Make'].setValue(this.VehicleSearchData[0].fla_maker_desc);
+                    this.thirdFormGroup.controls['Model'].setValue(this.VehicleSearchData[0].fla_model_desc);
                     this.thirdFormGroup.controls['Variant'].setValue('');
-                    this.thirdFormGroup.controls['MgfYear'].setValue(res.GetVehicleDataResult.vehicle.manufaturer_year);
-                    this.thirdFormGroup.controls['Color'].setValue(res.GetVehicleDataResult.vehicle.color);
+                    this.thirdFormGroup.controls['MgfYear'].setValue(this.VehicleSearchData[0].manufaturer_year);
+                    this.thirdFormGroup.controls['Color'].setValue(this.VehicleSearchData[0].color);
                     this.thirdFormGroup.controls['RegistrationDate'].setValue(formatedDatestring);
-                    this.thirdFormGroup.controls['FuelType'].setValue(res.GetVehicleDataResult.vehicle.fuel_type_desc);
+                    this.thirdFormGroup.controls['FuelType'].setValue(this.VehicleSearchData[0].fuel_type_desc);
                     this.thirdFormGroup.controls['HypoticatedTo'].setValue('');
                     this.thirdFormGroup.controls['OdometerReading'].setValue('');
                     this.thirdFormGroup.controls['RegisteredOwner'].setValue('');
                     this.thirdFormGroup.controls['Transfer_Date'].setValue('');
-                    this.thirdFormGroup.controls['Class_Vehicle'].setValue(res.GetVehicleDataResult.vehicle.fla_vh_class_desc);
+                    this.thirdFormGroup.controls['Class_Vehicle'].setValue(this.VehicleSearchData[0].fla_vh_class_desc);
                     this.thirdFormGroup.controls['Pre_Accident_Condition'].setValue('');
                     this.thirdFormGroup.controls['Laden_Wt'].setValue('');
                     this.thirdFormGroup.controls['Unladen_Wt'].setValue('');
                     this.thirdFormGroup.controls['CNG_KIT_Status'].setValue('');
                     this.thirdFormGroup.controls['Permit_Area'].setValue('');
                     this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
-                    this.thirdFormGroup.controls['Seating_Capacity'].setValue(res.GetVehicleDataResult.vehicle.seat_cap);
+                    this.thirdFormGroup.controls['Seating_Capacity'].setValue(this.VehicleSearchData[0].seat_cap);
                 } else {
                     this.RegSearchFailedMsg = true;
                     this.RegSearchSuccessMsg = false;
@@ -415,8 +416,8 @@ export class PreWizardComponent implements OnInit {
             .subscribe(res => {
                 if (res && res.Status == 200) {
                     this.VehicleDetailData = res.Data;
-                    if (this.VehicleDetailData !== null || this.VehicleDetailData !== undefined) {
-                      this.thirdFormGroup.controls['CaseID'].setValue(this.caseId),
+                    if (this.VehicleDetailData.length > 0 || this.VehicleDetailData !== null || this.VehicleDetailData !== undefined) {
+                      this.thirdFormGroup.controls['CaseID'].setValue(JSON.parse(this.caseId)),
                       this.thirdFormGroup.controls['VehicleTypeID'].setValue(this.VehicleDetailData[0].VehicleTypeID);
                       this.thirdFormGroup.controls['VehicleTypeName'].setValue(this.VehicleDetailData[0].VehicleTypeName);
                       this.thirdFormGroup.controls['Registration_No'].setValue(this.VehicleDetailData[0].Registration_No);

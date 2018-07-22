@@ -40,6 +40,7 @@ export class WizardComponent implements OnInit {
   tenthFormGroup: FormGroup;
   claimDetailData = [];
   VehicleDetailData = [];
+  VehicleSearchData = [];
   driverData = [];
   accidentData = [];
   firData = [];
@@ -147,7 +148,7 @@ export class WizardComponent implements OnInit {
 
     this.thirdFormGroup = new FormGroup({
       CaseVehicleId: new FormControl(this.CaseVehicleId),
-      SurveyorsId: new FormControl(this.caseId),
+      CaseID: new FormControl(JSON.parse(this.caseId)),
       VehicleId: new FormControl(''),
       VehicleName: new FormControl(''),
       Registration_No: new FormControl('', Validators.required),
@@ -177,8 +178,8 @@ export class WizardComponent implements OnInit {
     });
 
     this.fourthFormGroup = new FormGroup({
-      CaseDriverID: new FormControl(''),
-      CaseID: new FormControl(this.caseId, Validators.required),
+      CaseDriverID: new FormControl(0),
+      CaseID: new FormControl(JSON.parse(this.caseId), Validators.required),
       Drivername: new FormControl(''),
       DriverLicenseNo: new FormControl(''),
       IssuingAuthority: new FormControl(''),
@@ -204,8 +205,8 @@ export class WizardComponent implements OnInit {
       DetailsTPLoss: new FormControl('')
     });
     this.sixthFormGroup = new FormGroup({
-      PoliceFIRID: new FormControl(''),
-      CaseID: new FormControl(this.caseId, Validators.required),
+      PoliceFIRID: new FormControl(0),
+      CaseID: new FormControl(JSON.parse(this.caseId), Validators.required),
       FIRReported: new FormControl(''),
       FIRPoliceStation: new FormControl(''),
       FIRStationDiaryNo: new FormControl(''),
@@ -248,7 +249,7 @@ export class WizardComponent implements OnInit {
 
     var today: any = new Date();
     var dd: any = today.getDate();
-    var mm: any = today.getMonth() + 1; //January is 0!
+    var mm: any = today.getMonth() + 1; // January is 0!
     var yyyy: any = today.getFullYear() - 18;
     if (dd < 10) {
       dd = '0' + dd;
@@ -327,7 +328,11 @@ export class WizardComponent implements OnInit {
   getPolicyStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
     const SelectedDate = event.value;
     const dateString = new Date(SelectedDate);
-    const finalDate = new Date(dateString.getFullYear() - 1, dateString.getMonth(), dateString.getDate());
+    const finalDate = new Date(
+      dateString.getFullYear() - 1,
+      dateString.getMonth(),
+      dateString.getDate()
+    );
     this.policyEndDate = finalDate;
     this.firstFormGroup.controls['Policy_End_Date'].setValue('');
   }
@@ -366,43 +371,43 @@ export class WizardComponent implements OnInit {
     setTimeout(() => {
       this.getFirDetails();
     }, 1700);
-    setTimeout(() => {
-      this.getDetailImage();
-    }, 2000);
+    // setTimeout(() => {
+    //   this.getDetailImage();
+    // }, 2000);
 
-    setTimeout(() => {
-      this.getCrashImage9();
-    }, 2250);
+    // setTimeout(() => {
+    //   this.getCrashImage9();
+    // }, 2250);
 
-    setTimeout(() => {
-      this.getCrashImage10();
-    }, 2500);
+    // setTimeout(() => {
+    //   this.getCrashImage10();
+    // }, 2500);
 
-    setTimeout(() => {
-      this.getCrashImage11();
-    }, 2800);
+    // setTimeout(() => {
+    //   this.getCrashImage11();
+    // }, 2800);
 
-    setTimeout(() => {
-      this.getDriverLicenseImg();
-    }, 3050);
+    // setTimeout(() => {
+    //   this.getDriverLicenseImg();
+    // }, 3050);
 
-    setTimeout(() => {
-      this.getCrashImage12();
-    }, 3400);
+    // setTimeout(() => {
+    //   this.getCrashImage12();
+    // }, 3400);
     setTimeout(() => {
       this.getSummaryReportDetails();
     }, 4000);
-    setTimeout(() => {
-      this.getCrashImage13();
-    }, 4500);
+    // setTimeout(() => {
+    //   this.getCrashImage13();
+    // }, 4500);
 
     setTimeout(() => {
       this.getDamageDetails();
     }, 4700);
 
-    setTimeout(() => {
-      this.getClaimFormStatement();
-    }, 4900);
+    // setTimeout(() => {
+    //   this.getClaimFormStatement();
+    // }, 4900);
 
     this.seventhFormGroup = this._formBuilder.group({
       seventhCtrl: ['', Validators.required]
@@ -463,10 +468,12 @@ export class WizardComponent implements OnInit {
             this.claimDetailData[0].SurveyorsName
           );
           this.secondFormGroup.controls['DateofAllotmentofsurvey'].setValue(
-            this.claimDetailData[0].DateofAllotmentofsurvey
+            this.convertToDateFormat(
+              this.claimDetailData[0].DateofAllotmentofsurvey
+            )
           );
           this.secondFormGroup.controls['DateofSurvey'].setValue(
-            this.claimDetailData[0].DateofSurvey
+            this.convertToDateFormat(this.claimDetailData[0].DateofSurvey)
           );
           this.secondFormGroup.controls['SurveyLocation'].setValue(
             this.claimDetailData[0].SurveyLocation
@@ -490,46 +497,47 @@ export class WizardComponent implements OnInit {
   }
 
   SearchRegistration() {
-    let data = (document.getElementById('RegistrationNum') as HTMLInputElement)
-      .value;
+    const data = (document.getElementById(
+      'RegistrationNum'
+    ) as HTMLInputElement).value;
     this.wizardService.SearchRegistration(data).subscribe(res => {
-      if (res && res.GetVehicleDataResult.status === '200') {
-        this.VehicleDetailData = res.GetVehicleDataResult.vehicle;
+      if (res && res.Status === '200') {
+        this.VehicleSearchData = res.Data;
         this.RegSearchFailedMsg = false;
         this.RegSearchSuccessMsg = true;
-        var datedata = res.GetVehicleDataResult.vehicle.regn_dt;
+        var datedata = this.VehicleSearchData[0].regn_dt;
         var formatedDatestring = this.convertToDateFormat(datedata);
         this.thirdFormGroup.controls['Registration_No'].setValue(data);
         this.thirdFormGroup.controls['RegistrationDate'].setValue(
           formatedDatestring
         );
         this.thirdFormGroup.controls['ChasisNo'].setValue(
-          res.GetVehicleDataResult.vehicle.chasis_no
+          this.VehicleSearchData[0].chasis_no
         );
         this.thirdFormGroup.controls['EngineNo'].setValue(
-          res.GetVehicleDataResult.vehicle.engine_no
+          this.VehicleSearchData[0].engine_no
         );
 
         this.thirdFormGroup.controls['PermitNo'].setValue('');
         this.thirdFormGroup.controls['TypeofPermit'].setValue('');
         this.thirdFormGroup.controls['Make'].setValue(
-          res.GetVehicleDataResult.vehicle.fla_maker_desc
+          this.VehicleSearchData[0].fla_maker_desc
         );
         this.thirdFormGroup.controls['Model'].setValue(
-          res.GetVehicleDataResult.vehicle.fla_model_desc
+          this.VehicleSearchData[0].fla_model_desc
         );
         this.thirdFormGroup.controls['MgfYear'].setValue(
-          res.GetVehicleDataResult.vehicle.manufaturer_year
+          this.VehicleSearchData[0].manufaturer_year
         );
         this.thirdFormGroup.controls['Color'].setValue(
-          res.GetVehicleDataResult.vehicle.color
+          this.VehicleSearchData[0].color
         );
         this.thirdFormGroup.controls['OdometerReading'].setValue('');
         this.thirdFormGroup.controls['Hypo'].setValue('');
         this.thirdFormGroup.controls['RegisteredOwner'].setValue('');
         this.thirdFormGroup.controls['Transfer_Date'].setValue('');
         this.thirdFormGroup.controls['Class_Vehicle'].setValue(
-          res.GetVehicleDataResult.vehicle.fla_vh_class_desc
+          this.VehicleSearchData[0].fla_vh_class_desc
         );
         this.thirdFormGroup.controls['Pre_Accident_Condition'].setValue('');
         this.thirdFormGroup.controls['Laden_Wt'].setValue('');
@@ -538,10 +546,10 @@ export class WizardComponent implements OnInit {
         this.thirdFormGroup.controls['Permit_Area'].setValue('');
         this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue('');
         this.thirdFormGroup.controls['FuelType'].setValue(
-          res.GetVehicleDataResult.vehicle.fuel_type_desc
+          this.VehicleSearchData[0].fuel_type_desc
         );
         this.thirdFormGroup.controls['Seating_Capacity'].setValue(
-          res.GetVehicleDataResult.vehicle.seat_cap
+          this.VehicleSearchData[0].seat_cap
         );
       } else {
         this.RegSearchFailedMsg = true;
@@ -582,7 +590,7 @@ export class WizardComponent implements OnInit {
           this.thirdFormGroup.controls['CaseVehicleId'].setValue(
             this.VehicleDetailData[0].CaseVehicleId
           );
-          this.thirdFormGroup.controls['SurveyorsId'].setValue(
+          this.thirdFormGroup.controls['CaseID'].setValue(
             this.VehicleDetailData[0].SurveyorsId
           );
           this.thirdFormGroup.controls['VehicleId'].setValue(
@@ -678,24 +686,19 @@ export class WizardComponent implements OnInit {
             const years: number = parseInt(dateString.substring(0, 5));
             this.driverAge = this.thisYear - years;
           }
-          this.fourthFormGroup = new FormGroup({
-            CaseDriverID: new FormControl(this.driverData[0].CaseDriverID),
-            CaseID: new FormControl(this.driverData[0].CaseID),
-            Drivername: new FormControl(this.driverData[0].Drivername),
-            DriverLicenseNo: new FormControl(
-              this.driverData[0].DriverLicenseNo
-            ),
-            IssuingAuthority: new FormControl(
-              this.driverData[0].IssuingAuthority
-            ),
-            ValidUptoDate: new FormControl(this.driverData[0].ValidUptoDate),
-            TypeOfLicense: new FormControl(this.driverData[0].TypeOfLicense),
-            PSVBadgeNo: new FormControl(this.driverData[0].PSVBadgeNo),
-            DOB: new FormControl(this.driverData[0].DOB),
-            Age: new FormControl({ value: this.driverAge, disabled: true }),
-            DLEndorsment: new FormControl(this.driverData[0].DLEndorsment),
-            IssueDate: new FormControl(this.driverData[0].IssueDate)
-          });
+
+          this.fourthFormGroup.controls['CaseDriverID'].setValue(this.driverData[0].CaseDriverID);
+          this.fourthFormGroup.controls['CaseID'].setValue(this.driverData[0].CaseID);
+          this.fourthFormGroup.controls['Drivername'].setValue(this.driverData[0].Drivername);
+          this.fourthFormGroup.controls['DriverLicenseNo'].setValue(this.driverData[0].DriverLicenseNo);
+          this.fourthFormGroup.controls['IssuingAuthority'].setValue(this.driverData[0].IssuingAuthority);
+          this.fourthFormGroup.controls['ValidUptoDate'].setValue(this.driverData[0].ValidUptoDate);
+          this.fourthFormGroup.controls['TypeOfLicense'].setValue(this.driverData[0].TypeOfLicense);
+          this.fourthFormGroup.controls['PSVBadgeNo'].setValue(this.driverData[0].PSVBadgeNo);
+          this.fourthFormGroup.controls['DOB'].setValue(this.driverData[0].DOB);
+          this.fourthFormGroup.controls['Age'].setValue({ value: this.driverAge, disabled: true });
+          this.fourthFormGroup.controls['DLEndorsment'].setValue(this.driverData[0].DLEndorsment);
+          this.fourthFormGroup.controls['IssueDate'].setValue(this.driverData[0].IssueDate);
         }
       }
     });
@@ -706,34 +709,15 @@ export class WizardComponent implements OnInit {
       if (res && res.Status == 200) {
         this.accidentData = res.Data;
         if (this.accidentData.length > 0) {
-          this.fifthFormGroup = new FormGroup({
-            CaseID: new FormControl(
-              this.accidentData[0].CaseID,
-              Validators.required
-            ),
-            AccidentDate: new FormControl(
-              this.accidentData[0].AccidentDate,
-              Validators.required
-            ),
-            AccidentPlace: new FormControl(
-              this.accidentData[0].AccidentPlace,
-              Validators.required
-            ),
-            AllotementDate: new FormControl(
-              this.accidentData[0].AllotementDate,
-              Validators.required
-            ),
-            SurveyDatePlace: new FormControl(
-              this.accidentData[0].SurveyDatePlace
-            ),
-            InsuredRepName: new FormControl(
-              this.accidentData[0].InsuredRepName
-            ),
-            CauseofLoss: new FormControl(this.accidentData[0].CauseofLoss),
-            TPLoss: new FormControl(this.accidentData[0].TPLoss),
-            // FIRDDR: new FormControl(this.accidentData[0].FIRDDR),
-            DetailsTPLoss: new FormControl(this.accidentData[0].DetailsTPLoss)
-          });
+          this.fifthFormGroup.controls['CaseID'].setValue(this.accidentData[0].CaseID);
+          this.fifthFormGroup.controls['AccidentDate'].setValue(this.convertToDateFormat(this.accidentData[0].AccidentDate));
+          this.fifthFormGroup.controls['AccidentPlace'].setValue(this.accidentData[0].AccidentPlace);
+          this.fifthFormGroup.controls['AllotementDate'].setValue(this.convertToDateFormat(this.accidentData[0].AllotementDate));
+          this.fifthFormGroup.controls['SurveyDatePlace'].setValue(this.accidentData[0].IssueDate);
+          this.fifthFormGroup.controls['InsuredRepName'].setValue(this.accidentData[0].InsuredRepName);
+          this.fifthFormGroup.controls['CauseofLoss'].setValue(this.accidentData[0].CauseofLoss);
+          this.fifthFormGroup.controls['TPLoss'].setValue(this.accidentData[0].TPLoss);
+          this.fifthFormGroup.controls['DetailsTPLoss'].setValue(this.accidentData[0].DetailsTPLoss);
         }
       }
     });

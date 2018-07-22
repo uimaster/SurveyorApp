@@ -9,18 +9,18 @@ import 'rxjs/Rx';
 
 @Injectable()
 
-export class WizardService{
+export class WizardService {
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient) {}
 
     // ============ Claim Details ============ //
 
-    getClaimDetails():Observable<any>{
-        var CaseID= localStorage.getItem('CaseID');
+    getClaimDetails(): Observable<any> {
+        var CaseID = localStorage.getItem('CaseID');
         const params = new HttpParams().set('CaseID', CaseID);
         return this.http.get(urls.WIZARD_GETCLAIMURL, {params})
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
@@ -32,8 +32,7 @@ export class WizardService{
           .map((res: any) =>  {
             if (res) {
               return res;
-            }
-            else{
+            } else {
               return res;
             }
 
@@ -59,12 +58,12 @@ export class WizardService{
 
     // ============ Vehicle Details ============ //
 
-    getVehicleDetails():Observable<any>{
+    getVehicleDetails(): Observable<any> {
         var CaseID= localStorage.getItem('CaseID');
-        const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
+        const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
         return this.http.get(urls.WIZARD_GETVEHICLEDETAILSURL, {params})
-            .map((res) =>{
-                if(res){
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
@@ -76,8 +75,7 @@ export class WizardService{
           .map((res: any) =>  {
             if (res) {
               return res;
-            }
-            else{
+            } else {
               return res;
             }
           })
@@ -86,10 +84,11 @@ export class WizardService{
 
      // ============ Registraion Search for vehicle Details ============ //
 
-     SearchRegistration(payload:any):Observable<any>{
-        return this.http.get(urls.REGISTRATION_SEARCH_URL+"/"+payload)
-            .map((res) =>{
-                if(res){
+     SearchRegistration(payload: any): Observable<any> {
+      const params = new HttpParams().set('RegNo', payload);
+        return this.http.get(urls.REGISTRATION_SEARCH_URL, {params})
+            .map((res) => {
+                if (res) {
                     return res;
                 }
             })
@@ -127,9 +126,9 @@ export class WizardService{
 
     // ============ Accident Details ============ //
 
-    geAccidentDetails():Observable<any>{
+    geAccidentDetails():Observable<any> {
         var CaseID= localStorage.getItem('CaseID');
-        const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
+        const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
         return this.http.get(urls.WIZARD_GETACCIDENTDETAILSURL, {params})
             .map((res) =>{
                 if(res){
@@ -146,8 +145,7 @@ export class WizardService{
           .map((res: any) =>  {
             if (res) {
               return res;
-            }
-            else{
+            } else {
               return res;
             }
           })
@@ -185,24 +183,24 @@ export class WizardService{
 
   // ============ Damage Details ============ //
 
-  GetDamageDetails():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
+  GetDamageDetails(): Observable<any> {
+    var CaseID = localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
     return this.http.get(urls.WIZARD_DAMAGEDETAILSURL_PRE, {params})
-        .map((res) =>{
-            if(res){
+        .map((res) => {
+            if(res) {
                 return res;
             }
         })
         .catch((error) => Observable.throw('server Error.'));
 }
 
-GetDamagePartList():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
+GetDamagePartList(): Observable<any> {
+    var CaseID = localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
     return this.http.get(urls.WIZARD_DAMAGEPARTSLIST_PRE, {params})
-        .map((res) =>{
-            if(res){
+        .map((res) => {
+            if(res) {
                 return res;
             }
         })

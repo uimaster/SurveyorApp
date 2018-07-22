@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs/Subscription";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {AreaService} from "../area.service";
+import {Subscription} from 'rxjs/Subscription';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {AreaService} from '../area.service';
 
 @Component({
   selector: 'app-create-area',
@@ -13,13 +13,13 @@ import {AreaService} from "../area.service";
 export class CreateAreaComponent implements OnInit {
 
   public myForm: FormGroup;
-  public successMessage:String;
-  public errorMessage:String;
-  public showError: boolean=false;
-  public showSuccess: boolean=false;
+  public successMessage: String;
+  public errorMessage: String;
+  public showError = false;
+  public showSuccess = false;
   public sub: Subscription;
-  public areaId:Number = 0;
-  Loader: boolean = true;
+  public areaId = 0;
+  Loader = true;
 
   constructor(private fb: FormBuilder, private areaService: AreaService, private router: Router,private route: ActivatedRoute) { }
 
@@ -32,15 +32,15 @@ export class CreateAreaComponent implements OnInit {
     this.sub = this.route.params.subscribe((params: Params) => {
       this.areaId = params['id'];
 
-      if(this.areaId > 0){
-        this.areaService.getAreaList().subscribe((data)=> {
+      if(this.areaId > 0) {
+        this.areaService.getAreaList().subscribe((data) => {
             const finalData = data.Data;
             for (let i = 0; i < finalData.length;  i++) {
               if (finalData[i].AreaId == this.areaId) {
                 this.myForm.controls['name'].setValue(finalData[i].AreaName);
               }
             }
-          },(error)=>{
+          }, (error) => {
 
           }
         );
@@ -54,30 +54,29 @@ export class CreateAreaComponent implements OnInit {
 
   onSubmit(formD) {
     let bodyObj = {
-      "AreaId":this.areaId,
-      "AreaName":formD.name
+      'AreaId': this.areaId,
+      'AreaName': formD.name
     };
     this.Loader = true;
 
     this.areaService.addArea(bodyObj).subscribe (
       result => {
         // Handle result
-        if(result.sms.StatusCode === 200){
+        if (result.Status === '200') {
           this.showSuccess = true;
           this.showError = false;
-          this.successMessage = result.sms.Message;
-          setTimeout(()=>{    //<<<---    using ()=> syntax
+          this.successMessage = result.Message;
+          setTimeout(() => {    // <<<---    using ()=> syntax
             this.router.navigate(['/area']);
-          },2000);
+          }, 2000);
           this.Loader = false;
-        }
-        else{
+        } else {
           this.showSuccess = false;
           this.showError = true;
-          this.errorMessage = result.sms.Message;
+          this.errorMessage = result.Message;
           this.Loader = false;
         }
-        
+
       },
       error => {
         this.Loader = false;

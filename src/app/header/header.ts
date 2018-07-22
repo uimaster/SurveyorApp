@@ -6,12 +6,10 @@ import {Component} from '@angular/core';
   styleUrls: ['./header.scss'],
 })
 export class HeaderComponent {
-  
-  userEmail:string ='';
-  userName: string ='';
-  constructor(){
+  userEmail = '';
+  userName = '';
+  constructor() {
     this.userEmail = JSON.parse(localStorage.getItem('userEmail'));
     this.userName = JSON.parse(localStorage.getItem('userName'));
   }
-  
 }

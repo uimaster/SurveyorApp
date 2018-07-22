@@ -26,7 +26,7 @@ export class DashboardTabComponent implements OnInit {
   getTabCounts(data) {
     this.tabsServices.getTabCounts(data)
     .subscribe((res) => {
-      if(res && res.Status == 200) {
+      if(res && res.Status === '200') {
         this.AllocatedCases = res.Data[0].AllocatedCaseCount;
         this.CompletedCases = res.Data[0].CompletedCaseCount;
         this.UnderProcessCases = res.Data[0].UnderProcessCaseCount;
@@ -59,7 +59,6 @@ export class DashboardTabComponent implements OnInit {
 
 
   ngOnInit() {
-    //this.getTabCounts();
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
     if (userTypeId === 1) {
       this.userId = 0;
