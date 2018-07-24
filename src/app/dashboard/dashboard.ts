@@ -52,12 +52,12 @@ export class DashboardComponent implements OnInit {
   createCase() {
     const date = new Date();
     this.createCaseForm = this.fb.group({
-      SurveyorsId: [0, Validators.required],
+      SurveyorsId: [0],
       CaseStatusID: [0],
       CompanyId: [0, Validators.required],
       CaseID: [0],
       CaseNo: [''],
-      UserID: ['', Validators.required],
+      UserID: [''],
       CaseDate: [date.toISOString()],
       PolicyNO: [''],
       ClaimNO: [''],
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
       this.userDisabled = true;
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
-      this.createCaseForm.controls['SurveyorsId'].setValidators(Validators.required);
+      this.createCaseForm.controls['SurveyorsId'].clearValidators();
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 2) {
       this.companyDisabled = true;
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
       this.userDisabled = true;
       this.createCaseForm.controls['CompanyId'].clearValidators();
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
-      this.createCaseForm.controls['SurveyorsId'].setValidators(Validators.required);
+      this.createCaseForm.controls['SurveyorsId'].clearValidators();
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 3) {
       this.companyDisabled = false;
@@ -216,6 +216,8 @@ export class DashboardComponent implements OnInit {
       if (res && res.Status === '200') {
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
+      } else {
+        alert(res.Message);
       }
     });
   }
@@ -226,6 +228,8 @@ export class DashboardComponent implements OnInit {
       if (res && res.Status === '200') {
         let Data = res.Data[0];
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
+      } else {
+        alert(res.Message);
       }
     });
   }
@@ -330,7 +334,7 @@ export class DashboardComponent implements OnInit {
   }
 
   downloadSpotSurvey(caseid) {
-    const baseurl = 'http://apiflacors.iflotech.in/api/DownloadReport/getSpotSurveyReport?CaseID=';
+    const baseurl = 'http://apiflacorev2.iflotech.in/api/Reports/DownloadSPReportPDF?CaseID=';
     this.downloadUrl = baseurl + caseid;
   }
 }

@@ -57,6 +57,7 @@ import { SurveyorService } from './surveyor/surveyor.service';
 import { SharedModule } from './sharedModule/shared.module';
 import { DashboardSearchPipe } from '../shared/pipes/dashboard-search.pipe';
 import { TokenInterceptor } from '../app/login/login.inteceptor';
+import { CommonImageComponent } from './sharedModule/images.component';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ import { TokenInterceptor } from '../app/login/login.inteceptor';
     CreateCompaniesComponent,
     PreWizardComponent,
     DashboardSearchPipe,
+
   ],
   imports: [
     BrowserModule,
@@ -86,7 +88,6 @@ import { TokenInterceptor } from '../app/login/login.inteceptor';
     FormsModule,
     HttpClientModule,
     CommonModule,
-    //Material Modules
     MatSelectModule,
     MatInputModule,
     BrowserAnimationsModule,
@@ -114,7 +115,8 @@ import { TokenInterceptor } from '../app/login/login.inteceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    CommonImageComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

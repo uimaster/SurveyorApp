@@ -355,8 +355,8 @@
         <ng-template matStepLabel>Surveyor Signature</ng-template>
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5 style="color:#333;">Upload Surveyor Signature</h5>
-          <img alt="" [src]="imageToShow13" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-          <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" [src]="signatureImgUrl" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
+          <input type="file" name="" id="" (change)="postImage($event, 'PIDSG')" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div style="text-align: center; margin-top: 50px;">
           <button mat-raised-button matStepperPrevious>Back</button>
@@ -405,7 +405,7 @@
       <div class="backdrop" *ngIf="showStatusList">
         <div class="tabularData card smallModal" style="width:40%; left:30%;">
           <h3 style="color: #333"> Please complete below listed pending steps! </h3>
-          <div class="alert success" style="width:auto; overflow: hidden;">
+          <div class="alert error" style="width:auto; overflow: hidden;">
 
             <div *ngFor="let item of StatusData">
               <div *ngIf="StatusData[0].CaseDetailsStatus==='No'" class="listItem">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,17 +8,21 @@ import {
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Router } from '@angular/router';
+import { Router, UrlSegment } from '@angular/router';
 
 import { WizardService } from './wizard.service';
 import * as IMAGEURL from '../../shared/img.urls';
-import {
-  SharedComponent,
-  DonwloadDialog
-} from '../sharedModule/shared.component';
+import * as urls from '../../shared/urls';
+import { DonwloadDialog } from '../sharedModule/shared.component';
+import { CommonImageComponent } from '../sharedModule/images.component';
 import { CompaniesService } from '../companies/companies.service';
 import { DashboardService } from '../dashboard/dashboard.service';
 import { DISABLED } from '@angular/forms/src/model';
+import { SharedModuleServices } from '../sharedModule/shared.service';
+import { Observable } from 'rxjs/Observable';
+import { GenericGetImageResponseModel } from '../sharedModule/shared.model';
+import { Subscription } from 'rxjs/Subscription';
+import { KYCDOC_URL } from '../../shared/img.urls';
 
 @Component({
   selector: 'wizard-selector',
@@ -27,6 +31,7 @@ import { DISABLED } from '@angular/forms/src/model';
 })
 export class WizardComponent implements OnInit {
   @ViewChild('stepper') stepper;
+  // @ViewChild('CommonImageComponent') CommonImageComponent: CommonImageComponent;
   isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -84,6 +89,7 @@ export class WizardComponent implements OnInit {
     { value: '3', viewValue: 'HTV' }
   ];
 
+  imageBaseUrl = 'http://apiflacorev2.iflotech.in';
   submitDisabled = false;
   companyListData = [];
   thisYear = new Date().getFullYear();
@@ -102,6 +108,18 @@ export class WizardComponent implements OnInit {
   StatusData = [];
   showStatusList = false;
   openCreateCaseModal = false;
+  imageData: any;
+
+  // images scr ulrs //
+
+  claimImgUrl: string;
+  driverImgUrl: string;
+  accidentImgUrl: string;
+  summaryClaimImgUrl: string;
+  summaryBillImgUrl: string;
+  summaryKYCDOCImgUrl: string;
+  summaryKYCAddImgUrl: string;
+  signatureImgUrl: string;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -110,7 +128,9 @@ export class WizardComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private companyService: CompaniesService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private imageService: CommonImageComponent,
+    private sharedService: SharedModuleServices
   ) {
     this.files = [];
     this.firstFormGroup = new FormGroup({
@@ -337,7 +357,78 @@ export class WizardComponent implements OnInit {
     this.firstFormGroup.controls['Policy_End_Date'].setValue('');
   }
 
+  // =========================IMAGES FUNCNTIONS  START============================== //
+  postImage(file, typeCode) {
+    const ClaimImgPostpayload = {
+      CaseID: this.caseId,
+      ImageName: '',
+      CaseImageCode: typeCode,
+      CaseImageID: 1
+    };
+    this.imageService.postDetailImage(file, ClaimImgPostpayload);
+    setTimeout(() => {
+      this.getImage(typeCode);
+    }, 2000);
+  }
+
+  getImage(typeCode) {
+    const ClaimGetPayload = { CaseID: this.caseId, CaseImageCode: typeCode };
+    this.sharedService.getImages(ClaimGetPayload).subscribe(
+      (res: GenericGetImageResponseModel) => {
+        this.imageData = res.Data[0];
+        if (res && this.imageData != null) {
+          switch (typeCode) {
+            case 'SPCLFRM':
+              this.accidentImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            case 'SPDLNO':
+              this.driverImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            case 'SPPOLICYNO':
+              this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            case 'SPFEEBILL':
+              this.summaryBillImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            case 'SPKYIDN':
+              this.summaryKYCDOCImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            case 'SPKYADD':
+              this.summaryKYCAddImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            case 'SPDSG':
+              this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            default:
+            this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
+          }
+        }
+      },
+      error => {
+        return error;
+      }
+    );
+  }
+
+  // =========================IMAGES FUNCNTIONS  END============================== //
+
   ngOnInit() {
+    // get image of claim details //
+    this.getImage('SPPOLICYNO');
+    // get image of Driver details //
+    this.getImage('SPDLNO');
+    // get image of Driver details //
+    this.getImage('SPCLFRM');
+    // get image of Survey Fee Bill details //
+    this.getImage('SPFEEBILL');
+    // get image of KYC Doc details //
+    this.getImage('SPKYIDN');
+    // get image of KYC Address details //
+    this.getImage('SPKYADD');
+    // get image Signature details //
+    this.getImage('SPDSG');
+
+
     this.Loader = false;
     const completedState = localStorage.getItem('IsCompleted');
     if (completedState != undefined) {
@@ -371,36 +462,10 @@ export class WizardComponent implements OnInit {
     setTimeout(() => {
       this.getFirDetails();
     }, 1700);
-    // setTimeout(() => {
-    //   this.getDetailImage();
-    // }, 2000);
 
-    // setTimeout(() => {
-    //   this.getCrashImage9();
-    // }, 2250);
-
-    // setTimeout(() => {
-    //   this.getCrashImage10();
-    // }, 2500);
-
-    // setTimeout(() => {
-    //   this.getCrashImage11();
-    // }, 2800);
-
-    // setTimeout(() => {
-    //   this.getDriverLicenseImg();
-    // }, 3050);
-
-    // setTimeout(() => {
-    //   this.getCrashImage12();
-    // }, 3400);
     setTimeout(() => {
       this.getSummaryReportDetails();
     }, 4000);
-    // setTimeout(() => {
-    //   this.getCrashImage13();
-    // }, 4500);
-
     setTimeout(() => {
       this.getDamageDetails();
     }, 4700);
@@ -687,18 +752,41 @@ export class WizardComponent implements OnInit {
             this.driverAge = this.thisYear - years;
           }
 
-          this.fourthFormGroup.controls['CaseDriverID'].setValue(this.driverData[0].CaseDriverID);
-          this.fourthFormGroup.controls['CaseID'].setValue(this.driverData[0].CaseID);
-          this.fourthFormGroup.controls['Drivername'].setValue(this.driverData[0].Drivername);
-          this.fourthFormGroup.controls['DriverLicenseNo'].setValue(this.driverData[0].DriverLicenseNo);
-          this.fourthFormGroup.controls['IssuingAuthority'].setValue(this.driverData[0].IssuingAuthority);
-          this.fourthFormGroup.controls['ValidUptoDate'].setValue(this.driverData[0].ValidUptoDate);
-          this.fourthFormGroup.controls['TypeOfLicense'].setValue(this.driverData[0].TypeOfLicense);
-          this.fourthFormGroup.controls['PSVBadgeNo'].setValue(this.driverData[0].PSVBadgeNo);
+          this.fourthFormGroup.controls['CaseDriverID'].setValue(
+            this.driverData[0].CaseDriverID
+          );
+          this.fourthFormGroup.controls['CaseID'].setValue(
+            this.driverData[0].CaseID
+          );
+          this.fourthFormGroup.controls['Drivername'].setValue(
+            this.driverData[0].Drivername
+          );
+          this.fourthFormGroup.controls['DriverLicenseNo'].setValue(
+            this.driverData[0].DriverLicenseNo
+          );
+          this.fourthFormGroup.controls['IssuingAuthority'].setValue(
+            this.driverData[0].IssuingAuthority
+          );
+          this.fourthFormGroup.controls['ValidUptoDate'].setValue(
+            this.driverData[0].ValidUptoDate
+          );
+          this.fourthFormGroup.controls['TypeOfLicense'].setValue(
+            this.driverData[0].TypeOfLicense
+          );
+          this.fourthFormGroup.controls['PSVBadgeNo'].setValue(
+            this.driverData[0].PSVBadgeNo
+          );
           this.fourthFormGroup.controls['DOB'].setValue(this.driverData[0].DOB);
-          this.fourthFormGroup.controls['Age'].setValue({ value: this.driverAge, disabled: true });
-          this.fourthFormGroup.controls['DLEndorsment'].setValue(this.driverData[0].DLEndorsment);
-          this.fourthFormGroup.controls['IssueDate'].setValue(this.driverData[0].IssueDate);
+          this.fourthFormGroup.controls['Age'].setValue({
+            value: this.driverAge,
+            disabled: true
+          });
+          this.fourthFormGroup.controls['DLEndorsment'].setValue(
+            this.driverData[0].DLEndorsment
+          );
+          this.fourthFormGroup.controls['IssueDate'].setValue(
+            this.driverData[0].IssueDate
+          );
         }
       }
     });
@@ -709,15 +797,33 @@ export class WizardComponent implements OnInit {
       if (res && res.Status == 200) {
         this.accidentData = res.Data;
         if (this.accidentData.length > 0) {
-          this.fifthFormGroup.controls['CaseID'].setValue(this.accidentData[0].CaseID);
-          this.fifthFormGroup.controls['AccidentDate'].setValue(this.convertToDateFormat(this.accidentData[0].AccidentDate));
-          this.fifthFormGroup.controls['AccidentPlace'].setValue(this.accidentData[0].AccidentPlace);
-          this.fifthFormGroup.controls['AllotementDate'].setValue(this.convertToDateFormat(this.accidentData[0].AllotementDate));
-          this.fifthFormGroup.controls['SurveyDatePlace'].setValue(this.accidentData[0].IssueDate);
-          this.fifthFormGroup.controls['InsuredRepName'].setValue(this.accidentData[0].InsuredRepName);
-          this.fifthFormGroup.controls['CauseofLoss'].setValue(this.accidentData[0].CauseofLoss);
-          this.fifthFormGroup.controls['TPLoss'].setValue(this.accidentData[0].TPLoss);
-          this.fifthFormGroup.controls['DetailsTPLoss'].setValue(this.accidentData[0].DetailsTPLoss);
+          this.fifthFormGroup.controls['CaseID'].setValue(
+            this.accidentData[0].CaseID
+          );
+          this.fifthFormGroup.controls['AccidentDate'].setValue(
+            this.convertToDateFormat(this.accidentData[0].AccidentDate)
+          );
+          this.fifthFormGroup.controls['AccidentPlace'].setValue(
+            this.accidentData[0].AccidentPlace
+          );
+          this.fifthFormGroup.controls['AllotementDate'].setValue(
+            this.convertToDateFormat(this.accidentData[0].AllotementDate)
+          );
+          this.fifthFormGroup.controls['SurveyDatePlace'].setValue(
+            this.accidentData[0].IssueDate
+          );
+          this.fifthFormGroup.controls['InsuredRepName'].setValue(
+            this.accidentData[0].InsuredRepName
+          );
+          this.fifthFormGroup.controls['CauseofLoss'].setValue(
+            this.accidentData[0].CauseofLoss
+          );
+          this.fifthFormGroup.controls['TPLoss'].setValue(
+            this.accidentData[0].TPLoss
+          );
+          this.fifthFormGroup.controls['DetailsTPLoss'].setValue(
+            this.accidentData[0].DetailsTPLoss
+          );
         }
       }
     });
@@ -1121,366 +1227,5 @@ export class WizardComponent implements OnInit {
           }
         );
     }
-  }
-
-  // DETAILS IMAGE //
-
-  createImageFromBlob0(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShow = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChanged0(event: any) {
-    this.files = event.target.files;
-    this.postDetailImage();
-  }
-
-  imageToShow: any;
-  isImageLoading: boolean = false;
-
-  postDetailImage() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient
-      .post(IMAGEURL.CLAIMPOLICYIMG_URL, formData)
-      .subscribe(res => {
-        console.log(res);
-      });
-    setTimeout(() => {
-      this.getDetailImage();
-    }, 1000);
-  }
-
-  getDetailImage() {
-    this.isImageLoading = true;
-    this.wizardService.getDetailImg().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.createImageFromBlob0(data.Data[0].Image);
-        }
-        this.isImageLoading = false;
-      },
-      error => {
-        this.isImageLoading = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // DRIVERLICENSE IMAGE //
-
-  createImageFromBlobD(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShowD = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChangedD(event: any) {
-    this.files = event.target.files;
-    this.postDetailImageD();
-  }
-
-  imageToShowD: any;
-  isImageLoadingD = false;
-
-  postDetailImageD() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient
-      .post(IMAGEURL.DRIVERLICENSE_URL, formData)
-      .subscribe(res => {
-        console.log(res);
-      });
-    setTimeout(() => {
-      this.getDriverLicenseImg();
-    }, 1000);
-  }
-
-  getDriverLicenseImg() {
-    this.isImageLoadingD = true;
-    this.wizardService.getDriverLicenseImg().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.createImageFromBlobD(data.Data[0].Image);
-        }
-        this.isImageLoadingD = false;
-      },
-      error => {
-        this.isImageLoadingD = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // Upload Claim Form/Statement //
-
-  createImageFromBlobForm(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShowForm = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChangedForm(event: any) {
-    this.files = event.target.files;
-    this.postClaimFormStatement();
-  }
-
-  imageToShowForm: any;
-  isImageLoadingForm: boolean = false;
-
-  postClaimFormStatement() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient
-      .post(IMAGEURL.CLAIMFORMSTATEMENT_URL, formData)
-      .subscribe(res => {
-        console.log(res);
-      });
-    setTimeout(() => {
-      this.getClaimFormStatement();
-    }, 1000);
-  }
-
-  getClaimFormStatement() {
-    this.isImageLoadingForm = true;
-    this.wizardService.getClaimFormStatement().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.createImageFromBlobForm(data.Data[0].Image);
-        }
-        this.isImageLoadingForm = false;
-      },
-      error => {
-        this.isImageLoadingForm = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // SUMMARY REPORT KYC ADDRESS //
-  imageToShow9: any;
-  isImageLoading9: boolean = false;
-
-  reateImageFromBlob9(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShow9 = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChanged9(event: any) {
-    this.files = event.target.files;
-    this.postCrashImage9();
-  }
-
-  postCrashImage9() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient.post(IMAGEURL.KYCADDRESS_URL, formData).subscribe(res => {
-      console.log(res);
-    });
-    setTimeout(() => {
-      this.getCrashImage9();
-    }, 1000);
-  }
-
-  getCrashImage9() {
-    this.isImageLoading9 = true;
-    this.wizardService.getKycAddressImage().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.reateImageFromBlob9(data.Data[0].Image);
-        }
-        this.isImageLoading9 = false;
-      },
-      error => {
-        this.isImageLoading9 = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // SUMMARY REPORT CLAIM FORM //
-  imageToShow10: any;
-  isImageLoading10: boolean = false;
-
-  reateImageFromBlob10(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShow10 = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChanged10(event: any) {
-    this.files = event.target.files;
-    this.postCrashImage10();
-  }
-
-  postCrashImage10() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient.post(IMAGEURL.CLAIMFORM_URL, formData).subscribe(res => {
-      console.log(res);
-    });
-    setTimeout(() => {
-      this.getCrashImage10();
-    }, 1000);
-  }
-
-  getCrashImage10() {
-    this.isImageLoading10 = true;
-    this.wizardService.getClaimFormImage().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.reateImageFromBlob10(data.Data[0].Image);
-        }
-        this.isImageLoading10 = false;
-      },
-      error => {
-        this.isImageLoading10 = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // SUMMARY REPORT SURVEY FEES BILL //
-  imageToShow11: any;
-  isImageLoading11: boolean = false;
-
-  reateImageFromBlob11(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShow11 = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChanged11(event: any) {
-    this.files = event.target.files;
-    this.postCrashImage11();
-  }
-
-  postCrashImage11() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient.post(IMAGEURL.FEESBILLING_URL, formData).subscribe(res => {
-      console.log(res);
-    });
-    setTimeout(() => {
-      this.getCrashImage11();
-    }, 1000);
-  }
-
-  getCrashImage11() {
-    this.isImageLoading11 = true;
-    this.wizardService.getSummarySurveyFeeImage().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.reateImageFromBlob11(data.Data[0].Image);
-        }
-        this.isImageLoading11 = false;
-      },
-      error => {
-        this.isImageLoading11 = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // SUMMARY FORM KYC DOC //
-  imageToShow12: any;
-  isImageLoading12: boolean = false;
-
-  reateImageFromBlob12(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShow12 = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChanged12(event: any) {
-    this.files = event.target.files;
-    this.postCrashImage12();
-  }
-
-  postCrashImage12() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient.post(IMAGEURL.KYCDOC_URL, formData).subscribe(res => {
-      console.log(res);
-    });
-    setTimeout(() => {
-      this.getCrashImage12();
-    }, 1000);
-  }
-
-  getCrashImage12() {
-    this.isImageLoading12 = true;
-    this.wizardService.getKycDocImage().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.reateImageFromBlob12(data.Data[0].Image);
-        }
-        this.isImageLoading12 = false;
-      },
-      error => {
-        this.isImageLoading12 = false;
-        console.log(error);
-      }
-    );
-  }
-
-  // DIGITAL SIGNATURE IMAGE //
-  imageToShow13: any;
-  isImageLoading13: boolean = false;
-
-  reateImageFromBlob13(image: Blob) {
-    let reader = new FileReader();
-    this.imageToShow13 = 'http://apiflacors.iflotech.in' + image;
-  }
-
-  onFileChanged13(event: any) {
-    this.files = event.target.files;
-    this.postCrashImage13();
-  }
-
-  postCrashImage13() {
-    const formData = new FormData();
-    formData.append('CaseID', this.caseId);
-    for (const file of this.files) {
-      formData.append(name, file, file.name);
-    }
-    this.httpClient.post(IMAGEURL.SIGNATURE_URL, formData).subscribe(res => {
-      console.log(res);
-    });
-    setTimeout(() => {
-      this.getCrashImage13();
-    }, 2000);
-  }
-
-  getCrashImage13() {
-    this.isImageLoading13 = true;
-    this.wizardService.getSignatureImage().subscribe(
-      data => {
-        if (data.Data[0] !== null && data.Data[0] !== undefined) {
-          this.reateImageFromBlob13(data.Data[0].CustSign);
-        }
-        this.isImageLoading13 = false;
-      },
-      error => {
-        this.isImageLoading13 = false;
-        console.log(error);
-      }
-    );
   }
 }

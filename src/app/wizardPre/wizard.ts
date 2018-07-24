@@ -12,6 +12,9 @@ import * as IMAGEURL from '../../shared/img.urls';
 import { DonwloadDialog } from '../sharedModule/shared.component';
 import { CompaniesService } from '../companies/companies.service';
 import { DashboardService } from '../dashboard/dashboard.service';
+import { SharedModuleServices } from '../sharedModule/shared.service';
+import { GenericGetImageResponseModel } from '../sharedModule/shared.model';
+import { CommonImageComponent } from '../sharedModule/images.component';
 
 @Component({
     selector: 'wizard-selector',
@@ -78,11 +81,14 @@ export class PreWizardComponent implements OnInit {
     openCreateCaseModal = false;
     createCaseDisabled = false;
     maxDateToday = new Date();
-    VehicleSearchData = [ ]
+    VehicleSearchData = [];
+    signatureImgUrl: string;
+    imageData : any;
+    imageBaseUrl = 'http://apiflacorev2.iflotech.in';
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService,
-        private dashboardService: DashboardService
+        private dashboardService: DashboardService, private sharedService: SharedModuleServices, private imageService: CommonImageComponent,
     ) {
 
         this.firstFormGroup = new FormGroup({
@@ -175,7 +181,46 @@ export class PreWizardComponent implements OnInit {
       });
     }
 
+    // =========================IMAGES FUNCNTIONS  START============================== //
+  postImage(file, typeCode) {
+    const ClaimImgPostpayload = {
+      CaseID: this.caseId,
+      ImageName: '',
+      CaseImageCode: typeCode,
+      CaseImageID: 1
+    };
+    this.imageService.postDetailImage(file, ClaimImgPostpayload);
+    setTimeout(() => {
+      this.getImage(typeCode);
+    }, 2000);
+  }
+
+  getImage(typeCode) {
+    const ClaimGetPayload = { CaseID: this.caseId, CaseImageCode: typeCode };
+    this.sharedService.getImages(ClaimGetPayload).subscribe(
+      (res: GenericGetImageResponseModel) => {
+        this.imageData = res.Data[0];
+        if (res && this.imageData != null) {
+          switch (typeCode) {
+            case 'PIDSG':
+              this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+              break;
+            default:
+              this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+          }
+        }
+      },
+      error => {
+        return error;
+      }
+    );
+  }
+
+  // =========================IMAGES FUNCNTIONS  END============================== //
+
     ngOnInit() {
+      this.getImage('PIDSG');
+
         this.Loader = false;
         const completedState = localStorage.getItem('IsCompleted');
         if( completedState != undefined) {
@@ -206,15 +251,11 @@ export class PreWizardComponent implements OnInit {
             this.getConclusion();
         }, 900);
         setTimeout(() => {
-            this.getCrashImage13();
-        }, 1200);
-
-        setTimeout(() => {
             this.getDamageDetails();
         }, 2000);
-        // setTimeout(() => {
-        //     this.getDamagePartList();
-        // }, 4000);
+        setTimeout(() => {
+            this.getDamagePartList();
+        }, 4000);
 
 
         this.seventhFormGroup = this._formBuilder.group({
@@ -248,8 +289,8 @@ export class PreWizardComponent implements OnInit {
                     this.RegSearchFailedMsg = false;
                     this.RegSearchSuccessMsg = true;
 
-                    var datedata = this.VehicleSearchData[0].regn_dt;
-                    var formatedDatestring = this.convertToDateFormat(datedata);
+                    const datedata = this.VehicleSearchData[0].regn_dt;
+                    const formatedDatestring = this.convertToDateFormat(datedata);
 
                     this.thirdFormGroup.controls['VehicleTypeID'].setValue('');
                     this.thirdFormGroup.controls['VehicleTypeName'].setValue('');
@@ -416,7 +457,7 @@ export class PreWizardComponent implements OnInit {
             .subscribe(res => {
                 if (res && res.Status == 200) {
                     this.VehicleDetailData = res.Data;
-                    if (this.VehicleDetailData.length > 0 || this.VehicleDetailData !== null || this.VehicleDetailData !== undefined) {
+                    if (this.VehicleDetailData && this.VehicleDetailData.length > 0 ) {
                       this.thirdFormGroup.controls['CaseID'].setValue(JSON.parse(this.caseId)),
                       this.thirdFormGroup.controls['VehicleTypeID'].setValue(this.VehicleDetailData[0].VehicleTypeID);
                       this.thirdFormGroup.controls['VehicleTypeName'].setValue(this.VehicleDetailData[0].VehicleTypeName);
@@ -724,48 +765,5 @@ export class PreWizardComponent implements OnInit {
                 }, 3000);
             })
         }
-    }
-
-
-    // DIGITAL SIGNATURE IMAGE //
-    imageToShow13: any;
-    isImageLoading13 = false;
-
-    reateImageFromBlob13(image: Blob) {
-        let reader = new FileReader();
-        this.imageToShow13 = 'http://apiflacors.iflotech.in' + image;
-    }
-
-    onFileChanged13(event: any) {
-        this.files = event.target.files;
-        this.postCrashImage13();
-    }
-
-    postCrashImage13() {
-        const formData = new FormData();
-        formData.append('CaseID', this.caseId);
-        for (const file of this.files) {
-            formData.append(name, file, file.name);
-        }
-        this.httpClient.post(IMAGEURL.SIGNATURE_URL_PRE, formData).subscribe(
-            res => {
-                console.log(res);
-            });
-        setTimeout(() => {
-            this.getCrashImage13();
-        }, 2000);
-    }
-
-    getCrashImage13() {
-        this.isImageLoading13 = true;
-        this.wizardService.pre_GetSignatureImage().subscribe(data => {
-            if (data.Data[0] !== null && data.Data[0] !== undefined) {
-                this.reateImageFromBlob13(data.Data[0].SURVEYORSIGN);
-            }
-            this.isImageLoading13 = false;
-        }, error => {
-            this.isImageLoading13 = false;
-            console.log(error);
-        });
     }
 }

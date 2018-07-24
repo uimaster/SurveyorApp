@@ -51,6 +51,7 @@ export class CreateComponent implements OnInit {
     this.Loader = false;
     this.myForm = this.fb.group({
       name: ['' , Validators.required],
+      userId: [0 , Validators.required],
       email: [
         '',
         [
@@ -68,8 +69,8 @@ export class CreateComponent implements OnInit {
       ],
       userType: ['', Validators.required],
       company: ['', Validators.required],
-      SurveyorsId: ['', Validators.required],
-      IsActive: ['', Validators.required]
+      surveyorsId: [0, Validators.required],
+      isActive: ['', Validators.required]
     });
     this.sub = this.route.params.subscribe((params: Params) => {
       this.userId = params['id'];
@@ -80,6 +81,7 @@ export class CreateComponent implements OnInit {
             console.log(data.Data);
             for (let i = 0; i < data.Data.length; i++) {
               if (data.Data[i].UserId == this.userId) {
+                this.myForm.controls['userId'].setValue(data.Data[i].UserId);
                 this.myForm.controls['name'].setValue(data.Data[i].Name);
                 this.myForm.controls['email'].setValue(data.Data[i].EmailId);
                 this.myForm.controls['password'].setValue('');
@@ -122,22 +124,23 @@ export class CreateComponent implements OnInit {
   }
 
   getUserType(event) {
+    debugger;
 
     if (event === 1) {
       this.myForm.controls['company'].setValue('');
-      this.myForm.controls['SurveyorsId'].setValue('');
+      this.myForm.controls['surveyorsId'].setValue('');
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
-      this.myForm.controls['SurveyorsId'].clearValidators();
-      this.myForm.controls['SurveyorsId'].updateValueAndValidity();
+      this.myForm.controls['surveyorsId'].clearValidators();
+      this.myForm.controls['surveyorsId'].updateValueAndValidity();
       this.companyDisabled = true;
       this.surveyorDisabled = true;
     } else if (event === 2) {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
-      this.myForm.controls['SurveyorsId'].setValue('');
-      this.myForm.controls['SurveyorsId'].clearValidators();
-      this.myForm.controls['SurveyorsId'].updateValueAndValidity();
+      this.myForm.controls['surveyorsId'].setValue('');
+      this.myForm.controls['surveyorsId'].clearValidators();
+      this.myForm.controls['surveyorsId'].updateValueAndValidity();
       this.myForm.controls['company'].setValidators(Validators.required);
       this.myForm.controls['company'].updateValueAndValidity();
     } else if (event === 3) {
@@ -146,16 +149,16 @@ export class CreateComponent implements OnInit {
       this.myForm.controls['company'].setValue('');
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
-      this.myForm.controls['SurveyorsId'].setValidators(Validators.required);
-      this.myForm.controls['SurveyorsId'].updateValueAndValidity();
+      this.myForm.controls['surveyorsId'].setValidators(Validators.required);
+      this.myForm.controls['surveyorsId'].updateValueAndValidity();
     } else if (event === 4) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
       this.myForm.controls['company'].setValue('');
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
-      this.myForm.controls['SurveyorsId'].setValidators(Validators.required);
-      this.myForm.controls['SurveyorsId'].updateValueAndValidity();
+      this.myForm.controls['surveyorsId'].setValidators(Validators.required);
+      this.myForm.controls['surveyorsId'].updateValueAndValidity();
     }
   }
 
@@ -169,14 +172,14 @@ export class CreateComponent implements OnInit {
     this.Loader = true;
     let formValues = formD.value;
     let bodyObj = {
-      UserId: this.userId,
+      UserId: formValues.userId,
       Name: formValues.name,
       EmailId: formValues.email,
       Password: formValues.password,
       UserTypeId: formValues.userType,
       CompanyId: formValues.company,
-      SurveyorsId: formValues.SurveyorsId,
-      IsActive: formValues.IsActive
+      SurveyorsId: formValues.surveyorsId,
+      IsActive: formValues.isActive
     };
 
     this.userService.addUser(bodyObj).subscribe(

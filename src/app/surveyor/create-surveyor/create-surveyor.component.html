@@ -35,11 +35,11 @@
       </mat-form-field> -->
 
       <mat-form-field>
-        <input matInput placeholder="Mobile Number" formControlName="MobileNo" required>
-        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('required') && myForm.controls['MobileNo'].touched">Mobile Number is required</mat-error>
-        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('pattern') && myForm.controls['MobileNo'].touched">Mobile Number Only Digits allowed</mat-error>
-        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('minlength') && myForm.controls['MobileNo'].touched">Mobile Number Should be minimum 10 digits</mat-error>
-        <mat-error *ngIf="myForm.controls['MobileNo'].hasError('maxlength') && myForm.controls['MobileNo'].touched">Mobile Number Should be maximum 10 digits</mat-error>
+        <input matInput placeholder="Mobile Number" formControlName="mobileNo" required>
+        <mat-error *ngIf="myForm.controls['mobileNo'].hasError('required') && myForm.controls['mobileNo'].touched">Mobile Number is required</mat-error>
+        <mat-error *ngIf="myForm.controls['mobileNo'].hasError('pattern') && myForm.controls['mobileNo'].touched">Mobile Number Only Digits allowed</mat-error>
+        <mat-error *ngIf="myForm.controls['mobileNo'].hasError('minlength') && myForm.controls['mobileNo'].touched">Mobile Number Should be minimum 10 digits</mat-error>
+        <mat-error *ngIf="myForm.controls['mobileNo'].hasError('maxlength') && myForm.controls['mobileNo'].touched">Mobile Number Should be maximum 10 digits</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -47,9 +47,17 @@
         <mat-error *ngIf="myForm.controls['landline'].hasError('pattern') && myForm.controls['landline'].touched">Only Digits allowed</mat-error>
       </mat-form-field>
 
-      <!-- <mat-form-field>
-        <input matInput placeholder="Area" formControlName="area" required>
-      </mat-form-field> -->
+      <mat-form-field>
+        <mat-select placeholder="Select Single Area" formControlName="areaId" >
+          <mat-option *ngFor="let area of areaList" [value]="area.AreaId">{{area.AreaName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Select Multiple Areas" formControlName="areaList" required multiple>
+          <mat-option *ngFor="let area of areaList" [value]="area.AreaId">{{area.AreaName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <mat-form-field>
         <input matInput placeholder="City" formControlName="city">
@@ -64,7 +72,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="LicenceExpiryDate" formControlName="LicenceExpiryDate" [matDatepicker]="picker">
+        <input matInput placeholder="LicenceExpiryDate" formControlName="licenceExpiryDate" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -85,7 +93,7 @@
         <mat-error *ngIf="myForm.controls['active'].hasError('required') && myForm.controls['active'].touched">Active is required</mat-error>
       </mat-form-field>
 
-      <div style="text-align: center; margin-top: 50px;">
+      <div style="text-align: center; margin-top: 50px; ">
           <a mat-raised-button style="color: #333;" type="button" routerLink="/surveyor" >Cancel</a>
           <button mat-raised-button color="primary" (click)="onSubmit(myForm.value);" mat-button [disabled]="myForm.invalid">Submit</button>
       </div>

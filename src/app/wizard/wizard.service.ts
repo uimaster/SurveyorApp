@@ -220,198 +220,13 @@ PostDamageDetails(payload: any): Observable<any> {
       .catch((error) => Observable.throw(error.json() || 'Server error'));
 }
 
-
-
-
-  // GET CLAIM IMAGE //
-  getDetailImg():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.CLAIMPOLICYIMG_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET DRIVER LICENSE IMAGE //
-  getDriverLicenseImg():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.DRIVERLICENSE_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
   // Upload Claim Form/Statement //
-  getClaimFormStatement():Observable<any>{
+  getClaimFormStatement(): Observable<any> {
     var CaseID= localStorage.getItem('CaseID');
     const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
     return this.http.get(IMAGEURL.CLAIMFORMSTATEMENT_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET FRONT IMAGE //
-  getFrontCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.FRONTCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET BACK IMAGE //
-  getBackCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.BACKCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET LEFT FRONT IMAGE //
-  getLeftFrontCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.LEFTFRONTCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET LEFT IMAGE //
-  getLeftCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.LEFTCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET LEFT REAR IMAGE //
-  getLeftRearCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.LEFTREARCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET RIGHT FRONT IMAGE //
-  getRightFrontCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.RIGHTFRONTCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET RIGHT IMAGE //
-  getRightCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.RIGHTCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET RIGHT REAR IMAGE //
-  getRightRearCrashImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.RIGHTREARCRASH_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET SUMMARY KYC ADDRESS IMAGE //
-  getKycAddressImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.KYCADDRESS_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET SUMMARY CLAIM FORM IMAGE //
-  getClaimFormImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.CLAIMFORM_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET SUMMARY SURVEY FEES BILL IMAGE //
-  getSummarySurveyFeeImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.FEESBILLING_URL, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
-  // GET SUMMARY KYC DOC IMAGE //
-  getKycDocImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.KYCDOC_URL, {params})
-        .map((res) =>{
-            if(res){
+        .map((res) => {
+            if (res) {
                 return res;
             }
         })
@@ -419,12 +234,12 @@ PostDamageDetails(payload: any): Observable<any> {
   }
 
   // GET SUMMARY REPORT DETAILS //
-  getSummaryReportDetails():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
+  getSummaryReportDetails(): Observable<any> {
+    const CaseID = localStorage.getItem('CaseID');
     const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
     return this.http.get(urls.GETSUMMARYREPORT_URL, {params})
-        .map((res) =>{
-            if(res){
+        .map((res) => {
+            if(res) {
                 return res;
             }
         })
@@ -433,7 +248,7 @@ PostDamageDetails(payload: any): Observable<any> {
 
   // GET DIGITAL SIGNATURE IMAGE //
   getSignatureImage(): Observable<any> {
-    var CaseID = localStorage.getItem('CaseID');
+    const CaseID = localStorage.getItem('CaseID');
     const params = new HttpParams().set('SurveyorsId', JSON.parse(CaseID));
     return this.http.get(IMAGEURL.SIGNATURE_URL, {params})
         .map((res) => {
@@ -446,7 +261,6 @@ PostDamageDetails(payload: any): Observable<any> {
 
   // GET generateSpotSurvey //
   generateSpotSurvey(caseid): Observable<any> {
-    var CaseID = localStorage.getItem('SpotCaseId');
     const params = new HttpParams().set('CaseID', JSON.parse(caseid));
     return this.http.get(urls.GENERATESPOTREPORT, {params})
         .map((res) => {
@@ -459,7 +273,6 @@ PostDamageDetails(payload: any): Observable<any> {
 
   // GET generate Pre Survey //
   generatePreSurvey(caseid): Observable<any> {
-    const CaseID = localStorage.getItem('PreCaseId');
     const params = new HttpParams().set('CaseID', JSON.parse(caseid));
     return this.http.get(urls.GENERATEPREREPORT, {params})
         .map((res) => {

@@ -78,17 +78,17 @@
 
 
         <mat-form-field>
-          <mat-select placeholder="Surveyor" formControlName="SurveyorsId" [disabled]="surveyorDisabled">
-              <mat-option *ngFor="let item of surveyorList" [value]="item.SurveyorsId">
+          <mat-select placeholder="Surveyor" formControlName="surveyorsId" [disabled]="surveyorDisabled">
+              <mat-option *ngFor="let item of surveyorList" [value]="item.surveyorsId">
                 {{item.Name}}
               </mat-option>
           </mat-select>
-          <mat-error *ngIf="myForm.controls['SurveyorsId'].hasError('required') && myForm.controls['SurveyorsId'].touched">Surveyor is required</mat-error>
+          <mat-error *ngIf="myForm.controls['surveyorsId'].hasError('required') && myForm.controls['surveyorsId'].touched">Surveyor is required</mat-error>
         </mat-form-field>
 
 
         <mat-form-field>
-          <mat-select placeholder="User Active" formControlName="IsActive" ([ngModel])="IsActive">
+          <mat-select placeholder="User Active" formControlName="isActive" ([ngModel])="isActive">
             <mat-option [value]="true">
               True
             </mat-option>
@@ -96,7 +96,7 @@
               false
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="myForm.controls['IsActive'].hasError('required') && myForm.controls['IsActive'].touched">Active is required</mat-error>
+          <mat-error *ngIf="myForm.controls['isActive'].hasError('required') && myForm.controls['isActive'].touched">Active is required</mat-error>
         </mat-form-field>
 
 

@@ -17,8 +17,8 @@
         </mat-form-field>
         <div class="mat-form-checkfield">
           <label>Policy Picture</label>
-          <input type="file" name="file" id="file" (change)="onFileChanged0($event)" class="custom-file-input" />
-          <img alt="" id="imageUrl" [src]="imageToShow" />
+          <input type="file" name="file" id="file" (change)="postImage($event, 'SPPOLICYNO')" class="custom-file-input" />
+          <img alt="" id="imageUrl" [src]="claimImgUrl" />
         </div>
         <mat-form-field>
           <mat-select placeholder="Company Name" formControlName="CompanyId">
@@ -238,8 +238,8 @@
         </mat-form-field>
         <div class="mat-form-checkfield">
           <label>Upload Driving License</label>
-          <input type="file" name="file" (change)="onFileChangedD($event)" class="custom-file-input" *ngIf="!IsCompleted" />
-          <img alt="" id="imageUrl" [src]="imageToShowD" />
+          <input type="file" name="file" (change)="postImage($event, 'SPDLNO')" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" id="imageUrl" [src]="driverImgUrl" />
         </div>
         <mat-form-field>
           <input matInput placeholder="Driver License Number" formControlName="DriverLicenseNo">
@@ -298,9 +298,9 @@
 
         <div class="mat-form-checkfield">
           <label>Upload Claim Form/Statement</label>
-          <input type="file" name="file" id="file" (change)="onFileChangedForm($event)" class="custom-file-input" *ngIf="!IsCompleted"
+          <input type="file" name="file" id="file" (change)="postImage($event, 'SPCLFRM')" class="custom-file-input" *ngIf="!IsCompleted"
           />
-          <img alt="" id="imageUrl" [src]="imageToShowForm" />
+          <img alt="" id="imageUrl" [src]="accidentImgUrl" />
         </div>
 
         <mat-form-field>
@@ -511,8 +511,8 @@
             <mat-radio-button value="Yes">Yes</mat-radio-button>
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
-          <img alt="" [src]="imageToShow10" />
-          <input type="file" name="" id="" (change)="onFileChanged10($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" [src]="claimImgUrl" />
+          <input type="file" name="" id="" (change)="postImage($event, 'SPPOLICYNO')" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>Survey Fees Bill</h5>
@@ -520,8 +520,8 @@
             <mat-radio-button value="Yes">Yes</mat-radio-button>
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
-          <img alt="" [src]="imageToShow11" />
-          <input type="file" name="" id="" (change)="onFileChanged11($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" [src]="summaryBillImgUrl" />
+          <input type="file" name="" id="" (change)="postImage($event, 'SPFEEBILL')" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>KYC Doc Identity</h5>
@@ -529,8 +529,8 @@
             <mat-radio-button value="Yes">Yes</mat-radio-button>
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
-          <img alt="" [src]="imageToShow12" />
-          <input type="file" name="" id="" (change)="onFileChanged12($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" [src]="summaryKYCDOCImgUrl" />
+          <input type="file" name="" id="" (change)="postImage($event, 'SPKYIDN')" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>KYC Address </h5>
@@ -538,8 +538,8 @@
             <mat-radio-button value="Yes">Yes</mat-radio-button>
             <mat-radio-button value="No" checked>No</mat-radio-button>
           </mat-radio-group>
-          <img alt="" [src]="imageToShow9" />
-          <input type="file" name="" id="" (change)="onFileChanged9($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" [src]="summaryKYCAddImgUrl" />
+          <input type="file" name="" id="" (change)="postImage($event, 'SPKYADD')" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div class="tabularData card">
           <h5>Driving License</h5>
@@ -585,7 +585,7 @@
         <div class="backdrop" *ngIf="showStatusList">
           <div class="tabularData card smallModal" style="width:40%; left:30%;">
             <h3 style="color: #333"> Please complete below listed pending steps! </h3>
-            <div class="alert success" style="width:auto; overflow: hidden;">
+            <div class="alert error" style="width:auto; overflow: hidden;">
 
               <div *ngFor="let item of StatusData">
                 <div *ngIf="StatusData[0].ClaimDetailsStatus==='No'" class="listItem">
@@ -665,8 +665,8 @@
 
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5>Upload Digital Signature</h5>
-          <img alt="" [src]="imageToShow13" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-          <input type="file" name="" id="" (change)="onFileChanged13($event)" class="custom-file-input" *ngIf="!IsCompleted" />
+          <img alt="" [src]="signatureImgUrl" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
+          <input type="file" name="" id=""  (change)="postImage($event, 'SPDSG')" class="custom-file-input" *ngIf="!IsCompleted" />
           <input type="hidden" formControlName="tenthCtrl" />
         </div>
         <div style="text-align: center; margin-top: 50px;">

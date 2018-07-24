@@ -7,11 +7,12 @@ import {MAT_DATE_LOCALE, MatButtonModule, MatCheckboxModule, MatInputModule} fro
 
 import { SharedModuleServices } from './shared.service';
 import { SharedComponent, DonwloadDialog } from './shared.component';
-
+// import { CommonImageComponent } from './images.component';
 @NgModule({
     declarations: [
         SharedComponent,
-        DonwloadDialog
+        DonwloadDialog,
+        // CommonImageComponent
     ],
     imports: [
       BrowserModule,
@@ -27,7 +28,8 @@ import { SharedComponent, DonwloadDialog } from './shared.component';
     entryComponents: [DonwloadDialog],
     exports: [
         SharedComponent,
-        DonwloadDialog
+        DonwloadDialog,
+        // CommonImageComponent
     ],
     providers: [SharedModuleServices]
   })

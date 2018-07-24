@@ -4,6 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {UsersService} from '../../users/users.service';
 import {Subscription} from 'rxjs/Subscription';
 import {SurveyorService} from '../surveyor.service';
+import { AreaService } from '../../area/area.service';
 
 @Component({
   selector: 'app-create-surveyor',
@@ -19,26 +20,31 @@ export class CreateSurveyorComponent implements OnInit {
   public showError = false;
   public showSuccess = false;
   public sub: Subscription;
-  public surveyorId: Number = 0;
+  public surveyorsId: Number = 0;
   Loader = true;
+  areaList = [];
 
-  constructor(private fb: FormBuilder, private surveyorService: SurveyorService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private surveyorService: SurveyorService, private router: Router, private route: ActivatedRoute,
+     private areaService: AreaService) { }
 
 
   ngOnInit() {
 
     this.Loader = false;
-
+    this.surveyorsId = JSON.parse(localStorage.getItem('SurveyorsId'));
+    console.log(this.surveyorsId);
     this.myForm = this.fb.group({
+      surveyorsId: [this.surveyorsId],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
-      MobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
+      mobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       landline: ['', Validators.pattern(/^[0-9]*$/)],
-      // area: [1, Validators.required],
+      areaId: [''],
+      areaList: ['', Validators.required],
       city: ['0'],
       address: [],
       licenseNo: [],
-      LicenceExpiryDate: [''],
+      licenceExpiryDate: [''],
       // expireDate: [null],
       GPSCordinates: [null],
       password: [''],
@@ -47,69 +53,74 @@ export class CreateSurveyorComponent implements OnInit {
 
     });
     this.sub = this.route.params.subscribe((params: Params) => {
-      this.surveyorId = params['id'];
+      this.surveyorsId = params['id'];
 
-      if(this.surveyorId > 0) {
+      if(this.surveyorsId > 0) {
         this.surveyorService.getSurveyorList().subscribe((data) => {
             const finalData =  data.Data;
 
             for (let i = 0; i < finalData.length;  i++) {
-              if (finalData[i].SurveyorsId == this.surveyorId) {
+              if (finalData[i].SurveyorsId == this.surveyorsId) {
+                this.myForm.controls['surveyorsId'].setValue(finalData[i].SurveyorId);
                 this.myForm.controls['name'].setValue(finalData[i].Name);
                 this.myForm.controls['email'].setValue(finalData[i].EmailId);
                 this.myForm.controls['password'].setValue('');
                 this.myForm.controls['MobileNo'].setValue(finalData[i].MobileNo);
                 this.myForm.controls['landline'].setValue(finalData[i].LandLine);
-                // this.myForm.controls['area'].setValue(finalData[i].AreaId);
+                this.myForm.controls['areaId'].setValue(finalData[i].AreaId);
+                this.myForm.controls['areaList'].setValue(finalData[i].AreaList);
                 //  this.myForm.controls['company'].setValue(finalData[i].COMPANY_ID);
                  this.myForm.controls['LicenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
                  this.myForm.controls['city'].setValue('0');
                   this.myForm.controls['address'].setValue(finalData[i].Address);
-                  this.myForm.controls['LicenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
+                  this.myForm.controls['licenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
                   this.myForm.controls['active'].setValue(finalData[i].IsActive);
                   this.myForm.controls['licenseNo'].setValue(finalData[i].LicenceNo);
                   this.myForm.controls['GPSCordinates'].setValue(finalData[i].GPSCordinates);
               }
             }
-          }, (error) => {
-
-          }
-        );
-      }
-
-
+          }, (error) => {}
+        )}
     });
-
+    this.getAreaList();
   }
 
+  getAreaList() {
+    this.areaService.getAreaList()
+      .subscribe(res => {
+        this.areaList = res.Data;
+    });
+  }
 
   onSubmit(formD) {
     this.Loader = true;
-    let bodyObj = {
-      'SurveyorsId': this.surveyorId,
+    const bodyObj = {
+      'SurveyorsId': formD.surveyorsId,
       'Name': formD.name,
       'EmailId': formD.email,
       'Password': formD.password,
       'MobileNo': formD.MobileNo,
       'LandLine': formD.landline,
-      // 'AreaId': formD.area,
+      'AreaId': formD.areaId,
+      'AreaList': formD.areaList,
       'CityId': '0',
       'Address': formD.address,
       'LicenceNo': formD.licenseNo,
-      'LicenceExpiryDate': formD.LicenceExpiryDate,
+      'LicenceExpiryDate': formD.licenceExpiryDate,
       // 'ExpireDate' :formD.expireDate.toLocaleDateString('en-GB'),
       'GPSCordinates': formD.GPSCordinates,
       // 'COMPANY_ID':formD.company,
       'IsActive': formD.active
     };
+    console.log(bodyObj);
 
     this.surveyorService.addSurveyor(bodyObj).subscribe (
       result => {
         // Handle result
-        if ( result.sms.StatusCode == 200) {
+        if ( result.Status == 200) {
           this.showSuccess = true;
           this.showError = false;
-          this.successMessage = result.sms.Message;
+          this.successMessage = result.Message;
           setTimeout(() => {
             this.router.navigate(['/surveyor']);
           }, 2000);
@@ -117,7 +128,7 @@ export class CreateSurveyorComponent implements OnInit {
         } else {
           this.showSuccess = false;
           this.showError = true;
-          this.errorMessage = result.sms.Message;
+          this.errorMessage = result.Message;
           this.Loader = false;
         }
       },

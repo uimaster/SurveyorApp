@@ -6,15 +6,15 @@ import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { SharedModuleServices } from '../sharedModule/shared.service';
 import { WizardService } from '../wizard/wizard.service';
-import { MULTIIMAGES_URL } from '../../shared/img.urls';
+import { POSTIMAGE_URL } from '../../shared/urls';
 
 @Component({
     selector: 'app-shared',
     templateUrl: './shared.component.html',
     styleUrls: ['./shared.component.scss']
 })
-export class SharedComponent implements OnInit {
 
+export class SharedComponent implements OnInit {
     public files: any[];
     caseId: any = localStorage.getItem('CaseID');
     fileList = [];
@@ -26,29 +26,34 @@ export class SharedComponent implements OnInit {
     showfileEmptyMsg = false;
     IsCompleted: boolean;
     multiImages: any;
+    multiImage: any;
+    isImageLoading = false;
+    imageBaseUrl = 'http://apiflacorev2.iflotech.in';
 
     constructor(private sharedService: SharedModuleServices, private http: HttpClient, public dialog: MatDialog,
         private wizardService: WizardService, private fb: FormBuilder) {
             this.uploadCrashImageForm = this.fb.group({
                 ImageName: new FormControl('', Validators.required)
-            })
+            });
         }
 
     ngOnInit() {
         this.getMultiImages();
         this.Loader = false;
-        let completedState = localStorage.getItem('IsCompleted');
-        if(completedState != undefined) {
+        const completedState = localStorage.getItem('IsCompleted');
+        if (completedState != undefined) {
             this.IsCompleted = JSON.parse(completedState);
         }
 
     }
 
+
+
     // DETAILS IMAGE //
 
     createImageFromBlob0(image: Blob) {
         let reader = new FileReader();
-        this.multiImages = 'http://apiflacors.iflotech.in' + image;
+        this.multiImages = this.imageBaseUrl + image;
     }
 
     openImageDialog(){
@@ -61,31 +66,31 @@ export class SharedComponent implements OnInit {
     onMultifileChange(event: any) {
         this.files = event.target.files;
     }
-    changeshowfileEmptyMsg(){
-        this.showfileEmptyMsg= false;
+    changeshowfileEmptyMsg() {
+        this.showfileEmptyMsg = false;
     }
-    multiImage: any;
-    isImageLoading = false;
+
 
     postMultiImage(data) {
-        let imageName = this.uploadCrashImageForm.controls['ImageName'].value;
-        if(this.files==undefined || this.files.length < 1 || imageName === null || imageName ==''){
+        const imageName = this.uploadCrashImageForm.controls['ImageName'].value;
+        if (this.files == undefined || this.files.length < 1 || imageName === null || imageName == '') {
             this.showfileEmptyMsg = true;
             return false;
-        }
-        else{
+        } else {
             this.showfileEmptyMsg = false;
             this.Loader = true;
             // let id = localStorage.getItem('CaseImageID');
-            this.CaseImageID
+
             const formData = new FormData();
             formData.append('CaseID', this.caseId);
-            formData.append('CaseImageID', this.CaseImageID || '0');
+            formData.append('ImageName', imageName);
+            formData.append('CaseImageCode', 'VHIMGS');
+            formData.append('CaseImageID', '1');
             for (const file of this.files) {
-                formData.append(name, file);
-                formData.append('ImageName', data.ImageName);
+              formData.append(name, file, file.name);
             }
-            this.http.post(MULTIIMAGES_URL, formData).subscribe(
+
+            this.http.post(POSTIMAGE_URL, formData).subscribe(
                 res => {
                     console.log(res);
                 });
@@ -111,9 +116,10 @@ export class SharedComponent implements OnInit {
 
     getMultiImages() {
         this.isImageLoading = true;
-        this.sharedService.getMultiImages().subscribe(data => {
+        this.sharedService.getMultiImages(this.caseId).subscribe(data => {
             if (data.Data[0] !== null && data.Data[0] !== undefined) {
                 this.fileList = data.Data;
+                console.log(this.fileList);
                 this.createImageFromBlob0(data.Data[0].Image);
             }
             this.isImageLoading = false;

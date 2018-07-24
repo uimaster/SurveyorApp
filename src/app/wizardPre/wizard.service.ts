@@ -174,19 +174,6 @@ export class PreWizardService {
           .catch((error) => Observable.throw(error.json() || 'Server error'));
     }
 
-  // GET DIGITAL SIGNATURE IMAGE //
-  pre_GetSignatureImage():Observable<any>{
-    var CaseID= localStorage.getItem('CaseID');
-    const params = new HttpParams().set('CaseID', JSON.parse(CaseID));
-    return this.http.get(IMAGEURL.SIGNATURE_URL_PRE, {params})
-        .map((res) =>{
-            if(res){
-                return res;
-            }
-        })
-        .catch((error) => Observable.throw('server Error.'));
-  }
-
   // GET generateSpotSurvey //
   pre_GenerateSpotSurvey():Observable<any>{
     var CaseID= localStorage.getItem('CaseID');
