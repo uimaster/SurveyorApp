@@ -208,7 +208,7 @@ GetDamagePartList(): Observable<any> {
 }
 
 PostDamageDetails(payload: any): Observable<any> {
-    return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE, payload)
+    return this.http.post(urls.WIZARD_DAMAGEDETAILSURL_PRE_POST, payload)
       .map((res: any) =>  {
         if (res) {
           return res;

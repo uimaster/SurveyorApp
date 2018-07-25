@@ -76,6 +76,7 @@ export class CreateComponent implements OnInit {
       this.userId = params['id'];
 
       if (this.userId > 0) {
+        debugger;
         this.userService.getUsersList().subscribe(
           data => {
             console.log(data.Data);
@@ -89,8 +90,8 @@ export class CreateComponent implements OnInit {
                 this.myForm.controls['password'].updateValueAndValidity();
                 this.myForm.controls['userType'].setValue(data.Data[i].UserTypeId);
                 this.myForm.controls['company'].setValue(data.Data[i].CompanyId);
-                this.myForm.controls['IsActive'].setValue(data.Data[i].IsActive);
-                this.myForm.controls['SurveyorsId'].setValue(
+                this.myForm.controls['isActive'].setValue(data.Data[i].IsActive);
+                this.myForm.controls['surveyorsId'].setValue(
                   data.Data[i].SurveyorsId
                 );
 
@@ -127,8 +128,8 @@ export class CreateComponent implements OnInit {
     debugger;
 
     if (event === 1) {
-      this.myForm.controls['company'].setValue('');
-      this.myForm.controls['surveyorsId'].setValue('');
+      // this.myForm.controls['company'].setValue('');
+      // this.myForm.controls['surveyorsId'].setValue('');
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
       this.myForm.controls['surveyorsId'].clearValidators();
@@ -138,7 +139,7 @@ export class CreateComponent implements OnInit {
     } else if (event === 2) {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
-      this.myForm.controls['surveyorsId'].setValue('');
+      // this.myForm.controls['surveyorsId'].setValue('');
       this.myForm.controls['surveyorsId'].clearValidators();
       this.myForm.controls['surveyorsId'].updateValueAndValidity();
       this.myForm.controls['company'].setValidators(Validators.required);
@@ -146,7 +147,7 @@ export class CreateComponent implements OnInit {
     } else if (event === 3) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
-      this.myForm.controls['company'].setValue('');
+      // this.myForm.controls['company'].setValue('');
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
       this.myForm.controls['surveyorsId'].setValidators(Validators.required);
@@ -154,7 +155,7 @@ export class CreateComponent implements OnInit {
     } else if (event === 4) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
-      this.myForm.controls['company'].setValue('');
+      // this.myForm.controls['company'].setValue('');
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
       this.myForm.controls['surveyorsId'].setValidators(Validators.required);
@@ -185,7 +186,7 @@ export class CreateComponent implements OnInit {
     this.userService.addUser(bodyObj).subscribe(
       result => {
         // Handle result
-        if (result.StatusCode == 200) {
+        if (result.Status == 200) {
           this.showSuccess = true;
           this.showError = false;
           this.successMessage = result.Message;

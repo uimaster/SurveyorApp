@@ -39,7 +39,7 @@ export class CreateSurveyorComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)]],
       mobileNo: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10), Validators.maxLength(10)]],
       landline: ['', Validators.pattern(/^[0-9]*$/)],
-      areaId: [''],
+      areaId: [0],
       areaList: ['', Validators.required],
       city: ['0'],
       address: [],
@@ -61,16 +61,17 @@ export class CreateSurveyorComponent implements OnInit {
 
             for (let i = 0; i < finalData.length;  i++) {
               if (finalData[i].SurveyorsId == this.surveyorsId) {
-                this.myForm.controls['surveyorsId'].setValue(finalData[i].SurveyorId);
+                debugger;                
+                this.myForm.controls['surveyorsId'].setValue(finalData[i].SurveyorsId);
                 this.myForm.controls['name'].setValue(finalData[i].Name);
                 this.myForm.controls['email'].setValue(finalData[i].EmailId);
                 this.myForm.controls['password'].setValue('');
-                this.myForm.controls['MobileNo'].setValue(finalData[i].MobileNo);
+                this.myForm.controls['mobileNo'].setValue(finalData[i].MobileNo);
                 this.myForm.controls['landline'].setValue(finalData[i].LandLine);
-                this.myForm.controls['areaId'].setValue(finalData[i].AreaId);
+                this.myForm.controls['areaId'].setValue(0);
                 this.myForm.controls['areaList'].setValue(finalData[i].AreaList);
                 //  this.myForm.controls['company'].setValue(finalData[i].COMPANY_ID);
-                 this.myForm.controls['LicenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
+                 this.myForm.controls['licenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
                  this.myForm.controls['city'].setValue('0');
                   this.myForm.controls['address'].setValue(finalData[i].Address);
                   this.myForm.controls['licenceExpiryDate'].setValue(finalData[i].LicenceExpiryDate);
@@ -93,15 +94,16 @@ export class CreateSurveyorComponent implements OnInit {
   }
 
   onSubmit(formD) {
+    debugger
     this.Loader = true;
     const bodyObj = {
       'SurveyorsId': formD.surveyorsId,
       'Name': formD.name,
       'EmailId': formD.email,
       'Password': formD.password,
-      'MobileNo': formD.MobileNo,
+      'MobileNo': formD.mobileNo,
       'LandLine': formD.landline,
-      'AreaId': formD.areaId,
+      'AreaId': 0,
       'AreaList': formD.areaList,
       'CityId': '0',
       'Address': formD.address,

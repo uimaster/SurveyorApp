@@ -72,6 +72,7 @@ export class SharedComponent implements OnInit {
 
 
     postMultiImage(data) {
+      debugger;
         const imageName = this.uploadCrashImageForm.controls['ImageName'].value;
         if (this.files == undefined || this.files.length < 1 || imageName === null || imageName == '') {
             this.showfileEmptyMsg = true;
@@ -85,7 +86,7 @@ export class SharedComponent implements OnInit {
             formData.append('CaseID', this.caseId);
             formData.append('ImageName', imageName);
             formData.append('CaseImageCode', 'VHIMGS');
-            formData.append('CaseImageID', '1');
+            formData.append('CaseImageID', data.CaseImageID || 0);
             for (const file of this.files) {
               formData.append(name, file, file.name);
             }

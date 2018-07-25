@@ -8,7 +8,7 @@
 
   <div class="tabularData card">
     <div *ngIf="showSuccess" class="alert success">
-      {{successMessage}}
+      Surveyor Create/Update {{successMessage}}fully.
     </div>
     <div *ngIf="showError" class="alert error">
       {{errorMessage}}
@@ -47,11 +47,11 @@
         <mat-error *ngIf="myForm.controls['landline'].hasError('pattern') && myForm.controls['landline'].touched">Only Digits allowed</mat-error>
       </mat-form-field>
 
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-select placeholder="Select Single Area" formControlName="areaId" >
           <mat-option *ngFor="let area of areaList" [value]="area.AreaId">{{area.AreaName}}</mat-option>
         </mat-select>
-      </mat-form-field>
+      </mat-form-field> -->
 
       <mat-form-field>
         <mat-select placeholder="Select Multiple Areas" formControlName="areaList" required multiple>
@@ -70,9 +70,12 @@
       <mat-form-field>
         <input matInput placeholder="licenseNo" formControlName="licenseNo">
       </mat-form-field>
+      <mat-form-field style="display: none">
+        <input matInput placeholder="licenseNo" formControlName="surveyorsId">
+      </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="LicenceExpiryDate" formControlName="licenceExpiryDate" [matDatepicker]="picker">
+        <input matInput placeholder="licenceExpiryDate" formControlName="licenceExpiryDate" [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
