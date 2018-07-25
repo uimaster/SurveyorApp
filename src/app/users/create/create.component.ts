@@ -67,8 +67,8 @@ export class CreateComponent implements OnInit {
           Validators.minLength(5)
         ]
       ],
-      userType: ['', Validators.required],
-      company: ['', Validators.required],
+      userType: ['0', Validators.required],
+      company: ['0', Validators.required],
       surveyorsId: [0, Validators.required],
       isActive: ['', Validators.required]
     });
@@ -76,7 +76,6 @@ export class CreateComponent implements OnInit {
       this.userId = params['id'];
 
       if (this.userId > 0) {
-        debugger;
         this.userService.getUsersList().subscribe(
           data => {
             console.log(data.Data);
@@ -125,11 +124,9 @@ export class CreateComponent implements OnInit {
   }
 
   getUserType(event) {
-    debugger;
-
     if (event === 1) {
-      // this.myForm.controls['company'].setValue('');
-      // this.myForm.controls['surveyorsId'].setValue('');
+      this.myForm.controls['company'].setValue(0);
+      this.myForm.controls['surveyorsId'].setValue(0);
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
       this.myForm.controls['surveyorsId'].clearValidators();
@@ -139,7 +136,7 @@ export class CreateComponent implements OnInit {
     } else if (event === 2) {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
-      // this.myForm.controls['surveyorsId'].setValue('');
+      this.myForm.controls['surveyorsId'].setValue(0);
       this.myForm.controls['surveyorsId'].clearValidators();
       this.myForm.controls['surveyorsId'].updateValueAndValidity();
       this.myForm.controls['company'].setValidators(Validators.required);
@@ -147,7 +144,7 @@ export class CreateComponent implements OnInit {
     } else if (event === 3) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
-      // this.myForm.controls['company'].setValue('');
+      this.myForm.controls['company'].setValue(0);
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
       this.myForm.controls['surveyorsId'].setValidators(Validators.required);
@@ -155,7 +152,7 @@ export class CreateComponent implements OnInit {
     } else if (event === 4) {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
-      // this.myForm.controls['company'].setValue('');
+      this.myForm.controls['company'].setValue(0);
       this.myForm.controls['company'].clearValidators();
       this.myForm.controls['company'].updateValueAndValidity();
       this.myForm.controls['surveyorsId'].setValidators(Validators.required);

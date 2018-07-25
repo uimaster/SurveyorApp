@@ -109,6 +109,7 @@ export class WizardComponent implements OnInit {
   showStatusList = false;
   openCreateCaseModal = false;
   imageData: any;
+  showSignBroseBtn = true;
 
   // images scr ulrs //
 
@@ -142,7 +143,7 @@ export class WizardComponent implements OnInit {
       Policy_Start_Date: new FormControl(''),
       Policy_End_Date: new FormControl(''),
       Policy_Type: new FormControl(''),
-      Policy_Value: new FormControl(''),
+      Policy_Value: new FormControl('', Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
       UserID: new FormControl('', Validators.required),
       InsuredName: new FormControl('', Validators.required),
       InsuredAddress: new FormControl('', Validators.required),
@@ -182,14 +183,14 @@ export class WizardComponent implements OnInit {
       Model: new FormControl(''),
       MgfYear: new FormControl(''),
       Color: new FormControl(''),
-      OdometerReading: new FormControl(''),
+      OdometerReading: new FormControl('', Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
       Hypo: new FormControl(''),
       RegisteredOwner: new FormControl(''),
       Transfer_Date: new FormControl(''),
       Class_Vehicle: new FormControl(''),
       Pre_Accident_Condition: new FormControl(''),
-      Laden_Wt: new FormControl(''),
-      Unladen_Wt: new FormControl(''),
+      Laden_Wt: new FormControl('', Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+      Unladen_Wt: new FormControl('',  Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
       CNG_KIT_Status: new FormControl(''),
       Permit_Area: new FormControl(''),
       Road_Tax_ValidUpto: new FormControl(''),
@@ -377,6 +378,7 @@ export class WizardComponent implements OnInit {
       (res: GenericGetImageResponseModel) => {
         this.imageData = res.Data[0];
         if (res && this.imageData != null) {
+          localStorage.setItem('showSignBroseBtn', 'true');
           switch (typeCode) {
             case 'SPCLFRM':
               this.accidentImgUrl = this.imageBaseUrl + this.imageData.Image;
@@ -398,6 +400,7 @@ export class WizardComponent implements OnInit {
               break;
             case 'SPDSG':
               this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+              //localStorage.setItem('showSignBroseBtn', 'false');
               break;
             default:
             this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
@@ -428,6 +431,7 @@ export class WizardComponent implements OnInit {
     // get image Signature details //
     this.getImage('SPDSG');
 
+    // this.showSignBroseBtn = JSON.parse(localStorage.getItem('showSignBroseBtn'));
 
     this.Loader = false;
     const completedState = localStorage.getItem('IsCompleted');

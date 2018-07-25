@@ -41,6 +41,8 @@ export class DashboardComponent implements OnInit {
   userId = 0;
   noUserMsg = false;
   public searchText = '';
+  showError = false;
+  errorMessage: string;
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
@@ -68,14 +70,18 @@ export class DashboardComponent implements OnInit {
   createCaseInit() {
     const SurveyorsId = localStorage.getItem('SurveyorsId');
     const companyId = localStorage.getItem('CompanyId');
-    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
-    // this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(SurveyorsId));
-    // this.createCaseForm.controls['CompanyId'].setValue(JSON.parse(companyId));
+    const userTypeId = JSON.parse(localStorage.getItem('SurveyorsId'));
+    // this.createCaseForm.controls['SurveyorsId'].setValue(0);
+    this.createCaseForm.controls['CompanyId'].setValue(0);
+    this.createCaseForm.controls['UserID'].setValue(0);
+    this.createCaseForm.controls['AreaID'].setValue(0);
+    this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(userTypeId));
 
     if (userTypeId === 1) {
       this.companyDisabled = false;
       this.surveyorDisabled = false;
       this.userDisabled = true;
+      this.createCaseForm.controls['SurveyorsId'].setValue(0);
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
@@ -84,6 +90,8 @@ export class DashboardComponent implements OnInit {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
       this.userDisabled = true;
+      this.createCaseForm.controls['SurveyorsId'].setValue(0);
+      this.createCaseForm.controls['CompanyId'].setValue(JSON.parse(companyId));
       this.createCaseForm.controls['CompanyId'].clearValidators();
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
@@ -94,6 +102,7 @@ export class DashboardComponent implements OnInit {
       this.userDisabled = false;
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
+      // this.createCaseForm.controls['SurveyorsId'].setValue(SurveyorsId);
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 4) {
@@ -146,7 +155,7 @@ export class DashboardComponent implements OnInit {
   getProcessList() {
     this.tabsServices.getProcessList(this.userId)
     .subscribe(res => {
-      if(res && res.Status === '200') {
+      if (res && res.Status === '200') {
         this.TotalDada = res.Data;
         if (this.TotalDada.length > 0) {
           this.showProcessButtton = true;
@@ -208,6 +217,10 @@ export class DashboardComponent implements OnInit {
 
   closeCreateCase() {
     this.openCreateCaseModal = false;
+    this.createCaseForm.controls['SurveyorsId'].setValue(0);
+    this.createCaseForm.controls['CompanyId'].setValue(0);
+    this.createCaseForm.controls['UserID'].setValue(0);
+    this.createCaseForm.controls['AreaID'].setValue(0);
   }
 
   createSpotCase(data) {
@@ -215,9 +228,11 @@ export class DashboardComponent implements OnInit {
     .subscribe(res => {
       if (res && res.Status === '200') {
         let Data = res.Data[0];
+        this.showError = false;
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       } else {
-        alert(res.Message);
+        this.errorMessage = res.Message;
+        this.showError = true;
       }
     });
   }
@@ -227,9 +242,11 @@ export class DashboardComponent implements OnInit {
     .subscribe(res => {
       if (res && res.Status === '200') {
         let Data = res.Data[0];
+        this.showError = false;
         this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
       } else {
-        alert(res.Message);
+        this.errorMessage = res.Message;
+        this.showError = true;
       }
     });
   }
@@ -257,7 +274,7 @@ export class DashboardComponent implements OnInit {
     });
     this.sharedModuleServices.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
       if (res) {
-          alert('You have' + res.Message+'fully converted completed to UnderProcess case.');
+          alert('You have' + res.Message + 'fully converted completed to UnderProcess case.');
           this.getDashboardList();
       } else {
         alert(res.Message);

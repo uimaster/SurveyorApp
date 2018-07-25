@@ -28,8 +28,12 @@
         </h2>
         <hr style="margin-bottom: 10px; "/>
 
-        <div *ngIf="noUserMsg" class="alert error" style="width: 100%; padding: 0;">
+        <div *ngIf="noUserMsg" class="alert error" style="width: 100%; padding: 0 10px;">
           <p style="font-weight: normal">No users created for survyor, Please create Users to Create Case.</p>
+        </div><br/>
+
+        <div *ngIf="showError" class="alert error" style="width: 100%; padding: 0 10px;">
+          <p style="font-weight: normal">{{errorMessage}}</p>
         </div><br/>
 
 

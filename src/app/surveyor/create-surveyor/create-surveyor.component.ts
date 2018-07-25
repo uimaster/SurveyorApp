@@ -61,7 +61,6 @@ export class CreateSurveyorComponent implements OnInit {
 
             for (let i = 0; i < finalData.length;  i++) {
               if (finalData[i].SurveyorsId == this.surveyorsId) {
-                debugger;                
                 this.myForm.controls['surveyorsId'].setValue(finalData[i].SurveyorsId);
                 this.myForm.controls['name'].setValue(finalData[i].Name);
                 this.myForm.controls['email'].setValue(finalData[i].EmailId);
@@ -94,7 +93,6 @@ export class CreateSurveyorComponent implements OnInit {
   }
 
   onSubmit(formD) {
-    debugger
     this.Loader = true;
     const bodyObj = {
       'SurveyorsId': formD.surveyorsId,

@@ -38,6 +38,7 @@ export class PreWizardComponent implements OnInit {
     damagePartList = [];
     postResponseData = [];
     successMessage: string;
+    maxDateToday = new Date();
     errorMessage: string;
     showError = false;
     showSuccess = false;
@@ -80,7 +81,7 @@ export class PreWizardComponent implements OnInit {
     showStatusList = false;
     openCreateCaseModal = false;
     createCaseDisabled = false;
-    maxDateToday = new Date();
+    showSignBroseBtn = true;
     VehicleSearchData = [];
     signatureImgUrl: string;
     imageData : any;
@@ -107,7 +108,7 @@ export class PreWizardComponent implements OnInit {
             InspectionDate: new FormControl('', Validators.required),
             InspectionTime: new FormControl('', Validators.required),
             InspectionLocation: new FormControl(''),
-            InspectionGeoCodes: new FormControl(''),
+            InspectionGeoCodes: new FormControl({value: '', disabled: true}),
             SurveyStatusID: new FormControl(''),
         });
 
@@ -132,8 +133,8 @@ export class PreWizardComponent implements OnInit {
             Transfer_Date: new FormControl(''),
             Class_Vehicle: new FormControl(''),
             Pre_Accident_Condition: new FormControl(''),
-            Laden_Wt: new FormControl(''),
-            Unladen_Wt: new FormControl(''),
+            Laden_Wt: new FormControl('', Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
+            Unladen_Wt: new FormControl('',  Validators.pattern(/^-?(0|[1-9]\d*)?$/)),
             CNG_KIT_Status: new FormControl(''),
             Permit_Area: new FormControl(''),
             Road_Tax_ValidUpto: new FormControl(''),
@@ -152,7 +153,7 @@ export class PreWizardComponent implements OnInit {
             ProposedInsured: new FormControl('', Validators.required),
             CaseRemarks: new FormControl(''),
             PolicyType: new FormControl(''),
-            PolicyValue: new FormControl('')
+            PolicyValue: new FormControl('', Validators.pattern(/^-?(0|[1-9]\d*)?$/))
         });
 
         this.eightthFormGroup = new FormGroup({
@@ -190,6 +191,7 @@ export class PreWizardComponent implements OnInit {
       CaseImageID: 1
     };
     this.imageService.postDetailImage(file, ClaimImgPostpayload);
+    this.showSignBroseBtn = false;
     setTimeout(() => {
       this.getImage(typeCode);
     }, 2000);
@@ -204,9 +206,11 @@ export class PreWizardComponent implements OnInit {
           switch (typeCode) {
             case 'PIDSG':
               this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+             // localStorage.setItem('showSignBroseBtn', 'false');
               break;
             default:
-              this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+              console.log('No image items are available');
+              // this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
           }
         }
       },
@@ -220,7 +224,7 @@ export class PreWizardComponent implements OnInit {
 
     ngOnInit() {
       this.getImage('PIDSG');
-
+     // this.showSignBroseBtn = JSON.parse(localStorage.getItem('showSignBroseBtn'));
         this.Loader = false;
         const completedState = localStorage.getItem('IsCompleted');
         if( completedState != undefined) {

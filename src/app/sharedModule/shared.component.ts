@@ -72,7 +72,6 @@ export class SharedComponent implements OnInit {
 
 
     postMultiImage(data) {
-      debugger;
         const imageName = this.uploadCrashImageForm.controls['ImageName'].value;
         if (this.files == undefined || this.files.length < 1 || imageName === null || imageName == '') {
             this.showfileEmptyMsg = true;

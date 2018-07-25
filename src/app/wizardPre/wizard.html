@@ -55,7 +55,7 @@
           <input matInput placeholder="Inspection Location" formControlName="InspectionLocation">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Inspection Geo Codes" formControlName="InspectionGeoCodes">
+          <input matInput placeholder="Inspection Geo Codes" formControlName="InspectionGeoCodes"/>
         </mat-form-field>
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
@@ -153,9 +153,11 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Laden Weight" formControlName="Laden_Wt">
+          <mat-error *ngIf="thirdFormGroup.controls['Laden_Wt'].hasError('pattern') && thirdFormGroup.controls['Laden_Wt'].touched">Please enter Numeric  value only.</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Unladen Weight" formControlName="Unladen_Wt">
+          <mat-error *ngIf="thirdFormGroup.controls['Unladen_Wt'].hasError('pattern') && thirdFormGroup.controls['Unladen_Wt'].touched">Please enter Numeric  value only.</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="CNG KIT Status" formControlName="CNG_KIT_Status">
@@ -163,8 +165,11 @@
         <mat-form-field>
           <input matInput placeholder="Permit Area" formControlName="Permit_Area">
         </mat-form-field>
+
         <mat-form-field>
-          <input matInput placeholder="Road Tax ValidUpto" formControlName="Road_Tax_ValidUpto">
+          <input matInput placeholder="Road Tax ValidUpto" formControlName="Road_Tax_ValidUpto" [min]="maxDateToday" required [matDatepicker]="Road_Tax_ValidUpto">
+          <mat-datepicker-toggle matSuffix [for]="Road_Tax_ValidUpto"></mat-datepicker-toggle>
+          <mat-datepicker #Road_Tax_ValidUpto></mat-datepicker>
         </mat-form-field>
 
         <div style="text-align: center; margin-top: 50px;">
@@ -205,6 +210,7 @@
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="IDV Value" formControlName="PolicyValue">
+          <mat-error *ngIf="ninethFormGroup.controls['PolicyValue'].hasError('pattern') && ninethFormGroup.controls['PolicyValue'].touched">Please enter Numeric  value only.</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -356,7 +362,7 @@
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5 style="color:#333;">Upload Surveyor Signature</h5>
           <img alt="" [src]="signatureImgUrl" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-          <input type="file" name="" id="" (change)="postImage($event, 'PIDSG')" class="custom-file-input" *ngIf="!IsCompleted" />
+          <input type="file" name="" id="" (change)="postImage($event, 'PIDSG')" class="custom-file-input" *ngIf="!IsCompleted" [disabled]="!showSignBroseBtn" />
         </div>
         <div style="text-align: center; margin-top: 50px;">
           <button mat-raised-button matStepperPrevious>Back</button>
