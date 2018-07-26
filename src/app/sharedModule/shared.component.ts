@@ -85,7 +85,7 @@ export class SharedComponent implements OnInit {
             formData.append('CaseID', this.caseId);
             formData.append('ImageName', imageName);
             formData.append('CaseImageCode', 'VHIMGS');
-            formData.append('CaseImageID', data.CaseImageID || 0);
+            formData.append('CaseImageID', this.CaseImageID || 0);
             for (const file of this.files) {
               formData.append(name, file, file.name);
             }
@@ -109,9 +109,10 @@ export class SharedComponent implements OnInit {
 
     }
     updateImgRadio(data) {
-        this.showUpdateBtn = true;
-        this.CaseImageID = data.CaseImageID;
-        this.uploadCrashImageForm.controls['ImageName'].setValue(data.ImageName);
+      debugger;
+      this.showUpdateBtn = true;
+      this.CaseImageID = data.CaseImageID;
+      this.uploadCrashImageForm.controls['ImageName'].setValue(data.ImageName);
     }
 
     getMultiImages() {
@@ -161,18 +162,18 @@ export class DonwloadDialog implements OnInit {
         }, 1000);
     }
     ngOnInit() {
-        this.downloadSpotSurvey();
+        //this.downloadSpotSurvey(caseId, caseTypeId);
     }
     toShowSecondData() {
       this.dialogRef.close();
       this.router.navigate(['/dashboard']);
     }
 
-    downloadSpotSurvey() {
-        const CaseID = localStorage.getItem('CaseID');
-        const baseurl = 'http://apiflacors.iflotech.in/api/DownloadReport/getSpotSurveyReport?CaseID=';
-        this.downloadUrl = baseurl + CaseID;
-    }
+    // downloadSpotSurvey(caseId, caseTypeId) {
+    //     debugger;        
+    //     const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';       
+    //     this.downloadUrl = baseurl + caseId +'&&CaseTypeId='+ caseTypeId;
+    // }
 
     PostSpotCompletion(data) {
 

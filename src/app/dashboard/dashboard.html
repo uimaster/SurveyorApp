@@ -113,7 +113,7 @@
           <td>{{item.CaseTypeName}}</td>
           <td>{{item.SurveyStatusName}}</td>
           <td>
-            <a *ngIf="completedCasebuttons" [disabled]="item.SurveyStatusName !='Completed'" mat-raised-button color="primary" title="DownLoad Report" target="_blank" (click)="downloadSpotSurvey(item.CaseID)"
+            <a *ngIf="completedCasebuttons" [disabled]="item.SurveyStatusName !='Completed'" mat-raised-button color="primary" title="DownLoad Report" target="_blank" (click)="downloadSpotSurvey(item.CaseID, item.CaseTypeId)"
               href="{{downloadUrl}}">
               <i class="material-icons">
                 assignment_returned

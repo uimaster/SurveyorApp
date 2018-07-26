@@ -213,6 +213,9 @@ export class PreWizardComponent implements OnInit {
               // this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
           }
         }
+        if (this.signatureImgUrl !== undefined) {
+          this.showSignBroseBtn = false;
+        }
       },
       error => {
         return error;

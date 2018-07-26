@@ -350,8 +350,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  downloadSpotSurvey(caseid) {
-    const baseurl = 'http://apiflacorev2.iflotech.in/api/Reports/DownloadSPReportPDF?CaseID=';
-    this.downloadUrl = baseurl + caseid;
+  // downloadSpotSurvey(caseid) {
+  //   const baseurl = 'http://apiflacorev2.iflotech.in/api/Reports/DownloadSPReportPDF?CaseID=';
+  //   this.downloadUrl = baseurl + caseid;
+  // }
+
+  downloadSpotSurvey(caseId, caseTypeId) {
+    const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';       
+    this.downloadUrl = baseurl + caseId +'&CaseTypeId='+ caseTypeId;
   }
 }

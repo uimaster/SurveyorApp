@@ -367,6 +367,7 @@ export class WizardComponent implements OnInit {
       CaseImageID: 1
     };
     this.imageService.postDetailImage(file, ClaimImgPostpayload);
+    this.showSignBroseBtn = false;
     setTimeout(() => {
       this.getImage(typeCode);
     }, 2000);
@@ -400,11 +401,13 @@ export class WizardComponent implements OnInit {
               break;
             case 'SPDSG':
               this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
-              //localStorage.setItem('showSignBroseBtn', 'false');
               break;
             default:
             this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
           }
+        }
+        if (this.signatureImgUrl !== undefined) {
+          this.showSignBroseBtn = false;
         }
       },
       error => {
@@ -431,7 +434,7 @@ export class WizardComponent implements OnInit {
     // get image Signature details //
     this.getImage('SPDSG');
 
-    // this.showSignBroseBtn = JSON.parse(localStorage.getItem('showSignBroseBtn'));
+
 
     this.Loader = false;
     const completedState = localStorage.getItem('IsCompleted');
