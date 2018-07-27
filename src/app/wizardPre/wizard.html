@@ -193,6 +193,12 @@
           <input matInput placeholder="Proposer Name" formControlName="CaseProposerName">
         </mat-form-field>
 
+        <div class="mat-form-checkfield">
+          <label>Inspecting office  Signature:</label>
+          <input type="file" name="file" (change)="postImage($event, 'PICUST')" class="custom-file-input" />
+          <img alt="" id="imageUrl" [src]="customSignUrl" />
+        </div>
+
         <mat-form-field>
           <mat-select placeholder="Previous Insurer Name" formControlName="CurrentInsurerName">
             <mat-option *ngFor="let item of companyListData" [value]="item.Name">
@@ -301,7 +307,7 @@
 
         <div class="backdrop" *ngIf="uploadImageModal">
           <div class="smallModal">
-            <h4> Add Damage Details</h4>
+            <h4> Add Damage Details <a href="javascript:void(0)"><i class="material-icons" style="float:right; font-size:40px; color: #676767;" (click)="closeImageModal()"> cancel </i></a></h4>
             <div style="max-height: 450px; overflow: auto; padding: 10px;">
               <mat-accordion class="example-headers-align" *ngIf="damagePartList.length > 0">
                 <mat-expansion-panel hideToggle="false" *ngFor="let item of damagePartList; let i = index;" [expanded]="allExpandState">
@@ -345,7 +351,7 @@
               <p *ngIf="damagePartList.length < 1">No part list available !</p>
             </div>
             <br/>
-            <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button>
+            <!-- <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button> -->
           </div>
         </div>
 

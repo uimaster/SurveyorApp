@@ -12,6 +12,7 @@ export class CommonImageComponent {
   getImageData: imageModels.GetImageResponse;
   isImageLoading = false;
   data = {};
+  Loader = true;
 
   constructor( private sharedService: SharedModuleServices, private httpClient: HttpClient) {}
 

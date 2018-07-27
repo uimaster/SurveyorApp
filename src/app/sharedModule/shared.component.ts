@@ -64,12 +64,19 @@ export class SharedComponent implements OnInit {
     }
 
     onMultifileChange(event: any) {
-        this.files = event.target.files;
+      const file = event.target.value;
+      const allowedFiles = ['.gif', '.jpg', '.jpeg', '.png'];
+      const regex = new RegExp('([a-zA-Z0-9\s_\\.\-:])+(' + allowedFiles.join('|') + ')$');
+      if (!regex.exec(file)) {
+        alert('Please upload ' + allowedFiles.join(', ') + ' files only.');
+        this.Loader = false;
+        return false;
+      }
+      this.files = event.target.files;
     }
     changeshowfileEmptyMsg() {
         this.showfileEmptyMsg = false;
     }
-
 
     postMultiImage(data) {
         const imageName = this.uploadCrashImageForm.controls['ImageName'].value;
@@ -77,39 +84,37 @@ export class SharedComponent implements OnInit {
             this.showfileEmptyMsg = true;
             return false;
         } else {
-            this.showfileEmptyMsg = false;
-            this.Loader = true;
-            // let id = localStorage.getItem('CaseImageID');
 
-            const formData = new FormData();
-            formData.append('CaseID', this.caseId);
-            formData.append('ImageName', imageName);
-            formData.append('CaseImageCode', 'VHIMGS');
-            formData.append('CaseImageID', this.CaseImageID || 0);
-            for (const file of this.files) {
-              formData.append(name, file, file.name);
-            }
-
-            this.http.post(POSTIMAGE_URL, formData).subscribe(
-                res => {
-                    console.log(res);
-                });
-            setTimeout(() => {
-                this.getMultiImages();
-
-            }, 1000);
-            this.Loader = false;
-            this.showUpdateBtn = false;
-            this.uploadImageModal = false;
-            // localStorage.setItem('CaseImageID', id);
+        this.showfileEmptyMsg = false;
+        this.Loader = true;
+        const formData = new FormData();
+        formData.append('CaseID', this.caseId);
+        formData.append('ImageName', imageName);
+        formData.append('CaseImageCode', 'VHIMGS');
+        formData.append('CaseImageID', this.CaseImageID || 0);
+        for (const file of this.files) {
+          formData.append(name, file, file.name);
         }
-        this.files = [];
-        this.uploadCrashImageForm.controls['ImageName'].setValue('');
-        this.CaseImageID = '';
+
+        this.http.post(POSTIMAGE_URL, formData).subscribe(
+            res => {
+                console.log(res);
+            });
+        setTimeout(() => {
+            this.getMultiImages();
+
+        }, 1000);
+        this.Loader = false;
+        this.showUpdateBtn = false;
+        this.uploadImageModal = false;
+        // localStorage.setItem('CaseImageID', id);
+      }
+      this.files = [];
+      this.uploadCrashImageForm.controls['ImageName'].setValue('');
+      this.CaseImageID = '';
 
     }
     updateImgRadio(data) {
-      debugger;
       this.showUpdateBtn = true;
       this.CaseImageID = data.CaseImageID;
       this.uploadCrashImageForm.controls['ImageName'].setValue(data.ImageName);
@@ -124,8 +129,10 @@ export class SharedComponent implements OnInit {
                 this.createImageFromBlob0(data.Data[0].Image);
             }
             this.isImageLoading = false;
+            this.Loader = false;
         }, error => {
             this.isImageLoading = false;
+            this.Loader = false;
             console.log(error);
         });
     }
@@ -162,18 +169,12 @@ export class DonwloadDialog implements OnInit {
         }, 1000);
     }
     ngOnInit() {
-        //this.downloadSpotSurvey(caseId, caseTypeId);
+        // this.downloadSpotSurvey(caseId, caseTypeId);
     }
     toShowSecondData() {
       this.dialogRef.close();
       this.router.navigate(['/dashboard']);
     }
-
-    // downloadSpotSurvey(caseId, caseTypeId) {
-    //     debugger;        
-    //     const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';       
-    //     this.downloadUrl = baseurl + caseId +'&&CaseTypeId='+ caseTypeId;
-    // }
 
     PostSpotCompletion(data) {
 

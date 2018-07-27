@@ -359,24 +359,38 @@ export class WizardComponent implements OnInit {
   }
 
   // =========================IMAGES FUNCNTIONS  START============================== //
-  postImage(file, typeCode) {
+  postImage(files, typeCode) {
+    this.Loader = true;
+    const file = files.target.value;
     const ClaimImgPostpayload = {
       CaseID: this.caseId,
       ImageName: '',
       CaseImageCode: typeCode,
       CaseImageID: 1
     };
-    this.imageService.postDetailImage(file, ClaimImgPostpayload);
+
+    const allowedFiles = ['.gif', '.jpg', '.jpeg', '.png'];
+    const regex = new RegExp('([a-zA-Z0-9\s_\\.\-:])+(' + allowedFiles.join('|') + ')$');
+    if (!regex.exec(file)) {
+      alert('Please upload ' + allowedFiles.join(', ') + ' files only.');
+      this.Loader = false;
+      return false;
+    }
+    this.imageService.postDetailImage(files, ClaimImgPostpayload);
     this.showSignBroseBtn = false;
+    this.Loader = true;
     setTimeout(() => {
       this.getImage(typeCode);
-    }, 2000);
+    }, 1000);
+
   }
 
   getImage(typeCode) {
+    this.Loader = true;
     const ClaimGetPayload = { CaseID: this.caseId, CaseImageCode: typeCode };
     this.sharedService.getImages(ClaimGetPayload).subscribe(
       (res: GenericGetImageResponseModel) => {
+
         this.imageData = res.Data[0];
         if (res && this.imageData != null) {
           localStorage.setItem('showSignBroseBtn', 'true');
@@ -405,12 +419,15 @@ export class WizardComponent implements OnInit {
             default:
             this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
           }
+          this.Loader = false;
         }
         if (this.signatureImgUrl !== undefined) {
           this.showSignBroseBtn = false;
+          this.Loader = false;
         }
       },
       error => {
+        this.Loader = false;
         return error;
       }
     );

@@ -84,7 +84,8 @@ export class PreWizardComponent implements OnInit {
     showSignBroseBtn = true;
     VehicleSearchData = [];
     signatureImgUrl: string;
-    imageData : any;
+    customSignUrl: string;
+    imageData: any;
     imageBaseUrl = 'http://apiflacorev2.iflotech.in';
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
@@ -183,21 +184,35 @@ export class PreWizardComponent implements OnInit {
     }
 
     // =========================IMAGES FUNCNTIONS  START============================== //
-  postImage(file, typeCode) {
+  postImage(files, typeCode) {
+    this.Loader = true;
+    const file = files.target.value;
+
     const ClaimImgPostpayload = {
       CaseID: this.caseId,
       ImageName: '',
       CaseImageCode: typeCode,
       CaseImageID: 1
     };
-    this.imageService.postDetailImage(file, ClaimImgPostpayload);
+
+    const allowedFiles = ['.gif', '.jpg', '.jpeg', '.png'];
+    const regex = new RegExp('([a-zA-Z0-9\s_\\.\-:])+(' + allowedFiles.join('|') + ')$');
+    if (!regex.exec(file)) {
+      alert('Please upload ' + allowedFiles.join(', ') + ' files only.');
+      this.Loader = false;
+      return false;
+    }
+
+    this.imageService.postDetailImage(files, ClaimImgPostpayload);
     this.showSignBroseBtn = false;
+    this.Loader = true;
     setTimeout(() => {
       this.getImage(typeCode);
     }, 2000);
   }
 
   getImage(typeCode) {
+    this.Loader = true;
     const ClaimGetPayload = { CaseID: this.caseId, CaseImageCode: typeCode };
     this.sharedService.getImages(ClaimGetPayload).subscribe(
       (res: GenericGetImageResponseModel) => {
@@ -206,18 +221,22 @@ export class PreWizardComponent implements OnInit {
           switch (typeCode) {
             case 'PIDSG':
               this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
-             // localStorage.setItem('showSignBroseBtn', 'false');
+              break;
+            case 'PICUST':
+              this.customSignUrl = this.imageBaseUrl + this.imageData.Image;
               break;
             default:
               console.log('No image items are available');
-              // this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
           }
+          this.Loader = false;
         }
         if (this.signatureImgUrl !== undefined) {
           this.showSignBroseBtn = false;
+          this.Loader = false;
         }
       },
       error => {
+        this.Loader = false;
         return error;
       }
     );
@@ -451,7 +470,7 @@ export class PreWizardComponent implements OnInit {
                         this.firstFormGroup.controls['caseAddress'].setValue(this.caseDetailData[0].caseAddress);
                         this.firstFormGroup.controls['InspectionDate'].setValue(inspectDate);
                         this.firstFormGroup.controls['InspectionLocation'].setValue(this.caseDetailData[0].InspectionLocation);
-                        this.firstFormGroup.controls['InspectionTime'].setValue(InspectTime);
+                        this.firstFormGroup.controls['InspectionTime'].setValue(this.caseDetailData[0].InspectionTime);
                         this.firstFormGroup.controls['InspectionGeoCodes'].setValue(this.caseDetailData[0].InspectionGeoCodes);
                         this.firstFormGroup.controls['SurveyStatusID'].setValue(this.caseDetailData[0].SurveyStatusID);
                     }

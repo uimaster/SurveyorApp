@@ -444,10 +444,10 @@
           </mat-list>
           <br/>
         </div>
-        <p *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;">No Damaged parts are available !</p>
+        <p *ngIf="damageDetailsData.length < 1" style="text-align: center; padding:0 20px;" >No Damaged parts are available !</p>
         <div class="backdrop" *ngIf="uploadImageModal">
           <div class="smallModal">
-            <h4> Add Damage Details</h4>
+            <h4> Add Damage Details <a href="javascript:void(0)"><i class="material-icons" style="float:right; font-size:40px; color: #676767;" (click)="closeImageModal()"> cancel </i></a></h4>
             <div style="max-height: 450px; overflow: auto; padding: 10px;">
               <mat-accordion class="example-headers-align" *ngIf="damagePartList.length > 0">
                 <mat-expansion-panel hideToggle="true" *ngFor="let item of damagePartList; let i = index;">
@@ -497,7 +497,7 @@
               <p *ngIf="damagePartList.length < 1">No part list available !</p>
             </div>
             <br/>
-            <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button>
+            <!-- <button mat-raised-button class="smallBtn" (click)="closeImageModal()" style="float: right;">Close</button> -->
           </div>
         </div>
 
