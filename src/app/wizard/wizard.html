@@ -673,7 +673,7 @@
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5>Upload Digital Signature</h5>
           <img alt="" [src]="signatureImgUrl" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-          <input type="file" name="" id=""  (change)="postImage($event, 'SPDSG')" class="custom-file-input" *ngIf="!IsCompleted" [disabled]="!showSignBroseBtn"/>
+          <input type="file" name="" id=""  (change)="postImage($event, 'SPDSG')" class="custom-file-input" *ngIf="!IsCompleted" />
           <input type="hidden" formControlName="tenthCtrl" />
         </div>
         <div style="text-align: center; margin-top: 50px;">

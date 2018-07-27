@@ -193,11 +193,11 @@
           <input matInput placeholder="Proposer Name" formControlName="CaseProposerName">
         </mat-form-field>
 
-        <div class="mat-form-checkfield">
+        <!-- <div class="mat-form-checkfield">
           <label>Inspecting office  Signature:</label>
           <input type="file" name="file" (change)="postImage($event, 'PICUST')" class="custom-file-input" />
           <img alt="" id="imageUrl" [src]="customSignUrl" />
-        </div>
+        </div> -->
 
         <mat-form-field>
           <mat-select placeholder="Previous Insurer Name" formControlName="CurrentInsurerName">
@@ -368,7 +368,7 @@
         <div class="tabularData card" style="width:50%; margin-left: 23%;">
           <h5 style="color:#333;">Upload Surveyor Signature</h5>
           <img alt="" [src]="signatureImgUrl" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
-          <input type="file" name="" id="" (change)="postImage($event, 'PIDSG')" class="custom-file-input" *ngIf="!IsCompleted" [disabled]="!showSignBroseBtn" />
+          <input type="file" name="" id="" (change)="postImage($event, 'PIDSG')" class="custom-file-input" *ngIf="!IsCompleted" />
         </div>
         <div style="text-align: center; margin-top: 50px;">
           <button mat-raised-button matStepperPrevious>Back</button>
