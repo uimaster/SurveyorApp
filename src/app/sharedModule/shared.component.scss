@@ -6,7 +6,7 @@
     background-color: rgba(255, 255, 255, 0.6);
     padding: 1%;
     img{
-        vertical-align: top; max-height: 100px; float: left; margin-right: 10px;
+        vertical-align: top; max-height: 100px; float: left; margin-right: 10px; border: 1px solid #ddd; width:50%;
     }
     span{
         color: #1e1e1e;
@@ -33,7 +33,7 @@ p{ margin:0 0 5px 0; font-size: 12px; text-align: center;}
     bottom: 0;
     background-color: rgba(21, 21, 21, 0.6);
     z-index: 99;
-} 
+}
 .smallModal{ position: fixed; left: 40%; top: 25%; z-index: 999; padding: 30px; background-color: #fff;
     h2{
         margin: 0 0 35px 0;
@@ -41,4 +41,4 @@ p{ margin:0 0 5px 0; font-size: 12px; text-align: center;}
     p{
         text-align: center; font-size: 14px; color: #333;
     }
-}    
+}

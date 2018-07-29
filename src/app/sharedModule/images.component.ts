@@ -29,7 +29,8 @@ export class CommonImageComponent {
       formData.append(name, file, file.name);
     }
     this.httpClient.post(POSTIMAGE_URL, formData).subscribe((res: imageModels.PostImageResponseModel) => {
-      console.log(res);
+      alert('Image uploaded successfully !');
+      //console.log(res);
     });
   }
 

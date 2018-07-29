@@ -79,6 +79,7 @@ export class SharedComponent implements OnInit {
     }
 
     postMultiImage(data) {
+        this.showUpdateBtn = true;
         const imageName = this.uploadCrashImageForm.controls['ImageName'].value;
         if (this.files == undefined || this.files.length < 1 || imageName === null || imageName == '') {
             this.showfileEmptyMsg = true;
@@ -98,14 +99,14 @@ export class SharedComponent implements OnInit {
 
         this.http.post(POSTIMAGE_URL, formData).subscribe(
             res => {
-                console.log(res);
+              alert('Image uploaded successfully !');
+             // console.log(res);
             });
         setTimeout(() => {
             this.getMultiImages();
 
         }, 1000);
         this.Loader = false;
-        this.showUpdateBtn = false;
         this.uploadImageModal = false;
         // localStorage.setItem('CaseImageID', id);
       }
@@ -115,9 +116,9 @@ export class SharedComponent implements OnInit {
 
     }
     updateImgRadio(data) {
-      this.showUpdateBtn = true;
       this.CaseImageID = data.CaseImageID;
       this.uploadCrashImageForm.controls['ImageName'].setValue(data.ImageName);
+      this.openImageDialog();
     }
 
     getMultiImages() {
@@ -125,13 +126,17 @@ export class SharedComponent implements OnInit {
         this.sharedService.getMultiImages(this.caseId).subscribe(data => {
             if (data.Data[0] !== null && data.Data[0] !== undefined) {
                 this.fileList = data.Data;
-                console.log(this.fileList);
                 this.createImageFromBlob0(data.Data[0].Image);
+                setTimeout(() => {
+                  this.showUpdateBtn = false;
+                }, 3000);
             }
             this.isImageLoading = false;
             this.Loader = false;
+
         }, error => {
             this.isImageLoading = false;
+            this.showUpdateBtn = false;
             this.Loader = false;
             console.log(error);
         });

@@ -110,6 +110,7 @@ export class WizardComponent implements OnInit {
   openCreateCaseModal = false;
   imageData: any;
   showSignBroseBtn = true;
+  setPolicCtrlDisabled = false;
 
   // images scr ulrs //
 
@@ -208,7 +209,7 @@ export class WizardComponent implements OnInit {
       TypeOfLicense: new FormControl(''),
       PSVBadgeNo: new FormControl(''),
       DOB: new FormControl('', Validators.required),
-      Age: new FormControl({ value: '', disabled: true }),
+      Age: new FormControl(''),
       DLEndorsment: new FormControl(''),
       IssueDate: new FormControl('', Validators.required)
     });
@@ -575,6 +576,17 @@ export class WizardComponent implements OnInit {
     });
   }
 
+
+  getPoliceReport(event) {
+    debugger;
+    const firReport = this.sixthFormGroup.controls['FIRReported'].value;
+    if (firReport == 'yes') {
+      this.setPolicCtrlDisabled = true;
+    } else {
+      this.setPolicCtrlDisabled = false;
+    }
+  }
+
   convertToDateFormat(Datestr) {
     if (Datestr != '') {
       // Datestr='03/08/2016'
@@ -770,11 +782,14 @@ export class WizardComponent implements OnInit {
       if (res && res.Status == 200) {
         this.driverData = res.Data;
         if (this.driverData.length > 0) {
-          if (this.driverData[0].DOB !== null) {
+          if (this.driverData[0].DOB !== undefined) {
             const dateString: string = this.driverData[0].DOB.toString();
             const years: number = parseInt(dateString.substring(0, 5));
             this.driverAge = this.thisYear - years;
           }
+
+          const issueDate = this.convertToDateFormat(this.driverData[0].IssueDate);
+          const expiryDate = this.convertToDateFormat(this.driverData[0].ValidUptoDate);
 
           this.fourthFormGroup.controls['CaseDriverID'].setValue(
             this.driverData[0].CaseDriverID
@@ -791,9 +806,7 @@ export class WizardComponent implements OnInit {
           this.fourthFormGroup.controls['IssuingAuthority'].setValue(
             this.driverData[0].IssuingAuthority
           );
-          this.fourthFormGroup.controls['ValidUptoDate'].setValue(
-            this.driverData[0].ValidUptoDate
-          );
+          this.fourthFormGroup.controls['ValidUptoDate'].setValue(expiryDate);
           this.fourthFormGroup.controls['TypeOfLicense'].setValue(
             this.driverData[0].TypeOfLicense
           );
@@ -801,16 +814,13 @@ export class WizardComponent implements OnInit {
             this.driverData[0].PSVBadgeNo
           );
           this.fourthFormGroup.controls['DOB'].setValue(this.driverData[0].DOB);
-          this.fourthFormGroup.controls['Age'].setValue({
-            value: this.driverAge,
-            disabled: true
-          });
+          this.fourthFormGroup.controls['Age'].setValue(
+            this.driverData[0].Age
+          );
           this.fourthFormGroup.controls['DLEndorsment'].setValue(
             this.driverData[0].DLEndorsment
           );
-          this.fourthFormGroup.controls['IssueDate'].setValue(
-            this.driverData[0].IssueDate
-          );
+          this.fourthFormGroup.controls['IssueDate'].setValue(issueDate);
         }
       }
     });
@@ -1042,6 +1052,7 @@ export class WizardComponent implements OnInit {
   }
 
   fourthSubmit(formdata) {
+    debugger;
     if (this.fourthFormGroup.valid) {
       this.Loader = true;
       this.wizardService

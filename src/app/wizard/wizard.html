@@ -266,7 +266,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Date Of Birth" [max]="maxDate" formControlName="DOB" [matDatepicker]="picker6" [(ngModel)]="Age"
+          <input matInput placeholder="Date Of Birth" [max]="maxDate" formControlName="DOB" [matDatepicker]="picker6"
             (dateChange)="getDriverAge('change', $event)">
           <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
           <mat-datepicker #picker6></mat-datepicker>
@@ -340,6 +340,13 @@
         <h4>FIR Details</h4>
         <ng-template matStepLabel>Police FIR</ng-template>
         <div class="mat-form-checkfield">
+          <label>Police Report : </label>
+          <mat-radio-group formControlName="FIRReported" (change)="getPoliceReport($event)">
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="no" checked>No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="mat-form-checkfield">
           <label>Injury to Driver: </label>
           <mat-radio-group formControlName="InjuryToDriver">
             <mat-radio-button value="yes">Yes</mat-radio-button>
@@ -368,25 +375,18 @@
           </mat-radio-group>
         </div>
 
-        <div class="mat-form-checkfield">
-          <label>Police Report : </label>
-          <mat-radio-group formControlName="FIRReported">
-            <mat-radio-button value="yes">Yes</mat-radio-button>
-            <mat-radio-button value="no" checked>No</mat-radio-button>
-          </mat-radio-group>
-        </div>
         <mat-form-field>
-          <input matInput placeholder="Police Report Date" formControlName="FIRDate" required [matDatepicker]="FIRDate">
+          <input matInput placeholder="Police Report Date" formControlName="FIRDate" required [matDatepicker]="FIRDate" [disabled]="setPolicCtrlDisabled">
           <mat-datepicker-toggle matSuffix [for]="FIRDate"></mat-datepicker-toggle>
           <mat-datepicker #FIRDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Police Station Name" formControlName="FIRPoliceStation">
+          <input matInput placeholder="Police Station Name" formControlName="FIRPoliceStation" [disabled]="setPolicCtrlDisabled">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Police Diary No" formControlName="FIRStationDiaryNo">
+          <input matInput placeholder="Police Diary No" formControlName="FIRStationDiaryNo" [disabled]="setPolicCtrlDisabled">
         </mat-form-field>
 
         <mat-form-field>

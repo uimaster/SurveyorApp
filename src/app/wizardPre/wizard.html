@@ -33,7 +33,7 @@
           <input matInput placeholder="Case Proposer Name" formControlName="CaseProposerName">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Assigned Date Time" formControlName="AssignedDateTime" [matDatepicker]="Prepicker1">
+          <input matInput placeholder="Assigned Date Time" formControlName="AssignedDateTime" format="DD/MM/YYYY HH:mm" [matDatepicker]="Prepicker1">
           <mat-datepicker-toggle matSuffix [for]="Prepicker1"></mat-datepicker-toggle>
           <mat-datepicker #Prepicker1></mat-datepicker>
         </mat-form-field>
@@ -42,13 +42,13 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Inspection Date" formControlName="InspectionDate" [matDatepicker]="Prepicker2">
+          <input matInput placeholder="Inspection Date" formControlName="InspectionDate" format="DD/MM/YYYY HH:mm" [matDatepicker]="Prepicker2">
           <mat-datepicker-toggle matSuffix [for]="Prepicker2"></mat-datepicker-toggle>
           <mat-datepicker #Prepicker2></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Inspection Time" formControlName="InspectionTime" />
+          <input matInput placeholder="Inspection Time" formControlName="InspectionTime" format="DD/MM/YYYY HH:mm" />
         </mat-form-field>
 
         <mat-form-field>
@@ -240,7 +240,7 @@
           </mat-radio-group>
         </div>
         <div class="mat-form-checkfield">
-          <label for="GapInInsurance">Gap InInsurance</label>
+          <label for="GapInInsurance">Gap Insurance</label>
           <mat-radio-group formControlName="GapInInsurance" id="GapInInsurance" [(ngModel)]="GapInInsurance">
             <mat-radio-button value="0">No</mat-radio-button>
             <mat-radio-button value="1">Yes</mat-radio-button>

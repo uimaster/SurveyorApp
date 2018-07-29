@@ -452,9 +452,9 @@ export class PreWizardComponent implements OnInit {
                     this.selectedCompany = this.caseDetailData[0].CompanyID;
                     if (this.caseDetailData.length > 0) {
                       this.getUserList(this.caseDetailData[0].SurveyorsID);
-                        let AssDateTime = (new Date(this.caseDetailData[0].AssignedDateTime)).toISOString();
-                        let inspectDate = (new Date(this.caseDetailData[0].InspectionDate)).toISOString();
-                        let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toLocaleString();
+                        // let AssDateTime = (new Date(this.caseDetailData[0].AssignedDateTime)).toISOString();
+                        // let inspectDate = (new Date(this.caseDetailData[0].InspectionDate)).toISOString();
+                        // let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toLocaleString();
                         this.firstFormGroup.controls['CaseID'].setValue(this.caseId);
                         this.firstFormGroup.controls['CaseNo'].setValue(this.caseDetailData[0].CaseNo);
                         this.firstFormGroup.controls['CaseDate'].setValue(this.caseDetailData[0].CaseDate);
@@ -466,9 +466,9 @@ export class PreWizardComponent implements OnInit {
                         this.firstFormGroup.controls['CaseTypeId'].setValue(this.caseDetailData[0].CaseTypeId);
                         this.firstFormGroup.controls['SurveyorsID'].setValue(this.caseDetailData[0].SurveyorsID);
 
-                        this.firstFormGroup.controls['AssignedDateTime'].setValue(AssDateTime);
+                        this.firstFormGroup.controls['AssignedDateTime'].setValue(this.caseDetailData[0].AssignedDateTime);
                         this.firstFormGroup.controls['caseAddress'].setValue(this.caseDetailData[0].caseAddress);
-                        this.firstFormGroup.controls['InspectionDate'].setValue(inspectDate);
+                        this.firstFormGroup.controls['InspectionDate'].setValue(this.caseDetailData[0].InspectionDate);
                         this.firstFormGroup.controls['InspectionLocation'].setValue(this.caseDetailData[0].InspectionLocation);
                         this.firstFormGroup.controls['InspectionTime'].setValue(this.caseDetailData[0].InspectionTime);
                         this.firstFormGroup.controls['InspectionGeoCodes'].setValue(this.caseDetailData[0].InspectionGeoCodes);

@@ -36,7 +36,7 @@ export const DAMAGEDETAILS_URL = BASEURL + 'CarDemageDetailEntry';
 export const GENERATESPOTREPORT = BASEURL + 'Reports/GenerateSpotReport';
 export const GENERATEPREREPORT = BASEURL + 'Reports/GeneratePIReport';
 export const DOWNLOADSPOTREPORT = BASEURL + 'DownloadReport/getSpotSurveyReport';
-export const SPOTCOMPLETIONURL = BASEURL + 'CaseCompleteStatus';
+export const SPOTCOMPLETIONURL = BASEURL + 'SpotCases/GetCaseSPOTStatus';
 export const SPOTCREATECASE = BASEURL + 'SpotCases/SPOTCreateCase';
 export const PRECREATECASE = BASEURL + 'PICases/PICreateCase';
 
@@ -53,7 +53,7 @@ export const WIZARD_CONCLUSIONURLPOST_PRE = BASEURL + 'PICases/PICaseConclusionU
 export const WIZARD_DAMAGEDETAILSURL_PRE = BASEURL + 'VehicleInfo/getVehicleDamageDetails';
 export const WIZARD_DAMAGEDETAILSURL_PRE_POST = BASEURL + 'VehicleInfo/VehicleDamageDetailsUpdate';
 export const WIZARD_DAMAGEPARTSLIST_PRE = BASEURL + 'VehicleInfo/GetVehiclePartsList';
-export const WIZARD_CASECOMPLETEURL_PRE = BASEURL + 'CaseCompleteStatus';
+export const WIZARD_CASECOMPLETEURL_PRE = BASEURL + 'CaseStatus/CaseStatusUpdate';
 export const GENERATESPOTREPORT_PRE = BASEURL + 'PIReports';
 export const DOWNLOADSPOTREPORT_PRE = BASEURL + 'DownloadReport/PIDownloadReport';
 
