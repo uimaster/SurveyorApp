@@ -64,11 +64,11 @@ export class WizardComponent implements OnInit {
   Loader = true;
   PartStatusID: any;
   VehicleId = [
-    { VehicleId: 0, Name: 'LCV/HCV' },
-    { VehicleId: 1, Name: 'HTV/BUS' },
-    { VehicleId: 2, Name: 'TWO-Wheeler' },
-    { VehicleId: 3, Name: 'CAR' },
-    { VehicleId: 4, Name: 'TAXI ' }
+    { VehicleId: 1, Name: 'LCV/HCV' },
+    { VehicleId: 2, Name: 'HTV/BUS' },
+    { VehicleId: 3, Name: 'TWO-Wheeler' },
+    { VehicleId: 4, Name: 'CAR' },
+    { VehicleId: 5, Name: 'TAXI ' }
   ];
 
   FuelType = [
@@ -703,9 +703,8 @@ export class WizardComponent implements OnInit {
           this.thirdFormGroup.controls['Registration_No'].setValue(
             this.VehicleDetailData[0].Registration_No
           );
-          this.thirdFormGroup.controls['RegistrationDate'].setValue(
-            this.VehicleDetailData[0].RegistrationDate
-          );
+          const regDate = this.convertToDateFormat(this.VehicleDetailData[0].RegistrationDate);
+          this.thirdFormGroup.controls['RegistrationDate'].setValue(regDate);
           this.thirdFormGroup.controls['ChasisNo'].setValue(
             this.VehicleDetailData[0].ChasisNo
           );
@@ -763,9 +762,8 @@ export class WizardComponent implements OnInit {
           this.thirdFormGroup.controls['Permit_Area'].setValue(
             this.VehicleDetailData[0].Permit_Area
           );
-          this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue(
-            this.VehicleDetailData[0].Road_Tax_ValidUpto
-          );
+          const roadDate = this.convertToDateFormat(this.VehicleDetailData[0].Road_Tax_ValidUpto);
+          this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue(roadDate);
           this.thirdFormGroup.controls['FuelType'].setValue(
             this.VehicleDetailData[0].FuelType
           );

@@ -48,11 +48,11 @@ export class PreWizardComponent implements OnInit {
     public files: any[];
     Loader = true;
     VehicleTypeID = [
-        { VehicleTypeID: 0, Name: 'LCV/HCV' },
+        { VehicleTypeID: 2, Name: 'LCV/HCV' },
         { VehicleTypeID: 1, Name: 'HTV/BUS' },
-        { VehicleTypeID: 2, Name: 'TWO-Wheeler' },
-        { VehicleTypeID: 3, Name: 'CAR' },
-        { VehicleTypeID: 4, Name: 'TAXI' }
+        { VehicleTypeID: 3, Name: 'TWO-Wheeler' },
+        { VehicleTypeID: 4, Name: 'PERSONAL' },
+        { VehicleTypeID: 5, Name: 'TAXI' }
     ];
 
     FuelType = [

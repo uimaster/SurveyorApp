@@ -8,7 +8,8 @@
     <span>Name: {{item.ImageName}}</span><br/>
     <span>
       <!-- <mat-radio-button name="multiImages" (change)="updateImgRadio(item)" unchecked>Select to Update.</mat-radio-button> -->
-      <a href="javascript:void(0);" (click)="updateImgRadio(item)">Change Image</a>
+      <!-- <a href="javascript:void(0);" (click)="updateImgRadio(item)">Change Image</a> -->
+      <button mat-stroked-button color="primary" (click)="updateImgRadio(item)">Change Image</button>
     </span>
 
 

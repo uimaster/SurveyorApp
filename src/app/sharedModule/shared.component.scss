@@ -15,6 +15,13 @@
     a{ font-size: 12px; text-decoration: none;}
 
 }
+
+.mat-stroked-button {
+  border: 1px solid currentColor;
+  padding: 0 10px;
+  line-height: 28px;
+  margin-top: 10px;
+}
 .uploadbutton{ width: 130px; margin: auto; display: block;
     &::before{ content: ' Browse Image '; text-align: center;}
 }
