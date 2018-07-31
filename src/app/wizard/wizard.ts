@@ -11,18 +11,14 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router, UrlSegment } from '@angular/router';
 
 import { WizardService } from './wizard.service';
-import * as IMAGEURL from '../../shared/img.urls';
 import * as urls from '../../shared/urls';
 import { DonwloadDialog } from '../sharedModule/shared.component';
 import { CommonImageComponent } from '../sharedModule/images.component';
 import { CompaniesService } from '../companies/companies.service';
 import { DashboardService } from '../dashboard/dashboard.service';
-import { DISABLED } from '@angular/forms/src/model';
 import { SharedModuleServices } from '../sharedModule/shared.service';
-import { Observable } from 'rxjs/Observable';
 import { GenericGetImageResponseModel } from '../sharedModule/shared.model';
-import { Subscription } from 'rxjs/Subscription';
-import { KYCDOC_URL } from '../../shared/img.urls';
+
 
 @Component({
   selector: 'wizard-selector',
@@ -295,6 +291,17 @@ export class WizardComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  specialCharPrevention(event) {
+    const key = event.keyCode;
+    const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
+    if (!preventsKey) {
+     alert('Special characters not allowed');
+      return false;
+    }
+  }
+
+
 
   getSpotStepsStatus() {
     let CaseID = this.caseId;
@@ -887,7 +894,7 @@ export class WizardComponent implements OnInit {
               this.firData[0].ThirdPartyPropertyDamages
             ),
             FIRDate: new FormControl(
-              this.firData[0].FIRDate,
+              this.convertToDateFormat(this.firData[0].FIRDate),
               Validators.required
             ),
             Remarks: new FormControl(this.firData[0].Remarks),

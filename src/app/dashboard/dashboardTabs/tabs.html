@@ -22,7 +22,7 @@
             <a href="javascript:void(0);" [class.active]="showActiveCompleted" (click)="getCompleteCases()">
                 <i class="material-icons">
                     playlist_add_check
-                </i> 
+                </i>
                 <span class="first">Completed Cases</span>
                 <span>{{CompletedCases}}</span>
             </a>
@@ -37,7 +37,7 @@
             </a>
         </li>
         <li>
-            <a href="javascript:void(0)">
+            <a href="javascript:void(0)" [class.active]="showActiveBroadcast" (click)="getBroadcastCases()">
                 <i class="material-icons">
                     wifi
                 </i>

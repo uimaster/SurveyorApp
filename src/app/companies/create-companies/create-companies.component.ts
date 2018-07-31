@@ -60,7 +60,14 @@ export class CreateCompaniesComponent implements OnInit {
 
   }
 
-
+  specialCharPrevention(event) {
+    const key = event.keyCode;
+    const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
+    if (!preventsKey) {
+     alert('Special characters not allowed');
+      return false;
+    }
+  }
 
   onSubmit(formD) {
     this.Loader = true;

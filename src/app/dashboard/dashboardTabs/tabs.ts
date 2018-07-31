@@ -19,6 +19,7 @@ export class DashboardTabComponent implements OnInit {
   showActiveAll = true;
   showActiveCompleted = false;
   showActiveUnderProcess = false;
+  showActiveBroadcast = false;
   userId = 0;
 
   constructor( private tabsServices: TabsService, private dashboard: DashboardComponent){}
@@ -41,6 +42,7 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveAll = true;
     this.showActiveCompleted = false;
     this.showActiveUnderProcess = false;
+    this.showActiveBroadcast = false;
   }
 
   getCompleteCases() {
@@ -48,6 +50,15 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveAll = false;
     this.showActiveCompleted = true;
     this.showActiveUnderProcess = false;
+    this.showActiveBroadcast = false;
+  }
+
+  getBroadcastCases() {
+    this.dashboard.getBroadcastList();
+    this.showActiveAll = false;
+    this.showActiveCompleted = false;
+    this.showActiveUnderProcess = false;
+    this.showActiveBroadcast = true;
   }
 
   getUnderProcessCases() {
@@ -55,6 +66,7 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveAll = false;
     this.showActiveCompleted = false;
     this.showActiveUnderProcess = true;
+    this.showActiveBroadcast = false;
   }
 
 

@@ -15,7 +15,7 @@
     </div>
     <form [formGroup]="myForm" >
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" required>
+        <input matInput placeholder="Name" formControlName="name" required (keypress)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
         <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
       </mat-form-field>
@@ -23,7 +23,7 @@
 
 
       <mat-form-field>
-        <input matInput placeholder="email" formControlName="email" required>
+        <input matInput placeholder="email" formControlName="email" required (keypress)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['email'].hasError('required') && myForm.controls['email'].touched">Email is required</mat-error>
         <mat-error *ngIf="myForm.controls['email'].hasError('pattern') && myForm.controls['email'].touched">Please Enter valid email</mat-error>
       </mat-form-field>
@@ -35,7 +35,7 @@
       </mat-form-field> -->
 
       <mat-form-field>
-        <input matInput placeholder="Mobile Number" formControlName="mobileNo" required>
+        <input matInput placeholder="Mobile Number" formControlName="mobileNo" required (keypress)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['mobileNo'].hasError('required') && myForm.controls['mobileNo'].touched">Mobile Number is required</mat-error>
         <mat-error *ngIf="myForm.controls['mobileNo'].hasError('pattern') && myForm.controls['mobileNo'].touched">Mobile Number Only Digits allowed</mat-error>
         <mat-error *ngIf="myForm.controls['mobileNo'].hasError('minlength') && myForm.controls['mobileNo'].touched">Mobile Number Should be minimum 10 digits</mat-error>
@@ -43,7 +43,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Landline" formControlName="landline">
+        <input matInput placeholder="Landline" formControlName="landline" (keypress)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['landline'].hasError('pattern') && myForm.controls['landline'].touched">Only Digits allowed</mat-error>
       </mat-form-field>
 
@@ -60,18 +60,18 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="city">
+        <input matInput placeholder="City" formControlName="city" (keypress)="specialCharPrevention($event)">
       </mat-form-field>
 
       <mat-form-field>
-        <textarea matInput placeholder="Address" formControlName="address"></textarea>
+        <textarea matInput placeholder="Address" formControlName="address" (keypress)="specialCharPrevention($event)"></textarea>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="licenseNo" formControlName="licenseNo">
+        <input matInput placeholder="licenseNo" formControlName="licenseNo" (keypress)="specialCharPrevention($event)">
       </mat-form-field>
       <mat-form-field style="display: none">
-        <input matInput placeholder="licenseNo" formControlName="surveyorsId">
+        <input matInput placeholder="licenseNo" formControlName="surveyorsId" (keypress)="specialCharPrevention($event)">
       </mat-form-field>
 
       <mat-form-field>
@@ -81,7 +81,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="GPSCordinates" formControlName="GPSCordinates">
+        <input matInput placeholder="GPSCordinates" formControlName="GPSCordinates" (keypress)="specialCharPrevention($event)">
       </mat-form-field>
 
       <mat-form-field>

@@ -8,6 +8,7 @@ export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard/GetDashboardCounts?';
 export const DASHBOARDLIST = BASEURL + 'Dashboard/GetCaseList?';
 export const GETUSERLIST_URL = BASEURL + 'masters/GetSurveyorUserList';
 export const DASHBOARD_CAT_CASES = BASEURL + 'Dashboard/GetCaseList?';
+export const DASHBOARD_BROADCAST_URL = BASEURL + 'Dashboard/GetBroadCastList';
 
 export const WIZARD_GETCLAIMURL = BASEURL + 'SpotCases/GetSpotCaseDetails?';
 export const WIZARD_POSTCLAIMURL = BASEURL + 'SpotCases/SpotClaimDetailsUpdate';

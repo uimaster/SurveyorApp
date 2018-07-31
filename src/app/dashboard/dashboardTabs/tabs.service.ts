@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
 import { TabsRequest, TabsResponse} from './tabs.model';
-import { DASHBOARDLIST, DASHBOARD_CAT_CASES, DASHBOARDTABCOUNTS} from '../../../shared/urls';
+import { DASHBOARDLIST, DASHBOARD_CAT_CASES, DASHBOARDTABCOUNTS, DASHBOARD_BROADCAST_URL} from '../../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -63,5 +63,18 @@ export class TabsService {
             })
             .catch((error) => Observable.throw('server Error.'));
     }
+
+
+    getBroadCastList(payload: any): Observable<any> {
+      const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '1')
+      .set('CompanyID', JSON.parse(this.companyId)).set('UserID', payload);
+      return this.http.get(DASHBOARD_BROADCAST_URL, {params})
+          .map((res) => {
+              if (res) {
+                  return res;
+              }
+          })
+          .catch((error) => Observable.throw('server Error.'));
+  }
 
 }

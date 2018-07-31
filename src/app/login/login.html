@@ -10,12 +10,12 @@
                 <div class="alert success" *ngIf="showSuccessMessage">You have Login {{loginSuccessMessage}}fully.</div>
                 <div class="alert error" *ngIf="showErrorMessage">{{loginfailedMessage}}, Please try again.</div><br/><br/>
                 <mat-form-field>
-                    <input matInput placeholder="Username" formControlName="UserName">
+                    <input matInput placeholder="Username" formControlName="UserName" (keypress)="specialCharPrevention($event)">
                     <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserName'].hasError('required') && loginForm.controls['UserName'].touched">Email is required !</div>
                     <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserName'].hasError('pattern') && loginForm.controls['UserName'].touched">Email is not valid !</div>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Password" type="password" formControlName="UserPassword">
+                    <input matInput placeholder="Password" type="password" formControlName="UserPassword" (keypress)="specialCharPrevention($event)">
                     <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('required') && loginForm.controls['UserPassword'].touched">Password is required !</div>
                     <div class="alert alert-danger" role="alert" *ngIf="loginForm.controls['UserPassword'].hasError('minlength') && loginForm.controls['UserPassword'].touched">Password length should have atleast 5 character !</div>
                 </mat-form-field>

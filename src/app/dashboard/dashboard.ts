@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
   public searchText = '';
   showError = false;
   errorMessage: string;
+  showAcceptBtn = false;
 
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
@@ -132,6 +133,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+    this.showAcceptBtn = false;
   }
 
   getCompletedList() {
@@ -150,6 +152,27 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+    this.showAcceptBtn = false;
+  }
+
+
+  getBroadcastList() {
+    this.tabsServices.getBroadCastList(this.userId)
+    .subscribe(res => {
+      if(res && res.Status === '200') {
+        this.TotalDada = res.Data;
+        if (this.TotalDada.length > 0) {
+          this.Loader = false;
+          this.showProcessButtton = false;
+          this.noData = false;
+          this.completedCasebuttons = false;
+        } else {
+          this.noData = true;
+          this.Loader = false;
+        }
+      }
+    });
+    this.showAcceptBtn = true;
   }
 
   getProcessList() {
@@ -168,6 +191,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+    this.showAcceptBtn = false;
   }
 
   getSurveyorList() {
@@ -356,7 +380,7 @@ export class DashboardComponent implements OnInit {
   // }
 
   downloadSpotSurvey(caseId, caseTypeId) {
-    const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';       
+    const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
     this.downloadUrl = baseurl + caseId +'&CaseTypeId='+ caseTypeId;
   }
 }

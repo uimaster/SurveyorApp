@@ -87,6 +87,7 @@ export class PreWizardComponent implements OnInit {
     customSignUrl: string;
     imageData: any;
     imageBaseUrl = 'http://apiflacorev2.iflotech.in';
+    surveyorId = JSON.parse(localStorage.getItem('SurveyorsId'));
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService,
@@ -113,9 +114,11 @@ export class PreWizardComponent implements OnInit {
             SurveyStatusID: new FormControl(''),
         });
 
+
+
         this.thirdFormGroup = new FormGroup({
             CaseID: new FormControl(JSON.parse(this.caseId)),
-            VehicleTypeID: new FormControl(''),
+            VehicleTypeID: new FormControl(this.surveyorId),
             VehicleTypeName: new FormControl(''),
             Registration_No: new FormControl(''),
             ChasisNo: new FormControl(''),
@@ -246,6 +249,8 @@ export class PreWizardComponent implements OnInit {
 
     ngOnInit() {
       this.getImage('PIDSG');
+      this.getImage('PICUST');
+
      // this.showSignBroseBtn = JSON.parse(localStorage.getItem('showSignBroseBtn'));
         this.Loader = false;
         const completedState = localStorage.getItem('IsCompleted');
@@ -297,6 +302,15 @@ export class PreWizardComponent implements OnInit {
 
     }
 
+    specialCharPrevention(event) {
+      const key = event.keyCode;
+      const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
+      if (!preventsKey) {
+       alert('Special characters not allowed');
+        return false;
+      }
+    }
+
     convertToDateFormat(Datestr) {
       if ( Datestr!="" ) { // Datestr="03/08/2016"
           var datedata = Datestr.split("/");
@@ -318,7 +332,6 @@ export class PreWizardComponent implements OnInit {
                     const datedata = this.VehicleSearchData[0].regn_dt;
                     const formatedDatestring = this.convertToDateFormat(datedata);
 
-                    this.thirdFormGroup.controls['VehicleTypeID'].setValue('');
                     this.thirdFormGroup.controls['VehicleTypeName'].setValue('');
                     this.thirdFormGroup.controls['Registration_No'].setValue(data);
                     this.thirdFormGroup.controls['ChasisNo'].setValue(this.VehicleSearchData[0].chasis_no);
@@ -345,7 +358,7 @@ export class PreWizardComponent implements OnInit {
                 } else {
                     this.RegSearchFailedMsg = true;
                     this.RegSearchSuccessMsg = false;
-                    this.thirdFormGroup.controls['VehicleTypeID'].setValue('');
+                    this.thirdFormGroup.controls['VehicleTypeID'].setValue(this.surveyorId);
                     this.thirdFormGroup.controls['VehicleTypeName'].setValue('');
                     this.thirdFormGroup.controls['Registration_No'].setValue(data);
                     this.thirdFormGroup.controls['ChasisNo'].setValue('');
@@ -457,7 +470,7 @@ export class PreWizardComponent implements OnInit {
                         // let InspectTime = (new Date(this.caseDetailData[0].InspectionTime)).toLocaleString();
                         this.firstFormGroup.controls['CaseID'].setValue(this.caseId);
                         this.firstFormGroup.controls['CaseNo'].setValue(this.caseDetailData[0].CaseNo);
-                        this.firstFormGroup.controls['CaseDate'].setValue(this.caseDetailData[0].CaseDate);
+                        this.firstFormGroup.controls['CaseDate'].setValue(this.convertToDateFormat(this.caseDetailData[0].CaseDate));
                         this.firstFormGroup.controls['CaseRefNo'].setValue(this.caseDetailData[0].CaseRefNo);
                         this.firstFormGroup.controls['CaseProposerName'].setValue(this.caseDetailData[0].CaseProposerName);
                         this.firstFormGroup.controls['CompanyID'].setValue(this.caseDetailData[0].CompanyID);
@@ -466,11 +479,14 @@ export class PreWizardComponent implements OnInit {
                         this.firstFormGroup.controls['CaseTypeId'].setValue(this.caseDetailData[0].CaseTypeId);
                         this.firstFormGroup.controls['SurveyorsID'].setValue(this.caseDetailData[0].SurveyorsID);
 
-                        this.firstFormGroup.controls['AssignedDateTime'].setValue(this.caseDetailData[0].AssignedDateTime);
+                        this.firstFormGroup.controls['AssignedDateTime'].setValue(
+                          this.convertToDateFormat(this.caseDetailData[0].AssignedDateTime));
                         this.firstFormGroup.controls['caseAddress'].setValue(this.caseDetailData[0].caseAddress);
-                        this.firstFormGroup.controls['InspectionDate'].setValue(this.caseDetailData[0].InspectionDate);
+                        this.firstFormGroup.controls['InspectionDate'].setValue(
+                          this.convertToDateFormat(this.caseDetailData[0].InspectionDate));
                         this.firstFormGroup.controls['InspectionLocation'].setValue(this.caseDetailData[0].InspectionLocation);
-                        this.firstFormGroup.controls['InspectionTime'].setValue(this.caseDetailData[0].InspectionTime);
+                        this.firstFormGroup.controls['InspectionTime'].setValue(
+                          this.caseDetailData[0].InspectionTime);
                         this.firstFormGroup.controls['InspectionGeoCodes'].setValue(this.caseDetailData[0].InspectionGeoCodes);
                         this.firstFormGroup.controls['SurveyStatusID'].setValue(this.caseDetailData[0].SurveyStatusID);
                     }
@@ -488,7 +504,8 @@ export class PreWizardComponent implements OnInit {
                       this.thirdFormGroup.controls['VehicleTypeID'].setValue(this.VehicleDetailData[0].VehicleTypeID);
                       this.thirdFormGroup.controls['VehicleTypeName'].setValue(this.VehicleDetailData[0].VehicleTypeName);
                       this.thirdFormGroup.controls['Registration_No'].setValue(this.VehicleDetailData[0].Registration_No);
-                      this.thirdFormGroup.controls['RegistrationDate'].setValue(this.VehicleDetailData[0].RegistrationDate);
+                      this.thirdFormGroup.controls['RegistrationDate'].setValue(this.convertToDateFormat(
+                          this.VehicleDetailData[0].RegistrationDate));
                       this.thirdFormGroup.controls['ChasisNo'].setValue(this.VehicleDetailData[0].ChasisNo);
                       this.thirdFormGroup.controls['EngineNo'].setValue(this.VehicleDetailData[0].EngineNo);
                       this.thirdFormGroup.controls['FitnessCertifyValidDate'].setValue(this.VehicleDetailData[0].FitnessCertifyValidDate);
@@ -507,7 +524,8 @@ export class PreWizardComponent implements OnInit {
                       this.thirdFormGroup.controls['Unladen_Wt'].setValue(this.VehicleDetailData[0].Unladen_Wt);
                       this.thirdFormGroup.controls['CNG_KIT_Status'].setValue(this.VehicleDetailData[0].CNG_KIT_Status);
                       this.thirdFormGroup.controls['Permit_Area'].setValue(this.VehicleDetailData[0].Permit_Area);
-                      this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue(this.VehicleDetailData[0].Road_Tax_ValidUpto);
+                      this.thirdFormGroup.controls['Road_Tax_ValidUpto'].setValue(this.convertToDateFormat(
+                          this.VehicleDetailData[0].Road_Tax_ValidUpto));
                       this.thirdFormGroup.controls['FuelType'].setValue(this.VehicleDetailData[0].FuelType);
                       this.thirdFormGroup.controls['Seating_Capacity'].setValue(this.VehicleDetailData[0].Seating_Capacity);
                       this.thirdFormGroup.controls['Variant'].setValue(this.VehicleDetailData[0].Variant);
@@ -527,8 +545,10 @@ export class PreWizardComponent implements OnInit {
                       this.ninethFormGroup.controls['CaseProposerName'].setValue(this.insuranceDetailsData[0].CaseProposerName);
                       this.ninethFormGroup.controls['CurrentInsurerName'].setValue(this.insuranceDetailsData[0].CurrentInsurerName);
                       this.ninethFormGroup.controls['CurrentPolicyNo'].setValue(this.insuranceDetailsData[0].CurrentPolicyNo);
-                      this.ninethFormGroup.controls['PolicyStartDate'].setValue(this.insuranceDetailsData[0].PolicyStartDate);
-                      this.ninethFormGroup.controls['PolicyEndDate'].setValue(this.insuranceDetailsData[0].PolicyEndDate);
+                      this.ninethFormGroup.controls['PolicyStartDate'].setValue(this.convertToDateFormat(
+                        this.insuranceDetailsData[0].PolicyStartDate));
+                      this.ninethFormGroup.controls['PolicyEndDate'].setValue(this.convertToDateFormat(
+                        this.insuranceDetailsData[0].PolicyEndDate));
                       this.ninethFormGroup.controls['ClaimHistory'].setValue(this.insuranceDetailsData[0].ClaimHistory);
                       this.ninethFormGroup.controls['GapInInsurance'].setValue(this.insuranceDetailsData[0].GapInInsurance);
                       this.ninethFormGroup.controls['ProposedInsured'].setValue(this.insuranceDetailsData[0].ProposedInsured);

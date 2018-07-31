@@ -52,4 +52,13 @@ export class SharedModuleServices {
         })
         .catch((error) => Observable.throw('server Error.'));
   }
+
+  preventSpecialChar(event) {
+    const key = event.keyCode;
+    const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
+    if (!preventsKey) {
+      console.log('Special Keys are not allowed');
+      return false;
+    }
+  }
 }
