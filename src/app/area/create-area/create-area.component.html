@@ -15,7 +15,7 @@
     </div>
     <form [formGroup]="myForm">
       <mat-form-field style="margin: 0 30%;">
-        <input matInput placeholder="Ente Area Name" formControlName="name" (keypress)="specialCharPrevention($event)">
+        <input matInput placeholder="Ente Area Name" formControlName="name" (keydown)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Area Name is required.</mat-error>
       </mat-form-field>
 

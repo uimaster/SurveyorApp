@@ -24,7 +24,7 @@
       <h2 style="color:#000;">Upload Images</h2>
       <form [formGroup]="uploadCrashImageForm">
         <mat-form-field style="display: block;">
-          <input matInput placeholder="Enter Image Name" formControlName="ImageName" (focus)="changeshowfileEmptyMsg()">
+          <input matInput placeholder="Enter Image Name" formControlName="ImageName" (focus)="changeshowfileEmptyMsg()" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <input type="file" (change)="onMultifileChange($event)" class="custom-file-input updatebutton" *ngIf="showUpdateBtn" accept="image/gif, image/jpeg, image/png"/>
         <input type="file" (change)="onMultifileChange($event)" class="custom-file-input uploadbutton" *ngIf="!showUpdateBtn" accept="image/gif, image/jpeg, image/png"/>

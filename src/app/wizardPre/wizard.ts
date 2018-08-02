@@ -222,7 +222,7 @@ export class PreWizardComponent implements OnInit {
         this.imageData = res.Data[0];
         if (res && this.imageData != null) {
           switch (typeCode) {
-            case 'PIDSG':
+            case 'SPDSG':
               this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
               break;
             case 'PICUST':
@@ -248,7 +248,7 @@ export class PreWizardComponent implements OnInit {
   // =========================IMAGES FUNCNTIONS  END============================== //
 
     ngOnInit() {
-      this.getImage('PIDSG');
+      this.getImage('SPDSG');
       this.getImage('PICUST');
 
      // this.showSignBroseBtn = JSON.parse(localStorage.getItem('showSignBroseBtn'));

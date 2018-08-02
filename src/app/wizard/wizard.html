@@ -13,7 +13,7 @@
         <h4>Claim Details</h4>
 
         <mat-form-field>
-          <input matInput placeholder="Claim No." formControlName="claimNo" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Claim No." formControlName="claimNo" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <div class="mat-form-checkfield">
           <label>Policy Picture</label>
@@ -37,19 +37,19 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Policy No." formControlName="PolicyNO" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Policy No." formControlName="PolicyNO" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Insured's Name" formControlName="InsuredName" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Insured's Name" formControlName="InsuredName" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Insured's Address" formControlName="InsuredAddress" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Insured's Address" formControlName="InsuredAddress" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="insured's Mobile No." formControlName="InsuredMobile" type="number" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="insured's Mobile No." formControlName="InsuredMobile" type="number" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Insured's Email id" formControlName="EmailID" type="email" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Insured's Email id" formControlName="EmailID" type="email">
         </mat-form-field>
 
         <mat-form-field>
@@ -66,7 +66,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Policy Type" formControlName="Policy_Type" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Policy Type" formControlName="Policy_Type" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
@@ -90,7 +90,7 @@
         <ng-template matStepLabel>Surveyor</ng-template>
         <h4>Surveyor Details</h4>
         <mat-form-field>
-          <input matInput placeholder="Surveyor Name" formControlName="SurveyorsName" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Surveyor Name" formControlName="SurveyorsName" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Date of Allotment of Survey" [max]="maxDateToday" formControlName="DateofAllotmentofsurvey"
@@ -104,7 +104,7 @@
           <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Place Of Survey" formControlName="SurveyLocation" required (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Place Of Survey" formControlName="SurveyLocation" required (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <div style="text-align: center; margin-top: 50px;">
           <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
@@ -125,7 +125,7 @@
         <div class="alert success" *ngIf="RegSearchSuccessMsg" style="padding: 7px 10px; margin: 10px 44px 25px; width: 39%;">Search record found !</div>
 
         <mat-form-field style="display:none;">
-          <input matInput placeholder="CaseVehicle Id" formControlName="CaseVehicleId" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="CaseVehicle Id" formControlName="CaseVehicleId" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Registration No. / Search Registaration No." formControlName="Registration_No" id="RegistrationNum"
@@ -145,22 +145,22 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Chasis No" formControlName="ChasisNo" required (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Chasis No" formControlName="ChasisNo" required (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Engine No" formControlName="EngineNo" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Engine No" formControlName="EngineNo" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Make" formControlName="Make" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Make" formControlName="Make" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Model" formControlName="Model" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Model" formControlName="Model" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Year Manufacture" formControlName="MgfYear" (keypress)="specialCharPrevention($event)" />
+          <input matInput placeholder="Year Manufacture" formControlName="MgfYear" (keydown)="specialCharPrevention($event)" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Color" formControlName="Color" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Color" formControlName="Color" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Registration Date" formControlName="RegistrationDate" required [matDatepicker]="RegistrationDate">
@@ -168,15 +168,15 @@
           <mat-datepicker #RegistrationDate></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Odometer Reading" formControlName="OdometerReading" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Odometer Reading" formControlName="OdometerReading" (keydown)="specialCharPrevention($event)">
           <mat-error *ngIf="thirdFormGroup.controls['OdometerReading'].hasError('pattern') && thirdFormGroup.controls['OdometerReading'].touched">Please enter Numeric  value only.</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Hypophication" formControlName="Hypo" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Hypophication" formControlName="Hypo" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput type="number" placeholder="Seating Capacity" formControlName="Seating_Capacity" (keypress)="specialCharPrevention($event)">
+          <input matInput type="number" placeholder="Seating Capacity" formControlName="Seating_Capacity" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
@@ -188,7 +188,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Registered Owner" formControlName="RegisteredOwner" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Registered Owner" formControlName="RegisteredOwner" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
 
@@ -199,10 +199,10 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Vehicle Class" formControlName="Class_Vehicle" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Vehicle Class" formControlName="Class_Vehicle" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Pre Accident Condition" formControlName="Pre_Accident_Condition" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Pre Accident Condition" formControlName="Pre_Accident_Condition" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Laden Weight" formControlName="Laden_Wt">
@@ -213,10 +213,10 @@
           <mat-error *ngIf="thirdFormGroup.controls['Unladen_Wt'].hasError('pattern') && thirdFormGroup.controls['Unladen_Wt'].touched">Please enter Numeric  value only.</mat-error>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="CNG KIT Status" formControlName="CNG_KIT_Status" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="CNG KIT Status" formControlName="CNG_KIT_Status" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Permit Area" formControlName="Permit_Area" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Permit Area" formControlName="Permit_Area" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
@@ -241,7 +241,7 @@
         <ng-template matStepLabel>Driver</ng-template>
         <h4>Driver Details</h4>
         <mat-form-field>
-          <input matInput placeholder="Driver Name" formControlName="Drivername" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Driver Name" formControlName="Drivername" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <div class="mat-form-checkfield">
           <label>Upload Driving License</label>
@@ -249,7 +249,7 @@
           <img alt="" id="imageUrl" [src]="driverImgUrl" />
         </div>
         <mat-form-field>
-          <input matInput placeholder="Driver License Number" formControlName="DriverLicenseNo" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Driver License Number" formControlName="DriverLicenseNo" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
@@ -272,7 +272,7 @@
           <mat-datepicker #picker6></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Driver Age" formControlName="Age" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Driver Age" formControlName="Age" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
           <mat-select placeholder="Type Of License" formControlName="TypeOfLicense">
@@ -311,7 +311,7 @@
         </div>
 
         <mat-form-field>
-          <input matInput placeholder="Accident Place" formControlName="AccidentPlace" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Accident Place" formControlName="AccidentPlace" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Allotement Date" formControlName="AllotementDate" [max]="maxDateToday" [matDatepicker]="AllotementDate">
@@ -319,7 +319,7 @@
           <mat-datepicker #AllotementDate></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <textarea matInput placeholder="Cause of Loss" formControlName="CauseofLoss" (keypress)="specialCharPrevention($event)"></textarea>
+          <textarea matInput placeholder="Cause of Loss" formControlName="CauseofLoss" (keydown)="specialCharPrevention($event)"></textarea>
         </mat-form-field>
 
 
@@ -382,19 +382,19 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Police Station Name" formControlName="FIRPoliceStation" [disabled]="setPolicCtrlDisabled" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Police Station Name" formControlName="FIRPoliceStation" [disabled]="setPolicCtrlDisabled" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Police Diary No" formControlName="FIRStationDiaryNo" [disabled]="setPolicCtrlDisabled" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Police Diary No" formControlName="FIRStationDiaryNo" [disabled]="setPolicCtrlDisabled" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Hospital Details" formControlName="HospitalDetails" (keypress)="specialCharPrevention($event)">
+          <input matInput placeholder="Hospital Details" formControlName="HospitalDetails" (keydown)="specialCharPrevention($event)">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <textarea matInput placeholder="Leave a Remarks" formControlName="Remarks" (keypress)="specialCharPrevention($event)"></textarea>
+          <textarea matInput placeholder="Leave a Remarks" formControlName="Remarks" (keydown)="specialCharPrevention($event)"></textarea>
         </mat-form-field>
 
         <div style="text-align: center; margin-top: 50px;">
@@ -485,7 +485,7 @@
                   <br/>
                   <br/>
                   <mat-form-field style="width: 90%;">
-                    <textarea matInput placeholder="Part Remark" formControlName="PartRemark" (keypress)="specialCharPrevention($event)"></textarea>
+                    <textarea matInput placeholder="Part Remark" formControlName="PartRemark" (keydown)="specialCharPrevention($event)"></textarea>
                   </mat-form-field>
 
                   <mat-action-row>

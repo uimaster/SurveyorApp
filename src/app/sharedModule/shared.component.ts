@@ -121,6 +121,15 @@ export class SharedComponent implements OnInit {
       this.openImageDialog();
     }
 
+    specialCharPrevention(event) {
+      const key = event.keyCode;
+      const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
+      if (!preventsKey) {
+       alert('Special characters not allowed');
+        return false;
+      }
+    }
+
     getMultiImages() {
         this.isImageLoading = true;
         this.sharedService.getMultiImages(this.caseId).subscribe(data => {
@@ -180,6 +189,8 @@ export class DonwloadDialog implements OnInit {
       this.dialogRef.close();
       this.router.navigate(['/dashboard']);
     }
+
+
 
     PostSpotCompletion(data) {
 

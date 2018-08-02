@@ -15,7 +15,7 @@
     </div>
     <form [formGroup]="myForm">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" (keypress)="specialCharPrevention($event)">
+        <input matInput placeholder="Name" formControlName="name" (keydown)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['name'].hasError('required') && myForm.controls['name'].touched">Name is required</mat-error>
         <mat-error *ngIf="myForm.controls['name'].hasError('pattern') && myForm.controls['name'].touched">Name should contain string and digits</mat-error>
       </mat-form-field>
@@ -23,7 +23,7 @@
 
 
       <mat-form-field>
-        <input matInput placeholder="Contact" formControlName="Contact" (keypress)="specialCharPrevention($event)">
+        <input matInput placeholder="Contact" formControlName="Contact" (keydown)="specialCharPrevention($event)">
         <mat-error *ngIf="myForm.controls['Contact'].hasError('pattern') && myForm.controls['Contact'].touched">Only Digits allowed</mat-error>
         <mat-error *ngIf="myForm.controls['Contact'].hasError('minlength') && myForm.controls['Contact'].touched">Should be minimum 10 digits</mat-error>
         <mat-error *ngIf="myForm.controls['Contact'].hasError('maxlength') && myForm.controls['Contact'].touched">Should be maximum 10 digits</mat-error>
@@ -32,11 +32,11 @@
 
 
       <mat-form-field>
-        <input matInput placeholder="Address" formControlName="address" (keypress)="specialCharPrevention($event)">
+        <input matInput placeholder="Address" formControlName="address" (keydown)="specialCharPrevention($event)">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="CompanyNos" formControlName="CompanyNos" (keypress)="specialCharPrevention($event)">
+        <input matInput placeholder="CompanyNos" formControlName="CompanyNos" (keydown)="specialCharPrevention($event)">
       </mat-form-field>
 
 
