@@ -56,7 +56,7 @@ import { SurveyorService } from './surveyor/surveyor.service';
 
 import { SharedModule } from './sharedModule/shared.module';
 import { DashboardSearchPipe } from '../shared/pipes/dashboard-search.pipe';
-import { TokenInterceptor } from '../app/login/login.inteceptor';
+import { RequestInterceptor } from '../app/login/login.inteceptor';
 import { CommonImageComponent } from './sharedModule/images.component';
 
 
@@ -113,7 +113,7 @@ import { CommonImageComponent } from './sharedModule/images.component';
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, PreWizardService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: RequestInterceptor,
       multi: true
     },
     CommonImageComponent

@@ -4,6 +4,7 @@ export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
 
 // export const BASEURL = 'http://54.169.129.132/api/';
 export const LOGINURL = BASEURL + 'jwtAuth/token';
+export const REFRESHTOKEN_URL = BASEURL + 'jwtAuth/tokenrefresh';
 export const DASHBOARDTABCOUNTS = BASEURL + 'Dashboard/GetDashboardCounts?';
 export const DASHBOARDLIST = BASEURL + 'Dashboard/GetCaseList?';
 export const GETUSERLIST_URL = BASEURL + 'masters/GetSurveyorUserList';

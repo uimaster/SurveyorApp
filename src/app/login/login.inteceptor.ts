@@ -1,36 +1,91 @@
-import { Injectable, Injector } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import { LocalStorage } from '../../shared/localStorage';
+import {Injectable, Injector} from '@angular/core';
+import { Router } from '@angular/router';
 import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
-} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+  HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse
 
-// import { LoginService } from './login.service';
+} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {LoginService} from './login.service';
 export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
-  // private loginService: LoginService;
-  constructor(private injector: Injector) {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+export class RequestInterceptor implements HttpInterceptor {
+  public cachedRequests = [];
 
-    if (request.headers.has(InterceptorSkipHeader)) {
-      const headers = request.headers.delete(InterceptorSkipHeader);
-      return next.handle(request.clone({headers}));
+  constructor(private router: Router, public inj: Injector, public loaderInject: Injector) { }
+
+
+
+  private applyCredentials = (req: HttpRequest<any>, token: string) => {
+    return req.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`,
+        // 'Content-Type': 'application/json, multipart/form-data, text/plain;charset=UTF-8',
+        'X-Requested-With' : 'XMLHttpRequest',
+        'DeviceType': '1'
+      }
+    });
+  }
+
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+
+    if (req.headers.has(InterceptorSkipHeader)) {
+      const headers = req.headers.delete(InterceptorSkipHeader);
+      return next.handle(req.clone({headers}));
     }
 
-    // this.loginService = this.injector.get(LoginService);
-    const token = localStorage.getItem('token');
-    if (token) {
-      request = request.clone({
-        setHeaders: {
-          'Authorization': `Bearer ${token}`,
-          // 'Content-Type': 'application/json, multipart/form-data, text/plain;charset=UTF-8',
-          'X-Requested-With' : 'XMLHttpRequest',
-          'DeviceType': '1'
+    const auth = this.inj.get(LoginService);
+
+    const authReq = this.applyCredentials(req, LocalStorage.getRefreshToken());
+
+    return next.handle(authReq)
+
+      .map((event: HttpEvent<any>) => {
+
+        if (event instanceof HttpResponse) {
+
+          return event;
+
         }
+
+      })
+
+      .catch((error: any) => {
+
+        if (error instanceof HttpErrorResponse) {
+
+          if (error.status === 401) {
+
+            console.log('Unauthorized');
+
+            return auth.refreshToken()
+
+              .flatMap((res) => {
+
+                // localStorage.setItem('token', res.Data[0].bearerToken);
+                LocalStorage.setRefreshToken(res.Data[0].BearerToken);
+
+                return next.handle(this.applyCredentials(req, LocalStorage.getRefreshToken()));
+
+              });
+
+          } else if (error.status === 403) { // log back in!!
+
+            this.router.navigate(['/login']);
+
+          }
+
+        } else {
+
+          return Observable.throw(error);
+
+        }
+
       });
-    }
-    return next.handle(request);
+
   }
 }
