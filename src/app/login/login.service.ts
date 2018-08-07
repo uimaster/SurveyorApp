@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { LoginRequest, LoginResponse} from './login.model';
 import { LOGINURL, REFRESHTOKEN_URL } from '../../shared/urls';
@@ -15,7 +16,7 @@ export class LoginService {
   public authTokenStale = 'stale_auth_token';
   public authTokenNew = 'new_auth_token';
   public currentToken: string;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.currentToken = this.authTokenStale;
   }
 
@@ -45,8 +46,14 @@ export class LoginService {
     });
     return this.http.post(REFRESHTOKEN_URL, payload)
       .map((res: LoginResponse) => {
-        console.log('refreshToken:', res);
-        return res;
+        if (res.Message !== 'Bad Request') {
+          console.log('success refreshToken:', res.Data);
+          return res;
+        } else {
+          console.log('faild refreshToken:', res);
+          this.router.navigate(['/login']);
+        }
+
       })
       .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
