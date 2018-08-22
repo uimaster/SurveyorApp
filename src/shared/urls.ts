@@ -1,5 +1,7 @@
 import { BASE2URL } from './img.urls';
-export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
+// export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
+export const BASEURL = 'http://apiflav2live.iflotech.in/api/';
+
 // export const BASEURL = 'http://apiflacors.iflotech.in/api/';
 
 // export const BASEURL = 'http://54.169.129.132/api/';
@@ -38,7 +40,7 @@ export const DAMAGEDETAILS_URL = BASEURL + 'CarDemageDetailEntry';
 export const GENERATESPOTREPORT = BASEURL + 'Reports/GenerateSpotReport';
 export const GENERATEPREREPORT = BASEURL + 'Reports/GeneratePIReport';
 export const DOWNLOADSPOTREPORT = BASEURL + 'DownloadReport/getSpotSurveyReport';
-export const SPOTCOMPLETIONURL = BASEURL + 'SpotCases/GetCaseSPOTStatus';
+export const SPOTCOMPLETIONURL = BASEURL + 'CaseStatus/CaseStatusUpdate';
 export const SPOTCREATECASE = BASEURL + 'SpotCases/SPOTCreateCase';
 export const PRECREATECASE = BASEURL + 'PICases/PICreateCase';
 
@@ -67,7 +69,7 @@ export const SPOTALLSTEPS_STATUS_URL = BASEURL + 'SpotCases/GetCaseSPOTStatus';
 export const PIALLSTEPS_STATUS_URL = BASEURL + 'PICases/GetCasePIStatus';
 
 // COMMON IMAGES GET/POST ULRS //
-export const GETIMAGEBASE_URL = 'http://apiflacorev2.iflotech.in';
+// export const GETIMAGEBASE_URL = 'http://apiflacorev2.iflotech.in';
 export const POSTIMAGE_URL = BASEURL + 'CaseImages/CaseImageUpload';
 export const GETIMAGE_URL = BASEURL + 'CaseImages/GetCaseImageLink';
 export const GETACCIDENTIMAGELIST_URL = BASEURL + 'CaseImages/GetCaseImageList';

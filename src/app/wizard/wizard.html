@@ -342,34 +342,34 @@
         <div class="mat-form-checkfield">
           <label>Police Report : </label>
           <mat-radio-group formControlName="FIRReported" (change)="getPoliceReport($event)">
-            <mat-radio-button value="yes">Yes</mat-radio-button>
-            <mat-radio-button value="no" checked>No</mat-radio-button>
+            <mat-radio-button value="yes" checked>Yes</mat-radio-button>
+            <mat-radio-button value="no">No</mat-radio-button>
           </mat-radio-group>
         </div>
         <div class="mat-form-checkfield">
           <label>Injury to Driver: </label>
-          <mat-radio-group formControlName="InjuryToDriver">
+          <mat-radio-group formControlName="InjuryToDriver" [disabled]="setPolicCtrlDisabled">
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no" checked>No</mat-radio-button>
           </mat-radio-group>
         </div>
         <div class="mat-form-checkfield">
           <label>Injury to Cleaner: </label>
-          <mat-radio-group formControlName="InjuryToCleaner">
+          <mat-radio-group formControlName="InjuryToCleaner" [disabled]="setPolicCtrlDisabled">
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no" checked>No</mat-radio-button>
           </mat-radio-group>
         </div>
         <div class="mat-form-checkfield">
           <label>Injury to Other Occupants: </label>
-          <mat-radio-group formControlName="InjuryToOtherOccupants">
+          <mat-radio-group formControlName="InjuryToOtherOccupants" [disabled]="setPolicCtrlDisabled">
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no" checked>No</mat-radio-button>
           </mat-radio-group>
         </div>
         <div class="mat-form-checkfield">
           <label>Accident Third Party Property Damages: </label>
-          <mat-radio-group formControlName="ThirdPartyPropertyDamages">
+          <mat-radio-group formControlName="ThirdPartyPropertyDamages" [disabled]="setPolicCtrlDisabled">
             <mat-radio-button value="yes">Yes</mat-radio-button>
             <mat-radio-button value="no" checked>No</mat-radio-button>
           </mat-radio-group>
@@ -390,11 +390,11 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input matInput placeholder="Hospital Details" formControlName="HospitalDetails" (keydown)="specialCharPrevention($event)">
+          <input matInput placeholder="Hospital Details" formControlName="HospitalDetails" (keydown)="specialCharPrevention($event)" [disabled]="setPolicCtrlDisabled">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
-          <textarea matInput placeholder="Leave a Remarks" formControlName="Remarks" (keydown)="specialCharPrevention($event)"></textarea>
+          <textarea matInput placeholder="Leave a Remarks" formControlName="Remarks" (keydown)="specialCharPrevention($event)" [disabled]="setPolicCtrlDisabled"></textarea>
         </mat-form-field>
 
         <div style="text-align: center; margin-top: 50px;">

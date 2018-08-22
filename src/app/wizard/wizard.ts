@@ -85,7 +85,7 @@ export class WizardComponent implements OnInit {
     { value: '3', viewValue: 'HTV' }
   ];
 
-  imageBaseUrl = 'http://apiflacorev2.iflotech.in';
+  imageBaseUrl = 'http://apiflav2live.iflotech.in';
   submitDisabled = false;
   companyListData = [];
   thisYear = new Date().getFullYear();
@@ -294,9 +294,10 @@ export class WizardComponent implements OnInit {
 
   specialCharPrevention(event) {
     const key = event.keyCode;
-    const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
-    if (!preventsKey) {
-     alert('Special characters not allowed');
+    const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
+      key === 55 || key === 48  || key === 57 || key === 186 ));
+    if (preventsKey) {
+     console.log('Special characters not allowed');
       return false;
     }
   }
@@ -585,12 +586,21 @@ export class WizardComponent implements OnInit {
 
 
   getPoliceReport(event) {
-    debugger;
-    const firReport = this.sixthFormGroup.controls['FIRReported'].value;
-    if (firReport == 'yes') {
-      this.setPolicCtrlDisabled = true;
-    } else {
+    // const firReport = this.sixthFormGroup.controls['FIRReported'].value;
+    const firReport = event.value;
+    if (firReport === 'yes') {
       this.setPolicCtrlDisabled = false;
+    } else {
+      this.setPolicCtrlDisabled = true;
+      this.sixthFormGroup.controls['InjuryToDriver'].setValue(0);
+      this.sixthFormGroup.controls['InjuryToCleaner'].setValue(false);
+      this.sixthFormGroup.controls['InjuryToOtherOccupants'].setValue(false);
+      this.sixthFormGroup.controls['ThirdPartyPropertyDamages'].setValue(false);
+      this.sixthFormGroup.controls['FIRDate'].setValue('');
+      this.sixthFormGroup.controls['FIRPoliceStation'].setValue('');
+      this.sixthFormGroup.controls['FIRStationDiaryNo'].setValue('');
+      this.sixthFormGroup.controls['HospitalDetails'].setValue('');
+      this.sixthFormGroup.controls['Remarks'].setValue('');
     }
   }
 
@@ -906,8 +916,10 @@ export class WizardComponent implements OnInit {
   }
 
   getSummaryReportDetails() {
+    this.Loader = true;
     this.wizardService.getSummaryReportDetails().subscribe(res => {
       if (res && res.Status == 200) {
+        this.Loader = false;
         this.summaryReportData = res.Data;
         this.ninethFormGroup = new FormGroup({
           PNo: new FormControl(this.summaryReportData[0].PNo),
@@ -929,6 +941,7 @@ export class WizardComponent implements OnInit {
           )
         });
       } else {
+        this.Loader = false;
         console.log(res.Message);
       }
     });

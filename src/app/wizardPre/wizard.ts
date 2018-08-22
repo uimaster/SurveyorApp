@@ -86,7 +86,7 @@ export class PreWizardComponent implements OnInit {
     signatureImgUrl: string;
     customSignUrl: string;
     imageData: any;
-    imageBaseUrl = 'http://apiflacorev2.iflotech.in';
+    imageBaseUrl = 'http://apiflav2live.iflotech.in';
     surveyorId = JSON.parse(localStorage.getItem('SurveyorsId'));
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
@@ -304,9 +304,10 @@ export class PreWizardComponent implements OnInit {
 
     specialCharPrevention(event) {
       const key = event.keyCode;
-      const preventsKey = ((key > 64 && key < 91) || (key > 96 && key < 123) || key === 8 || key === 32  || (key >= 48 && key <= 57));
-      if (!preventsKey) {
-       alert('Special characters not allowed');
+      const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
+        key === 55 || key === 48  || key === 57  || key === 186 ));
+      if (preventsKey) {
+        console.log('Special characters not allowed');
         return false;
       }
     }

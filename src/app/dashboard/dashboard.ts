@@ -69,9 +69,11 @@ export class DashboardComponent implements OnInit {
   }
 
   createCaseInit() {
+    //debugger;
     const SurveyorsId = localStorage.getItem('SurveyorsId');
     const companyId = localStorage.getItem('CompanyId');
-    const userTypeId = JSON.parse(localStorage.getItem('SurveyorsId'));
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    const UserId = JSON.parse(localStorage.getItem('UserId'));
     // this.createCaseForm.controls['SurveyorsId'].setValue(0);
     this.createCaseForm.controls['CompanyId'].setValue(0);
     this.createCaseForm.controls['UserID'].setValue(0);
@@ -107,12 +109,16 @@ export class DashboardComponent implements OnInit {
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 4) {
-      this.userDisabled = false;
       this.surveyorDisabled = true;
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
+      this.createCaseForm.controls['UserID'].setValue(UserId);
+      setTimeout(() => {
+        this.createCaseForm.controls['UserID'].disable();
+        this.userDisabled = true;
+      }, 2000);
     }
   }
 
@@ -139,7 +145,7 @@ export class DashboardComponent implements OnInit {
   getCompletedList() {
     this.tabsServices.getCompletedList(this.userId)
     .subscribe(res => {
-      if(res && res.Status === '200') {
+      if (res && res.Status === '200') {
         this.TotalDada = res.Data;
         if (this.TotalDada.length > 0) {
           this.Loader = false;
@@ -216,6 +222,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserList(data) {
+
     this.createCaseForm.controls['UserID'].setValue('');
     this.dashboardService.getUserList(data)
       .subscribe(res => {
@@ -314,8 +321,18 @@ export class DashboardComponent implements OnInit {
       this.userId = 0;
     } else if (userTypeId === 3) {
       this.userId = 0;
+
+      setTimeout(() => {
+        const serveyorId = localStorage.getItem('SurveyorsId');
+        this.getUserList(serveyorId);
+      }, 1300);
+
     } else if (userTypeId === 4) {
       this.userId = JSON.parse(localStorage.getItem('UserId'));
+      setTimeout(() => {
+        const serveyorId = localStorage.getItem('SurveyorsId');
+        this.getUserList(serveyorId);
+      }, 1300);
     }
 
     setTimeout(() => {
@@ -334,10 +351,7 @@ export class DashboardComponent implements OnInit {
       this.getAreaList();
     }, 1000);
 
-    setTimeout(() => {
-      const serveyorId = localStorage.getItem('SurveyorsId');
-      this.getUserList(serveyorId);
-    }, 1300);
+
 
     setTimeout(() => {
       this.createCaseInit();
@@ -380,7 +394,7 @@ export class DashboardComponent implements OnInit {
   // }
 
   downloadSpotSurvey(caseId, caseTypeId) {
-    const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
+    const baseurl = 'http://apiflav2live.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
     this.downloadUrl = baseurl + caseId +'&CaseTypeId='+ caseTypeId;
   }
 }

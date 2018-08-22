@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SharedModuleServices } from './shared.service';
-import { POSTIMAGE_URL,  GETIMAGEBASE_URL} from '../../shared/urls';
+import { POSTIMAGE_URL} from '../../shared/urls';
 import * as imageModels from './shared.model';
 
 @Injectable()
