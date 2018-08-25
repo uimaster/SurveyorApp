@@ -53,8 +53,8 @@ export class WizardComponent implements OnInit {
   errorMessage: string;
   showError = false;
   showSuccess = false;
-  caseId: any = localStorage.getItem('CaseID');
-  caseNO: any = localStorage.getItem('CaseNO');
+  caseId: any;
+  caseNO: any;
   //   url:any;
   public files: any[];
   Loader = true;
@@ -85,7 +85,7 @@ export class WizardComponent implements OnInit {
     { value: '3', viewValue: 'HTV' }
   ];
 
-  imageBaseUrl = 'http://apiflav2live.iflotech.in';
+  imageBaseUrl = 'http://apiflacorev2.iflotech.in';
   submitDisabled = false;
   companyListData = [];
   thisYear = new Date().getFullYear();
@@ -130,6 +130,10 @@ export class WizardComponent implements OnInit {
     private imageService: CommonImageComponent,
     private sharedService: SharedModuleServices
   ) {
+
+    this.caseId = localStorage.getItem('CaseID');
+    this.caseNO = localStorage.getItem('CaseNO');
+
     this.files = [];
     this.firstFormGroup = new FormGroup({
       CaseID: new FormControl(this.caseId),
@@ -166,7 +170,7 @@ export class WizardComponent implements OnInit {
 
     this.thirdFormGroup = new FormGroup({
       CaseVehicleId: new FormControl(this.CaseVehicleId),
-      CaseID: new FormControl(JSON.parse(this.caseId)),
+      CaseID: new FormControl(this.caseId),
       VehicleId: new FormControl(''),
       VehicleName: new FormControl(''),
       Registration_No: new FormControl('', Validators.required),
@@ -625,6 +629,7 @@ export class WizardComponent implements OnInit {
         this.RegSearchSuccessMsg = true;
         var datedata = this.VehicleSearchData[0].regn_dt;
         var formatedDatestring = this.convertToDateFormat(datedata);
+        this.thirdFormGroup.controls['CaseID'].setValue(this.caseId);
         this.thirdFormGroup.controls['Registration_No'].setValue(data);
         this.thirdFormGroup.controls['RegistrationDate'].setValue(
           formatedDatestring
@@ -701,6 +706,7 @@ export class WizardComponent implements OnInit {
   }
 
   getVehicleDetails() {
+    debugger;
     this.wizardService.getVehicleDetails().subscribe(res => {
       if (res && res.Status == 200) {
         this.VehicleDetailData = res.Data;
@@ -708,9 +714,7 @@ export class WizardComponent implements OnInit {
           this.thirdFormGroup.controls['CaseVehicleId'].setValue(
             this.VehicleDetailData[0].CaseVehicleId
           );
-          this.thirdFormGroup.controls['CaseID'].setValue(
-            this.VehicleDetailData[0].SurveyorsId
-          );
+          this.thirdFormGroup.controls['CaseID'].setValue(JSON.parse(this.caseId));
           this.thirdFormGroup.controls['VehicleId'].setValue(
             this.VehicleDetailData[0].VehicleId
           );

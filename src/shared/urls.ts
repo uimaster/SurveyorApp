@@ -1,6 +1,6 @@
 import { BASE2URL } from './img.urls';
-// export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
-export const BASEURL = 'http://apiflav2live.iflotech.in/api/';
+export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
+// export const BASEURL = 'http://apiflav2live.iflotech.in/api/';
 
 // export const BASEURL = 'http://apiflacors.iflotech.in/api/';
 

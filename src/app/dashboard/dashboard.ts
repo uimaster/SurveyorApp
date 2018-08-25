@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
   }
 
   createCaseInit() {
-    //debugger;
+    // debugger;
     const SurveyorsId = localStorage.getItem('SurveyorsId');
     const companyId = localStorage.getItem('CompanyId');
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
     this.createCaseForm.controls['CompanyId'].setValue(0);
     this.createCaseForm.controls['UserID'].setValue(0);
     this.createCaseForm.controls['AreaID'].setValue(0);
-    this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(userTypeId));
+    this.createCaseForm.controls['SurveyorsId'].setValue(JSON.parse(SurveyorsId));
 
     if (userTypeId === 1) {
       this.companyDisabled = false;
@@ -110,15 +110,16 @@ export class DashboardComponent implements OnInit {
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
     } else if (userTypeId === 4) {
       this.surveyorDisabled = true;
+      this.userDisabled = true;
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
       this.createCaseForm.controls['SurveyorsId'].updateValueAndValidity();
       this.createCaseForm.controls['UserID'].setValue(UserId);
-      setTimeout(() => {
-        this.createCaseForm.controls['UserID'].disable();
-        this.userDisabled = true;
-      }, 2000);
+      // setTimeout(() => {
+      //   this.createCaseForm.controls['UserID'].disable();
+      //   this.userDisabled = true;
+      // }, 3000);
     }
   }
 
@@ -244,6 +245,7 @@ export class DashboardComponent implements OnInit {
 
   openCreateCase() {
     this.openCreateCaseModal = true;
+    this.createCaseInit();
   }
 
   closeCreateCase() {
@@ -353,9 +355,9 @@ export class DashboardComponent implements OnInit {
 
 
 
-    setTimeout(() => {
-      this.createCaseInit();
-    }, 1700);
+    // setTimeout(() => {
+    //   this.createCaseInit();
+    // }, 1700);
 
 
 
@@ -394,7 +396,7 @@ export class DashboardComponent implements OnInit {
   // }
 
   downloadSpotSurvey(caseId, caseTypeId) {
-    const baseurl = 'http://apiflav2live.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
-    this.downloadUrl = baseurl + caseId +'&CaseTypeId='+ caseTypeId;
+    const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
+    this.downloadUrl = baseurl + caseId + '&CaseTypeId=' + caseTypeId;
   }
 }

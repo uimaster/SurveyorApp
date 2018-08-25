@@ -29,7 +29,7 @@ export class SharedComponent implements OnInit {
     multiImage: any;
     isImageLoading = false;
     // imageBaseUrl = 'http://apiflacorev2.iflotech.in';
-    imageBaseUrl = 'http://apiflav2live.iflotech.in';
+    imageBaseUrl = 'http://apiflacorev2.iflotech.in';
 
     constructor(private sharedService: SharedModuleServices, private http: HttpClient, public dialog: MatDialog,
         private wizardService: WizardService, private fb: FormBuilder) {

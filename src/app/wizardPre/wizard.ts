@@ -42,8 +42,8 @@ export class PreWizardComponent implements OnInit {
     errorMessage: string;
     showError = false;
     showSuccess = false;
-    caseId: any = localStorage.getItem('CaseID');
-    caseNO: any = localStorage.getItem('CaseNO');
+    caseId: any;
+    caseNO: any;
     showPartsList = false;
     public files: any[];
     Loader = true;
@@ -86,13 +86,15 @@ export class PreWizardComponent implements OnInit {
     signatureImgUrl: string;
     customSignUrl: string;
     imageData: any;
-    imageBaseUrl = 'http://apiflav2live.iflotech.in';
+    imageBaseUrl = 'http://apiflacorev2.iflotech.in';
     surveyorId = JSON.parse(localStorage.getItem('SurveyorsId'));
 
     constructor(private _formBuilder: FormBuilder, private wizardService: PreWizardService, private spotService: WizardService,
         private httpClient: HttpClient, public dialog: MatDialog, private router: Router, private companyService: CompaniesService,
         private dashboardService: DashboardService, private sharedService: SharedModuleServices, private imageService: CommonImageComponent,
     ) {
+        this.caseId = localStorage.getItem('CaseID');
+        this.caseNO = localStorage.getItem('CaseNO');
 
         this.firstFormGroup = new FormGroup({
             CaseID: new FormControl(this.caseId),
