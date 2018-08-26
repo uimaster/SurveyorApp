@@ -12,7 +12,7 @@ import { REQUIRED_VALIDATOR } from '@angular/forms/src/directives/validators';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
-export class CreateComponent implements OnInit {
+export class CreateUsersComponent implements OnInit {
   public myForm: FormGroup;
   public successMessage: String;
   public errorMessage: String;

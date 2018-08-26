@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {USERSLIST, UPDATE_CRAETE_USERS_URL, WIZARD_POSTCLAIMURL} from '../../shared/urls';
+import {USERSLIST, UPDATE_CRAETE_USERS_URL, WIZARD_POSTCLAIMURL} from '../../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 

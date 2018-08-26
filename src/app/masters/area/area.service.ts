@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {SURVEYORLIST, USERSLIST, UPDATE_CRAETE_SURVEYOR_URL} from '../../shared/urls';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import {AREALIST, USERSLIST, UPDATE_CRAETE_AREA_URL} from '../../../shared/urls';
 import 'rxjs/Rx';
-
-
 @Injectable()
 
-export class SurveyorService {
-
+export class AreaService {
   constructor(private http: HttpClient) {}
 
-  getSurveyorList(): Observable<any> {
-    return this.http.get(SURVEYORLIST)
+  getAreaList(): Observable<any> {
+    return this.http.get(AREALIST)
       .map((res) => {
         if (res) {
           return res;
@@ -21,8 +18,8 @@ export class SurveyorService {
       .catch((error) => Observable.throw('server Error.'));
   }
 
-  addSurveyor(payload: any): Observable<any> {
-    return this.http.post(UPDATE_CRAETE_SURVEYOR_URL, payload)
+  addArea(payload: any): Observable<any> {
+    return this.http.post(UPDATE_CRAETE_AREA_URL, payload)
       .map((res: any) =>  {
         if (res) {
           return res;

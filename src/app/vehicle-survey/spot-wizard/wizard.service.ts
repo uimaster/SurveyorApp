@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
-import { LoginRequest, LoginResponse} from '../login/login.model';
-import * as urls from '../../shared/urls';
-import * as IMAGEURL from '../../shared/img.urls';
+import { LoginRequest, LoginResponse} from '../../login/login.model';
+import * as urls from '../../../shared/urls';
+import * as IMAGEURL from '../../../shared/img.urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 

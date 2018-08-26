@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UsersService} from "./users.service";
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {UsersService} from './users.service';
+
 
 @Component({
   selector: 'app-users',
@@ -11,7 +12,7 @@ export class UsersComponent implements OnInit {
   public TotalDada = [];
   Loader = true;
   public searchText = '';
-  constructor( private userService: UsersService, private router:Router){}
+  constructor( private userService: UsersService, private router: Router) {}
 
   getUserList() {
     this.userService.getUsersList()
@@ -22,7 +23,6 @@ export class UsersComponent implements OnInit {
         }
       });
   }
-
 
   ngOnInit() {
     this.getUserList();

@@ -1,0 +1,80 @@
+.mat-stepper-horizontal-line{border-top: 0;}
+.mat-stepper-horizontal{ padding: 25px; background-color: hsla(0,0%,100%,0.3); border-radius: 6px; min-height: 500px;}
+h2{ color: #fff; font-size: 18px;}
+.mat-horizontal-stepper-header-container{ background-color: hsla(0,0%,100%,0.6); }
+.mat-step-header .mat-step-label, .mat-step-header .mat-step-optional{ color: #6c6d6e!important; }
+.mat-step-icon, .mat-step-icon-not-touched{ height: 28px; width: 28px;}
+.mat-form-field { width: 40%;  margin: 0 45px;}
+
+.mat-form-checkfield{
+    display: inline-block; position: relative; text-align: left;  width: 40%;  margin: 0 45px; margin: 15px 45px;
+    label{ margin-right: 10px; width:160px; display: inline-block;  text-align: left; color: #4f4f4f;}
+    .mat-radio-button{ color: #e5e9ff; margin-right: 15px;}
+    img{
+        height: 100px; width: 100px; background-color: #ddd;
+        display: block;
+        position: absolute;
+        top: -44px;
+        left: 300px;
+        border: 1px solid #eee;
+        padding: 2px;
+        border-radius: 4px;
+    }
+}
+.tabularData{
+    padding: 1%;
+    max-height: 400px;
+    overflow: auto;
+    display: inline-block;
+    width: 20.5%;
+    margin: 1%;
+    text-align: center;
+    min-height: 210px;
+    vertical-align: top;
+    background-color: rgba(255, 255, 255, 0.6);
+    h5{ margin: 0; padding-bottom: 7px; font-size: 17px; font-weight: 500;}
+    img{display: block;
+        margin: 10px auto;
+        max-height: 130px;
+        border-radius: 4px;
+        max-width: 160px; background-color: #ddd; min-height: 100px;
+    }
+    input[type="file"]{ margin: 0; height: 30px;}
+  }
+
+
+  .example-section{
+      label{ display: inline-block; width: 160px;}
+      .mat-checkbox{display: inline-block; width: 160px;}
+  }
+  .mat-list{
+    padding-top: 0px;
+    .mat-list-item{ background-color: #fff; border-bottom: 1px solid #ddd; padding: 5px; cursor: pointer;}
+  }
+
+  .backdrop{     position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(21, 21, 21, 0.6);
+    z-index: 99;
+}
+  .smallModal{
+    position: fixed; left: 20%; top: 15%; width: 58%; z-index: 999; padding: 10px 1%; background-color: #fff; border-radius: 10px; overflow: hidden;
+
+    h2{
+        margin: 0 0 35px 0;
+    }
+    p{
+        text-align: center; font-size: 14px; color: #333;
+    }
+}
+
+.smallPara{
+    font-size: 14px; line-height: 20px;
+}
+
+.alert{
+  .listItem{ width: 40%; padding: 5px 5%;  text-align: left; float: left;}
+}

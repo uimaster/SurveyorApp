@@ -30,7 +30,7 @@ export class CommonImageComponent {
     }
     this.httpClient.post(POSTIMAGE_URL, formData).subscribe((res: imageModels.PostImageResponseModel) => {
       alert('Image uploaded successfully !');
-      //console.log(res);
+      // console.log(res);
     });
   }
 

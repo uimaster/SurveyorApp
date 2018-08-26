@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import {COMPANYLIST, CREATECOMPANY, UPDATE_CRAETE_COMPANY_URL} from '../../shared/urls';
+import {COMPANYLIST, CREATECOMPANY, UPDATE_CRAETE_COMPANY_URL} from '../../../shared/urls';
 import 'rxjs/Rx';
 @Injectable()
 

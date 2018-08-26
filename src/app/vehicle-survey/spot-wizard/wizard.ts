@@ -11,13 +11,13 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router, UrlSegment } from '@angular/router';
 
 import { WizardService } from './wizard.service';
-import * as urls from '../../shared/urls';
-import { DonwloadDialog } from '../sharedModule/shared.component';
-import { CommonImageComponent } from '../sharedModule/images.component';
-import { CompaniesService } from '../companies/companies.service';
-import { DashboardService } from '../dashboard/dashboard.service';
-import { SharedModuleServices } from '../sharedModule/shared.service';
-import { GenericGetImageResponseModel } from '../sharedModule/shared.model';
+import * as urls from '../../../shared/urls';
+import { DonwloadDialog } from '../../sharedModule/shared.component';
+import { CommonImageComponent } from '../../sharedModule/images.component';
+import { CompaniesService } from '../../masters/companies/companies.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
+import { SharedModuleServices } from '../../sharedModule/shared.service';
+import { GenericGetImageResponseModel } from '../../sharedModule/shared.model';
 
 
 @Component({

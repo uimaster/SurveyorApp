@@ -4,11 +4,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { TabsService } from './dashboardTabs/tabs.service';
 import { TabsResponse, TabsGenericResponse} from './dashboardTabs/tabs.model';
-import { WizardService } from '../wizard/wizard.service';
+import { WizardService } from '../vehicle-survey/spot-wizard/wizard.service';
 import { DashboardService } from './dashboard.service';
-import {CompaniesService} from '../companies/companies.service';
-import { SurveyorService } from '../surveyor/surveyor.service';
-import { AreaService } from '../area/area.service';
+import {CompaniesService} from '../masters/companies/companies.service';
+import { SurveyorService } from '../masters/surveyor/surveyor.service';
+import { AreaService } from '../masters/area/area.service';
 import { SharedModuleServices } from '../sharedModule/shared.service';
 
 @Component({
@@ -293,9 +293,14 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('IsCompleted', completed);
     if (id === 1) {
       this.router.navigate(['wizard']);
-    } else {
+    } else if (id === 2) {
       this.router.navigate(['pre-wizard']);
+    } else if (id === 3) {
+      this.router.navigate(['spot-cattle']);
+    } else if (id === 4) {
+      this.router.navigate(['pre-cattle']);
     }
+
   }
 
   PostSpotCompletion(sur: any, caseId: number) {

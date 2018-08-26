@@ -7,14 +7,14 @@ import { MatAccordion } from '@angular/material';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 import { PreWizardService } from './wizard.service';
-import { WizardService } from '../wizard/wizard.service';
-import * as IMAGEURL from '../../shared/img.urls';
-import { DonwloadDialog } from '../sharedModule/shared.component';
-import { CompaniesService } from '../companies/companies.service';
-import { DashboardService } from '../dashboard/dashboard.service';
-import { SharedModuleServices } from '../sharedModule/shared.service';
-import { GenericGetImageResponseModel } from '../sharedModule/shared.model';
-import { CommonImageComponent } from '../sharedModule/images.component';
+import { WizardService } from '../spot-wizard/wizard.service';
+import * as IMAGEURL from '../../../shared/img.urls';
+import { DonwloadDialog } from '../../sharedModule/shared.component';
+import { CompaniesService } from '../../masters/companies/companies.service';
+import { DashboardService } from '../../dashboard/dashboard.service';
+import { SharedModuleServices } from '../../sharedModule/shared.service';
+import { GenericGetImageResponseModel } from '../../sharedModule/shared.model';
+import { CommonImageComponent } from '../../sharedModule/images.component';
 
 @Component({
     selector: 'wizard-selector',

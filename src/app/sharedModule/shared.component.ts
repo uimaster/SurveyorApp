@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SharedModuleServices } from '../sharedModule/shared.service';
-import { WizardService } from '../wizard/wizard.service';
+import { WizardService } from '../vehicle-survey/spot-wizard/wizard.service';
 import { POSTIMAGE_URL } from '../../shared/urls';
 
 @Component({
