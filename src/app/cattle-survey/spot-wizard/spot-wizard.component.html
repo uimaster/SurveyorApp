@@ -6,32 +6,37 @@
 <div class="container">
   <h2> Pre-Inspection Survey, Case No. : {{20}}</h2>
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
+    <mat-step>
+      <ng-template matStepLabel>Claim Details</ng-template>
+      <app-claim></app-claim>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Address" formControlName="secondCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
+    <mat-step >
+      <ng-template matStepLabel>Inspection Details</ng-template>
+      <app-inspection></app-inspection>
+    </mat-step>
+    <mat-step >
+      <ng-template matStepLabel>Proof Identification</ng-template>
+      <app-proof></app-proof>
+    </mat-step>
+    <mat-step >
+      <ng-template matStepLabel>Animal Images</ng-template>
+      <app-animal-images></app-animal-images>
+    </mat-step>
+    <mat-step >
+      <ng-template matStepLabel>Inquary Info Part 1</ng-template>
+      <app-inquary-one></app-inquary-one>
+    </mat-step>
+    <mat-step >
+      <ng-template matStepLabel>Inquary Info Part 2</ng-template>
+      <app-inquary-second></app-inquary-second>
+    </mat-step>
+    <mat-step >
+      <ng-template matStepLabel>Report Summary</ng-template>
+      <app-report-summary></app-report-summary>
     </mat-step>
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
+      <ng-template matStepLabel>Inspecting officer Signature</ng-template>
+      <app-signature></app-signature>
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="stepper.reset()">Reset</button>

@@ -95,7 +95,7 @@ export class CreateSurveyorComponent implements OnInit {
   specialCharPrevention(event) {
     const key = event.keyCode;
     const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
-      key === 55 || key === 48  || key === 57 || key === 186 ));
+     key === 57 || key === 186 ));
     if (preventsKey) {
       console.log('Special characters not allowed');
       return false;

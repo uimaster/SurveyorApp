@@ -1,0 +1,47 @@
+<form [formGroup]="claimForm">
+  <ng-template matStepLabel>Claim Details</ng-template>
+  <h4>Claim Details</h4>
+
+  <mat-form-field>
+    <input matInput placeholder="Policy No." formControlName="PolicyNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Ear Tag No." formControlName="EarTagNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Schedule No." formControlName="ScheduleNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="SL No." formControlName="SLNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Insured Name" formControlName="InsuredName" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Insured Address" formControlName="InsuredAddress" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Village" formControlName="Village" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Intimation Date" formControlName="IntimationDate" >
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Intimation Time" formControlName="IntimationTime">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Intimation Location" formControlName="IntimationLocation" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Is There Delay InIntimation?" formControlName="DelayInIntimation">
+  </mat-form-field>
+
+
+  <div style="text-align: center; margin-top: 50px;">
+    <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+    <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+
+    <button mat-raised-button matStepperNext>Skip</button>
+    <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="claimSubmit(claimForm.value);">Next</button>
+  </div>
+</form>

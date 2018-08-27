@@ -30,6 +30,7 @@ import { CommonImageComponent } from './sharedModule/images.component';
 import { MaterialModule } from './material.module';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,8 +38,7 @@ import { MaterialModule } from './material.module';
     DashboardComponent,
     WizardComponent,
     DashboardTabComponent,
-    PreWizardComponent,
-
+    PreWizardComponent
   ],
   imports: [
     BrowserModule,
