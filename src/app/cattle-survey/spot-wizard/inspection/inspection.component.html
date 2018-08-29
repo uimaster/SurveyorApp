@@ -1,3 +1,73 @@
-<p>
-  inspection works!
-</p>
+<form [formGroup]="inspectionForm">
+  <h4>Inspection Details</h4>
+
+  <mat-form-field>
+    <input matInput placeholder="Inspection Date" formControlName="InspectionDate" [matDatepicker]="InspectionDate">
+    <mat-datepicker-toggle matSuffix [for]="InspectionDate"></mat-datepicker-toggle>
+    <mat-datepicker #InspectionDate></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Inspection Time" formControlName="InspectionTime" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Inspection Place" formControlName="InspectionPlace" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Inspection Delay" formControlName="InspectionDelay" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="IInspection DelayReason" formControlName="InspectionDelayReason" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Animal EarTag No." formControlName="Animal_EarTagNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Animal Sex" formControlName="Animal_sex">
+      <mat-option *ngFor="let item of GenderArray" [value]="item.genderID">
+        {{ item.genderName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="Animal Color" formControlName="Animal_Color">
+      <mat-option *ngFor="let item of colorArray" [value]="item.colorID">
+        {{ item.colorName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal Breed" formControlName="Animal_Breed" >
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal Horn Left" formControlName="Animal_HornLeft">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Animal Horn Right" formControlName="Animal_HornRight">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Animal Tail" formControlName="Animal_Tail">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Animal Age" formControlName="Animal_Age">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Mark On Fore Head" formControlName="MarkOnForeHead">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Mark On Body" formControlName="MarkOnBody">
+  </mat-form-field>
+
+
+  <div style="text-align: center; margin-top: 50px;">
+    <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+    <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+
+    <button mat-raised-button matStepperNext>Skip</button>
+    <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="inspectionSubmit(inspectionForm.value);">Next</button>
+  </div>
+</form>

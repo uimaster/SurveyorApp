@@ -1,5 +1,4 @@
 <form [formGroup]="claimForm">
-  <ng-template matStepLabel>Claim Details</ng-template>
   <h4>Claim Details</h4>
 
   <mat-form-field>
@@ -23,18 +22,27 @@
   <mat-form-field>
     <input matInput placeholder="Village" formControlName="Village" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
+
   <mat-form-field>
-    <input matInput placeholder="Intimation Date" formControlName="IntimationDate" >
+    <input matInput placeholder="Intimation Date" formControlName="IntimationDate" [matDatepicker]="IntimationDate">
+    <mat-datepicker-toggle matSuffix [for]="IntimationDate"></mat-datepicker-toggle>
+    <mat-datepicker #IntimationDate></mat-datepicker>
   </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Intimation Time" formControlName="IntimationTime">
   </mat-form-field>
   <mat-form-field>
     <input matInput placeholder="Intimation Location" formControlName="IntimationLocation" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="Is There Delay InIntimation?" formControlName="DelayInIntimation">
-  </mat-form-field>
+
+  <div class="mat-form-checkfield">
+    <label for="DelayInIntimation">Is There Delay InIntimation?</label>
+    <mat-radio-group formControlName="DelayInIntimation" id="DelayInIntimation" [(ngModel)]="DelayInIntimation">
+      <mat-radio-button value="0">No</mat-radio-button>
+      <mat-radio-button value="1">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
 
   <div style="text-align: center; margin-top: 50px;">

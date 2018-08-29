@@ -1,0 +1,74 @@
+<form [formGroup]="inquaryFirstForm">
+  <h4>Claim Details</h4>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal Illness Date" formControlName="Animal_Illness_Date" [matDatepicker]="Animal_Illness_Date">
+    <mat-datepicker-toggle matSuffix [for]="Animal_Illness_Date"></mat-datepicker-toggle>
+    <mat-datepicker #Animal_Illness_Date></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal_Illness" formControlName="Animal_Illness" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Vetnary Doctor Remarks" formControlName="Vetnary_Doctor_Remarks" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Insured Remarks" formControlName="Insured_Remarks" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Locals Remarks" formControlName="Locals_Remarks" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Vetnary Doctor Name" formControlName="Vetnary_Doctor_Name" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal Not Treated Reason" formControlName="Animal_NotTreatedReason" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal Productivty In Ltrs" formControlName="Animal_ProductivtyInLtrs" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Animal Milk Purchaser" formControlName="Animal_MilkPurchaser" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <div class="mat-form-checkfield">
+    <label for="VetnaryHospitalRecords_Status">Vetnary Hospital Records Status</label>
+    <mat-radio-group formControlName="VetnaryHospitalRecords_Status" id="VetnaryHospitalRecords_Status" [(ngModel)]="VetnaryHospitalRecords_Status">
+      <mat-radio-button value="0">No</mat-radio-button>
+      <mat-radio-button value="1">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="mat-form-checkfield">
+    <label for="SocietyDoctorReport_Status">Society DoctorReport Status</label>
+    <mat-radio-group formControlName="SocietyDoctorReport_Status" id="SocietyDoctorReport_Status" [(ngModel)]="SocietyDoctorReport_Status">
+      <mat-radio-button value="0">No</mat-radio-button>
+      <mat-radio-button value="1">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="mat-form-checkfield">
+    <label for="Medical_Bills_Status">Medical Bills Status</label>
+    <mat-radio-group formControlName="Medical_Bills_Status" id="Medical_Bills_Status" [(ngModel)]="Medical_Bills_Status">
+      <mat-radio-button value="0">No</mat-radio-button>
+      <mat-radio-button value="1">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div style="text-align: center; margin-top: 50px;">
+    <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+    <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+
+    <button mat-raised-button matStepperNext>Skip</button>
+    <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="inquaryFirstSubmit(inquaryFirstForm.value);">Next</button>
+  </div>
+</form>

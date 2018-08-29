@@ -1,5 +1,6 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { SpotCattleService } from '../spot-wizard.service';
 
 @Component({
   selector: 'app-claim',
@@ -8,17 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClaimComponent implements OnInit {
   claimForm: FormGroup;
-
-  constructor( private fb: FormBuilder) {
+  claimData = [];
+  caseID = JSON.parse(localStorage.getItem('CaseID'));
+  caseNO = localStorage.getItem('CaseNO');
+  SurveyorsId = JSON.parse(localStorage.getItem('SurveyorsId'));
+  showSuccess = false;
+  showError = false;
+  successMessage: string;
+  errorMessage: string;
+  constructor(
+    private fb: FormBuilder,
+    private claimService: SpotCattleService
+  ) {
     this.createClaimForm();
    }
 
   ngOnInit() {
+    this.getClaimDetails();
   }
 
-  claimSubmit(formData) {
-    console.log(formData);
-  }
+
 
   specialCharPrevention(event) {
     const key = event.keyCode;
@@ -32,14 +42,11 @@ export class ClaimComponent implements OnInit {
 
   createClaimForm() {
     this.claimForm = this.fb.group({
-      CaseID : new FormControl(0),
-      CaseNo : new FormControl('0'),
-      CaseDate : new FormControl(Date()),
-      CompanyId : new FormControl(0),
-      CompanyName : new FormControl(''),
-      CaseTypeId : new FormControl(''),
-      SurveyorsID : new FormControl(0),
-      AssignedDateTime : new FormControl(Date()),
+      CaseID : new FormControl(this.caseID || 0),
+      CaseNo : new FormControl(this.caseNO || 0),
+      CaseTypeId : new FormControl(0),
+      CompanyId: new FormControl(0),
+      SurveyorsID : new FormControl(this.SurveyorsId || 0),
       PolicyNo : new FormControl('', Validators.required),
       EarTagNo : new FormControl('', Validators.required),
       ScheduleNo : new FormControl('', Validators.required),
@@ -52,15 +59,48 @@ export class ClaimComponent implements OnInit {
       IntimationLocation : new FormControl('', Validators.required),
       DelayInIntimation : new FormControl('', Validators.required),
       IntimationDelayReason : new FormControl(''),
-      RequesterName : new FormControl(''),
-      RequesterCode : new FormControl(''),
-      RequesterContactNo : new FormControl(''),
-      District : new FormControl(''),
-      State : new FormControl(''),
-      InsuredContactNo : new FormControl(''),
-      InspectionOfficialName : new FormControl(''),
-      InspectionOfficialContactNo : new FormControl('')
     });
+  }
+
+  getClaimDetails() {
+    this.claimService.GetClaimDetails().subscribe((res) => {
+      if (res) {
+        if (res.Status === '200') {
+          this.claimData = res.Data;
+          if (this.claimData.length > 0) {
+            this.claimForm.controls['CaseTypeId'].setValue(this.claimData[0].CaseTypeId || 0);
+            this.claimForm.controls['CompanyId'].setValue(this.claimData[0].CompanyId || 0);
+            this.claimForm.controls['PolicyNo'].setValue(this.claimData[0].PolicyNo);
+            this.claimForm.controls['EarTagNo'].setValue(this.claimData[0].EarTagNo);
+            this.claimForm.controls['ScheduleNo'].setValue(this.claimData[0].ScheduleNo);
+            this.claimForm.controls['SLNo'].setValue(this.claimData[0].SLNo);
+            this.claimForm.controls['InsuredName'].setValue(this.claimData[0].InsuredName);
+            this.claimForm.controls['InsuredAddress'].setValue(this.claimData[0].InsuredAddress);
+            this.claimForm.controls['Village'].setValue(this.claimData[0].Village);
+            this.claimForm.controls['IntimationDate'].setValue(this.claimData[0].IntimationDate);
+            this.claimForm.controls['IntimationTime'].setValue(this.claimData[0].IntimationTime);
+            this.claimForm.controls['IntimationLocation'].setValue(this.claimData[0].IntimationLocation);
+            this.claimForm.controls['DelayInIntimation'].setValue(this.claimData[0].DelayInIntimation);
+            this.claimForm.controls['IntimationDelayReason'].setValue(this.claimData[0].IntimationDelayReason);
+          }
+          console.log(this.claimForm);
+        }
+      }
+    });
+  }
+
+  claimSubmit(formData) {
+    this.claimService.PostClaimDetails(formData).subscribe(res => {
+      if (res) {
+        if (res.Status === '200') {
+          this.successMessage = res.Message;
+          this.showSuccess = true;
+        } else {
+          this.errorMessage = res.Message;
+          this.showError = true;
+        }
+      }
+    })
   }
 
 }

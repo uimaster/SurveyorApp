@@ -11,10 +11,11 @@ import { ClaimComponent } from './claim/claim.component';
 import { InspectionComponent } from './inspection/inspection.component';
 import { ProofComponent } from './proof/proof.component';
 import { AnimalImagesComponent } from './animal-images/animal-images.component';
-import { InquaryOneComponent } from './inquary-one/inquary-one.component';
-import { InquarySecondComponent } from './inquary-second/inquary-second.component';
+import { InquaryOneComponent } from './enquiry-one/enquiry-one.component';
+import { InquarySecondComponent } from './enquiry-second/enquiry-second.component';
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { SignatureComponent } from './signature/signature.component';
+import { SpotCattleService } from './spot-wizard.service';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { SignatureComponent } from './signature/signature.component';
     InquarySecondComponent,
     ReportSummaryComponent,
     SignatureComponent
-  ]
+  ],
+  providers: [ SpotCattleService ]
 })
 export class SpotCattleModule { }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InquaryOneComponent } from './inquary-one.component';
+import { InquarySecondComponent } from './enquiry-second.component';
 
-describe('InquaryOneComponent', () => {
-  let component: InquaryOneComponent;
-  let fixture: ComponentFixture<InquaryOneComponent>;
+describe('InquarySecondComponent', () => {
+  let component: InquarySecondComponent;
+  let fixture: ComponentFixture<InquarySecondComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InquaryOneComponent ]
+      declarations: [ InquarySecondComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InquaryOneComponent);
+    fixture = TestBed.createComponent(InquarySecondComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

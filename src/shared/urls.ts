@@ -1,3 +1,4 @@
+
 import { BASE2URL } from './img.urls';
 export const BASEURL = 'http://apiflacorev2.iflotech.in/api/';
 // export const BASEURL = 'http://apiflav2live.iflotech.in/api/';
@@ -69,7 +70,20 @@ export const SPOTALLSTEPS_STATUS_URL = BASEURL + 'SpotCases/GetCaseSPOTStatus';
 export const PIALLSTEPS_STATUS_URL = BASEURL + 'PICases/GetCasePIStatus';
 
 // COMMON IMAGES GET/POST ULRS //
-// export const GETIMAGEBASE_URL = 'http://apiflacorev2.iflotech.in';
 export const POSTIMAGE_URL = BASEURL + 'CaseImages/CaseImageUpload';
 export const GETIMAGE_URL = BASEURL + 'CaseImages/GetCaseImageLink';
 export const GETACCIDENTIMAGELIST_URL = BASEURL + 'CaseImages/GetCaseImageList';
+
+
+// CATTLE URLS //
+export const CATTLECLAIMGET_URL = BASEURL + 'CaseLS/GetLSClaimDetails';
+export const CATTLECLAIMPOST_URL = BASEURL + 'CaseLS/LSClaimDetailsUpdate';
+export const CATTLEINSPECTIONGET_URL = BASEURL + 'CaseLS/GetLSInspectionDetails';
+export const CATTLEINSPECTIONPOST_URL = BASEURL + 'CaseLS/LSInspectionDetailsUpdate';
+export const CATTLEPROOFGET_URL = BASEURL + 'CaseLS/GetLSIdentificationDetails';
+export const CATTLEPROOFPOST_URL = BASEURL + 'CaseLS/LSIdentificationDetailsUpdate';
+export const CATTLEENQUIRYONEGET_URL = BASEURL + 'CaseLS/GetLSEnquiryPart1Details';
+export const CATTLEENQUIRYONEPOST_URL = BASEURL + 'CaseLS/LSInquiryPart1DetailsUpdate';
+export const CATTLEENQUIRYTWOGET_URL = BASEURL + 'CaseLS/GetLSEnquiryPart2Details';
+export const CATTLEENQUIRYTWOPOST_URL = BASEURL + 'CaseLS/LSInquiryPart2DetailsUpdate';
+export const CATTLEREPORTSUMMARYGET_URL = BASEURL + 'CaseLS/GetLSReportSummary';

@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SpotWizardComponent implements OnInit {
   isLinear = false;
-
+  caseNo = localStorage.getItem('CaseNO');
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
