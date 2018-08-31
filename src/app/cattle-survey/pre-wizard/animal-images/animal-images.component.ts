@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SharedModuleServices } from '../../../sharedModule/shared.service';
 import { CommonImageComponent } from '../../../sharedModule/images.component';
 
 @Component({
-  selector: 'app-signature',
-  templateUrl: './signature.component.html',
-  styleUrls: ['./signature.component.scss']
+  selector: 'app-animal-images',
+  templateUrl: './animal-images.component.html',
+  styleUrls: ['./animal-images.component.scss']
 })
-export class SignatureComponent implements OnInit {
+export class AnimalImagesComponent implements OnInit {
+ @Input() stepper: any;
 
   Loader = true;
   caseId = localStorage.getItem('CaseID');
@@ -20,7 +21,8 @@ export class SignatureComponent implements OnInit {
   constructor(private sharedService: SharedModuleServices, private imageService: CommonImageComponent) { }
 
   ngOnInit() {
-    this.getImage('SPDSG');
+    this.getImage('LSDDEARTAG');
+    this.getImage('LSDDINS');
   }
 
   postImage(files, typeCode) {
@@ -59,8 +61,11 @@ export class SignatureComponent implements OnInit {
         if (this.imageData.length > 0) {
           localStorage.setItem('showSignBroseBtn', 'true');
           switch (typeCode) {
-            case 'SPDSG':
+            case 'LSDDEARTAG':
               this.animalImageUrl = this.imageBaseUrl + this.imageData[0].Image;
+              break;
+            case 'LSDDINS':
+            this.animalImageUrl2 = this.imageBaseUrl + this.imageData[0].Image;
               break;
             default:
             this.animalImageUrl = '';
@@ -77,6 +82,12 @@ export class SignatureComponent implements OnInit {
         return error;
       }
     );
+  }
+
+  next() {
+    setTimeout(() => {
+      this.stepper.next();
+    }, 1000);
   }
 
 }

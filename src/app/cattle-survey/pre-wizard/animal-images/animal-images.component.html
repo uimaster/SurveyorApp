@@ -1,0 +1,17 @@
+  <h4>Animal Images</h4>
+  <div class="tabularData card" style="width:45%;">
+    <h5>Close up photo with ear tag</h5>
+    <img alt="" [src]="animalImageUrl" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
+    <input type="file" name="" id=""  (change)="postImage($event, 'LSDDEARTAG')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card" style="width:45%;">
+      <h5>Photo of animal with insured</h5>
+      <img alt="" [src]="animalImageUrl2" style="min-height: 200px; max-height: 250px; max-width: 400px;" />
+      <input type="file" name="" id=""  (change)="postImage($event, 'LSDDINS')" class="custom-file-input" *ngIf="!IsCompleted" />
+    </div>
+
+    <div style="text-align: center; margin-top: 50px;">
+        <button mat-raised-button matStepperNext>Skip</button>
+        <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="next();">Next</button>
+      </div>

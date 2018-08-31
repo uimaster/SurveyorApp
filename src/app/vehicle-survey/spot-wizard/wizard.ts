@@ -404,33 +404,33 @@ export class WizardComponent implements OnInit {
     this.sharedService.getImages(ClaimGetPayload).subscribe(
       (res: GenericGetImageResponseModel) => {
 
-        this.imageData = res.Data[0];
-        if (res && this.imageData != null) {
+        this.imageData = res.Data;
+        if (this.imageData !== undefined && this.imageData.length > 0) {
           localStorage.setItem('showSignBroseBtn', 'true');
           switch (typeCode) {
             case 'SPCLFRM':
-              this.accidentImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.accidentImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             case 'SPDLNO':
-              this.driverImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.driverImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             case 'SPPOLICYNO':
-              this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.claimImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             case 'SPFEEBILL':
-              this.summaryBillImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.summaryBillImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             case 'SPKYIDN':
-              this.summaryKYCDOCImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.summaryKYCDOCImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             case 'SPKYADD':
-              this.summaryKYCAddImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.summaryKYCAddImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             case 'SPDSG':
-              this.signatureImgUrl = this.imageBaseUrl + this.imageData.Image;
+              this.signatureImgUrl = this.imageBaseUrl + this.imageData[0].Image;
               break;
             default:
-            this.claimImgUrl = this.imageBaseUrl + this.imageData.Image;
+            this.claimImgUrl = this.imageBaseUrl + this.imageData[0].Image;
           }
           this.Loader = false;
         }

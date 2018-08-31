@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { SpotCattleService } from '../spot-wizard.service';
 
@@ -8,6 +8,7 @@ import { SpotCattleService } from '../spot-wizard.service';
   styleUrls: ['./enquiry-one.component.scss']
 })
 export class InquaryOneComponent implements OnInit {
+  @Input() stepper: any;
   inquaryFirstForm: FormGroup;
   enquiryData = [];
   caseID = JSON.parse(localStorage.getItem('CaseID'));
@@ -58,6 +59,9 @@ export class InquaryOneComponent implements OnInit {
       if(res.Status === '200') {
         this.successMessage = res.Message;
         this.showSuccess = true;
+        setTimeout(() => {
+          this.stepper.next();
+        }, 2000);
       } else {
         this.errorMessage = res.Message;
         this.showError = true;

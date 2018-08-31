@@ -76,6 +76,7 @@ export const GETACCIDENTIMAGELIST_URL = BASEURL + 'CaseImages/GetCaseImageList';
 
 
 // CATTLE URLS //
+// -SPOT-//
 export const CATTLECLAIMGET_URL = BASEURL + 'CaseLS/GetLSClaimDetails';
 export const CATTLECLAIMPOST_URL = BASEURL + 'CaseLS/LSClaimDetailsUpdate';
 export const CATTLEINSPECTIONGET_URL = BASEURL + 'CaseLS/GetLSInspectionDetails';
@@ -87,3 +88,9 @@ export const CATTLEENQUIRYONEPOST_URL = BASEURL + 'CaseLS/LSInquiryPart1DetailsU
 export const CATTLEENQUIRYTWOGET_URL = BASEURL + 'CaseLS/GetLSEnquiryPart2Details';
 export const CATTLEENQUIRYTWOPOST_URL = BASEURL + 'CaseLS/LSInquiryPart2DetailsUpdate';
 export const CATTLEREPORTSUMMARYGET_URL = BASEURL + 'CaseLS/GetLSReportSummary';
+
+// -PRE-//
+export const CATTLEDESCRIPTIONGET_URL = BASEURL + 'CaseLS/GetLSInspectionDetails';
+export const CATTLEDESCRIPTIONPOST_URL = BASEURL + 'CaseLS/LSInspectionDetailsUpdate';
+export const CATTLEOTHERINFOGET_URL = BASEURL + 'CaseLS/GetLSEnquiryPart2Details';
+export const CATTLEOTHERINFOPOST_URL = BASEURL + 'CaseLS/LSInquiryPart2DetailsUpdate';

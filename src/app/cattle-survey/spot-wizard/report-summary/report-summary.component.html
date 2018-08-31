@@ -1,42 +1,48 @@
 
   <h4>Report Summary Details</h4>
-  <form style="width: 500px; margin: auto;">
-  <h4 style="color: #333; text-align: center"> Please complete below listed pending steps! </h4>
-  <div class="alert error" style="width:auto; overflow: hidden;">
+  <form [formGroup]="summaryForm">
+  <!-- <h4 style="color: #333; text-align: center"> Please complete below listed pending steps! </h4> -->
 
-    <div *ngFor="let item of StatusData">
-      <div *ngIf="StatusData[0].ClaimformStatus===false" class="listItem">
-        <span>
-          <b>1. Claim Details</b>
-        </span>
-      </div>
-
-      <div *ngIf="StatusData[0].DeadAnimalPhotoStatus===false" class="listItem">
-        <span>
-          <b>2. Dead Animal Photo</b>
-        </span>
-      </div>
-
-      <div *ngIf="StatusData[0].IntactEarTagStatus===false" class="listItem">
-        <span>
-          <b>3. Intact Ear Tag</b>
-        </span>
-      </div>
-
-      <div *ngIf="StatusData[0].PMReportStatus===false" class="listItem">
-        <span>
-          <b>4. PM Report</b>
-        </span>
-      </div>
-
+    <div class="tabularData card">
+      <h5>1. Claim Details</h5>
+      <mat-radio-group formControlName="ClaimformStatus" [(ngModel)]="ClaimformStatus">
+        <mat-radio-button value="true">Yes</mat-radio-button>
+        <mat-radio-button value="false" checked>No</mat-radio-button>
+      </mat-radio-group>
+      <img alt="" src='../../assets/images/no-photo.png' />
+      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
     </div>
-  </div>
-  <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-    <a mat-raised-button routerLink="/dashboard">GO to Dashboard</a>
-  </div>
 
+    <div class="tabularData card">
+      <h5>2. Dead Animal Photo</h5>
+      <mat-radio-group formControlName="DeadAnimalPhotoStatus" [(ngModel)]="DeadAnimalPhotoStatus">
+        <mat-radio-button value="true">Yes</mat-radio-button>
+        <mat-radio-button value="false" checked>No</mat-radio-button>
+      </mat-radio-group>
+      <img alt="" src='../../assets/images/no-photo.png' />
+      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
+    </div>
+
+    <div class="tabularData card">
+      <h5>3. Intact Ear Tag</h5>
+      <mat-radio-group formControlName="IntactEarTagStatus" [(ngModel)]="IntactEarTagStatus">
+        <mat-radio-button value="true">Yes</mat-radio-button>
+        <mat-radio-button value="false" checked>No</mat-radio-button>
+      </mat-radio-group>
+      <img alt="" src='../../assets/images/no-photo.png' />
+      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
+    </div>
+
+    <div class="tabularData card">
+      <h5>4. PM Report</h5>
+      <mat-radio-group formControlName="PMReportStatus" [(ngModel)]="PMReportStatus">
+        <mat-radio-button value="true">Yes</mat-radio-button>
+        <mat-radio-button value="false" checked>No</mat-radio-button>
+      </mat-radio-group>
+      <img alt="" src='../../assets/images/no-photo.png' />
+      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
+    </div>
   <div style="text-align: center; margin-top: 50px;">
-    <button mat-raised-button matStepperNext>Skip</button>
-    <button mat-raised-button color="primary" style="margin-left: 10px;">Next</button>
+    <button mat-raised-button matStepperNext color="primary" style="margin-left: 10px;">Next</button>
   </div>
 </form>

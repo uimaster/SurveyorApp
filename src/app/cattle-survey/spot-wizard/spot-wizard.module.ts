@@ -1,6 +1,6 @@
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpotWizardComponent } from './spot-wizard.component';
 import { SpotCattleRouteModule } from './spot-wizard.route.module';
@@ -37,6 +37,7 @@ import { SpotCattleService } from './spot-wizard.service';
     ReportSummaryComponent,
     SignatureComponent
   ],
-  providers: [ SpotCattleService ]
+  providers: [ SpotCattleService ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SpotCattleModule { }

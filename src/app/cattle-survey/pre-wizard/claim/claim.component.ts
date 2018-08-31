@@ -1,9 +1,9 @@
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, Input} from '@angular/core';
-import { SpotCattleService } from '../spot-wizard.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { PreCattleService } from '../../pre-wizard/pre-wizard.service';
 
 @Component({
-  selector: 'app-claim',
+  selector: 'app-claim-pre',
   templateUrl: './claim.component.html',
   styleUrls: ['./claim.component.scss']
 })
@@ -20,7 +20,7 @@ export class ClaimComponent implements OnInit {
   errorMessage: string;
   constructor(
     private fb: FormBuilder,
-    private claimService: SpotCattleService
+    private claimService: PreCattleService
   ) {
     this.createClaimForm();
    }
@@ -48,18 +48,21 @@ export class ClaimComponent implements OnInit {
       CaseTypeId : new FormControl(0),
       CompanyId: new FormControl(0),
       SurveyorsID : new FormControl(this.SurveyorsId || 0),
-      PolicyNo : new FormControl('', Validators.required),
-      EarTagNo : new FormControl('', Validators.required),
+      RequesterCode : new FormControl('', Validators.required),
+      RequesterName : new FormControl('', Validators.required),
+      RequesterContactNo : new FormControl('', Validators.required),
       ScheduleNo : new FormControl('', Validators.required),
-      SLNo : new FormControl('', Validators.required),
+      District : new FormControl('', Validators.required),
       InsuredName : new FormControl('', Validators.required),
       InsuredAddress : new FormControl('', Validators.required),
       Village : new FormControl('', Validators.required),
       IntimationDate : new FormControl('', Validators.required),
       IntimationTime : new FormControl('', Validators.required),
       IntimationLocation : new FormControl('', Validators.required),
-      DelayInIntimation : new FormControl('', Validators.required),
-      IntimationDelayReason : new FormControl(''),
+      State : new FormControl('', Validators.required),
+      InsuredContactNo : new FormControl(''),
+      InspectionOfficialName : new FormControl(''),
+      InspectionOfficialContactNo : new FormControl('')
     });
   }
 
@@ -71,18 +74,21 @@ export class ClaimComponent implements OnInit {
           if (this.claimData.length > 0) {
             this.claimForm.controls['CaseTypeId'].setValue(this.claimData[0].CaseTypeId || 0);
             this.claimForm.controls['CompanyId'].setValue(this.claimData[0].CompanyId || 0);
-            this.claimForm.controls['PolicyNo'].setValue(this.claimData[0].PolicyNo);
-            this.claimForm.controls['EarTagNo'].setValue(this.claimData[0].EarTagNo);
+            this.claimForm.controls['RequesterCode'].setValue(this.claimData[0].RequesterCode);
+            this.claimForm.controls['RequesterName'].setValue(this.claimData[0].RequesterName);
+            this.claimForm.controls['RequesterContactNo'].setValue(this.claimData[0].RequesterContactNo);
             this.claimForm.controls['ScheduleNo'].setValue(this.claimData[0].ScheduleNo);
-            this.claimForm.controls['SLNo'].setValue(this.claimData[0].SLNo);
             this.claimForm.controls['InsuredName'].setValue(this.claimData[0].InsuredName);
             this.claimForm.controls['InsuredAddress'].setValue(this.claimData[0].InsuredAddress);
             this.claimForm.controls['Village'].setValue(this.claimData[0].Village);
             this.claimForm.controls['IntimationDate'].setValue(this.claimData[0].IntimationDate);
             this.claimForm.controls['IntimationTime'].setValue(this.claimData[0].IntimationTime);
             this.claimForm.controls['IntimationLocation'].setValue(this.claimData[0].IntimationLocation);
-            this.claimForm.controls['DelayInIntimation'].setValue(this.claimData[0].DelayInIntimation);
-            this.claimForm.controls['IntimationDelayReason'].setValue(this.claimData[0].IntimationDelayReason);
+            this.claimForm.controls['District'].setValue(this.claimData[0].District);
+            this.claimForm.controls['State'].setValue(this.claimData[0].State);
+            this.claimForm.controls['InsuredContactNo'].setValue(this.claimData[0].InsuredContactNo);
+            this.claimForm.controls['InspectionOfficialName'].setValue(this.claimData[0].InspectionOfficialName);
+            this.claimForm.controls['InspectionOfficialContactNo'].setValue(this.claimData[0].InspectionOfficialContactNo);
           }
           console.log(this.claimForm);
         }
@@ -104,7 +110,7 @@ export class ClaimComponent implements OnInit {
           this.showError = true;
         }
       }
-    })
+    });
   }
 
 }

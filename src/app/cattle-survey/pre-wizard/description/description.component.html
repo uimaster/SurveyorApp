@@ -1,0 +1,45 @@
+<form [formGroup]="descriptionForm">
+    <h4>Animal Description</h4>
+
+    <mat-form-field>
+      <input matInput placeholder="Animal Ear Tag No." formControlName="Animal_EarTagNo" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Sex" formControlName="Animal_sex" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Breed" formControlName="Animal_Breed" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Color" formControlName="Animal_Color" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Horn Left" formControlName="Animal_HornLeft" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Horn Right" formControlName="Animal_HornRight" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Tail" formControlName="Animal_Tail" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Animal Age" formControlName="Animal_Age" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Mark On Fore Head" formControlName="MarkOnForeHead" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Mark On Body" formControlName="MarkOnBody" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+
+
+    <div style="text-align: center; margin-top: 50px;">
+      <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+      <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+
+      <button mat-raised-button matStepperNext>Skip</button>
+      <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="descriptionSubmit(descriptionForm.value);">Next</button>
+    </div>
+  </form>

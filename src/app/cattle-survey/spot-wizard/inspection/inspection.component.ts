@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { SpotCattleService } from '../spot-wizard.service';
 
@@ -8,6 +8,7 @@ import { SpotCattleService } from '../spot-wizard.service';
   styleUrls: ['./inspection.component.scss']
 })
 export class InspectionComponent implements OnInit {
+  @Input() stepper: any;
   inspectionForm: FormGroup;
   inspectionData = [];
   caseID = JSON.parse(localStorage.getItem('CaseID'));
@@ -81,6 +82,9 @@ export class InspectionComponent implements OnInit {
       if(res.Status === '200') {
         this.successMessage = res.Message;
         this.showSuccess = true;
+        setTimeout(() => {
+          this.stepper.next();
+        }, 2000);
       } else {
         this.errorMessage = res.Message;
         this.showError = true;

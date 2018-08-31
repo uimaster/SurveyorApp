@@ -1,0 +1,24 @@
+<form [formGroup]="otherInfoForm">
+    <h4>Other Informations</h4>
+
+    <mat-form-field>
+      <input matInput placeholder="Financer Name" formControlName="Financer_Name" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Financer Place" formControlName="Financer_Place" (keydown)="specialCharPrevention($event)">
+      </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Animal Valuation" formControlName="Animal_Valuation" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Enquiry Remarks" formControlName="Enquiry_Remarks" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
+
+    <div style="text-align: center; margin-top: 50px;">
+      <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+      <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+
+      <button mat-raised-button matStepperNext>Skip</button>
+      <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="otherInfoSubmit(otherInfoForm.value);">Next</button>
+    </div>
+  </form>

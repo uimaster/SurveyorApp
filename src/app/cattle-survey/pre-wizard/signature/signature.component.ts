@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SharedModuleServices } from '../../../sharedModule/shared.service';
 import { CommonImageComponent } from '../../../sharedModule/images.component';
 
@@ -9,6 +9,7 @@ import { CommonImageComponent } from '../../../sharedModule/images.component';
 })
 export class SignatureComponent implements OnInit {
 
+  @Input() stepper: any;
   Loader = true;
   caseId = localStorage.getItem('CaseID');
   caseNO = localStorage.getItem('CaseNO');
@@ -77,6 +78,12 @@ export class SignatureComponent implements OnInit {
         return error;
       }
     );
+  }
+
+  previous() {
+    setTimeout(() => {
+      this.stepper.previous();
+    }, 1000);
   }
 
 }

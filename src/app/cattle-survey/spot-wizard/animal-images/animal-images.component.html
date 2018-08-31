@@ -1,3 +1,48 @@
-<p>
-  animal-images works!
-</p>
+<h4>Crash Images Details</h4>
+<form>
+  <div class="tabularData card">
+    <h5>Dead Animal Photo with Ear & EarTag</h5>
+    <img alt="" [src]="animalDeadUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSDDEARTAG')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card">
+    <h5>Animal With Insured</h5>
+    <img alt="" [src]="animalInjuredUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSDDINS')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card">
+    <h5>Dead Animal after removing EarTag</h5>
+    <img alt="" [src]="removedEarTagUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSDDREATAG')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card">
+    <h5>Intact Ear & Eartag</h5>
+    <img alt="" [src]="intactEarTagUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSDREARTAG')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card">
+    <h5>Veterinary Records</h5>
+    <img alt="" [src]="vRecordUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSVHR')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card">
+    <h5>Society Doctor Records</h5>
+    <img alt="" [src]="doctorRecordsUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSSDR')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+
+  <div class="tabularData card">
+    <h5>Medical Bills</h5>
+    <img alt="" [src]="medicalBillUrl" />
+    <input type="file" name="" id="" (change)="postImage($event, 'LSMB')" class="custom-file-input" *ngIf="!IsCompleted" />
+  </div>
+</form>
+
+<div style="text-align: center; margin-top: 50px;">
+    <button mat-raised-button color="primary" matStepperNext style="margin-left: 10px;">Next</button>
+  </div>

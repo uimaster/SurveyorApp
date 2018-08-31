@@ -1,0 +1,60 @@
+<form [formGroup]="claimForm">
+  <h4>Claim Details</h4>
+
+  <mat-form-field>
+    <input matInput placeholder="Requester Name" formControlName="RequesterName" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Requester Code" formControlName="RequesterCode" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Requester Contact No." formControlName="RequesterContactNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Company" formControlName="CompanyId" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Insured Name" formControlName="InsuredName" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Insured Address" formControlName="InsuredAddress" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Village" formControlName="Village" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="District" formControlName="District" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="State" formControlName="State" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Contact No." formControlName="InsuredContactNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Date of Inspection" formControlName="IntimationDate" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Time of Inspection" formControlName="IntimationTime" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Place of Inspection" formControlName="IntimationLocation" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Inspection Official Name" formControlName="InspectionOfficialName" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Inspection Official Contact No" formControlName="InspectionOfficialContactNo" (keydown)="specialCharPrevention($event)">
+  </mat-form-field>
+
+
+  <div style="text-align: center; margin-top: 50px;">
+    <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
+    <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
+
+    <button mat-raised-button matStepperNext>Skip</button>
+    <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="claimSubmit(claimForm.value);">Next</button>
+  </div>
+</form>

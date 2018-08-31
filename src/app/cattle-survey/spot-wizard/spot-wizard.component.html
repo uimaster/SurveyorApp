@@ -8,15 +8,15 @@
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step>
       <ng-template matStepLabel>Claim Details</ng-template>
-      <app-claim></app-claim>
+      <app-claim [stepper]="stepper"></app-claim>
     </mat-step>
     <mat-step >
       <ng-template matStepLabel>Inspection Details</ng-template>
-      <app-inspection></app-inspection>
+      <app-inspection [stepper]="stepper"></app-inspection>
     </mat-step>
     <mat-step >
       <ng-template matStepLabel>Proof Identification</ng-template>
-      <app-proof></app-proof>
+      <app-proof [stepper]="stepper"></app-proof>
     </mat-step>
     <mat-step >
       <ng-template matStepLabel>Animal Images</ng-template>
@@ -24,11 +24,11 @@
     </mat-step>
     <mat-step >
       <ng-template matStepLabel>Inquary Info Part 1</ng-template>
-      <app-inquary-one></app-inquary-one>
+      <app-inquary-one [stepper]="stepper"></app-inquary-one>
     </mat-step>
     <mat-step >
       <ng-template matStepLabel>Inquary Info Part 2</ng-template>
-      <app-inquary-second></app-inquary-second>
+      <app-inquary-second [stepper]="stepper"></app-inquary-second>
     </mat-step>
     <mat-step >
       <ng-template matStepLabel>Report Summary</ng-template>
@@ -37,10 +37,6 @@
     <mat-step>
       <ng-template matStepLabel>Inspecting officer Signature</ng-template>
       <app-signature></app-signature>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
     </mat-step>
   </mat-horizontal-stepper>
 </div>

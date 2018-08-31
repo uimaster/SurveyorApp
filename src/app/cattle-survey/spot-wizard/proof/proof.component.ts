@@ -1,5 +1,5 @@
 import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SpotCattleService } from '../spot-wizard.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { SpotCattleService } from '../spot-wizard.service';
   styleUrls: ['./proof.component.scss']
 })
 export class ProofComponent implements OnInit {
+  @Input() stepper: any;
   proofForm: FormGroup;
   proofData = [];
   caseID = JSON.parse(localStorage.getItem('CaseID'));
@@ -29,11 +30,11 @@ export class ProofComponent implements OnInit {
   createProofForm() {
     this.proofForm = this.fb.group({
       CaseID : new FormControl(this.caseID || 0),
-      SurveyEarTagStatus : new FormControl('', Validators.required),
-      SurveyAnimalVerifiedStatus : new FormControl('', Validators.required),
-      SurveyAnimalReTagged : new FormControl('', Validators.required),
-      SurveyEarTagRemovalStatus : new FormControl('', Validators.required),
-      SurveyEarTagPreserveStatus : new FormControl('', Validators.required),
+      SurveyEarTagStatus : new FormControl(0, Validators.required),
+      SurveyAnimalVerifiedStatus : new FormControl(0, Validators.required),
+      SurveyAnimalReTagged : new FormControl(0, Validators.required),
+      SurveyEarTagRemovalStatus : new FormControl(0, Validators.required),
+      SurveyEarTagPreserveStatus : new FormControl(0, Validators.required),
     });
   }
   getProofDetails() {
@@ -59,6 +60,9 @@ export class ProofComponent implements OnInit {
       if (res.Status === '200') {
         this.successMessage = res.Message;
         this.showSuccess = true;
+        setTimeout(() => {
+          this.stepper.next();
+        }, 2000);
       } else {
         this.errorMessage = res.Message;
         this.showError = true;

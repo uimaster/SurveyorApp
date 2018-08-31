@@ -4,38 +4,31 @@
   <mat-spinner [color]="accent"></mat-spinner>
 </div>
 <div class="container">
-  <h2> Pre-Inspection Survey, Case No. : {{20}}</h2>
+  <h2> Pre-Inspection Cattle Survey, Case No. : {{caseNo}}</h2>
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-      <form [formGroup]="secondFormGroup">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Address" formControlName="secondCtrl" required>
-        </mat-form-field>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
-  </mat-horizontal-stepper>
+      <mat-step>
+        <ng-template matStepLabel>Claim Details</ng-template>
+        <app-claim-pre [stepper]="stepper"></app-claim-pre>
+      </mat-step>
+      <mat-step >
+        <ng-template matStepLabel>Animal Description</ng-template>
+        <app-description [stepper]="stepper"></app-description>
+      </mat-step>
+      <mat-step >
+        <ng-template matStepLabel>Other Information</ng-template>
+        <app-other-info [stepper]="stepper"></app-other-info>
+      </mat-step>
+      <mat-step >
+        <ng-template matStepLabel>Animal Image</ng-template>
+        <app-animal-images [stepper]="stepper"></app-animal-images>
+      </mat-step>
+      <mat-step >
+        <ng-template matStepLabel>Multi Image Upload</ng-template>
+        <app-multi-images [stepper]="stepper"></app-multi-images>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Inspecting officer Signature</ng-template>
+        <app-signature [stepper]="stepper"></app-signature>
+      </mat-step>
+    </mat-horizontal-stepper>
 </div>

@@ -5,7 +5,7 @@
   <input type="file" name="" id=""  (change)="postImage($event, 'SPDSG')" class="custom-file-input" *ngIf="!IsCompleted" />
 </div>
 
-<div style="text-align: center; margin-top: 50px;">
-    <button mat-raised-button matStepperPrevious color="primary" style="margin-left: 10px;">Previous</button>
-  </div>
 
+<div style="text-align: center; margin-top: 50px;">
+    <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="previous();">Previous</button>
+  </div>
