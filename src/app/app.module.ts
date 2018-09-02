@@ -29,8 +29,6 @@ import { RequestInterceptor } from '../app/login/login.inteceptor';
 import { CommonImageComponent } from './sharedModule/images.component';
 import { MaterialModule } from './material.module';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

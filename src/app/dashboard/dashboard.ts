@@ -6,9 +6,9 @@ import { TabsService } from './dashboardTabs/tabs.service';
 import { TabsResponse, TabsGenericResponse} from './dashboardTabs/tabs.model';
 import { WizardService } from '../vehicle-survey/spot-wizard/wizard.service';
 import { DashboardService } from './dashboard.service';
-import {CompaniesService} from '../masters/companies/companies.service';
-import { SurveyorService } from '../masters/surveyor/surveyor.service';
-import { AreaService } from '../masters/area/area.service';
+import {CompaniesService} from '../companies/companies.service';
+import { SurveyorService } from '../surveyor/surveyor.service';
+import { AreaService } from '../area/area.service';
 import { SharedModuleServices } from '../sharedModule/shared.service';
 
 @Component({
@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
       SurveyorsId: [0],
       CaseStatusID: [0],
       CompanyId: [0, Validators.required],
+      CaseTypeID: [0],
       CaseID: [0],
       CaseNo: [''],
       UserID: [''],
@@ -256,48 +257,58 @@ export class DashboardComponent implements OnInit {
     this.createCaseForm.controls['AreaID'].setValue(0);
   }
 
-  createSpotCase(data) {
-    this.dashboardService.createSpotCase(data)
-    .subscribe(res => {
-      if (res && res.Status === '200') {
-        let Data = res.Data[0];
-        this.showError = false;
-        this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
-      } else {
-        this.errorMessage = res.Message;
-        this.showError = true;
-      }
-    });
+  createSpotCase(data, casetypeid) {
+    data.CaseTypeID = casetypeid;
+    if (this.createCaseForm.valid) {
+      this.dashboardService.createCattleSpotCase(data)
+      .subscribe(res => {
+        if (res && res.Status === '200') {
+          let Data = res.Data[0];
+          this.showError = false;
+          this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
+        } else {
+          this.errorMessage = res.Message;
+          this.showError = true;
+        }
+      });
+    } else {
+      console.log('invalid form');
+    }
   }
 
-  createPreCase(data) {
-    this.dashboardService.createPreCase(data)
-    .subscribe(res => {
-      if (res && res.Status === '200') {
-        let Data = res.Data[0];
-        this.showError = false;
-        this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
-      } else {
-        this.errorMessage = res.Message;
-        this.showError = true;
-      }
-    });
+  createPreCase(data, casetypeid) {
+    data.CaseTypeID = casetypeid;
+    if (this.createCaseForm.valid) {
+      this.dashboardService.createCattlePreCase(data)
+      .subscribe(res => {
+        if (res && res.Status === '200') {
+          let Data = res.Data[0];
+          this.showError = false;
+          this.getClaimDetails(Data.CaseTypeID, Data.CaseID, Data.CaseNo, 'false');
+        } else {
+          this.errorMessage = res.Message;
+          this.showError = true;
+        }
+      });
+    } else {
+      console.log('invalid form');
+    }
   }
 
 
 
 
-  getClaimDetails(id, caseid, caseNo, completed) {
+  getClaimDetails(CaseTypeId, caseid, caseNo, completed) {
     localStorage.setItem('CaseID', caseid);
     localStorage.setItem('CaseNO', caseNo);
     localStorage.setItem('IsCompleted', completed);
-    if (id === 1) {
+    if (CaseTypeId === 1) {
       this.router.navigate(['wizard']);
-    } else if (id === 2) {
+    } else if (CaseTypeId === 2) {
       this.router.navigate(['pre-wizard']);
-    } else if (id === 3) {
+    } else if (CaseTypeId === 3) {
       this.router.navigate(['spot-cattle']);
-    } else if (id === 4) {
+    } else if (CaseTypeId === 4) {
       this.router.navigate(['pre-cattle']);
     }
 
@@ -375,7 +386,7 @@ export class DashboardComponent implements OnInit {
 
   generateSpotSurvey(caseid) {
     localStorage.setItem('SpotCaseId', JSON.parse(caseid));
-    this.wizardService.generateSpotSurvey(caseid).subscribe( res => {
+    this.dashboardService.generateSpotSurvey(caseid).subscribe( res => {
         if ( res && res.Status == 200) {
             alert('You have generated Spot Survey Successfully.');
         } else {
@@ -386,7 +397,7 @@ export class DashboardComponent implements OnInit {
 
   generatePreSurvey(caseid) {
     localStorage.setItem('PreCaseId', JSON.parse(caseid));
-    this.wizardService.generatePreSurvey(caseid).subscribe( res => {
+    this.dashboardService.generatePreSurvey(caseid).subscribe( res => {
         if ( res && res.Status == 200) {
             alert('You have generated Pre Survey Successfully.');
         } else {
@@ -401,7 +412,10 @@ export class DashboardComponent implements OnInit {
   // }
 
   downloadSpotSurvey(caseId, caseTypeId) {
+    debugger;
     const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
     this.downloadUrl = baseurl + caseId + '&CaseTypeId=' + caseTypeId;
+
+    console.log(baseurl);
   }
 }

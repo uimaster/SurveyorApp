@@ -1,43 +1,45 @@
 <form [formGroup]="proofForm">
   <h4>Proof Identification.</h4>
-
+  <div class="loader" *ngIf="Loader">
+      <mat-spinner [color]="accent"></mat-spinner>
+    </div>
   <div class="mat-form-checkfield">
-    <label for="SurveyEarTagStatus">Survey Ear Tag Status</label>
+    <label for="SurveyEarTagStatus">Survey Ear Tag</label>
     <mat-radio-group formControlName="SurveyEarTagStatus" id="SurveyEarTagStatus" [(ngModel)]="SurveyEarTagStatus">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False" checked>No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="mat-form-checkfield">
-    <label for="SurveyAnimalVerifiedStatus">Survey Animal Verified Status</label>
+    <label for="SurveyAnimalVerifiedStatus">Survey Animal Verified</label>
     <mat-radio-group formControlName="SurveyAnimalVerifiedStatus" id="SurveyAnimalVerifiedStatus" [(ngModel)]="SurveyAnimalVerifiedStatus">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False" checked>No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="mat-form-checkfield">
     <label for="SurveyAnimalReTagged">Survey Animal ReTagged</label>
     <mat-radio-group formControlName="SurveyAnimalReTagged" id="SurveyAnimalReTagged" [(ngModel)]="SurveyAnimalReTagged">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False" checked>No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="mat-form-checkfield">
-    <label for="SurveyEarTagRemovalStatus">Survey Ear Tag Removal Status</label>
+    <label for="SurveyEarTagRemovalStatus">Survey Ear Tag Removal</label>
     <mat-radio-group formControlName="SurveyEarTagRemovalStatus" id="SurveyEarTagRemovalStatus" [(ngModel)]="SurveyEarTagRemovalStatus">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False" checked>No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="mat-form-checkfield">
-    <label for="SurveyEarTagPreserveStatus">Survey Ear Tag Preserve Status</label>
+    <label for="SurveyEarTagPreserveStatus">Survey Ear Tag Preserve</label>
     <mat-radio-group formControlName="SurveyEarTagPreserveStatus" id="SurveyEarTagPreserveStatus" [(ngModel)]="SurveyEarTagPreserveStatus">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False" checked>No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
@@ -45,7 +47,7 @@
   <div style="text-align: center; margin-top: 50px;">
     <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
     <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
-
+    <button mat-raised-button matStepperPrevious>Back</button>
     <button mat-raised-button matStepperNext>Skip</button>
     <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="proofSubmit(proofForm.value);">Next</button>
   </div>

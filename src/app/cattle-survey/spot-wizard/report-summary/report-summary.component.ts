@@ -10,6 +10,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class ReportSummaryComponent implements OnInit {
   StatusData = [];
   summaryForm: FormGroup;
+  Loader = false;
   constructor( private summaryReportService: SpotCattleService, private fb: FormBuilder) {
     this.creareSummaryForm();
   }
@@ -20,22 +21,24 @@ export class ReportSummaryComponent implements OnInit {
 
   creareSummaryForm() {
     this.summaryForm = this.fb.group({
-      ClaimformStatus: new FormControl(0),
-      DeadAnimalPhotoStatus: new FormControl(0),
-      IntactEarTagStatus: new FormControl(0),
-      PMReportStatus: new FormControl(0),
+      ClaimformStatus: new FormControl(),
+      DeadAnimalPhotoStatus: new FormControl(),
+      IntactEarTagStatus: new FormControl(),
+      PMReportStatus: new FormControl(),
     });
   }
 
   getSummaryReport() {
+    this.Loader = true;
     this.summaryReportService.GetSummaryDetails().subscribe( res => {
+      this.Loader = false;
       if (res && res.Status === '200' && res.Data != null) {
         this.StatusData = res.Data;
         if (this.StatusData !== undefined && this.StatusData.length > 0) {
-          this.summaryForm.controls['ClaimformStatus'].setValue(JSON.stringify(this.StatusData[0].ClaimformStatus));
-          this.summaryForm.controls['DeadAnimalPhotoStatus'].setValue(JSON.stringify(this.StatusData[0].DeadAnimalPhotoStatus));
-          this.summaryForm.controls['IntactEarTagStatus'].setValue(JSON.stringify(this.StatusData[0].IntactEarTagStatus));
-          this.summaryForm.controls['PMReportStatus'].setValue(JSON.stringify(this.StatusData[0].PMReportStatus));
+          this.summaryForm.controls['ClaimformStatus'].setValue(this.StatusData[0].ClaimformStatus);
+          this.summaryForm.controls['DeadAnimalPhotoStatus'].setValue(this.StatusData[0].DeadAnimalPhotoStatus);
+          this.summaryForm.controls['IntactEarTagStatus'].setValue(this.StatusData[0].IntactEarTagStatus);
+          this.summaryForm.controls['PMReportStatus'].setValue(this.StatusData[0].PMReportStatus);
         }
       }
     });

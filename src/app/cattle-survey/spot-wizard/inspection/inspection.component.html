@@ -1,6 +1,8 @@
 <form [formGroup]="inspectionForm">
   <h4>Inspection Details</h4>
-
+  <div class="loader" *ngIf="Loader">
+      <mat-spinner [color]="accent"></mat-spinner>
+    </div>
   <mat-form-field>
     <input matInput placeholder="Inspection Date" formControlName="InspectionDate" [matDatepicker]="InspectionDate">
     <mat-datepicker-toggle matSuffix [for]="InspectionDate"></mat-datepicker-toggle>
@@ -13,30 +15,29 @@
   <mat-form-field>
     <input matInput placeholder="Inspection Place" formControlName="InspectionPlace" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput placeholder="Inspection Delay" formControlName="InspectionDelay" (keydown)="specialCharPrevention($event)">
-  </mat-form-field>
+  </mat-form-field> -->
+
   <mat-form-field>
-    <input matInput placeholder="IInspection DelayReason" formControlName="InspectionDelayReason" (keydown)="specialCharPrevention($event)">
+    <mat-select placeholder="Inspection Delay" formControlName="InspectionDelay">
+      <mat-option *ngFor="let item of isDelay" [value]="item.value">{{item.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Inspection Delay Reason" formControlName="InspectionDelayReason" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
   <mat-form-field>
     <input matInput placeholder="Animal EarTag No." formControlName="Animal_EarTagNo" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-select placeholder="Animal Sex" formControlName="Animal_sex">
-      <mat-option *ngFor="let item of GenderArray" [value]="item.genderID">
-        {{ item.genderName }}
-      </mat-option>
-    </mat-select>
+    <input matInput placeholder="Animal Sex" formControlName="Animal_sex" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-select placeholder="Animal Color" formControlName="Animal_Color">
-      <mat-option *ngFor="let item of colorArray" [value]="item.colorID">
-        {{ item.colorName }}
-      </mat-option>
-    </mat-select>
+    <input matInput placeholder="Animal Color" formControlName="Animal_Color" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
 
   <mat-form-field>
@@ -66,7 +67,7 @@
   <div style="text-align: center; margin-top: 50px;">
     <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
     <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
-
+    <button mat-raised-button matStepperPrevious>Back</button>
     <button mat-raised-button matStepperNext>Skip</button>
     <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="inspectionSubmit(inspectionForm.value);">Next</button>
   </div>

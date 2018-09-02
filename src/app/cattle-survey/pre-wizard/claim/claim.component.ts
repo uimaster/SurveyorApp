@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { PreCattleService } from '../../pre-wizard/pre-wizard.service';
+import { SharedModuleServices } from '../../../sharedModule/shared.service';
+
 
 @Component({
   selector: 'app-claim-pre',
@@ -18,25 +20,28 @@ export class ClaimComponent implements OnInit {
   showError = false;
   successMessage: string;
   errorMessage: string;
+  Loader = false;
+  companyList = [];
   constructor(
     private fb: FormBuilder,
-    private claimService: PreCattleService
+    private claimService: PreCattleService,
+    private shareService: SharedModuleServices
   ) {
     this.createClaimForm();
    }
 
   ngOnInit() {
     this.getClaimDetails();
+    this.getCompanyList();
   }
 
 
 
   specialCharPrevention(event) {
     const key = event.keyCode;
-    const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
-     key === 57 || key === 186 ));
+    const preventsKey = (( key === 222 ));
     if (preventsKey) {
-     console.log('Special characters not allowed');
+     alert('Quote special character not allowed');
       return false;
     }
   }
@@ -56,10 +61,10 @@ export class ClaimComponent implements OnInit {
       InsuredName : new FormControl('', Validators.required),
       InsuredAddress : new FormControl('', Validators.required),
       Village : new FormControl('', Validators.required),
-      IntimationDate : new FormControl('', Validators.required),
-      IntimationTime : new FormControl('', Validators.required),
-      IntimationLocation : new FormControl('', Validators.required),
-      State : new FormControl('', Validators.required),
+      IntimationDate : new FormControl(''),
+      IntimationTime : new FormControl(''),
+      IntimationLocation : new FormControl(''),
+      State : new FormControl(''),
       InsuredContactNo : new FormControl(''),
       InspectionOfficialName : new FormControl(''),
       InspectionOfficialContactNo : new FormControl('')
@@ -67,7 +72,9 @@ export class ClaimComponent implements OnInit {
   }
 
   getClaimDetails() {
+    this.Loader = true;
     this.claimService.GetClaimDetails().subscribe((res) => {
+      this.Loader = false;
       if (res) {
         if (res.Status === '200') {
           this.claimData = res.Data;
@@ -97,17 +104,38 @@ export class ClaimComponent implements OnInit {
   }
 
   claimSubmit(formData) {
-    this.claimService.PostClaimDetails(formData).subscribe(res => {
+    debugger;
+    this.Loader = true;
+    if (this.claimForm.valid) {
+      this.claimService.PostClaimDetails(formData).subscribe(res => {
+        if (res) {
+          if (res.Status === '200') {
+            this.successMessage = res.Message;
+            this.showSuccess = true;
+            setTimeout(() => {
+              this.stepper.next();
+            }, 2000);
+            this.Loader = false;
+          } else {
+            this.errorMessage = res.Message;
+            this.showError = true;
+            this.Loader = false;
+          }
+        }
+      });
+    } else {
+      console.log('invalid form');
+      this.Loader = false;
+    }
+  }
+
+  getCompanyList() {
+    this.shareService.getCompanyList().subscribe( res => {
       if (res) {
         if (res.Status === '200') {
-          this.successMessage = res.Message;
-          this.showSuccess = true;
-          setTimeout(() => {
-            this.stepper.next();
-          }, 2000);
+          this.companyList = res.Data;
         } else {
-          this.errorMessage = res.Message;
-          this.showError = true;
+          console.log(res.Message);
         }
       }
     });

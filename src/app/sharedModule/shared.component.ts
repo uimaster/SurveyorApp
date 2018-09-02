@@ -124,12 +124,11 @@ export class SharedComponent implements OnInit {
 
     specialCharPrevention(event) {
       const key = event.keyCode;
-      const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
-       key === 57 || key === 186 ));
-      if (preventsKey) {
-        console.log('Special characters not allowed');
-        return false;
-      }
+      const preventsKey = (( key === 222 ));
+    if (preventsKey) {
+     alert('Quote special character not allowed');
+      return false;
+    }
     }
 
     getMultiImages() {
@@ -171,6 +170,7 @@ export class DonwloadDialog implements OnInit {
     downloadUrl = '';
     comletionForm: FormGroup;
     msg = '';
+    showMsg = false;
     constructor(
         public dialogRef: MatDialogRef<DonwloadDialog>,
         @Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private wizardService: WizardService,
@@ -204,9 +204,10 @@ export class DonwloadDialog implements OnInit {
         });
 
         this.sharedService.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
-            if (res) {
-                this.msg = res.Message;
-            }
+          if (res) {
+            this.msg = res.Message;
+            this.showMsg = true;
+          }
         });
 
         this.showSecondData = true;

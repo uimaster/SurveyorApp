@@ -1,6 +1,8 @@
 <form [formGroup]="descriptionForm">
     <h4>Animal Description</h4>
-
+    <div class="loader" *ngIf="Loader">
+        <mat-spinner [color]="accent"></mat-spinner>
+      </div>
     <mat-form-field>
       <input matInput placeholder="Animal Ear Tag No." formControlName="Animal_EarTagNo" (keydown)="specialCharPrevention($event)">
     </mat-form-field>
@@ -38,7 +40,7 @@
     <div style="text-align: center; margin-top: 50px;">
       <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
       <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
-
+      <button mat-raised-button matStepperPrevious>Back</button>
       <button mat-raised-button matStepperNext>Skip</button>
       <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="descriptionSubmit(descriptionForm.value);">Next</button>
     </div>

@@ -13,6 +13,8 @@ import { AnimalImagesComponent } from './animal-images/animal-images.component';
 import { MultiImagesComponent } from './multi-images/multi-images.component';
 import { SignatureComponent } from './signature/signature.component';
 import { PreCattleService } from '../pre-wizard/pre-wizard.service';
+import { MAT_DATE_LOCALE} from '@angular/material';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,9 +32,11 @@ import { PreCattleService } from '../pre-wizard/pre-wizard.service';
     AnimalImagesComponent,
     MultiImagesComponent,
     SignatureComponent],
+
   providers: [
-    PreCattleService
-  ],
+    PreCattleService,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PreCattleModule { }

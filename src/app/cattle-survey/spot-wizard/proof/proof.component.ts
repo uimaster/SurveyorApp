@@ -18,6 +18,7 @@ export class ProofComponent implements OnInit {
   showError = false;
   successMessage: string;
   errorMessage: string;
+  Loader = false;
 
   constructor( private fb: FormBuilder, private proofService: SpotCattleService) {
     this.createProofForm();
@@ -30,15 +31,17 @@ export class ProofComponent implements OnInit {
   createProofForm() {
     this.proofForm = this.fb.group({
       CaseID : new FormControl(this.caseID || 0),
-      SurveyEarTagStatus : new FormControl(0, Validators.required),
-      SurveyAnimalVerifiedStatus : new FormControl(0, Validators.required),
-      SurveyAnimalReTagged : new FormControl(0, Validators.required),
-      SurveyEarTagRemovalStatus : new FormControl(0, Validators.required),
-      SurveyEarTagPreserveStatus : new FormControl(0, Validators.required),
+      SurveyEarTagStatus : new FormControl('False', Validators.required),
+      SurveyAnimalVerifiedStatus : new FormControl('False', Validators.required),
+      SurveyAnimalReTagged : new FormControl('False', Validators.required),
+      SurveyEarTagRemovalStatus : new FormControl('False', Validators.required),
+      SurveyEarTagPreserveStatus : new FormControl('False', Validators.required),
     });
   }
   getProofDetails() {
+    this.Loader = true;
     this.proofService.GetProofDetails().subscribe( res => {
+      this.Loader = false;
       if (res) {
         if (res.Status === '200') {
           this.proofData = res.Data;
@@ -56,17 +59,26 @@ export class ProofComponent implements OnInit {
   }
 
   proofSubmit(formData) {
-    this.proofService.PostProofDetails(formData).subscribe( res => {
-      if (res.Status === '200') {
-        this.successMessage = res.Message;
-        this.showSuccess = true;
-        setTimeout(() => {
-          this.stepper.next();
-        }, 2000);
-      } else {
-        this.errorMessage = res.Message;
-        this.showError = true;
-      }
-    });
+    this.Loader = true;
+    if (this.proofForm.valid) {
+      this.proofService.PostProofDetails(formData).subscribe( res => {
+        if (res.Status === '200') {
+          this.successMessage = res.Message;
+          this.showSuccess = true;
+          setTimeout(() => {
+            this.stepper.next();
+          }, 2000);
+          this.Loader = false;
+        } else {
+          this.errorMessage = res.Message;
+          this.showError = true;
+          this.Loader = false;
+        }
+      });
+    } else {
+      console.log('invalid form');
+      this.Loader = false;
+    }
+
   }
 }

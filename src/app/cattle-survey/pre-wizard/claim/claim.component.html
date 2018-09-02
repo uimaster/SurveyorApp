@@ -1,6 +1,8 @@
 <form [formGroup]="claimForm">
   <h4>Claim Details</h4>
-
+  <div class="loader" *ngIf="Loader">
+    <mat-spinner [color]="accent"></mat-spinner>
+  </div>
   <mat-form-field>
     <input matInput placeholder="Requester Name" formControlName="RequesterName" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
@@ -10,9 +12,18 @@
   <mat-form-field>
     <input matInput placeholder="Requester Contact No." formControlName="RequesterContactNo" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
-  <mat-form-field>
+  <!-- <mat-form-field>
     <input matInput placeholder="Company" formControlName="CompanyId" (keydown)="specialCharPrevention($event)">
-  </mat-form-field>
+  </mat-form-field> -->
+
+  <mat-form-field>
+      <mat-select placeholder="Company" formControlName="CompanyId">
+        <mat-option *ngFor="let item of companyList" [value]="item.CompanyId">
+          {{item.Name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Insured Name" formControlName="InsuredName" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
@@ -22,6 +33,9 @@
   <mat-form-field>
     <input matInput placeholder="Village" formControlName="Village" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
+  <mat-form-field>
+      <input matInput placeholder="Schedule No." formControlName="ScheduleNo" (keydown)="specialCharPrevention($event)">
+    </mat-form-field>
 
   <mat-form-field>
     <input matInput placeholder="District" formControlName="District" (keydown)="specialCharPrevention($event)">
@@ -33,9 +47,13 @@
   <mat-form-field>
     <input matInput placeholder="Contact No." formControlName="InsuredContactNo" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
+
   <mat-form-field>
-    <input matInput placeholder="Date of Inspection" formControlName="IntimationDate" (keydown)="specialCharPrevention($event)">
+    <input matInput placeholder="Date of Inspection" formControlName="IntimationDate" [matDatepicker]="IntimationDate">
+    <mat-datepicker-toggle matSuffix [for]="IntimationDate"></mat-datepicker-toggle>
+    <mat-datepicker #IntimationDate></mat-datepicker>
   </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Time of Inspection" formControlName="IntimationTime" (keydown)="specialCharPrevention($event)">
   </mat-form-field>

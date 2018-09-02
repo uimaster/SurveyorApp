@@ -18,6 +18,7 @@ export class InspectionComponent implements OnInit {
   showError = false;
   successMessage: string;
   errorMessage: string;
+  Loader = false;
 
   colorArray = [
     { colorID: 1, colorName: 'White' },
@@ -34,6 +35,11 @@ export class InspectionComponent implements OnInit {
     { genderID: 2, genderName: 'Male U' }
   ];
 
+  isDelay = [
+    { value: 1, name: 'Yes' },
+    { value: 2, name: 'No' }
+  ];
+
   constructor( private fb: FormBuilder, private inspectionService: SpotCattleService) {
     this.createInspectionForm();
   }
@@ -44,10 +50,9 @@ export class InspectionComponent implements OnInit {
 
   specialCharPrevention(event) {
     const key = event.keyCode;
-    const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
-     key === 57 || key === 186 ));
+    const preventsKey = (( key === 222 ));
     if (preventsKey) {
-     console.log('Special characters not allowed');
+     alert('Quote special character not allowed');
       return false;
     }
   }
@@ -64,8 +69,8 @@ export class InspectionComponent implements OnInit {
       InspectionDelay : new FormControl('', Validators.required),
       InspectionDelayReason : new FormControl('', Validators.required),
       Animal_EarTagNo : new FormControl('', Validators.required),
-      Animal_sex : new FormControl('', Validators.required),
-      Animal_Color : new FormControl('', Validators.required),
+      Animal_sex : new FormControl(''),
+      Animal_Color : new FormControl(''),
       Animal_Breed : new FormControl('', Validators.required),
       Animal_HornLeft : new FormControl('', Validators.required),
       Animal_HornRight : new FormControl('', Validators.required),
@@ -78,22 +83,33 @@ export class InspectionComponent implements OnInit {
 
 
   inspectionSubmit(formData) {
-    this.inspectionService.PostInspection(formData).subscribe( res => {
-      if(res.Status === '200') {
-        this.successMessage = res.Message;
-        this.showSuccess = true;
-        setTimeout(() => {
-          this.stepper.next();
-        }, 2000);
-      } else {
-        this.errorMessage = res.Message;
-        this.showError = true;
-      }
-    });
+    this.Loader = true;
+    if (this.inspectionForm.valid) {
+      this.inspectionService.PostInspection(formData).subscribe( res => {
+        if (res.Status === '200') {
+          this.successMessage = res.Message;
+          this.showSuccess = true;
+          setTimeout(() => {
+            this.stepper.next();
+          }, 2000);
+          this.Loader = false;
+        } else {
+          this.errorMessage = res.Message;
+          this.showError = true;
+          this.Loader = false;
+        }
+      });
+    } else {
+      console.log('invalid form');
+      this.Loader = false;
+    }
+
   }
 
   getInspections() {
+    this.Loader = true;
     this.inspectionService.GetInspection().subscribe( res => {
+      this.Loader = false;
       if (res) {
         if (res.Status === '200') {
           this.inspectionData = res.Data;

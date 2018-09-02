@@ -16,6 +16,7 @@ import { InquarySecondComponent } from './enquiry-second/enquiry-second.componen
 import { ReportSummaryComponent } from './report-summary/report-summary.component';
 import { SignatureComponent } from './signature/signature.component';
 import { SpotCattleService } from './spot-wizard.service';
+import { MAT_DATE_LOCALE} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -37,7 +38,9 @@ import { SpotCattleService } from './spot-wizard.service';
     ReportSummaryComponent,
     SignatureComponent
   ],
-  providers: [ SpotCattleService ],
+  providers: [ SpotCattleService,
+     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SpotCattleModule { }

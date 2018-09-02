@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SharedModuleServices } from '../../../sharedModule/shared.service';
 import { CommonImageComponent } from '../../../sharedModule/images.component';
+import { DonwloadDialog } from '../../../sharedModule/shared.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-signature',
@@ -18,7 +20,7 @@ export class SignatureComponent implements OnInit {
   animalImageUrl: string;
   animalImageUrl2: string;
   imageBaseUrl = 'http://apiflacorev2.iflotech.in';
-  constructor(private sharedService: SharedModuleServices, private imageService: CommonImageComponent) { }
+  constructor(private sharedService: SharedModuleServices, private imageService: CommonImageComponent, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getImage('SPDSG');
@@ -55,7 +57,7 @@ export class SignatureComponent implements OnInit {
     const ClaimGetPayload = { CaseID: this.caseId, CaseImageCode: typeCode };
     this.sharedService.getImages(ClaimGetPayload).subscribe(
       (res) => {
-
+        this.Loader = false;
         this.imageData = res.Data;
         if (this.imageData.length > 0) {
           localStorage.setItem('showSignBroseBtn', 'true');
@@ -84,6 +86,18 @@ export class SignatureComponent implements OnInit {
     setTimeout(() => {
       this.stepper.previous();
     }, 1000);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DonwloadDialog, {
+        height: '300px',
+        disableClose: true,
+        width: '350px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

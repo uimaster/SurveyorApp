@@ -15,11 +15,11 @@ export const routes: Routes = [
   { path: 'pre-wizard', component: PreWizardComponent },
   { path: 'pre-cattle', loadChildren: 'app/cattle-survey/pre-wizard/pre-wizard.module#PreCattleModule'},
   { path: 'spot-cattle', loadChildren: 'app/cattle-survey/spot-wizard/spot-wizard.module#SpotCattleModule'},
-  { path: 'users', loadChildren: 'app/masters/users/users.module#UsersModule'},
-  { path: 'surveyor', loadChildren: 'app/masters/surveyor/surveyor.module#SurveyorModule' },
-  { path: 'area', loadChildren: 'app/masters/area/area.module#AreaModule' },
-  { path: 'companies', loadChildren: 'app/masters/companies/company.module#CompanyModule' },
-  { path: '**', component: LoginComponent}
+  { path: 'users', loadChildren: 'app/users/users.module#UsersModule'},
+  { path: 'surveyor', loadChildren: 'app/surveyor/surveyor.module#SurveyorModule' },
+  { path: 'area', loadChildren: 'app/area/area.module#AreaModule' },
+  { path: 'companies', loadChildren: 'app/companies/company.module#CompanyModule' },
+  // { path: '**', component: LoginComponent}
 ];
 
 @NgModule({

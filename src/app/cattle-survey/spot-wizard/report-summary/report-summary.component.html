@@ -2,47 +2,43 @@
   <h4>Report Summary Details</h4>
   <form [formGroup]="summaryForm">
   <!-- <h4 style="color: #333; text-align: center"> Please complete below listed pending steps! </h4> -->
+  <div class="loader" *ngIf="Loader">
+      <mat-spinner [color]="accent"></mat-spinner>
+    </div>
+  <div class="mat-form-checkfield">
+    <label for="SurveyEarTagStatus">1. Claim Details:</label>
+    <mat-radio-group formControlName="ClaimformStatus" id="ClaimformStatus" [(ngModel)]="ClaimformStatus">
+      <mat-radio-button value="False" checked>No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
-    <div class="tabularData card">
-      <h5>1. Claim Details</h5>
-      <mat-radio-group formControlName="ClaimformStatus" [(ngModel)]="ClaimformStatus">
-        <mat-radio-button value="true">Yes</mat-radio-button>
-        <mat-radio-button value="false" checked>No</mat-radio-button>
+  <div class="mat-form-checkfield">
+      <label for="DeadAnimalPhotoStatus">2. Dead Animal Photo:</label>
+      <mat-radio-group formControlName="DeadAnimalPhotoStatus" id="DeadAnimalPhotoStatus" [(ngModel)]="DeadAnimalPhotoStatus">
+        <mat-radio-button value="False" checked>No</mat-radio-button>
+        <mat-radio-button value="True">Yes</mat-radio-button>
       </mat-radio-group>
-      <img alt="" src='../../assets/images/no-photo.png' />
-      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
     </div>
 
-    <div class="tabularData card">
-      <h5>2. Dead Animal Photo</h5>
-      <mat-radio-group formControlName="DeadAnimalPhotoStatus" [(ngModel)]="DeadAnimalPhotoStatus">
-        <mat-radio-button value="true">Yes</mat-radio-button>
-        <mat-radio-button value="false" checked>No</mat-radio-button>
-      </mat-radio-group>
-      <img alt="" src='../../assets/images/no-photo.png' />
-      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
-    </div>
+    <div class="mat-form-checkfield">
+        <label for="IntactEarTagStatus">3. Intact Ear Tag:</label>
+        <mat-radio-group formControlName="IntactEarTagStatus" id="IntactEarTagStatus" [(ngModel)]="IntactEarTagStatus">
+          <mat-radio-button value="False" checked>No</mat-radio-button>
+          <mat-radio-button value="True">Yes</mat-radio-button>
+        </mat-radio-group>
+      </div>
 
-    <div class="tabularData card">
-      <h5>3. Intact Ear Tag</h5>
-      <mat-radio-group formControlName="IntactEarTagStatus" [(ngModel)]="IntactEarTagStatus">
-        <mat-radio-button value="true">Yes</mat-radio-button>
-        <mat-radio-button value="false" checked>No</mat-radio-button>
-      </mat-radio-group>
-      <img alt="" src='../../assets/images/no-photo.png' />
-      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
-    </div>
+      <div class="mat-form-checkfield">
+          <label for="PMReportStatus">4. PM Report:</label>
+          <mat-radio-group formControlName="PMReportStatus" id="PMReportStatus" [(ngModel)]="PMReportStatus">
+            <mat-radio-button value="False" checked>No</mat-radio-button>
+            <mat-radio-button value="True">Yes</mat-radio-button>
+          </mat-radio-group>
+        </div>
 
-    <div class="tabularData card">
-      <h5>4. PM Report</h5>
-      <mat-radio-group formControlName="PMReportStatus" [(ngModel)]="PMReportStatus">
-        <mat-radio-button value="true">Yes</mat-radio-button>
-        <mat-radio-button value="false" checked>No</mat-radio-button>
-      </mat-radio-group>
-      <img alt="" src='../../assets/images/no-photo.png' />
-      <!-- <input type="file" name="" id="" (change)="onFileChanged5($event)" class="custom-file-input"  /> -->
-    </div>
   <div style="text-align: center; margin-top: 50px;">
+    <button mat-raised-button matStepperPrevious>Back</button>
     <button mat-raised-button matStepperNext color="primary" style="margin-left: 10px;">Next</button>
   </div>
 </form>

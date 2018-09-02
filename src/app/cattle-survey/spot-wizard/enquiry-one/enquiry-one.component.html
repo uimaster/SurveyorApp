@@ -1,6 +1,8 @@
 <form [formGroup]="inquaryFirstForm">
   <h4>Enquiry Info Part 1</h4>
-
+  <div class="loader" *ngIf="Loader">
+      <mat-spinner [color]="accent"></mat-spinner>
+    </div>
   <mat-form-field>
     <input matInput placeholder="Animal Illness Date" formControlName="Animal_Illness_Date" [matDatepicker]="Animal_Illness_Date">
     <mat-datepicker-toggle matSuffix [for]="Animal_Illness_Date"></mat-datepicker-toggle>
@@ -12,15 +14,15 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Vetnary Doctor Remarks" formControlName="Vetnary_Doctor_Remarks" (keydown)="specialCharPrevention($event)">
+    <textarea matInput placeholder="Vetnary Doctor Remarks" formControlName="Vetnary_Doctor_Remarks" (keydown)="specialCharPrevention($event)"></textarea>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Insured Remarks" formControlName="Insured_Remarks" (keydown)="specialCharPrevention($event)">
+    <textarea matInput placeholder="Insured Remarks" formControlName="Insured_Remarks" (keydown)="specialCharPrevention($event)"></textarea>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Locals Remarks" formControlName="Locals_Remarks" (keydown)="specialCharPrevention($event)">
+    <textarea matInput placeholder="Locals Remarks" formControlName="Locals_Remarks" (keydown)="specialCharPrevention($event)"></textarea>
   </mat-form-field>
 
   <mat-form-field>
@@ -40,26 +42,26 @@
   </mat-form-field>
 
   <div class="mat-form-checkfield">
-    <label for="VetnaryHospitalRecords_Status">Vetnary Hospital Records Status</label>
+    <label for="VetnaryHospitalRecords_Status">Vetnary Hospital Records</label>
     <mat-radio-group formControlName="VetnaryHospitalRecords_Status" id="VetnaryHospitalRecords_Status" [(ngModel)]="VetnaryHospitalRecords_Status">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False">No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="mat-form-checkfield">
-    <label for="SocietyDoctorReport_Status">Society DoctorReport Status</label>
+    <label for="SocietyDoctorReport_Status">Society DoctorReport</label>
     <mat-radio-group formControlName="SocietyDoctorReport_Status" id="SocietyDoctorReport_Status" [(ngModel)]="SocietyDoctorReport_Status">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False">No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
   <div class="mat-form-checkfield">
-    <label for="Medical_Bills_Status">Medical Bills Status</label>
+    <label for="Medical_Bills_Status">Medical Bills</label>
     <mat-radio-group formControlName="Medical_Bills_Status" id="Medical_Bills_Status" [(ngModel)]="Medical_Bills_Status">
-      <mat-radio-button value="0">No</mat-radio-button>
-      <mat-radio-button value="1">Yes</mat-radio-button>
+      <mat-radio-button value="False">No</mat-radio-button>
+      <mat-radio-button value="True">Yes</mat-radio-button>
     </mat-radio-group>
   </div>
 
@@ -67,7 +69,7 @@
   <div style="text-align: center; margin-top: 50px;">
     <div class="alert success" *ngIf="showSuccess">Data Saved {{successMessage}}fully.</div>
     <div class="alert error" *ngIf="showError">Data Saved {{errorMessage}}.</div>
-
+    <button mat-raised-button matStepperPrevious>Back</button>
     <button mat-raised-button matStepperNext>Skip</button>
     <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="inquaryFirstSubmit(inquaryFirstForm.value);">Next</button>
   </div>

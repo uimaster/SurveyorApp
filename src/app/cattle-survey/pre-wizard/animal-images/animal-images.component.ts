@@ -56,7 +56,7 @@ export class AnimalImagesComponent implements OnInit {
     const ClaimGetPayload = { CaseID: this.caseId, CaseImageCode: typeCode };
     this.sharedService.getImages(ClaimGetPayload).subscribe(
       (res) => {
-
+        this.Loader = false;
         this.imageData = res.Data;
         if (this.imageData.length > 0) {
           localStorage.setItem('showSignBroseBtn', 'true');

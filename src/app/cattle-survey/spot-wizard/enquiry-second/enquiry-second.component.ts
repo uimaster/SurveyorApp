@@ -18,6 +18,7 @@ export class InquarySecondComponent implements OnInit {
   showError = false;
   successMessage: string;
   errorMessage: string;
+  Loader = false;
   constructor( private fb: FormBuilder, private enquiryService: SpotCattleService) {
     this.createEnquirySecondForm();
   }
@@ -28,10 +29,9 @@ export class InquarySecondComponent implements OnInit {
 
   specialCharPrevention(event) {
     const key = event.keyCode;
-    const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
-     key === 57 || key === 186 ));
+    const preventsKey = (( key === 222 ));
     if (preventsKey) {
-     console.log('Special characters not allowed');
+     alert('Quote special character not allowed');
       return false;
     }
   }
@@ -47,22 +47,33 @@ export class InquarySecondComponent implements OnInit {
   }
 
   EnquirySecondSubmit(formData) {
-    this.enquiryService.PostEnquirytwoDetails(formData).subscribe( res => {
-      if(res.Status === '200') {
-        this.successMessage = res.Message;
-        this.showSuccess = true;
-        setTimeout(() => {
-          this.stepper.next();
-        }, 2000);
-      } else {
-        this.errorMessage = res.Message;
-        this.showError = true;
-      }
-    });
+    this.Loader = true;
+    if (this.EnquirySecondForm.valid) {
+      this.enquiryService.PostEnquirytwoDetails(formData).subscribe( res => {
+        if(res.Status === '200') {
+          this.successMessage = res.Message;
+          this.showSuccess = true;
+          setTimeout(() => {
+            this.stepper.next();
+          }, 2000);
+          this.Loader = false;
+        } else {
+          this.errorMessage = res.Message;
+          this.showError = true;
+          this.Loader = false;
+        }
+      });
+    } else {
+      console.log('invalid form');
+      this.Loader = false;
+    }
+
   }
 
   getEnquiryTwoDetails() {
+    this.Loader = true;
     this.enquiryService.GetEnquirytwoDetails().subscribe( res => {
+      this.Loader = false;
       if (res) {
         if (res.Status === '200') {
           this.enquiryData = res.Data;

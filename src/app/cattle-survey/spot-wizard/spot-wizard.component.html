@@ -4,7 +4,7 @@
   <mat-spinner [color]="accent"></mat-spinner>
 </div>
 <div class="container">
-  <h2> Pre-Inspection Survey, Case No. : {{caseNo}}</h2>
+  <h2> Spot-Inspection Cattle Survey, Case No. : {{caseNo}}</h2>
   <mat-horizontal-stepper [linear]="isLinear" #stepper>
     <mat-step>
       <ng-template matStepLabel>Claim Details</ng-template>
@@ -23,11 +23,11 @@
       <app-animal-images></app-animal-images>
     </mat-step>
     <mat-step >
-      <ng-template matStepLabel>Inquary Info Part 1</ng-template>
+      <ng-template matStepLabel>Enquiry Info Part 1</ng-template>
       <app-inquary-one [stepper]="stepper"></app-inquary-one>
     </mat-step>
     <mat-step >
-      <ng-template matStepLabel>Inquary Info Part 2</ng-template>
+      <ng-template matStepLabel>Enquiry Info Part 2</ng-template>
       <app-inquary-second [stepper]="stepper"></app-inquary-second>
     </mat-step>
     <mat-step >

@@ -7,10 +7,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { SharedModuleServices } from './shared.service';
 import { SharedComponent, DonwloadDialog } from './shared.component';
-import { SurveyorService } from '../masters/surveyor/surveyor.service';
-import { AreaService } from '../masters/area/area.service';
-import { CompaniesService } from '../masters/companies/companies.service';
-import { UsersService } from './../masters/users/users.service';
+import { SurveyorService } from '../surveyor/surveyor.service';
+import { AreaService } from '../area/area.service';
+import { CompaniesService } from '../companies/companies.service';
+import { UsersService } from './../users/users.service';
 import { SidebarComponent } from '../sidebar/sidebar';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';

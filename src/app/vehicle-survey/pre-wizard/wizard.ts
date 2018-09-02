@@ -10,7 +10,7 @@ import { PreWizardService } from './wizard.service';
 import { WizardService } from '../spot-wizard/wizard.service';
 import * as IMAGEURL from '../../../shared/img.urls';
 import { DonwloadDialog } from '../../sharedModule/shared.component';
-import { CompaniesService } from '../../masters/companies/companies.service';
+import { CompaniesService } from '../../companies/companies.service';
 import { DashboardService } from '../../dashboard/dashboard.service';
 import { SharedModuleServices } from '../../sharedModule/shared.service';
 import { GenericGetImageResponseModel } from '../../sharedModule/shared.model';
@@ -306,12 +306,11 @@ export class PreWizardComponent implements OnInit {
 
     specialCharPrevention(event) {
       const key = event.keyCode;
-      const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219
-          || key === 57  || key === 186 ));
-      if (preventsKey) {
-        console.log('Special characters not allowed');
-        return false;
-      }
+      const preventsKey = (( key === 222 ));
+    if (preventsKey) {
+     alert('Quote special character not allowed');
+      return false;
+    }
     }
 
     convertToDateFormat(Datestr) {

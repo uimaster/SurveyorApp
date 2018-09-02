@@ -70,12 +70,13 @@
             <mat-error *ngIf="createCaseForm.controls['CompanyId'].hasError('required') && createCaseForm.controls['CompanyId'].touched">Company is required</mat-error>
           </mat-select>
         </mat-form-field>
+        <input type="text" formControlName="CaseTypeID" style="display: none" />
 
         <h5 style="color:#000;">What type of case do you want to create ?</h5>
-        <button mat-raised-button color="primary" (click)="createSpotCase(createCaseForm.value)" [disabled]="createCaseForm.invalid">
+        <button mat-raised-button color="primary" (click)="createSpotCase(createCaseForm.value, 3)" [disabled]="createCaseForm.invalid">
           Spot Survey
         </button>
-        <button mat-raised-button color="primary" (click)="createPreCase(createCaseForm.value)" style="float:right;" [disabled]="createCaseForm.invalid">
+        <button mat-raised-button color="primary" (click)="createPreCase(createCaseForm.value, 4)" style="float:right;" [disabled]="createCaseForm.invalid">
           Pre Inspection
         </button>
       </div>
@@ -131,6 +132,20 @@
                 assignment_turned_in
               </i>
             </button>
+
+            <button *ngIf="completedCasebuttons && item.CaseTypeName =='Cattle SPOT'" [disabled]="item.SurveyStatusName !='Completed'" mat-raised-button color="accent" title="Generate Spot Report"
+              (click)="generateSpotSurvey(item.CaseID);">
+              <i class="material-icons">
+                assignment_turned_in
+              </i>
+            </button>
+            <button *ngIf="completedCasebuttons && item.CaseTypeName =='Cattle PI'" [disabled]="item.SurveyStatusName !='Completed'" mat-raised-button color="accent" title="Generate Pre Report"
+              (click)="generatePreSurvey(item.CaseID);">
+              <i class="material-icons">
+                assignment_turned_in
+              </i>
+            </button>
+
             <button *ngIf="completedCasebuttons" mat-raised-button color="accent" [disabled]="item.SurveyStatusName !='Completed'" (click)="getClaimDetails(item.CaseTypeId, item.CaseID, item.CaseNo, 'true');"
               title="View Completed Case">
               <i class="material-icons">

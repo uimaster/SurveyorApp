@@ -4,7 +4,7 @@ import 'rxjs/Rx';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { MULTIIMAGES_URL } from '../../shared/img.urls';
-import { SPOTCOMPLETIONURL, GETIMAGE_URL } from '../../shared/urls';
+import { SPOTCOMPLETIONURL, GETIMAGE_URL, COMPANYLIST} from '../../shared/urls';
 import * as imageModels from './shared.model';
 
 
@@ -55,11 +55,20 @@ export class SharedModuleServices {
 
   preventSpecialChar(event) {
     const key = event.keyCode;
-    const preventsKey = (( key === 192 || key === 190 || key === 188 || key === 222 || key === 221 || key === 219 ||
-     key === 57 || key === 186 ));
+    const preventsKey = (( key === 222 ));
     if (preventsKey) {
-      console.log('Special Keys are not allowed');
+     alert('Quote special character not allowed');
       return false;
     }
+  }
+
+  getCompanyList(): Observable<any> {
+    return this.http.get(COMPANYLIST)
+      .map((res) => {
+        if (res) {
+          return res;
+        }
+      })
+      .catch((error) => Observable.throw('server Error.'));
   }
 }

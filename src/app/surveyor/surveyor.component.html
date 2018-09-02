@@ -1,0 +1,48 @@
+<header-selector></header-selector>
+<sidebar-selector></sidebar-selector>
+<div class="loader" *ngIf="Loader">
+    <mat-spinner [color]="accent"></mat-spinner>
+</div>
+<div class="container">
+  <h2>Surveyors List <a mat-raised-button color="accent" [routerLink] = "['/surveyor/0']" style="float:right">Create Surveyor</a></h2>
+
+
+  <div class="tabularData card">
+    <table width="100%" class="table">
+      <thead>
+      <tr>
+        <!-- <th>Sn</th> -->
+        <th width="10%">Name</th>
+        <th width="10%">Email</th>
+        <th width="10%">Mobile</th>
+        <th width="10%">Landline</th>
+        <!-- <th width="10%">Area Name</th> -->
+        <th width="10%">City Name</th>
+        <th width="15%">Address</th>
+        <th width="10%">LicenceNo</th>
+        <th width="15%">Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let surveyor of TotalDada;let i = index;">
+        <!-- <td>{{i}}</td> -->
+        <td>{{surveyor.Name}}</td>
+        <td>{{surveyor.EmailId}}</td>
+        <td>{{surveyor.MobileNo}}</td>
+        <td>{{surveyor.LandLine}}</td>
+        <!-- <td>{{surveyor.AreaName}}</td> -->
+        <td>{{surveyor.CityName}}</td>
+        <td>{{surveyor.Address}}</td>
+        <td>{{surveyor.LicenceNo}}</td>
+        <td>
+
+            <mat-chip color="accent" selected="true" (click)="editSurveyor(surveyor.SurveyorsId)">Edit</mat-chip>
+            <mat-chip color="warn" selected="true">Delete</mat-chip>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- <wizard-selector></wizard-selector> -->
