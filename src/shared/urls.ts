@@ -44,6 +44,9 @@ export const DOWNLOADSPOTREPORT = BASEURL + 'DownloadReport/getSpotSurveyReport'
 export const SPOTCOMPLETIONURL = BASEURL + 'CaseStatus/CaseStatusUpdate';
 export const SPOTCREATECASE = BASEURL + 'SpotCases/SPOTCreateCase';
 export const PRECREATECASE = BASEURL + 'PICases/PICreateCase';
+export const CATTLESPOTCREATECASE = BASEURL + 'CaseLS/LSCreateCase';
+export const CATTLEPRECREATECASE = BASEURL + 'CaseLS/LSCreateCase';
+
 
 // URLS FOR PRE WIZARD //
 export const WIZARD_CASEDETAILS_URL = BASEURL + 'PICases/GetPICaseDetails';
@@ -94,3 +97,5 @@ export const CATTLEDESCRIPTIONGET_URL = BASEURL + 'CaseLS/GetLSInspectionDetails
 export const CATTLEDESCRIPTIONPOST_URL = BASEURL + 'CaseLS/LSInspectionDetailsUpdate';
 export const CATTLEOTHERINFOGET_URL = BASEURL + 'CaseLS/GetLSEnquiryPart2Details';
 export const CATTLEOTHERINFOPOST_URL = BASEURL + 'CaseLS/LSInquiryPart2DetailsUpdate';
+export const DELETECASECATTLE = BASEURL + 'Dashboard/DeleteCase';
+

@@ -6,6 +6,15 @@
   <mat-form-field>
     <input matInput placeholder="Requester Name" formControlName="RequesterName" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="User Name" formControlName="UserID" required [disabled]="createCaseDisabled">
+      <mat-option *ngFor="let item of userList" [value]="item.UserID">
+        {{item.UserName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Requester Code" formControlName="RequesterCode" (keydown)="specialCharPrevention($event)">
   </mat-form-field>

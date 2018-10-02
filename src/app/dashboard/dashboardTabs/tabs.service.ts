@@ -77,4 +77,18 @@ export class TabsService {
           .catch((error) => Observable.throw('server Error.'));
   }
 
+  getAllocatedList(payload: any): Observable<any> {
+    const params = new HttpParams().set('SurveyorsId', JSON.parse(this.SurveyorsId)).set('CaseStatusID', '2')
+    .set('CompanyID', JSON.parse(this.companyId)).set('UserID', payload);
+    return this.http.get(DASHBOARD_CAT_CASES, {params})
+        .map((res) => {
+            if (res) {
+                return res;
+            }
+        })
+        .catch((error) => Observable.throw('server Error.'));
+  }
+
+
+
 }

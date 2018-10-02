@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
   companyDisabled = false;
   surveyorDisabled = false;
   areaDisabled = false;
+  showDeleteButton = false;
   comletionForm: FormGroup;
   userDisabled = true;
   userList = [];
@@ -85,6 +86,7 @@ export class DashboardComponent implements OnInit {
       this.companyDisabled = false;
       this.surveyorDisabled = false;
       this.userDisabled = true;
+      this.showDeleteButton = true;
       this.createCaseForm.controls['SurveyorsId'].setValue(0);
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
@@ -94,6 +96,7 @@ export class DashboardComponent implements OnInit {
       this.companyDisabled = true;
       this.surveyorDisabled = false;
       this.userDisabled = true;
+      this.showDeleteButton = false;
       this.createCaseForm.controls['SurveyorsId'].setValue(0);
       this.createCaseForm.controls['CompanyId'].setValue(JSON.parse(companyId));
       this.createCaseForm.controls['CompanyId'].clearValidators();
@@ -104,6 +107,7 @@ export class DashboardComponent implements OnInit {
       this.companyDisabled = false;
       this.surveyorDisabled = true;
       this.userDisabled = false;
+      this.showDeleteButton = false;
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
       // this.createCaseForm.controls['SurveyorsId'].setValue(SurveyorsId);
@@ -112,6 +116,7 @@ export class DashboardComponent implements OnInit {
     } else if (userTypeId === 4) {
       this.surveyorDisabled = true;
       this.userDisabled = true;
+      this.showDeleteButton = false;
       this.createCaseForm.controls['CompanyId'].setValidators(Validators.required);
       this.createCaseForm.controls['CompanyId'].updateValueAndValidity();
       this.createCaseForm.controls['SurveyorsId'].clearValidators();
@@ -135,6 +140,7 @@ export class DashboardComponent implements OnInit {
           this.noData = false;
           this.showProcessButtton = false;
           this.completedCasebuttons = true;
+          this.showDeleteButton = true;
         } else {
           this.noData = true;
           this.Loader = false;
@@ -154,6 +160,7 @@ export class DashboardComponent implements OnInit {
           this.showProcessButtton = false;
           this.noData = false;
           this.completedCasebuttons = true;
+          this.showDeleteButton = false;
         } else {
           this.noData = true;
           this.Loader = false;
@@ -174,6 +181,7 @@ export class DashboardComponent implements OnInit {
           this.showProcessButtton = false;
           this.noData = false;
           this.completedCasebuttons = false;
+          this.showDeleteButton = false;
         } else {
           this.noData = true;
           this.Loader = false;
@@ -191,6 +199,27 @@ export class DashboardComponent implements OnInit {
         if (this.TotalDada.length > 0) {
           this.showProcessButtton = true;
           this.completedCasebuttons = false;
+          this.showDeleteButton = false;
+          this.Loader = false;
+          this.noData = false;
+        } else {
+          this.noData = true;
+          this.Loader = false;
+        }
+      }
+    });
+    this.showAcceptBtn = false;
+  }
+
+  getAllocatedList() {
+    this.tabsServices.getAllocatedList(this.userId)
+    .subscribe(res => {
+      if (res && res.Status === '200') {
+        this.TotalDada = res.Data;
+        if (this.TotalDada.length > 0) {
+          this.showProcessButtton = true;
+          this.completedCasebuttons = false;
+          this.showDeleteButton = false;
           this.Loader = false;
           this.noData = false;
         } else {
@@ -412,10 +441,20 @@ export class DashboardComponent implements OnInit {
   // }
 
   downloadSpotSurvey(caseId, caseTypeId) {
-    debugger;
     const baseurl = 'http://apiflacorev2.iflotech.in/api/ReportDownload/DownloadSPReportPDF?CaseID=';
     this.downloadUrl = baseurl + caseId + '&CaseTypeId=' + caseTypeId;
 
     console.log(baseurl);
+  }
+
+  deleteCase(caseid) {
+    this.dashboardService.deleteCase(caseid).subscribe( res => {
+      if (res && res.Status === '200') {
+        alert('You have successfully delete the case.');
+        window.location.reload();
+      } else {
+        alert('Delete operatio failed');
+      }
+    });
   }
 }

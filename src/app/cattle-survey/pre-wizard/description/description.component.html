@@ -9,24 +9,41 @@
     <mat-form-field>
       <input matInput placeholder="Animal Sex" formControlName="Animal_sex" (keydown)="specialCharPrevention($event)">
     </mat-form-field>
+
     <mat-form-field>
-      <input matInput placeholder="Animal Breed" formControlName="Animal_Breed" (keydown)="specialCharPrevention($event)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Animal Color" formControlName="Animal_Color" (keydown)="specialCharPrevention($event)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Animal Horn Left" formControlName="Animal_HornLeft" (keydown)="specialCharPrevention($event)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Animal Horn Right" formControlName="Animal_HornRight" (keydown)="specialCharPrevention($event)">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Animal Tail" formControlName="Animal_Tail" (keydown)="specialCharPrevention($event)">
+      <mat-select placeholder="Animal Breed" formControlName="Animal_Breed">
+        <mat-option *ngFor="let item of animalBread" [value]="item.name">{{item.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Animal Age" formControlName="Animal_Age" (keydown)="specialCharPrevention($event)">
+      <mat-select placeholder="Animal Color" formControlName="Animal_Color">
+        <mat-option *ngFor="let item of bodyColor" [value]="item.name">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Animal Horn Left" formControlName="Animal_HornLeft">
+        <mat-option *ngFor="let item of leftList" [value]="item.name">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Animal Horn Right" formControlName="Animal_HornRight">
+        <mat-option *ngFor="let item of rightList" [value]="item.name">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Animal Tail" formControlName="Animal_Tail">
+        <mat-option *ngFor="let item of tailEnd" [value]="item.name">{{item.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Animal Age" formControlName="Animal_Age">
+        <mat-option *ngFor="let item of ageList" [value]="item.age">{{item.age}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>

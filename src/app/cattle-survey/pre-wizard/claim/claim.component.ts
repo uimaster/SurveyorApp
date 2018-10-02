@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { PreCattleService } from '../../pre-wizard/pre-wizard.service';
 import { SharedModuleServices } from '../../../sharedModule/shared.service';
+import { DashboardService } from '../../../dashboard/dashboard.service';
 
 
 @Component({
@@ -22,10 +23,13 @@ export class ClaimComponent implements OnInit {
   errorMessage: string;
   Loader = false;
   companyList = [];
+  userList = [];
+  createCaseDisabled = false;
   constructor(
     private fb: FormBuilder,
     private claimService: PreCattleService,
-    private shareService: SharedModuleServices
+    private shareService: SharedModuleServices,
+    private dashboardService: DashboardService
   ) {
     this.createClaimForm();
    }
@@ -33,6 +37,17 @@ export class ClaimComponent implements OnInit {
   ngOnInit() {
     this.getClaimDetails();
     this.getCompanyList();
+
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    if (userTypeId === 1) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 2) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 3) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 4) {
+      this.createCaseDisabled = true;
+    }
   }
 
 
@@ -46,12 +61,20 @@ export class ClaimComponent implements OnInit {
     }
   }
 
+  getUserList(data) {
+    this.dashboardService.getUserList(data).subscribe(res => {
+      this.userList = res.Data;
+      // this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
+    });
+  }
+
   createClaimForm() {
     this.claimForm = this.fb.group({
       CaseID : new FormControl(this.caseID || 0),
       CaseNo : new FormControl(this.caseNO || 0),
       CaseTypeId : new FormControl(0),
       CompanyId: new FormControl(0),
+      UserID: new FormControl(0),
       SurveyorsID : new FormControl(this.SurveyorsId || 0),
       RequesterCode : new FormControl('', Validators.required),
       RequesterName : new FormControl('', Validators.required),
@@ -79,8 +102,10 @@ export class ClaimComponent implements OnInit {
         if (res.Status === '200') {
           this.claimData = res.Data;
           if (this.claimData.length > 0) {
+            this.getUserList(this.claimData[0].SurveyorsID);
             this.claimForm.controls['CaseTypeId'].setValue(this.claimData[0].CaseTypeId || 0);
             this.claimForm.controls['CompanyId'].setValue(this.claimData[0].CompanyId || 0);
+            this.claimForm.controls['UserID'].setValue(this.claimData[0].UserID);
             this.claimForm.controls['RequesterCode'].setValue(this.claimData[0].RequesterCode);
             this.claimForm.controls['RequesterName'].setValue(this.claimData[0].RequesterName);
             this.claimForm.controls['RequesterContactNo'].setValue(this.claimData[0].RequesterContactNo);

@@ -1,6 +1,7 @@
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input} from '@angular/core';
 import { SpotCattleService } from '../spot-wizard.service';
+import { DashboardService } from '../../../dashboard/dashboard.service';
 
 @Component({
   selector: 'app-claim',
@@ -19,16 +20,30 @@ export class ClaimComponent implements OnInit {
   successMessage: string;
   errorMessage: string;
   Loader = false;
+  userList = [];
+  createCaseDisabled = false;
   constructor(
     private fb: FormBuilder,
-    private claimService: SpotCattleService
+    private claimService: SpotCattleService,
+    private dashboardService: DashboardService
   ) {
     this.createClaimForm();
    }
 
   ngOnInit() {
     this.getClaimDetails();
+    const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));
+    if (userTypeId === 1) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 2) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 3) {
+      this.createCaseDisabled = false;
+    } else if (userTypeId === 4) {
+      this.createCaseDisabled = true;
+    }
   }
+
 
 
 
@@ -41,10 +56,19 @@ export class ClaimComponent implements OnInit {
     }
   }
 
+  getUserList(data) {
+    this.dashboardService.getUserList(data).subscribe(res => {
+      this.userList = res.Data;
+      // this.firstFormGroup.controls['UserID'].setValue(this.userList[0].UserID);
+    });
+  }
+
   createClaimForm() {
     this.claimForm = this.fb.group({
       CaseID : new FormControl(this.caseID || 0),
       CaseNo : new FormControl(this.caseNO || 0),
+      UserID: new FormControl('', Validators.required),
+      DiedonDate: new FormControl(''),
       CaseTypeId : new FormControl(0),
       CompanyId: new FormControl(0),
       SurveyorsID : new FormControl(this.SurveyorsId || 0),
@@ -70,10 +94,14 @@ export class ClaimComponent implements OnInit {
       if (res) {
         if (res.Status === '200') {
           this.claimData = res.Data;
+          // console.log("====", this.claimData);
           if (this.claimData.length > 0) {
+            this.getUserList(this.claimData[0].SurveyorsID);
             this.claimForm.controls['CaseTypeId'].setValue(this.claimData[0].CaseTypeId || 0);
             this.claimForm.controls['CompanyId'].setValue(this.claimData[0].CompanyId || 0);
+            this.claimForm.controls['UserID'].setValue(this.claimData[0].UserID);
             this.claimForm.controls['PolicyNo'].setValue(this.claimData[0].PolicyNo);
+            this.claimForm.controls['DiedonDate'].setValue(this.claimData[0].DiedonDate);
             this.claimForm.controls['EarTagNo'].setValue(this.claimData[0].EarTagNo);
             this.claimForm.controls['ScheduleNo'].setValue(this.claimData[0].ScheduleNo);
             this.claimForm.controls['SLNo'].setValue(this.claimData[0].SLNo);

@@ -6,6 +6,21 @@
   <mat-form-field>
     <input matInput placeholder="Policy No." formControlName="PolicyNo" (keydown)="specialCharPrevention($event)">
   </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="User Name" formControlName="UserID" required [disabled]="createCaseDisabled">
+      <mat-option *ngFor="let item of userList" [value]="item.UserID">
+        {{item.UserName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Died On Date " formControlName="DiedonDate" format="DD/MM/YYYY HH:mm"  [matDatepicker]="DiedonDate">
+    <mat-datepicker-toggle matSuffix [for]="DiedonDate"></mat-datepicker-toggle>
+    <mat-datepicker #DiedonDate></mat-datepicker>
+  </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Ear Tag No." formControlName="EarTagNo" (keydown)="specialCharPrevention($event)">
   </mat-form-field>

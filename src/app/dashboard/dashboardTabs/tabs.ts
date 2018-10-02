@@ -20,6 +20,7 @@ export class DashboardTabComponent implements OnInit {
   showActiveCompleted = false;
   showActiveUnderProcess = false;
   showActiveBroadcast = false;
+  showActiveAllocated = false;
   userId = 0;
 
   constructor( private tabsServices: TabsService, private dashboard: DashboardComponent){}
@@ -43,6 +44,7 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveCompleted = false;
     this.showActiveUnderProcess = false;
     this.showActiveBroadcast = false;
+    this.showActiveAllocated = false;
   }
 
   getCompleteCases() {
@@ -51,6 +53,7 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveCompleted = true;
     this.showActiveUnderProcess = false;
     this.showActiveBroadcast = false;
+    this.showActiveAllocated = false;
   }
 
   getBroadcastCases() {
@@ -59,6 +62,7 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveCompleted = false;
     this.showActiveUnderProcess = false;
     this.showActiveBroadcast = true;
+    this.showActiveAllocated = false;
   }
 
   getUnderProcessCases() {
@@ -67,8 +71,17 @@ export class DashboardTabComponent implements OnInit {
     this.showActiveCompleted = false;
     this.showActiveUnderProcess = true;
     this.showActiveBroadcast = false;
+    this.showActiveAllocated = false;
   }
 
+  getAllocatedCases() {
+    this.dashboard.getAllocatedList();
+    this.showActiveAll = false;
+    this.showActiveCompleted = false;
+    this.showActiveUnderProcess = false;
+    this.showActiveBroadcast = false;
+    this.showActiveAllocated = true;
+  }
 
   ngOnInit() {
     const userTypeId = JSON.parse(localStorage.getItem('UserTypeId'));

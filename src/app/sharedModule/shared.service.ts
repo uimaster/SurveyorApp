@@ -32,11 +32,7 @@ export class SharedModuleServices {
     return this.http
       .post(SPOTCOMPLETIONURL, payload)
       .map((res: any) => {
-        if (res) {
           return res;
-        } else {
-          return res;
-        }
       })
       .catch(error => Observable.throw(error.json() || 'Server error'));
   }

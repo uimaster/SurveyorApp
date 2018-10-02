@@ -20,15 +20,62 @@ export class InspectionComponent implements OnInit {
   errorMessage: string;
   Loader = false;
 
-  colorArray = [
-    { colorID: 1, colorName: 'White' },
-    { colorID: 2, colorName: 'Black' },
-    { colorID: 3, colorName: 'Green' },
-    { colorID: 4, colorName: 'Yellow' },
-    { colorID: 5, colorName: 'Blue' },
-    { colorID: 6, colorName: 'Red' },
-    { colorID: 7, colorName: 'Maroon' },
+  bodyColor = [
+    { id: 1, name: 'Black' },
+    { id: 2, name: 'Grey' },
+    { id: 3, name: 'White' },
+    { id: 4, name: 'Black Patches' },
+    { id: 5, name: 'Brown Patches' }
   ];
+
+  animalBread = [
+    { id: 1, name: 'Cow' },
+    { id: 2, name: 'Jersy' },
+    { id: 3, name: 'HF' },
+    { id: 4, name: 'Gir' },
+    { id: 5, name: 'ND' },
+    { id: 6, name: 'Buffalo' },
+    { id: 7, name: 'Surti' },
+    { id: 8, name: 'Mehsani' },
+    { id: 9, name: 'Murrah' }
+  ];
+
+  leftList = [
+    { id: 1, name: 'Straight' },
+    { id: 2, name: 'Sickel' },
+    { id: 3, name: 'Cresent' },
+    { id: 4, name: 'Rolled' },
+    { id: 5, name: 'Stub' }
+  ];
+
+  rightList = [
+    { id: 1, name: 'Straight' },
+    { id: 2, name: 'Sickel' },
+    { id: 3, name: 'Cresent' },
+    { id: 4, name: 'Rolled' },
+    { id: 5, name: 'Stub' }
+  ];
+
+  tailEnd = [
+    { id: 1, name: 'White' },
+    { id: 2, name: 'Black' },
+    { id: 3, name: 'Brown' },
+    { id: 4, name: 'NA' }
+  ];
+
+  ageList = [
+    { id: 1, age: '0-1' },
+    { id: 2, age: '1-2' },
+    { id: 3, age: '2-3' },
+    { id: 4, age: '3-4' },
+    { id: 1, age: '4-5' },
+    { id: 2, age: '5-6' },
+    { id: 3, age: '6-7' },
+    { id: 4, age: '7-8' },
+    { id: 1, age: '8-9' }
+  ];
+
+
 
   GenderArray = [
     { genderID: 1, genderName: 'Female U' },

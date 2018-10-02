@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
 
-import { SPOTCREATECASE, PRECREATECASE, 
+import { SPOTCREATECASE, PRECREATECASE,
     GETUSERLIST_URL, CATTLESPOTCREATECASE,
-     CATTLEPRECREATECASE, GENERATESPOTREPORT, GENERATEPREREPORT} from '../../shared/urls';
+     CATTLEPRECREATECASE, GENERATESPOTREPORT, GENERATEPREREPORT, DELETECASECATTLE} from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -95,5 +95,14 @@ export class DashboardService {
                 }
             })
             .catch((error) => Observable.throw('server Error.'));
+    }
+
+    deleteCase(caseId: any): Observable<any> {
+      const params = new HttpParams().set('CaseID', JSON.parse(caseId));
+      return this.http.delete(DELETECASECATTLE, {params})
+          .map((res) => {
+              return res;
+          })
+          .catch((error) => Observable.throw('server Error.'));
     }
 }
