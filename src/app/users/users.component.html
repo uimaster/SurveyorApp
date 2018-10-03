@@ -37,7 +37,7 @@
         <td>{{user.IsActive}}</td>
         <td>
           <mat-chip color="accent" selected="true" (click)="editUser(user.UserId)">Edit</mat-chip>
-          <mat-chip color="warn" selected="true">Delete</mat-chip>
+          <mat-chip color="warn" selected="true" (click)="openDeleteModal(user.UserId);" >Delete</mat-chip>
         </td>
       </tr>
       </tbody>
@@ -45,3 +45,20 @@
   </div>
 </div>
 <!-- <wizard-selector></wizard-selector> -->
+<div class="backdrop" *ngIf="isDeleteModal">
+  <div class="tabularData card smallModal" style=" margin-left: -175px; width: 350px; min-height: 190px;">
+    <h2 style="color:#000; text-align:left; font-size: 18px;">User Delete Confirmation !</h2>
+    <hr style="margin-bottom: 10px; "/>
+    <br/>
+    <div class="alert error" style="width: auto; padding: 0 10px;">
+      <p style="font-weight: normal">Do you want to delete this User?</p>
+    </div><br/><br/>
+
+    <button mat-raised-button style="float:left;" (click)="closeDeleteModal();">
+      Cancel
+    </button>
+    <button mat-raised-button color="warn"openDeleteModal  (click)="deleteUser(deleteUserId);" style="float:right;">
+      Delete Case
+    </button>
+  </div>
+</div>

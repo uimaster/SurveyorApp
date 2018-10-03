@@ -21,3 +21,23 @@
     font-size: 16x;
   }
 }
+
+.backdrop{     position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(21, 21, 21, 0.6);
+  z-index: 99;
+}
+.smallModal{ position: fixed; left: 50%; margin-left: -250px; width: 500px; top: 25%; z-index: 999; padding: 30px; background-color: #fff; min-height:250px;
+  h2{
+      margin: 0 0 15px 0;
+  }
+  p{
+      text-align: left; font-size: 14px; color: #333;
+  }
+  .mat-raised-button{ padding: 0px 30px !important; }
+  hr{ margin-bottom: 40px;}
+  h5{ margin:20px auto 30px; text-align: center;}
+}

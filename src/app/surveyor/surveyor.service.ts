@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {SURVEYORLIST, USERSLIST, UPDATE_CRAETE_SURVEYOR_URL} from '../../shared/urls';
+import {SURVEYORLIST, USERSLIST, UPDATE_CRAETE_SURVEYOR_URL, DELETESURVEYOR} from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -32,6 +32,15 @@ export class SurveyorService {
 
       })
       .catch((error) => Observable.throw(error.json() || 'Server error'));
+  }
+
+  deleteSurveyor(id: any): Observable<any> {
+    const params = new HttpParams().set('Surveyorid', JSON.parse(id));
+    return this.http.delete(DELETESURVEYOR, {params})
+        .map((res) => {
+            return res;
+        })
+        .catch((error) => Observable.throw('server Error.'));
   }
 
 

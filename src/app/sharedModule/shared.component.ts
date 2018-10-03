@@ -173,8 +173,13 @@ export class DonwloadDialog implements OnInit {
     showMsg = false;
     constructor(
         public dialogRef: MatDialogRef<DonwloadDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private wizardService: WizardService,
-         private sharedService: SharedModuleServices, private fb: FormBuilder) { }
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private router: Router,
+        private wizardService: WizardService,
+        private sharedService: SharedModuleServices,
+        private fb: FormBuilder
+    )
+    { }
 
     closeDialog(): void {
         this.dialogRef.close();

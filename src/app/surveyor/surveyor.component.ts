@@ -11,7 +11,9 @@ import {Router} from "@angular/router";
 })
 export class SurveyorComponent implements OnInit {
   public TotalDada = [];
-  Loader: boolean = true;
+  Loader = true;
+  isDeleteModal = false;
+  deleteSurveyorId = '';
   constructor( private surveyorService: SurveyorService,  private router:Router ){}
 
   getSurveyorList() {
@@ -23,12 +25,33 @@ export class SurveyorComponent implements OnInit {
   }
 
 
-  ngOnInit(){
+  ngOnInit() {
     this.getSurveyorList();
   }
 
   editSurveyor(surveyorId){
     this.router.navigate(['/surveyor/' + surveyorId]);
+  }
+
+  openDeleteModal(id) {
+    this.isDeleteModal = true;
+    this.deleteSurveyorId = id;
+    console.log(this.deleteSurveyorId);
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModal = false;
+  }
+
+  deleteUser(id) {
+    this.surveyorService.deleteSurveyor(id).subscribe( res => {
+      if (res && res.Status === '200') {
+        alert('You have successfully delete the case.');
+        window.location.reload();
+      } else {
+        alert(res.Message);
+      }
+    });
   }
 
 }

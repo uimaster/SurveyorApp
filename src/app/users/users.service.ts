@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpParams } from '@angular/common/http';
-import {USERSLIST, UPDATE_CRAETE_USERS_URL, WIZARD_POSTCLAIMURL} from '../../shared/urls';
+import {USERSLIST, UPDATE_CRAETE_USERS_URL, WIZARD_POSTCLAIMURL, DELETEUSER} from '../../shared/urls';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
@@ -37,6 +37,15 @@ export class UsersService {
 
       })
       .catch((error) => Observable.throw(error.json() || 'Server error'));
+  }
+
+  deleteUser(id: any): Observable<any> {
+    const params = new HttpParams().set('Userid', JSON.parse(id));
+    return this.http.delete(DELETEUSER, {params})
+        .map((res) => {
+            return res;
+        })
+        .catch((error) => Observable.throw('server Error.'));
   }
 
 

@@ -98,4 +98,6 @@ export const CATTLEDESCRIPTIONPOST_URL = BASEURL + 'CaseLS/LSInspectionDetailsUp
 export const CATTLEOTHERINFOGET_URL = BASEURL + 'CaseLS/GetLSEnquiryPart2Details';
 export const CATTLEOTHERINFOPOST_URL = BASEURL + 'CaseLS/LSInquiryPart2DetailsUpdate';
 export const DELETECASECATTLE = BASEURL + 'Dashboard/DeleteCase';
+export const DELETEUSER = BASEURL + 'Masters/DeleteUser';
+export const DELETESURVEYOR = BASEURL + 'Masters/DeleteSurveyor';
 

@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   showActionColumn = false;
   completedCasebuttons = false;
   openCreateCaseModal = false;
+  isDeleteModal = false;
   companyListData = [];
   surveyorList = [];
   areaList = [];
@@ -45,7 +46,8 @@ export class DashboardComponent implements OnInit {
   showError = false;
   errorMessage: string;
   showAcceptBtn = false;
-
+  deleteCaseId = '';
+  deleteCaseNo = '';
   constructor( private tabsServices: TabsService, private wizardService: WizardService, private router: Router, private fb: FormBuilder,
     private dashboardService: DashboardService, private companyService: CompaniesService, private surveyorService: SurveyorService,
     private areaService: AreaService, private sharedModuleServices: SharedModuleServices
@@ -276,6 +278,17 @@ export class DashboardComponent implements OnInit {
   openCreateCase() {
     this.openCreateCaseModal = true;
     this.createCaseInit();
+  }
+
+  openDeleteModal(caseid, caseNo) {
+    this.isDeleteModal = true;
+    this.deleteCaseId = caseid;
+    this.deleteCaseNo = caseNo;
+    console.log(this.deleteCaseId, this.deleteCaseNo);
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModal = false;
   }
 
   closeCreateCase() {

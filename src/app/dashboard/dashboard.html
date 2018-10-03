@@ -173,7 +173,7 @@
               </i>
             </button>
 
-            <button *ngIf="showDeleteButton" mat-raised-button color="accent" (click)="deleteCase(item.CaseID);" title="Delete Case">
+            <button *ngIf="showDeleteButton" mat-raised-button color="accent" (click)="openDeleteModal(item.CaseID, item.CaseNo);" title="Delete Case">
               <i class="material-icons">
                 delete_forever
               </i>
@@ -182,6 +182,8 @@
             <button *ngIf="showAcceptBtn" mat-raised-button color="accent"  title="Accept" style="padding: 0 10px!important;" disabled="disabled">
               Accept
             </button>
+
+
           </td>
         </tr>
       </tbody>
@@ -192,4 +194,26 @@
       <br/>No Data Available !</h5>
   </div>
 </div>
+
+
+
+<div class="backdrop" *ngIf="isDeleteModal">
+  <div class="tabularData card smallModal" style=" margin-left: -175px; width: 350px; min-height: 190px;">
+    <h2 style="color:#000; text-align:left; font-size: 18px;">Case Delete Confirmation !</h2>
+    <hr style="margin-bottom: 10px; "/>
+    <br/>
+    <div class="alert error" style="width: auto; padding: 0 10px;">
+      <p style="font-weight: normal">Do you want to delete this Case: {{deleteCaseNo}}?</p>
+    </div><br/><br/>
+
+    <button mat-raised-button style="float:left;" (click)="closeDeleteModal();">
+      Cancel
+    </button>
+    <button mat-raised-button color="warn"openDeleteModal  (click)="deleteCase(deleteCaseId);" style="float:right;">
+      Delete Case
+    </button>
+  </div>
+</div>
+
+
 <!-- <wizard-selector></wizard-selector> -->

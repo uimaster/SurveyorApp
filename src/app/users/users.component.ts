@@ -12,6 +12,8 @@ export class UsersComponent implements OnInit {
   public TotalDada = [];
   Loader = true;
   public searchText = '';
+  isDeleteModal = false;
+  deleteUserId = '';
   constructor( private userService: UsersService, private router: Router) {}
 
   getUserList() {
@@ -30,6 +32,27 @@ export class UsersComponent implements OnInit {
 
   editUser(UserId) {
     this.router.navigate(['/users/' + UserId]);
+  }
+
+  openDeleteModal(id) {
+    this.isDeleteModal = true;
+    this.deleteUserId = id;
+    console.log(this.deleteUserId);
+  }
+
+  closeDeleteModal() {
+    this.isDeleteModal = false;
+  }
+
+  deleteUser(id) {
+    this.userService.deleteUser(id).subscribe( res => {
+      if (res && res.Status === '200') {
+        alert('You have successfully delete the case.');
+        window.location.reload();
+      } else {
+        alert(res.Message);
+      }
+    });
   }
 
 }
