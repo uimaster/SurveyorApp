@@ -47,6 +47,7 @@ export class SurveyorComponent implements OnInit {
     this.surveyorService.deleteSurveyor(id).subscribe( res => {
       if (res && res.Status === '200') {
         alert('You have successfully delete the case.');
+        this.closeDeleteModal();
         window.location.reload();
       } else {
         alert(res.Message);

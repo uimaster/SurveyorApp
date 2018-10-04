@@ -365,7 +365,7 @@ export class DashboardComponent implements OnInit {
     });
     this.sharedModuleServices.PostSpotCompletion(this.comletionForm.value).subscribe(res => {
       if (res) {
-          alert('You have' + res.Message + 'fully converted completed to UnderProcess case.');
+          alert('You have' + res.Message + 'fully changed the case status.');
           this.getDashboardList();
       } else {
         alert(res.Message);
@@ -464,6 +464,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.deleteCase(caseid).subscribe( res => {
       if (res && res.Status === '200') {
         alert('You have successfully delete the case.');
+        this.isDeleteModal = false;
         window.location.reload();
       } else {
         alert('Delete operatio failed');
