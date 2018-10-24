@@ -20,23 +20,24 @@ export class DescriptionComponent implements OnInit {
   Loader = false;
 
   bodyColor = [
-    { id: 1, name: 'Black' },
-    { id: 2, name: 'Grey' },
-    { id: 3, name: 'White' },
-    { id: 4, name: 'Black Patches' },
-    { id: 5, name: 'Brown Patches' }
+    { id: 1, name: 'Grey' },
+    { id: 2, name: 'Black' },
+    { id: 3, name: 'Black Patches' },    
+    { id: 4, name: 'White' },
+    { id: 5, name: 'White Patches' },    
+    { id: 6, name: 'Brown' },
+    { id: 7, name: 'Brown Patches' }
   ];
 
   animalBread = [
-    { id: 1, name: 'Cow' },
-    { id: 2, name: 'Jersy' },
-    { id: 3, name: 'HF' },
-    { id: 4, name: 'Gir' },
-    { id: 5, name: 'ND' },
-    { id: 6, name: 'Buffalo' },
-    { id: 7, name: 'Surti' },
-    { id: 8, name: 'Mehsani' },
-    { id: 9, name: 'Murrah' }
+    { id: 1, name: 'Cow-Jersy' },
+    { id: 2, name: 'Cow-HF' },
+    { id: 3, name: 'Cow-Gir' },
+    { id: 4, name: 'Cow-ND' },
+    { id: 5, name: 'Buffalo-Surti' },
+    { id: 6, name: 'Buffalo-Mehsani' },
+    { id: 7, name: 'Buffalo-Murrah' },
+    { id: 8, name: 'Buffalo-ND' }
   ];
 
   leftList = [
@@ -44,7 +45,8 @@ export class DescriptionComponent implements OnInit {
     { id: 2, name: 'Sickel' },
     { id: 3, name: 'Cresent' },
     { id: 4, name: 'Rolled' },
-    { id: 5, name: 'Stub' }
+    { id: 5, name: 'Stub' },
+    { id: 6, name: 'NA' }
   ];
 
   rightList = [
@@ -52,7 +54,8 @@ export class DescriptionComponent implements OnInit {
     { id: 2, name: 'Sickel' },
     { id: 3, name: 'Cresent' },
     { id: 4, name: 'Rolled' },
-    { id: 5, name: 'Stub' }
+    { id: 5, name: 'Stub' },
+    { id: 6, name: 'NA' }
   ];
 
   tailEnd = [
@@ -72,6 +75,11 @@ export class DescriptionComponent implements OnInit {
     { id: 3, age: '6-7' },
     { id: 4, age: '7-8' },
     { id: 1, age: '8-9' }
+  ];
+
+  GenderArray = [
+    { id: 1, name: 'Female' },
+    { id: 2, name: 'Male' }
   ];
 
   constructor(

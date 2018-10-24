@@ -33,7 +33,11 @@
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput placeholder="Animal Sex" formControlName="Animal_sex" (keydown)="specialCharPrevention($event)">
+    <!-- <input matInput placeholder="Animal Sex" formControlName="Animal_sex" (keydown)="specialCharPrevention($event)"> -->
+
+    <mat-select placeholder="Animal Sex" formControlName="Animal_sex">
+      <mat-option *ngFor="let item of GenderArray" [value]="item.name">{{item.name}}</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <mat-form-field>
